@@ -10,4 +10,5 @@ public class MediaWranglerApplication {
 		SpringApplication.run(MediaWranglerApplication.class, args);
 	}
 
+
 }
