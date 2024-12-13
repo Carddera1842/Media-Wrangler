@@ -46,7 +46,7 @@ public class UserController {
             userService.saveUser(user);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {
-            // Handle database constraint violations
+
             if (e.getMessage().contains("users.UK_username")) {
                 return new ResponseEntity<>(Map.of("username", "Username is already taken"), HttpStatus.BAD_REQUEST);
             } else if (e.getMessage().contains("users.UK_email")) {
