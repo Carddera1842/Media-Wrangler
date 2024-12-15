@@ -11,12 +11,29 @@ export default function CenteredTabs() {
   };
 
   return (
-    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      bgcolor: 'background.paper',
+      padding: 2
+    }}>
+      <Box sx={{ fontSize: 36, fontWeight: 'bold', fontFamily: 'sans-serif' }}>
+        Media Wrangler
+      </Box>
+      <Box sx={{
+        width: '50%',
+        bgcolor: 'Background.paper',
+        padding: 2
+      }}>
       <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="Home" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
+        <Tab label="Home" sx={{marginX: 3 }} />
+        <Tab label="Movies" sx={{marginX: 3 }} />
+        <Tab label="Search" sx={{marginX: 3 }} />
+        <Tab label="Log In" sx={{marginX: 3 }} />
+        <Tab label="Register" sx={{marginX: 3 }} />
       </Tabs>
+      </Box>
     </Box>
   );
 }
