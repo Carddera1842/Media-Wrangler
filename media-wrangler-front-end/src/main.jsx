@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Nav from './components/home-page/Nav'; // Import Nav component
+import Nav from './components/home-page/nav'; // Import Nav component
 import Login from './components/log-in/Login'; // Import Login component
 import 'bootstrap/dist/css/bootstrap.min.css'; // If you are using Bootstrap
 import { BrowserRouter as Router } from 'react-router-dom'; // Import Router for routing

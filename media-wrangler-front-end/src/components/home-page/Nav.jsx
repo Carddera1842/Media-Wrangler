@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-export default function CenteredTabs() {
+export default function Nav() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

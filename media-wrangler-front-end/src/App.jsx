@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CenteredTabs from './components/home-page/Nav';
+import { BrowserRouter as Router, Route, Switch, Routes } from 'react-router-dom';
+import Nav from './components/home-page/nav';
 import Home from './components/home-page/Home';
 import LogIn from './components/log-in/Login';
 import Movies from './components/movies/Movies';
@@ -10,14 +10,14 @@ import Search from './components/search/Search';
 const App = () => {
     return (
         <Router>
-            <CenteredTabs />
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/login" component={LogIn} />
-                <Route exact path="/movies" component={Movies} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/search" component={Search} />
-            </Switch>
+            <Nav />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<LogIn />} />
+                <Route path="/movies" element={<Movies />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/search" element={<Search />} />
+            </Routes>
         </Router>
     )
 }
