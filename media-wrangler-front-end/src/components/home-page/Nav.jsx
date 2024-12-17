@@ -27,11 +27,11 @@ export default function CenteredTabs() {
         padding: 2
       }}>
       <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="Home" sx={{marginX: 3 }} />
-        <Tab label="Movies" sx={{marginX: 3 }} />
-        <Tab label="Search" sx={{marginX: 3 }} />
-        <Tab label="Log In" sx={{marginX: 3 }} />
-        <Tab label="Register" sx={{marginX: 3 }} />
+        <Tab label="Home" sx={{ marginX: 3 }} />
+        <Tab label="Movies" sx={{ marginX: 3 }} />
+        <Tab label="Search" sx={{ marginX: 3 }} />
+        <Tab label="Log In" sx={{ marginX: 3 }} />
+        <Tab label="Register" sx={{ marginX: 3 }} />
       </Tabs>
       </Box>
     </Box>
