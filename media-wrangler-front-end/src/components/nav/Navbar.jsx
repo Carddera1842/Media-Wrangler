@@ -27,7 +27,7 @@ export default function Navbar() {
           padding: 2
         }}>
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="Home" sx={{ marginX: 3 }} />
+          <Tab label="Home" LinkComponent={"/"} sx={{ marginX: 3 }} />
           <Tab label="Movies" sx={{ marginX: 3 }} />
           <Tab label="Search" sx={{ marginX: 3 }} />
           <Tab label="Log In" sx={{ marginX: 3 }} />
