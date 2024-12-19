@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -27,11 +28,11 @@ export default function Navbar() {
           padding: 2
         }}>
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="Home" LinkComponent={"/"} sx={{ marginX: 3 }} />
-          <Tab label="Movies" sx={{ marginX: 3 }} />
-          <Tab label="Search" sx={{ marginX: 3 }} />
-          <Tab label="Log In" sx={{ marginX: 3 }} />
-          <Tab label="Register" sx={{ marginX: 3 }} />
+          <Tab label="Home" component={Link} to="/" sx={{ marginX: 3 }} />
+          <Tab label="Movies" component={Link} to="/movies" sx={{ marginX: 3 }} />
+          <Tab label="Search" component={Link} to="/search" sx={{ marginX: 3 }} />
+          <Tab label="Log In" component={Link} to="/login" sx={{ marginX: 3 }} />
+          <Tab label="Register" component={Link} to="/register" sx={{ marginX: 3 }} />
         </Tabs>
         </Box>
       </Box>
