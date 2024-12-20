@@ -29,8 +29,6 @@ export default function Navbar() {
       justifyContent: 'center',
       bgcolor: 'background.paper',
       padding: 2,
-      // flexWrap: 'wrap',
-      // flexShrink: 0,
     }}>
       <Box sx={{ 
         fontSize: { xs: 24, sm: 36 }, 
@@ -51,14 +49,8 @@ export default function Navbar() {
         <Tabs 
           value={value} 
           onChange={handleChange} 
-          centered
           variant="scrollable"
           scrollButtons="auto"
-          // sx={{
-          //   '& .MuiTabs-flexContainer': {
-          //     justifyContent: { xs: 'center', sm: 'space-between' },
-          //   },
-          // }}
         >
           <Tab label="Home" component={Link} to="/" sx={{ marginX: 3 }} />
           <Tab label="Movies" component={Link} to="/movies" sx={{ marginX: 3 }} />
