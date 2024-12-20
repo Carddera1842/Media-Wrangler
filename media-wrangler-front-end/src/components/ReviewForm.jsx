@@ -10,6 +10,7 @@ function ReviewForm() {
         <div class="review-container">
           <div class="content is-normal">
              <h1>Movie Title Goes Here (YEAR)</h1>
+             <h5>Movie Genre Goes Here</h5>
           </div>
        
           <br />
