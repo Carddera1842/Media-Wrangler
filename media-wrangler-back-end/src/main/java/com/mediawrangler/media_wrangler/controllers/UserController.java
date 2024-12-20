@@ -1,6 +1,7 @@
 package com.mediawrangler.media_wrangler.Controllers;
 
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
+import com.mediawrangler.media_wrangler.dto.RegisterRequest;
 import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/users")
+//@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, Errors errors) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest, Errors errors) {
         if (errors.hasErrors()) {
             Map<String, String> validationErrors = new HashMap<>();
             errors.getFieldErrors().forEach(error ->
@@ -42,6 +43,14 @@ public class UserController {
             );
             return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
         }
+
+    User user = new User(
+      registerRequest.getUsername(),
+      registerRequest.getFirstName(),
+      registerRequest.getLastName(),
+      passwordEncoder.encode(registerRequest.getPassword()),
+      registerRequest.getEmail()
+    );
 
         try {
             userService.saveUser(user);
@@ -64,8 +73,6 @@ public class UserController {
             session.setAttribute("user", user.getId());
             return new ResponseEntity<>("Login successful!", HttpStatus.OK);
         }
-
-
 
 
         return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
