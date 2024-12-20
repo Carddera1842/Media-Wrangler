@@ -7,6 +7,9 @@ import Tab from '@mui/material/Tab';
 export default function Navbar() {
   const [value, setValue] = React.useState(0);
 
+  // React.useEffect(
+  //   handleChange(0)
+  // )[]
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -14,12 +17,19 @@ export default function Navbar() {
   return (
     <Box sx={{
         display: 'flex',
+        flexDirection: { xs: 'comumn', sm: 'row' },
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         bgcolor: 'background.paper',
         padding: 2
       }}>
-        <Box sx={{ fontSize: 36, fontWeight: 'bold', fontFamily: 'sans-serif' }}>
+        <Box sx={{ 
+          fontSize: { xs: 24, sm: 36 }, 
+          fontWeight: 'bold', 
+          fontFamily: 'sans-serif', 
+          textAlign: { sx: 'center', sm: 'left'},
+          width: { xs: '100%', sm: 'auto'},
+          }}>
           Media Wrangler
         </Box>
         <Box sx={{
