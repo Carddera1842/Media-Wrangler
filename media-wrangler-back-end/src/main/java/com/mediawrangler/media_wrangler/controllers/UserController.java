@@ -1,4 +1,4 @@
-package com.mediawrangler.media_wrangler.controllers;
+package com.mediawrangler.media_wrangler.Controllers;
 
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
 import com.mediawrangler.media_wrangler.models.User;
