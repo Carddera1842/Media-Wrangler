@@ -7,7 +7,7 @@ export async function apiRegister(registerData) {
             registerData
         );
         console.log("Response:", response);
-        if (response.status === 200) {
+        if (response.status === 201) {
             // login();
             console.log("Navigating to login");
             // navigate("/registrationSuccess");

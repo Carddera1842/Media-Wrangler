@@ -7,8 +7,8 @@ export default function Register() {
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [firstname, setFirstName] = useState("");
+    const [lastname, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     
@@ -20,8 +20,8 @@ export default function Register() {
 
         const registerData = {
             username,
-            firstName,
-            lastName,
+            firstname,
+            lastname,
             password,
             email
         };
@@ -47,7 +47,7 @@ export default function Register() {
                     <input
                         className="input" 
                         type="username" 
-                        placeholder="Userame" 
+                        placeholder="Username" 
                         value={username}
                         onChange = {(e) => setUsername(e.target.value)}>
                         </input>
@@ -61,7 +61,7 @@ export default function Register() {
                         className="input" 
                         type="text" 
                         placeholder="First Name" 
-                        value={firstName}
+                        value={firstname}
                         onChange = {(e) => setFirstName(e.target.value)}>
                         </input>
                 </div>
@@ -74,7 +74,7 @@ export default function Register() {
                         className="input" 
                         type="text" 
                         placeholder="Last Name" 
-                        value={lastName}
+                        value={lastname}
                         onChange = {(e) => setLastName(e.target.value)}>
                         </input>
                 </div>
