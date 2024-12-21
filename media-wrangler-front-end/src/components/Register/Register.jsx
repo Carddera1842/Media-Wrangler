@@ -1,6 +1,7 @@
 import axios from "axios";
     import React, { useState } from "react"
     import { useNavigate } from "react-router-dom";
+import { apiRegister } from "../../Services/RegistrationService";
 
 export default function Register() {
     
@@ -25,23 +26,13 @@ export default function Register() {
             email
         };
 
-        try {
-            const response = await axios.post(
-                "http://localhost:8080/register",
-                registerData
-            );
-            console.log("Response:", response);
-            if (response.status === 200) {
-                // login();
-                console.log("Navigating to registration success");
-                navigate("/registrationSuccess");
-            } else {
-                // console.error("Login failed:", response);
-                setError("Registration failed. Please try again");
-            }
-        } catch (error) {
-            // console.error("An error occurred:", error);
-            setError("An error occured. Please try again");
+        let responseMessage = await apiRegister(registerData);
+
+        console.log(responseMessage);
+        if (responseMessage === "Success") {
+            navigate("/login");
+        } else {
+            setError(responseMessage);
         }
 
         console.log("Registering: ", username, password);
