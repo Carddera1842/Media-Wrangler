@@ -8,6 +8,11 @@ public class Movie {
     private String overview;
     private String posterPath;
 
+
+    public Movie() {
+
+    }
+
     public Movie(int id, String title, String releaseDate, double rating, String overview, String posterPath) {
         this.id = id;
         this.title = title;

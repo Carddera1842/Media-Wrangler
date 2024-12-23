@@ -1,14 +1,17 @@
-package com.mediawrangler.media_wrangler.models;
+package com.mediawrangler.media_wrangler.services;
 
+import com.mediawrangler.media_wrangler.models.Movie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MovieDataFetcher {
 
-    private static final String API_KEY = System.getenv("TMDB_API_KEY");
+    private static final String API_READ_ACCESS_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNGY4N2NjNmIxZTZhMzQyMThjNjdjYWM1NGMwYzE0ZiIsIm5iZiI6MTczNDE5MTM5MS43NzcsInN1YiI6IjY3NWRhOTFmZjFiZjk2ZGMyNDc4MTA4ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4trA-9bv10lqcfQyhPxFTeKRWMyyPjIhgM_3Vri9Y6Y";
 
     // overloaded method to fetch movie data by movie title (String)
     public static Movie fetchMovieData(String movieTitle) {
@@ -35,10 +38,11 @@ public class MovieDataFetcher {
 
     // searches for a movie ID by title
     private static int searchMovieIdByTitle(OkHttpClient client, String title) {
-        String apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=" + API_KEY + "&query=" + title + "&language=en-US";
+        String apiUrl = "https://api.themoviedb.org/3/search/movie?" + "query=" + title + "&language=en-US";
 
         Request request = new Request.Builder()
                 .url(apiUrl)
+                .header("Authorization", "Bearer " + API_READ_ACCESS_KEY)
                 .build();
 
         // sends http request to server and receieves response
@@ -70,10 +74,13 @@ public class MovieDataFetcher {
 
     // fetches movie details by ID
     private static Movie fetchMovieDetails(OkHttpClient client, int movieId) {
-        String apiUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + API_KEY + "&language=en-US";
+        String apiUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?" + "&language=en-US";
 
         Request request = new Request.Builder()
                 .url(apiUrl)
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization","Bearer " + API_READ_ACCESS_KEY)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
