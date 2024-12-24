@@ -9,6 +9,7 @@ function App() {
 
   return (
     <>
+      <h3>Searched: Christmas Movies</h3>
       <MovieCard />
     </>
   )

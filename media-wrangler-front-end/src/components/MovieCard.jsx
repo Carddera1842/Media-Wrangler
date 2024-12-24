@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './MovieCard.css';
 
 function MovieCard() {
 
@@ -29,16 +29,17 @@ function MovieCard() {
 
     return(
         <div>
+        <div id="movie-search">
             {movies.map((movie) => (
             <div key={movie.id}>
-            <img
-            src={movie.poster} 
-            alt={movie.title} 
-            style={{ width: '200px', height: '300px' }} 
-            />
-            <h3>{movie.title}</h3> 
-        </div>
+                <img
+                src={movie.poster} 
+                alt={movie.title} 
+                />
+                {/* <h6>{movie.title}</h6>  */}
+            </div>
             ))}
+        </div>
         </div>
 
      
