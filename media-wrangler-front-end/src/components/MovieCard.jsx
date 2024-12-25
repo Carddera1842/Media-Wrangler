@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MovieCard.css';
+
 
 function MovieCard() {
 
@@ -25,6 +26,19 @@ function MovieCard() {
         }
     ]
 
+    const [isHovered, setIsHovered] = useState(false);
+
+    function handleMouseOver(){
+      setIsHovered(true);     
+    };
+  
+    function handleMouseOut(){
+      setIsHovered(false);
+    };
+ 
+    function handleClick() {
+        console.log("Poster Clicked");
+    }
 
 
     return(
@@ -33,11 +47,14 @@ function MovieCard() {
             {movies.map((movie) => (
             <div key={movie.id}>
                 <img
-                onmouseover=""
+                onClick={handleClick}
+                onMouseOver= {handleMouseOver}
+                onMouseOut={handleMouseOut}
                 src={movie.poster} 
                 alt={movie.title} 
                 />
-                {/* <h6>{movie.title}</h6>  */}
+                
+                
             </div>
             ))}
             </div>
@@ -57,4 +74,7 @@ We probably want an image a bit larger for the movie-detail-card when we are tar
 NOTE: We may not want to display the movie title in the poster grid (or horizontal display) because the titles will not allow for a good flow with the various lengths. 
 
 NOTE: We just need to decide if we want the results to list horizontal or vertically. For the homepage, if we are viewing the trending movies I think horizontally would be best, but for the search results a vertical display might be nice. No preference either way
+
+-----
+NOTE: Make sure not to add () after clickHandler inside the {} because it would then be calling the function instead of acting as a function
 */
