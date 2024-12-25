@@ -33,13 +33,14 @@ function MovieCard() {
             {movies.map((movie) => (
             <div key={movie.id}>
                 <img
+                onmouseover=""
                 src={movie.poster} 
                 alt={movie.title} 
                 />
                 {/* <h6>{movie.title}</h6>  */}
             </div>
             ))}
-        </div>
+            </div>
         </div>
 
      
