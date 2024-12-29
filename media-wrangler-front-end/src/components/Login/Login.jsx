@@ -25,10 +25,12 @@ export default function Login() {
                 loginData
             );
             console.log("Response:", response);
+
             if (response.status === 200) {
-                // login();
+                const user = response.data;
+                console.log("User data:", user);
                 console.log("Navigating to login success");
-                navigate("/loginSuccess");
+                navigate(`/profile/${user.id}`);
             } else {
                 // console.error("Login failed:", response);
                 setError("Login failed. Please try again");
