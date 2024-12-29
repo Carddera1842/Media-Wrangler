@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/users")
+//@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -62,12 +62,15 @@ public class UserController {
         User user = userRepository.findByUsername(loginRequest.getUsername());
         if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             session.setAttribute("user", user.getId());
-            return new ResponseEntity<>("Login successful!", HttpStatus.OK);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", user.getId());
+            response.put("username", user.getUsername());
+            response.put("firstname", user.getFirstname());
+            response.put("lastname", user.getLastname());
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-
-
-
-
         return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
     }
 
@@ -78,6 +81,13 @@ public class UserController {
         User user = userRepository.getById(userId);
 
         return new ResponseEntity<>("User: " + user.getEmail(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+        return userRepository.findById(userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }
