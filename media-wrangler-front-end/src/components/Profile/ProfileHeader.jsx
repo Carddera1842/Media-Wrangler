@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import { Box } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 // import { deepOrange, deepPurple } from '@mui/material/colors';
 
 export default function LetterAvatars({ user }) {
@@ -14,7 +14,14 @@ export default function LetterAvatars({ user }) {
     <Box component="section" sx={{ p: 2, border: '1px solid grey'}}>
       <Stack direction="row" spacing={2} alignItems="center">
         <Avatar>{getInitials(user.firstname + " " + user.lastname)}</Avatar>
-        <h1>{user.username}</h1>
+        <Typography variant="h6">{user.username}</Typography>
+        <Button
+        variant="contained"
+        sx={{ marginLeft: "auto" }}
+        onClick={(() => alert("Edit profile clicked"))}
+        >
+        Edit Profile
+      </Button>
       </Stack>
     </Box>
   );
