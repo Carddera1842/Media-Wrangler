@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserService from "../../Services/UserService";
 import ProfileHeader from "./ProfileHeader";
+import FavoriteFilms from "./FavoriteFilms";
 
 const Profile = () => {
     const { userId } = useParams();
@@ -26,7 +27,8 @@ const Profile = () => {
 
     return (
         <div>
-            <ProfileHeader user={user} /> 
+            <ProfileHeader user={user} />
+            <FavoriteFilms />
         </div>
     )
 };
