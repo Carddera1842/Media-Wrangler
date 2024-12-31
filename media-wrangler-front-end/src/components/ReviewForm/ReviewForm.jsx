@@ -16,11 +16,23 @@ function ReviewForm() {
 
   const handleSubmit = (e) => {
       e.preventDefault();
-      const movieReview = { dateWatched, review, spoiler, movieMVP }
+      if(spoiler === "no") {
+        const cancelSubmission = window.confirm("Are you sure there are no spoilers? Did you hand out your Movie MVP award? If so, press ok to continue submitting your review?");
 
-      console.log(movieReview);
+        if(cancelSubmission === false) {
+          alert("Canceling the Movie Review Submission");
+        return;
+        }    
+     
+        const movieReview = { dateWatched, review, spoiler, movieMVP }
+        console.log("Submission complete");
+        console.log(movieReview);
+      
+        
+      }      
   }
-  
+
+ 
     return (
         <>
           <div className="review-container">
