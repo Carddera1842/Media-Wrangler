@@ -11,10 +11,6 @@ function App() {
   return (
     <>
       <ReviewForm />
-      <br />
-      <br />
-      <br />
-      <BasicReviewForm  />
     </>
   )
 }
