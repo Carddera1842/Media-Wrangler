@@ -83,7 +83,7 @@ public class UserController {
         return new ResponseEntity<>("User: " + user.getEmail(), HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/profile/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable int userId) {
         return userRepository.findById(userId)
                 .map(ResponseEntity::ok)
