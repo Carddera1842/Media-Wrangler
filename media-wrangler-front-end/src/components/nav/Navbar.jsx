@@ -27,26 +27,29 @@ export default function Navbar() {
     }
   }, [location.pathname]);
 
+  // React.useEffect(
+  //   handleChange(0)
+  // )[]
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
     <Box sx={{
-      display: 'flex',
-      flexDirection: { xs: 'comumn', sm: 'row' },
-      alignItems: 'center',
-      justifyContent: 'center',
-      bgcolor: 'background.paper',
-      padding: 2,
-    }}>
-      <Box sx={{ 
-        fontSize: { xs: 24, sm: 36 }, 
-        fontWeight: 'bold', 
-        fontFamily: 'sans-serif', 
-        textAlign: { sx: 'center', sm: 'left'},
-        flexShrink: 0,
-        }}>
+        display: 'flex',
+        flexDirection: { xs: 'comumn', sm: 'row' },
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        bgcolor: 'background.paper',
+        padding: 2
+      }}>
+        <Box sx={{ 
+          fontSize: { xs: 24, sm: 36 }, 
+          fontWeight: 'bold', 
+          fontFamily: 'sans-serif', 
+          textAlign: { sx: 'center', sm: 'left'},
+          width: { xs: '100%', sm: 'auto'},
+          }}>
           Media Wrangler
         </Box>
         <Box sx={{
