@@ -8,7 +8,7 @@ import StarRating from "../Rating/StarRating";
 import StarRatings from 'react-star-ratings';
 
 
-function ReviewForm() {
+function ReviewForm({title, genre, releaseDate, poster}) {
 
 
   const [dateWatched, setDateWatched] = useState("");
@@ -17,6 +17,7 @@ function ReviewForm() {
   const [movieMVP, setMovieMVP] = useState('');
   const [rating, setRating] = useState(0); 
   const [tags, setTags] = useState([]);
+  
   
 
   const handleSubmit = (e) => {
@@ -48,7 +49,7 @@ function ReviewForm() {
         } 
       }
 
-      const movieReview = { dateWatched, review, spoiler, movieMVP, rating, tags }
+      const movieReview = { dateWatched, review, spoiler, movieMVP, rating, tags, title, genre }
       alert("Thank you for your submission!")
       console.log("Submission complete");
       console.log(movieReview);   
@@ -64,18 +65,19 @@ function ReviewForm() {
 
 {/* Movie Poster Image */}
             <div className="poster">
-              <img src="https://image.tmdb.org/t/p/original/qRitcyVpWdL7bSV7akDcKTR2YxL.jpg" ></img>
+              <img src={ poster } ></img>
             </div>
 
 {/* Movie Review Form */}
             <form onSubmit={handleSubmit}>
               <div className="review-form">
                 <div className="content is-normal">
-                  <h1>Movie Title Goes Here (YEAR)</h1>
-                  <h5>Movie Genre Goes Here</h5>
+                  <h1>{ title } ({ releaseDate })</h1>
+                  
+                  <p>{ genre.join(", ") }</p>
                 </div>
             
-                <br />
+              
 
 {/* Movie Watched Date */}
                 <div className="field is-horizontal">
