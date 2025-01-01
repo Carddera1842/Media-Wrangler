@@ -28,7 +28,7 @@ export default function Register() {
 
         let responseMessage = await apiRegister(registerData);
 
-        console.log(responseMessage);
+         console.log(responseMessage);
         if (responseMessage === "Success") {
             navigate("/login");
         } else {
