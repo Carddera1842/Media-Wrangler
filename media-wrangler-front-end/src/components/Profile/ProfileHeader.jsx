@@ -11,7 +11,16 @@ export default function LetterAvatars({ user }) {
   };
 
   return (
-    <Box component="section" sx={{ p: 2, border: '1px solid grey'}}>
+    <Box 
+      component="section" 
+      sx={{
+        display: 'flex',
+        // alignItems: 'center', 
+        p: 2, 
+        border: '1px solid grey',
+        width: '50%',
+        margin: '0 auto',
+      }}>
       <Stack direction="row" spacing={2} alignItems="center">
         <Avatar>{getInitials(user.firstname + " " + user.lastname)}</Avatar>
         <Typography variant="h6">{user.username}</Typography>
