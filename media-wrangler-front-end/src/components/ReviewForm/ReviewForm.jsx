@@ -3,6 +3,9 @@ import React from "react";
 
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
+import StarRating from "../Rating/StarRating";
+
+import StarRatings from 'react-star-ratings';
 
 
 function ReviewForm() {
@@ -11,26 +14,48 @@ function ReviewForm() {
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
   const [spoiler, setSpoiler] = useState('no');
-  const [movieMVP, setMovieMVP] = useState(''); 
+  const [movieMVP, setMovieMVP] = useState('');
+  const [rating, setRating] = useState(0); 
+  const [tags, setTags] = useState([]);
   
 
   const handleSubmit = (e) => {
       e.preventDefault();
+
+      //There is already a required on the fields, but if we would prefer to have extra info for user we can use these instead...
+      if(!dateWatched) {
+        alert("You must pick a Date Watched to log in journal.");
+        return;
+      }
+
+      if(!review){
+        alert("Let your peers know what you thought, write your review.");
+      }
+
+      //pops up reminding the user must pick a rating 1-5. Without this, if the user leaves blank it will be a 0 rating
+      if(rating === 0){
+        alert("You must rate the movie.");
+        return;
+      }
+
+      //This makes sure that the user did not forget to click the spoiler box if there are actually spoilers. User can choose to not submit form and go back and click the box before submission. Or they can continue with submission if there are not any spoilers. 
       if(spoiler === "no") {
-        const cancelSubmission = window.confirm("Are you sure there are no spoilers? Did you hand out your Movie MVP award? If so, press ok to continue submitting your review?");
+        const cancelSubmission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
 
         if(cancelSubmission === false) {
           alert("Canceling the Movie Review Submission");
         return;
-        }    
-     
-        const movieReview = { dateWatched, review, spoiler, movieMVP }
-        console.log("Submission complete");
-        console.log(movieReview);
-      
-        
-      }      
+        } 
+      }
+
+      const movieReview = { dateWatched, review, spoiler, movieMVP, rating, tags }
+      alert("Thank you for your submission!")
+      console.log("Submission complete");
+      console.log(movieReview);   
+           
   }
+
+
 
  
     return (
@@ -74,7 +99,8 @@ function ReviewForm() {
                     </div>
                     <div className="field">
                       <div className="field-label is-normal">
-{/* Left this blank for spacing...otherwise the date bar spans all the way across -- can fix later */}
+{/* Here is my star rating component */}
+                        {/* <StarRating /> */}
                       </div>                        
                     </div>
                   </div>
@@ -115,7 +141,7 @@ function ReviewForm() {
                   <label className="checkbox">
                     <input 
                       type="checkbox"
-                      value={ spoiler }
+                      value={ spoiler === "yes" }
                       onChange={(e) => setSpoiler(e.target.value)} 
                     />
                     &nbsp; Does Review Contain Spoilers?
@@ -157,13 +183,39 @@ function ReviewForm() {
                   <div className="field-body">
                     <div className="field">
                       <div className="control">
-                        <input className="input is-danger" type="text" placeholder="tag name here ..." />
+                        <input 
+                          className="input is-danger" 
+                          type="text" 
+                          placeholder="tag name here ..."                        
+                        />
                       </div>
+                      <button onClick={(e) => setTags(e.target.value)}  >Tag it!</button>
                     </div>
                   </div>
                 </div>
 
                 <br />
+
+{/* Built in React Star Rating Component */}
+                <div className="field is-horizontal">
+                  <div className="field-label is-normal">
+                    <label className="label">Rating</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <StarRatings
+                          rating={ rating }  
+                          starRatedColor="teal"  
+                          changeRating={(newRating) => setRating(newRating)}  
+                          numberOfStars={5}  
+                          name="rating"  
+                          starDimension="20px"  
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="field is-horizontal">
                   <div className="field-label">

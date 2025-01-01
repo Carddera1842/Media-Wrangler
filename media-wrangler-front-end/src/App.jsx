@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import ReviewForm from './components/ReviewForm/ReviewForm'
 import BasicReviewForm from './components/ReviewForm/BasicReviewForm';
+import StarRating from './components/Rating/StarRating'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       <ReviewForm />
+    
     </>
   )
 }
