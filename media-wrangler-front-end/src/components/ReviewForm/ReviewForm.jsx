@@ -6,6 +6,7 @@ import './ReviewForm.css';
 import StarRating from "../Rating/StarRating";
 
 import StarRatings from 'react-star-ratings';
+import HeartButton from "../LikeButton/HeartButton";
 
 
 function ReviewForm({title, genre, releaseDate, poster}) {
@@ -102,6 +103,7 @@ function ReviewForm({title, genre, releaseDate, poster}) {
                     <div className="field">
                       <div className="field-label is-normal">
 {/* Here is my star rating component */}
+                        <HeartButton />
                         {/* <StarRating /> */}
                       </div>                        
                     </div>
