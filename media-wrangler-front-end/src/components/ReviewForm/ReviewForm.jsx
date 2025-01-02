@@ -6,10 +6,10 @@ import './ReviewForm.css';
 import StarRating from "../Rating/StarRating";
 
 import StarRatings from 'react-star-ratings';
-import HeartButton from "../LikeButton/HeartButton";
 
 
-function ReviewForm({title, genre, releaseDate, poster}) {
+
+function ReviewForm({title, genre, releaseDate, poster, id}) {
 
 
   const [dateWatched, setDateWatched] = useState("");
@@ -19,6 +19,15 @@ function ReviewForm({title, genre, releaseDate, poster}) {
   const [rating, setRating] = useState(0); 
   const [tags, setTags] = useState([]);
   
+
+  
+  //This is the tags function. Just splits the string into array elements currently...
+  function tagElements(e) {
+    let reviewTags = (e.target.value).split(",");
+    setTags(reviewTags);
+
+    //if this is how we want to do the tags, I need to trim any whitespaces users could potentially enter
+  }
   
 
   const handleSubmit = (e) => {
@@ -50,7 +59,7 @@ function ReviewForm({title, genre, releaseDate, poster}) {
         } 
       }
 
-      const movieReview = { dateWatched, review, spoiler, movieMVP, rating, tags, title, genre }
+      const movieReview = { dateWatched, review, spoiler, movieMVP, rating, tags, title, genre, id, poster }
       alert("Thank you for your submission!")
       console.log("Submission complete");
       console.log(movieReview);   
@@ -70,7 +79,7 @@ function ReviewForm({title, genre, releaseDate, poster}) {
             </div>
 
 {/* Movie Review Form */}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>              
               <div className="review-form">
                 <div className="content is-normal">
                   <h1>{ title } ({ releaseDate })</h1>
@@ -103,7 +112,6 @@ function ReviewForm({title, genre, releaseDate, poster}) {
                     <div className="field">
                       <div className="field-label is-normal">
 {/* Here is my star rating component */}
-                        <HeartButton />
                         {/* <StarRating /> */}
                       </div>                        
                     </div>
@@ -190,10 +198,10 @@ function ReviewForm({title, genre, releaseDate, poster}) {
                         <input 
                           className="input is-danger" 
                           type="text" 
-                          placeholder="tag name here ..."                        
+                          placeholder="tag name here ..." 
+                          onChange={tagElements}                       
                         />
                       </div>
-                      <button onClick={(e) => setTags(e.target.value)}  >Tag it!</button>
                     </div>
                   </div>
                 </div>
