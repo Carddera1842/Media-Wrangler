@@ -3,7 +3,7 @@ import axios from "axios";
 export async function apiRegister(registerData) {
     try {
         const response = await axios.post(
-            "http://localhost:8080/register",
+            "http://localhost:8080/users/register",
             registerData
         );
         console.log("Response:", response);

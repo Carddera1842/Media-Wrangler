@@ -4,7 +4,7 @@ export async function apiLogin(loginData) {
     try {
         console.log("loginData:", loginData);
         const response = await axios.post(
-            "http://localhost:8080/login",
+            "http://localhost:8080/users/login",
             loginData
         );
         console.log("Response:", response);
