@@ -102,31 +102,23 @@ export default function Register() {
                     </div>
 
                     <div className="field-row">
+                    <div className="field-row">
                         <div className="field">
                             <label className="label">Password</label>
                             <div className="control">
                                 <input
-                                    className="input" 
-                                    type="password" 
-                                    placeholder="Password" 
+                                    className="input"
+                                    type="password"
+                                    placeholder="Password"
                                     value={password}
-                                    onChange = {(e) => setPassword(e.target.value)}>
-                                    </input>
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
                             </div>
                         </div>
 
-                        <div className="field">
-                            <label className="label">Password</label>
-                            <div className="control">
-                                <input
-                                    className="input" 
-                                    type="password" 
-                                    placeholder="Enter Password Again" 
-                                    value={password}
-                                    onChange = {(e) => setPassword(e.target.value)}>
-                                    </input>
-                            </div>
+                        
                         </div>
+
                     </div>
 
                     <div className="field">
