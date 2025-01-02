@@ -1,4 +1,4 @@
-package com.mediawrangler.media_wrangler.config;
+package com.mediawrangler.media_wrangler.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
