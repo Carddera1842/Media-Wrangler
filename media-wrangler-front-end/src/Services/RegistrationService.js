@@ -3,8 +3,10 @@ import axios from "axios";
 export async function apiRegister(registerData) {
     try {
         const response = await axios.post(
-            "http://localhost:8080/users/register",
-            registerData
+            'http://localhost:8080/users/register',
+            registerData, {
+                withCredentials: true,
+            }
         );
         console.log("Response:", response);
         if (response.status === 201) {

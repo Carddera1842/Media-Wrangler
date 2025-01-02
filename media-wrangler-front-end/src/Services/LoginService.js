@@ -4,8 +4,10 @@ export async function apiLogin(loginData) {
     try {
         console.log("loginData:", loginData);
         const response = await axios.post(
-            "http://localhost:8080/users/login",
-            loginData
+            'http://localhost:8080/users/login',
+            loginData, {
+                withCredentials: true,
+            }
         );
         console.log("Response:", response);
         if (response.status === 200) {

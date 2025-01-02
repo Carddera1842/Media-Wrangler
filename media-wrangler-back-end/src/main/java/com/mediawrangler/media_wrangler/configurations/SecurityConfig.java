@@ -10,15 +10,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//   @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        http
-//                .cors().and()
+//                .cors()
+//                .and()
 //                .csrf().disable()
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-//                        .anyRequest().authenticated()
-//                );
+//                .authorizeHttpRequests()
+//                .anyRequest().permitAll();
 //
 //        return http.build();
 //    }
