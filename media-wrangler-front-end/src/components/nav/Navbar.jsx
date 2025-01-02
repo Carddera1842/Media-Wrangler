@@ -33,7 +33,7 @@ export default function Navbar() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  
   return (
     <Box sx={{
         display: 'flex',
