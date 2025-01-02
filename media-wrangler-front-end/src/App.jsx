@@ -36,7 +36,7 @@ function App() {
   return (
     <>
       <h1>Movie Detail Page</h1>
-      {movies.map((movie) => (
+      {/* {movies.map((movie) => (
           <MovieDetailCard 
             key={ movie.id }
             title={ movie.title }
@@ -47,7 +47,10 @@ function App() {
             genre={ movie.genre }
             
           />
-        ))}
+        ))} */}
+      <br />
+      <MovieDetailCard {...movies[0]} />
+      <br />
       <br />
       <p>
         We probably need to discuss how we want the cast and other specific details (themes, releases, etc) to be displayed
