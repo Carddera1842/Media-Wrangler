@@ -39,16 +39,19 @@ export default function Navbar() {
         display: 'flex',
         flexDirection: { xs: 'comumn', sm: 'row' },
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         bgcolor: 'background.paper',
-        padding: 2
+        padding: 2,
+        gap: { xs: 2, sm: 0 },
+        width: "100%",
+        
       }}>
         <Box sx={{ 
           fontSize: { xs: 24, sm: 36 }, 
           fontWeight: 'bold', 
           fontFamily: 'sans-serif', 
-          textAlign: { sx: 'center', sm: 'left'},
-          width: { xs: '100%', sm: 'auto'},
+          textAlign: "left",
+          marginRight:4,
           }}>
           Media Wrangler
         </Box>
@@ -57,7 +60,10 @@ export default function Navbar() {
           maxWidth: '100%',
           minWidth: 0,
           bgcolor: 'Background.paper',
-          padding: 2
+          padding: 2,
+          display: "flex",
+          justifyContent: "flex-start",
+          flexWrap: { xs: "wrap", sm: "nowrap" },
         }}>
         <Tabs 
           value={value} 
