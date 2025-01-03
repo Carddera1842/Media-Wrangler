@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+
+import { useState } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/nav/Navbar'
@@ -34,7 +35,7 @@ import StarRating from './components/Rating/StarRating'
 
 
 function App() {
-  
+
   //Demo Data for Testing (I made releaseDate a year. I will probably have to write a function to extract the year from releaseDate from API)
   const movies = [
     {id: 1, 
@@ -63,14 +64,21 @@ function App() {
     }
 ]
 
+
   return (
     <>
-      <ReviewForm {...movies[0]} />
-      <br />
-     
-
-    
->>>>>>> review-form-front-end
+      <Navbar />
+        <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movies" element={<Movies />}/>
+        <Route path="/search" element={<Search />}/>
+        <Route path="/login" element={<Login />}/>
+        <Route path="/loginsuccess" element={<LoginSuccess />}/>
+        <Route path="/register" element={<Register />}/>
+        <Route path="/registrationsuccess" element={<registrationSuccess />}/>
+      </Routes>
+        </div>
     </>
   )
 }
