@@ -1,7 +1,6 @@
-package com.mediawrangler.media_wrangler.controllers;
+package com.mediawrangler.media_wrangler.Controllers;
 
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
-import com.mediawrangler.media_wrangler.dto.RegisterRequest;
 import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -18,9 +17,8 @@ import com.mediawrangler.media_wrangler.data.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
-@RequestMapping("/users")
+//@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -46,9 +44,10 @@ public class UserController {
         }
 
         try {
-            User savedUser = userService.saveUser(user);
-            return new ResponseEntity<>("User registered successfully. Please verify your email.", HttpStatus.CREATED);
+            userService.saveUser(user);
+            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {
+
             if (e.getMessage().contains("users.UK_username")) {
                 return new ResponseEntity<>(Map.of("username", "Username is already taken"), HttpStatus.BAD_REQUEST);
             } else if (e.getMessage().contains("users.UK_email")) {
@@ -83,8 +82,6 @@ public class UserController {
 
         return new ResponseEntity<>("User: " + user.getEmail(), HttpStatus.OK);
     }
-
-}
 
     @GetMapping("/profile/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable int userId) {
