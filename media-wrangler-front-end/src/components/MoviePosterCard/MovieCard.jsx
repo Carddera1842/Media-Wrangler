@@ -4,13 +4,10 @@ import './MovieCard.css';
 
 function MovieCard() {
 
-    //The API fetching should go here I believe
-    //update properties in the return statement to match the API json 
-    //maybe an if/else statement should be used to display an error message in case search comes up empty or something??
-    
+ 
 
 
-    //Testing the map() function
+    //Testing the map() function -- will use demo data until search filters or user movie lists are available
     const movies = [
         {id: 1, 
             title: "It's a Wonderful Life",
@@ -26,19 +23,20 @@ function MovieCard() {
         }
     ]
 
-    const [isHovered, setIsHovered] = useState(false);
+    //This should track which movie id is being hovered over. isHovered state variable was allowing all movies to highlight at once
+    const [hoveredId, setHoveredId] = useState(null); 
 
-    function handleMouseOver(){
-      setIsHovered(true);     
-    };
-  
-    function handleMouseOut(){
-      setIsHovered(false);
-    };
- 
-    function handleClick() {
-        console.log("Poster Clicked");
-    }
+  function handleMouseOver(id) {
+    setHoveredId(id); 
+  }
+
+  function handleMouseOut() {
+    setHoveredId(null); 
+  }
+
+  function handleClick() {
+    console.log("Poster Clicked");
+  }
 
 
     return(
@@ -48,12 +46,19 @@ function MovieCard() {
             <div key={movie.id}>
                 <img
                 onClick={handleClick}
-                onMouseOver= {handleMouseOver}
+                onMouseOver= {() => handleMouseOver(movie.id)}
                 onMouseOut={handleMouseOut}
                 src={movie.poster} 
                 alt={movie.title} 
+                style={{
+                    border: hoveredId === movie.id ? '2px solid rgb(99, 180, 176)' : 'none', 
+                    transition: 'border 0.3s ease', 
+                  }}
                 />
                 
+            {/* Picked up the highlight styling from googling it. It can be changed to whatever we want.
+                Also, the poster onClick event does work. Now I'll just need to reroute it to the movie detail view */}
+           
                 
             </div>
             ))}
@@ -66,15 +71,9 @@ function MovieCard() {
 
 export default MovieCard;
 
-/*
-NOTE: The width and height can be adjusted. We probably want a smaller poster size for the poster grid that will display the movie-cards and possibly to attach to the movie-review-form
-We probably want an image a bit larger for the movie-detail-card when we are targeting in on one specific movie 
 
 
-NOTE: We may not want to display the movie title in the poster grid (or horizontal display) because the titles will not allow for a good flow with the various lengths. 
 
-NOTE: We just need to decide if we want the results to list horizontal or vertically. For the homepage, if we are viewing the trending movies I think horizontally would be best, but for the search results a vertical display might be nice. No preference either way
 
------
-NOTE: Make sure not to add () after clickHandler inside the {} because it would then be calling the function instead of acting as a function
-*/
+
+
