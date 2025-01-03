@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import MovieDetailCard from './MovieDetailCard';
+import { data } from 'react-router-dom';
 
 function MovieSearch() {
     const [movieTitle, setMovieTitle] = useState('');
@@ -19,6 +21,10 @@ function MovieSearch() {
 
             // Parsing the response as JSON
             const data = await response.json();
+
+            //NOTE: log the data to see the properties we are getting back
+            console.log(data);
+
             setMovieData(data);  // Save the data to state
             setError(null);       // Reset any previous errors
         } catch (error) {
@@ -26,6 +32,11 @@ function MovieSearch() {
             setMovieData(null); // Clear any previous movie data
         }
     };
+
+    
+       
+        
+    
 
     return (
         <div>
@@ -42,9 +53,16 @@ function MovieSearch() {
 
             {movieData && (
                 <div>
-                    <h2>{movieData.title}</h2>
-                    <p>{movieData.overview}</p>
-                    <p>Release Date: {movieData.releaseDate}</p>
+                    <MovieDetailCard
+                        id={movieData.id}
+                        poster={movieData.posterPath}  
+                        title={movieData.title} 
+                        releaseDate={movieData.releaseDate} 
+                        rating={movieData.rating} // maybe we should only use our rating stats and not the one from API????
+                        // director={movieData.director}  // Director -- not seeing Director given as property
+                        overview={movieData.overview}  
+                        genre={movieData.genres}  // not seeing Genres given as property
+                />              
                 </div>
             )}
         </div>
@@ -52,3 +70,18 @@ function MovieSearch() {
 }
 
 export default MovieSearch;
+
+/* NOTE: Json being returned from console.log(data);
+movieData :
+
+id : 1108427,
+overview : "In Ancient Polynesia, when a terrible curse incurred by Maui reaches the island of an impetuous Chieftain, his willful daughter answers the Ocean's call to seek out the demigod to set things right.",
+posterPath : "/ys0jZr0quHERDUEoCboGQEKPvgQ.jpg",
+rating : 0,
+releaseDate : "2026-07-09",   <----- I AM SUPER CONFUSED ON WHY THAT SAY 2026??? JULY 9, 2026
+title : "Moana"
+
+
+
+
+*/
