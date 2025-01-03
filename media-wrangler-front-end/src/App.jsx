@@ -14,30 +14,6 @@ import MovieSearch from './components/MovieSearch'
 
 function App() {
 
-  return (
-    <>
-      <Navbar />
-        <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}/>
-
-        <Route path="/login" element={<Login />}/>
-        <Route path="/search" element={<MovieSearch />}/>
-        <Route path="/loginsuccess" element={<LoginSuccess />}/>
-        <Route path="/register" element={<Register />}/>
-        <Route path="/registrationsuccess" element={<registrationSuccess />}/>
-      </Routes>
-        </div>
-=======
-import { useState } from 'react'
-import './App.css'
-import ReviewForm from './components/ReviewForm/ReviewForm'
-import StarRating from './components/Rating/StarRating'
-
-
-function App() {
-
   //Demo Data for Testing (I made releaseDate a year. I will probably have to write a function to extract the year from releaseDate from API)
   const movies = [
     {id: 1, 
@@ -74,8 +50,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />}/>
-        <Route path="/search" element={<Search />}/>
+
         <Route path="/login" element={<Login />}/>
+        <Route path="/search" element={<MovieSearch />}/>
         <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/registrationsuccess" element={<registrationSuccess />}/>
