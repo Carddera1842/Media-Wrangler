@@ -31,4 +31,5 @@ public class MovieController {
         System.out.println("Received request to fetch movie: " + id);
         return movieDataFetcher.fetchMovieData(id);
     }
+
 }
