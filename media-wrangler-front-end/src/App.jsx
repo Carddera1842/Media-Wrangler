@@ -5,8 +5,10 @@ import Movies from './components/Movies/Movies'
 import Search from './components/Search/Search'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
+import LoginSuccess from './components/Login/LoginSuccess'
 import Register from './components/Register/Register'
 import registrationSuccess from './components/Register/RegistrationSuccess'
+import ProfileHeader from './components/Profile/ProfileHeader'
 import Profile from './components/Profile/Profile'
 
 function App() {
@@ -20,9 +22,9 @@ function App() {
         <Route path="/movies" element={<Movies />}/>
         <Route path="/search" element={<Search />}/>
         <Route path="/login" element={<Login />}/>
-        {/* <Route path="/loginsuccess" element={<LoginSuccess />}/> */}
+        <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
-        <Route path="/registrationsuccess" element={<registrationSuccess />}/>
+        {/* <Route path="/registrationsuccess" element={<registrationSuccess />}/> */}
         <Route path="/profile/:userId" element={<Profile />}/>
       </Routes>
         </div>
