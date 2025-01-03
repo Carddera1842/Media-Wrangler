@@ -1,9 +1,7 @@
 
 function ClickPoster() {
 
-    return (
-
-    );
+    return;
 }
 
 export default ClickPoster;
