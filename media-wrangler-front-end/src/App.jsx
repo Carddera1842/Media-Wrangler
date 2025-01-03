@@ -13,6 +13,8 @@ import Register from './components/Register/Register'
 import registrationSuccess from './components/Register/RegistrationSuccess'
 import MovieSearch from './components/MovieSearch'
 import MovieCard from './components/MoviePosterCard/MovieCard'
+import ProfileHeader from './components/Profile/ProfileHeader'
+import Profile from './components/Profile/Profile'
 
 function App() {
   const movies = [
@@ -54,7 +56,8 @@ function App() {
         <Route path="/search" element={<MovieSearch {...movies[0]} />}/>
         <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
-        <Route path="/registrationsuccess" element={<registrationSuccess />}/>
+        {/* <Route path="/registrationsuccess" element={<registrationSuccess />}/> */}
+        <Route path="/profile/:userId" element={<Profile />}/>
       </Routes>
         
         <MovieCard />
