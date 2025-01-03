@@ -4,16 +4,23 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
+import PropTypes from 'prop-types';
 
 
-//I guess I can add props validation in order to get VSC to stop being so angry...
 
-function MovieDetailCard({ title, releaseDate, overview, poster, rating }) {
+function MovieDetailCard({ title, releaseDate, overview, poster }) {
 
-  //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation...
+  //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
   const baseImageUrl = "https://image.tmdb.org/t/p/w300";
   const fullPosterUrl = `${baseImageUrl}${poster}`;
+
+    //TODO: Figure out how to open the image in a pop up when movie poster is clicked with onClick
+    //TODO: Add onClick to watched and want to watch buttons
+
+    //TODO: I don't like the styling (yyyy-mm-dd) of the release date, change that
 
 
     //NOTE: Styling Notes...
@@ -29,30 +36,43 @@ function MovieDetailCard({ title, releaseDate, overview, poster, rating }) {
 
   return (
     <Card sx={{maxWidth: 1000}} variant="outlined">
-      <CardActionArea>
-      <div className="movie-info-container">
-        <CardMedia
-          component="img"
-          height="140"
-          image={ fullPosterUrl }
-          alt="Movie Poster"
-        />
-        <CardContent>            
-          <Typography gutterBottom variant="h1" component="div">
-            { title }
-          </Typography>          
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-           <b>Date Released:</b> { releaseDate }
-          </Typography>
-          <br />
-          <Typography variant="body2" sx={{ color: 'black' }}  >
-            <b>Overview:</b>{ overview }
-          </Typography>          
-        </CardContent>
-        </div>
-      </CardActionArea>
+        <div className="movie-info-container">
+            <CardActionArea>            
+                <CardMedia
+                component="img"
+                height="140"
+                image={ fullPosterUrl }
+                alt="Movie Poster"
+                />
+            </CardActionArea>
+            <CardContent>            
+                <Typography gutterBottom variant="h1" component="div">
+                    { title }
+                </Typography>          
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                <b>Date Released:</b> { releaseDate }
+                </Typography>
+                <br />
+                <Typography variant="body2" sx={{ color: 'black' }}  >
+                    <b>Overview:</b>{ overview }
+                </Typography>          
+            </CardContent>
+            </div> 
+            <CardActions>
+                <Button size="small">Want to Watch</Button>
+                <Button size="small">Watched</Button>
+             </CardActions>
+         
     </Card>
   );
 }
 
 export default MovieDetailCard;
+
+MovieDetailCard.propTypes = {
+    title: PropTypes.string,
+    releaseDate: PropTypes.string, 
+    overview: PropTypes.string, 
+    poster: PropTypes.string
+
+}
