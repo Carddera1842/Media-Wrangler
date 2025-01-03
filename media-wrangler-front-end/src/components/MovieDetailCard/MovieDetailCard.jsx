@@ -5,7 +5,7 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id, rating, yea
     
 
     //The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... 
-    const baseImageUrl = "https://image.tmdb.org/t/p/w500";  
+    const baseImageUrl = "https://image.tmdb.org/t/p/w300";  
     const fullPosterUrl = `${baseImageUrl}${poster}`;
 
 
@@ -21,7 +21,9 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id, rating, yea
                     />
                 </div>
                 <div>
-                    <h2> { title } </h2> 
+                    <h1> { title } </h1> 
+                </div>
+                <div>
                     <p> <b>Release Date: </b> { releaseDate } </p>                         
                     <p> <b>Overview: </b>{ overview } </p>
                     <p> <b>Rating: </b>{ rating }</p>

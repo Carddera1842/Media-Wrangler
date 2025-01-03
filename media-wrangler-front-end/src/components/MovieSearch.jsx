@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MovieDetailCard from './MovieDetailCard';
+import MovieDetailCard from './MovieDetailCard/MovieDetailCard';
 import { data } from 'react-router-dom';
 
 function MovieSearch() {
