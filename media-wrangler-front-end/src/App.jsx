@@ -11,7 +11,7 @@ import LoginSuccess from './components/Login/LoginSuccess'
 import Register from './components/Register/Register'
 import registrationSuccess from './components/Register/RegistrationSuccess'
 import MovieSearch from './components/MovieSearch'
-import MovieDetailCard from './components/MovieDetailCard'
+import MovieDetailCard from './components/MovieDetailCard/MovieDetailCard'
 import ReviewForm from './components/ReviewForm/ReviewForm';
 
 function App() {

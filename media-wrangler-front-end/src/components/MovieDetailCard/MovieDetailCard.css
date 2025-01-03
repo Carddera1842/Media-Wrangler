@@ -1,1 +1,13 @@
 
+.MuiCard-root {
+    margin:20px;
+}
+
+
+.movie-info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: space-between; 
+  }
+  
