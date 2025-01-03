@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { apiLogin } from "../../Services/LoginService";
 
 export default function Login() {
 
@@ -18,6 +18,15 @@ export default function Login() {
             username,
             password
         };
+        
+       let responseMessage = await apiLogin(loginData);
+
+       console.log(responseMessage);
+        if (responseMessage === "Success") {
+            navigate("/loginSuccess");
+        } else {
+            setError(responseMessage);
+        }
 
         try {
             const response = await axios.post(
@@ -39,6 +48,7 @@ export default function Login() {
             // console.error("An error occurred:", error);
             setError("An error occured. Please try again");
         }
+
 
         console.log("Logging in with: ", username, password);
     };
