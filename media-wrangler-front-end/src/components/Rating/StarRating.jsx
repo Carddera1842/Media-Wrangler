@@ -1,37 +1,37 @@
 /* eslint-disable react/jsx-key */
 
-import { FaStar } from 'react-icons/fa';
-import { useState } from 'react';
-import './StarRating.css';
+// import { FaStar } from 'react-icons/fa';
+// import { useState } from 'react';
+// import './StarRating.css';
 
-function StarRating(){
+// function StarRating(){
 
-    const [rating, setRating] = useState(null);
+//     const [rating, setRating] = useState(null);
 
-    return (
-        <>      
-        <div>
-            {[...Array(5)].map((star, i) => {
-                const currentRating = i + 1;
-                return (                    
-                        <label>
-                            <input 
-                                type="radio" 
-                                name="rating" 
-                                value={currentRating}
-                                onClick={() => setRating(currentRating)}
-                            />
-                            <FaStar className='star' color={currentRating <= rating ? "#02736B" : "#CECECE"} />
-                        </label>                   
-                );
-            })}
-        </div> 
-        <p>You gave the movie : {rating} stars </p>        
-        </>
-    );
-}
+//     return (
+//         <>      
+//         <div>
+//             {[...Array(5)].map((star, i) => {
+//                 const currentRating = i + 1;
+//                 return (                    
+//                         <label>
+//                             <input 
+//                                 type="radio" 
+//                                 name="rating" 
+//                                 value={currentRating}
+//                                 onClick={() => setRating(currentRating)}
+//                             />
+//                             <FaStar className='star' color={currentRating <= rating ? "#02736B" : "#CECECE"} />
+//                         </label>                   
+//                 );
+//             })}
+//         </div> 
+//         <p>You gave the movie : {rating} stars </p>        
+//         </>
+//     );
+// }
 
-export default StarRating;
+// export default StarRating;
 
         {/* <div>
             <label>
