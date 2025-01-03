@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import MovieDetailCard from './MovieDetailCard/MovieDetailCard';
-import { data } from 'react-router-dom';
+import MovieDetailCard from './MovieDetailCard/MovieDetailCard'
 
 function MovieSearch() {
     const [movieTitle, setMovieTitle] = useState('');
@@ -21,10 +20,6 @@ function MovieSearch() {
 
             // Parsing the response as JSON
             const data = await response.json();
-
-            //NOTE: log the data to see the properties we are getting back
-            console.log(data);
-
             setMovieData(data);  // Save the data to state
             setError(null);       // Reset any previous errors
         } catch (error) {
@@ -32,11 +27,6 @@ function MovieSearch() {
             setMovieData(null); // Clear any previous movie data
         }
     };
-
-    
-       
-        
-    
 
     return (
         <div>
@@ -71,17 +61,3 @@ function MovieSearch() {
 
 export default MovieSearch;
 
-/* NOTE: Json being returned from console.log(data);
-movieData :
-
-id : 1108427,
-overview : "In Ancient Polynesia, when a terrible curse incurred by Maui reaches the island of an impetuous Chieftain, his willful daughter answers the Ocean's call to seek out the demigod to set things right.",
-posterPath : "/ys0jZr0quHERDUEoCboGQEKPvgQ.jpg",
-rating : 0,
-releaseDate : "2026-07-09",   <----- I AM SUPER CONFUSED ON WHY THAT SAY 2026??? JULY 9, 2026
-title : "Moana"
-
-
-
-
-*/
