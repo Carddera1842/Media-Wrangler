@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-
+/*
 import { FaStar } from 'react-icons/fa';
 import { useState } from 'react';
 import './StarRating.css';
@@ -32,7 +32,7 @@ function StarRating(){
 }
 
 export default StarRating;
-
+*/
         {/* <div>
             <label>
                 <input type="radio" name="rating" value={1} onClick={(e) => setRating(e.target.value)}/>

@@ -1,6 +1,8 @@
-<<<<<<< HEAD
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+import { useState } from 'react'
+import ReviewForm from './components/ReviewForm/ReviewForm'
+//import StarRating from './components/Rating/StarRating'
 import Navbar from './components/nav/Navbar'
 import Movies from './components/Movies/Movies'
 import Search from './components/Search/Search'
@@ -12,32 +14,6 @@ import registrationSuccess from './components/Register/RegistrationSuccess'
 import MovieSearch from './components/MovieSearch'
 
 function App() {
-
-  return (
-    <>
-      <Navbar />
-        <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}/>
-
-        <Route path="/login" element={<Login />}/>
-        <Route path="/search" element={<MovieSearch />}/>
-        <Route path="/loginsuccess" element={<LoginSuccess />}/>
-        <Route path="/register" element={<Register />}/>
-        <Route path="/registrationsuccess" element={<registrationSuccess />}/>
-      </Routes>
-        </div>
-=======
-import { useState } from 'react'
-import './App.css'
-import ReviewForm from './components/ReviewForm/ReviewForm'
-import StarRating from './components/Rating/StarRating'
-
-
-function App() {
-  
-  //Demo Data for Testing (I made releaseDate a year. I will probably have to write a function to extract the year from releaseDate from API)
   const movies = [
     {id: 1, 
         title: "It's a Wonderful Life",
@@ -67,12 +43,19 @@ function App() {
 
   return (
     <>
-      <ReviewForm {...movies[0]} />
-      <br />
-     
-
-    
->>>>>>> review-form-front-end
+      <Navbar />
+        <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movies" element={<Movies />}/>
+        <Route path="/review" element={<ReviewForm />}/>
+        <Route path="/login" element={<Login />}/>
+        <Route path="/search" element={<MovieSearch {...movies[0]} />}/>
+        <Route path="/loginsuccess" element={<LoginSuccess />}/>
+        <Route path="/register" element={<Register />}/>
+        <Route path="/registrationsuccess" element={<registrationSuccess />}/>
+      </Routes>
+        </div>
     </>
   )
 }

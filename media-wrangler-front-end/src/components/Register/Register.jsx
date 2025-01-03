@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import axios from "axios";
     import React, { useState } from "react"
     import { useNavigate } from "react-router-dom";
@@ -115,12 +115,5 @@ export default function Register() {
                 </div>
             </form>
         </div>
-=======
-import React from "react";
-
-export default function Register() {
-    return (
-        <h1>Create a Media Wrangler account</h1>
->>>>>>> review-form-front-end
     )
 }

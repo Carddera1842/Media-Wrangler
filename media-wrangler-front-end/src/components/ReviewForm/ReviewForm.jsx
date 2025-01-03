@@ -3,9 +3,7 @@ import React from "react";
 
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-import StarRating from "../Rating/StarRating";
-
-import StarRatings from 'react-star-ratings';
+//import StarRatings from 'react-star-ratings';
 
 
 
