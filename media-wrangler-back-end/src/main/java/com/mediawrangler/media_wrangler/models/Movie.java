@@ -8,6 +8,11 @@ public class Movie {
     private String overview;
     private String posterPath;
 
+
+    public Movie() {
+
+    }
+
     public Movie(int id, String title, String releaseDate, double rating, String overview, String posterPath) {
         this.id = id;
         this.title = title;
@@ -72,4 +77,3 @@ public class Movie {
         return "Title: " + title + "\nRelease Date: " + releaseDate + "\nRating: " + rating + "\nOverview: " + overview;
     }
 }
-

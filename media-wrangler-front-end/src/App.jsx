@@ -9,6 +9,7 @@ import Login from './components/Login/Login'
 import LoginSuccess from './components/Login/LoginSuccess'
 import Register from './components/Register/Register'
 import registrationSuccess from './components/Register/RegistrationSuccess'
+import MovieSearch from './components/MovieSearch'
 
 function App() {
 
@@ -19,8 +20,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />}/>
-        <Route path="/search" element={<Search />}/>
+
         <Route path="/login" element={<Login />}/>
+        <Route path="/search" element={<MovieSearch />}/>
         <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/registrationsuccess" element={<registrationSuccess />}/>
