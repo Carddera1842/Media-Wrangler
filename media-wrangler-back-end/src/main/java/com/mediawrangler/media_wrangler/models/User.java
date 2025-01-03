@@ -33,6 +33,7 @@ public class User {
     @Email(message = "Invalid email format")
     private String email;
 
+<<<<<<< HEAD
     public User(String username, String firstname, String lastname, String password, String email) {
         this.username = username;
         this.firstname = firstname;
@@ -44,6 +45,8 @@ public class User {
     public User() {
     }
 
+=======
+>>>>>>> review-form-front-end
     public int getId() {
         return id;
     }

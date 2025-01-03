@@ -77,4 +77,3 @@ public class Movie {
         return "Title: " + title + "\nRelease Date: " + releaseDate + "\nRating: " + rating + "\nOverview: " + overview;
     }
 }
-
