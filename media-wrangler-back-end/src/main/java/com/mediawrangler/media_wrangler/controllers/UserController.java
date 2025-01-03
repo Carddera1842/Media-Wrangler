@@ -65,10 +65,10 @@ public class UserController {
             session.setAttribute("user", user.getId());
             return new ResponseEntity<>("Login successful!", HttpStatus.OK);
         }
-
-
         return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
     }
+
+
 
     @GetMapping("/info")
     public ResponseEntity<?> loginUser( HttpSession session) {
