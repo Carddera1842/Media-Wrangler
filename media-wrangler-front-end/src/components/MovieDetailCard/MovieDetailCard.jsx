@@ -8,13 +8,14 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
-import LikeButton from '../UserInteractions/LikeButton';
+import MovieInteractions from '../UserInteractions/MovieInteractions';
 import StarRating from '../UserInteractions/StarRating';
+import LikeButton from '../UserInteractions/LikeButton';
 
 
 
 
-function MovieDetailCard({ title, releaseDate, overview, poster }) {
+function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
 
   //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
   const baseImageUrl = "https://image.tmdb.org/t/p/w300";
@@ -22,6 +23,7 @@ function MovieDetailCard({ title, releaseDate, overview, poster }) {
     
     const yearReleased = new Date(releaseDate).getFullYear();
 
+    //NOTE: console.logs are temporary, just checking for basic functionality before moving forward
     function handleWantToWatch() {
         console.log("clicked want to watch button!");
     }
@@ -39,52 +41,61 @@ function MovieDetailCard({ title, releaseDate, overview, poster }) {
     }
 
   return (
-    <Card sx={{maxWidth: 1000}} variant="outlined">
-        <div className="movie-info-container">
-            <CardActionArea>            
-            <CardMedia
-                onClick={handlePosterClick}
-                component="img"
-                height="300"  
-                width="auto"   
-                image={fullPosterUrl}
-                alt="Movie Poster"
-            />
-            </CardActionArea>
-            <CardContent>            
-                <Typography gutterBottom variant="h2" component="div">
-                    { title } 
-                    <span style={{ marginLeft: '8px', fontSize: '1.5rem', color: 'teal' }}>
-                        ({yearReleased})
-                    </span>
-                </Typography>          
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                <b>Date Released: </b> { releaseDate }
-                </Typography>
-                <br />
-                <Typography variant="body2" sx={{ color: 'black' }}  >
-                    <b>Overview: </b>{ overview }
-                </Typography>          
-            </CardContent>
-            </div> 
-            <CardActions>
-                <Button onClick={handleWantToWatch}
-                    size="small">Want to Watch</Button>
-                <Button onClick={handleWatched}
-                    size="small">Watched</Button>
-                <Button onClick={handleWriteReview} 
-                    size="small">Write a Review</Button>
-                <StarRating title={title}/>
-                <LikeButton />              
-            </CardActions>
-         
-    </Card>
+    <div className="movie-detail-container">
+        <Card sx={{maxWidth: 1000}} variant="outlined">
+            <div className="movie-info-container">
+                <CardActionArea>            
+                <CardMedia
+                    onClick={handlePosterClick}
+                    component="img"
+                    height="300"  
+                    width="auto"   
+                    image={fullPosterUrl}
+                    alt="Movie Poster"
+                />
+                </CardActionArea>
+                <CardContent>            
+                    <Typography gutterBottom variant="h2" component="div">
+                        { title } 
+                        <span style={{ marginLeft: '8px', fontSize: '1.5rem', color: 'teal' }}>
+                            ({yearReleased})
+                        </span>
+                    </Typography>          
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <b>Date Released: </b> { releaseDate }
+                    </Typography>
+                    <br />
+                    <Typography variant="body2" sx={{ color: 'black' }}  >
+                        <b>Overview: </b>{ overview }
+                    </Typography>          
+                </CardContent>
+                </div> 
+                <CardActions>
+                    <Button onClick={handleWantToWatch}
+                        size="small">Want to Watch</Button>
+                    <Button onClick={handleWatched}
+                        size="small">Watched</Button>
+                    {/* <Button onClick={handleWriteReview} 
+                        size="small">Write a Review</Button>              */}
+                </CardActions>
+
+                {/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
+                {/* <StarRating title={ title } id={ id } />
+                <LikeButton title={ title } id={ id } />          */}
+                
+        </Card>
+        <div className="movie-interactions-container">
+           <MovieInteractions title={ title } id={ id } />  
+        </div>
+       
+    </div>
   );
 }
 
 export default MovieDetailCard;
 
 MovieDetailCard.propTypes = {
+    id: PropTypes.number,
     title: PropTypes.string,
     releaseDate: PropTypes.string, 
     overview: PropTypes.string, 

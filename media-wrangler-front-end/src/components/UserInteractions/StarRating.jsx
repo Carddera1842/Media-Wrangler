@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import PropTypes from 'prop-types';
 
 
-export default function StarRating({ title } ) {
+export default function StarRating({ title, id } ) {
 
     const [userRating, setUserRating] = useState(0);   
  
@@ -16,11 +16,15 @@ export default function StarRating({ title } ) {
             precision={0.5} 
             onChange={(e) => setUserRating(e.target.value)}
         />
-        <p>{(userRating > 0 ? `Gave "${ title }" ${ userRating } Stars!` : null)}</p>
+
+        {/* NOTE: Leaving here to keep an eye on functionality for now-- especially if adding more props */}
+        {/* <p>{(userRating > 0 ? `Gave "${ title }" ${ userRating } Stars! (id# ${id})` : null)}</p> */}
+        
     </Stack>
   );
 }
 
 StarRating.propTypes = {
+    id: PropTypes.number,
     title: PropTypes.string
 }
