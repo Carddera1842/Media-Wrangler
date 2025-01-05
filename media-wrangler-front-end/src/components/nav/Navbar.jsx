@@ -1,23 +1,16 @@
-import * as React from 'react'
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../Services/AuthContext.jsx'
 import Box from '@mui/material/Box'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isSignedIn, signOut } = useContext(AuthContext);
+
   const [value, setValue] = React.useState(0);
-  const [isSignedIn, setIsSignedIn] = useState(false);
-
-  const handleSignIn = () => {
-    setIsSignedIn(true);
-  }
-
-  const handleSignOut = () => {
-    setIsSignedIn(false);
-  }
-
   const tabRoutes = ['/', '/movies', '/search', '/login', '/register'];
 
   React.useEffect(() => {
@@ -27,12 +20,14 @@ export default function Navbar() {
     }
   }, [location.pathname]);
 
-  // React.useEffect(
-  //   handleChange(0)
-  // )[]
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleSignOut = () => {
+    signOut();
+    navigate('/');
+  }
 
   return (
     <Box sx={{

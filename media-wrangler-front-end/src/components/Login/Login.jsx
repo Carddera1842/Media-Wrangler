@@ -1,7 +1,7 @@
-
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { apiLogin } from "../../Services/LoginService";
+import { AuthContext } from "../../Services/AuthContext";
 
 export default function Login() {
 
@@ -9,29 +9,26 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    const { signIn } = useContext(AuthContext)
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
 
-        const loginData = {
+        const credentials = {
             username,
             password
         };
-        
-       let responseMessage = await apiLogin(loginData);
+        const result = await signIn(credentials);
 
-       console.log(responseMessage);
-        if (responseMessage === "Success") {
-            navigate("/loginSuccess");
+        if (result.success) {
+            navigate("/profile");
         } else {
-            setError(responseMessage);
+            setError(result.message);
         }
-       
-
-        console.log("Logging in with: ", username, password);
-    };
+    };        
+    
 
     return (
         <div>
