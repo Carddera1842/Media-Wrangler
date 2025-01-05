@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class MovieDataFetcher {
 
@@ -34,6 +36,58 @@ public class MovieDataFetcher {
 
         // fetch movie details using movieId
         return fetchMovieDetails(client, movieId);
+    }
+
+    // returns array of movie objects from search
+    public static ArrayList<Movie> movieSearch(String searchString) {
+        OkHttpClient client = new OkHttpClient();
+        ArrayList<Movie> movieArrayList = new ArrayList<>();
+        String apiUrl = "https://api.themoviedb.org/3/search/movie?" + "query=" + searchString + "&include_adult=false&language=en-US&page=1";
+
+        Request request = new Request.Builder()
+                .url(apiUrl)
+                .header("Authorization", "Bearer " + API_READ_ACCESS_KEY)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                System.out.println("Request failed with status: " + response.code());
+                return null;
+            }
+
+            // parse response and transform into array
+            String responseBody = response.body().string();
+            JSONObject jsonResponse = new JSONObject(responseBody);
+            JSONArray results = jsonResponse.getJSONArray("results");
+
+            // extract details for each movie
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject movieJson = results.getJSONObject(i);
+
+                // Extract the required fields for the Movie object
+                int id = movieJson.getInt("id");
+                String title = movieJson.getString("title");
+                String releaseDate = movieJson.getString("release_date");
+                double rating = movieJson.getDouble("vote_average");
+                String overview = movieJson.getString("overview");
+                String posterPath = movieJson.optString("poster_path", null);
+
+
+                if (posterPath == null || posterPath.isEmpty()) {
+                    posterPath = "no-poster-found.jpg";  // needs image for this, and alt handling in front end
+                }
+
+                Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath);
+
+                movieArrayList.add(movie);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return movieArrayList;
     }
 
     // searches for a movie ID by title

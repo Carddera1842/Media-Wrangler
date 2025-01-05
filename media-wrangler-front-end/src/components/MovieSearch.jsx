@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
 function MovieSearch() {
-    const [movieTitle, setMovieTitle] = useState('');
-    const [movieData, setMovieData] = useState(null);
+    const [movieSearch, setMovieSearch] = useState('');
+    const [movieData, setMovieData] = useState([]);
     const [error, setError] = useState(null);
 
     const handleSearch = async () => {
-        setMovieData(null); // Reset previous movie data before making a new request
+        setMovieData([]); // Reset previous movie data before making a new request
         setError(null); // Reset previous error message
         
         try {
             // GET request to the backend API
-            const response = await fetch(`http://localhost:8080/api/movies/search?title=${movieTitle}`);
+            const response = await fetch(`http://localhost:8080/api/movies/search?searchString=${movieSearch}`);
             
             if (!response.ok) {
                 throw new Error('Movie not found!');
@@ -29,23 +29,37 @@ function MovieSearch() {
 
     return (
         <div>
-            <h1>Search for a Movie</h1>
+            <h1>Search for Movies</h1>
             <input
                 type="text"
-                value={movieTitle}
-                onChange={(e) => setMovieTitle(e.target.value)}
+                value={movieSearch}
+                onChange={(e) => setMovieSearch(e.target.value)}
                 placeholder="Enter movie title"
             />
             <button onClick={handleSearch}>Search</button>
 
-            {error && <p>{error}</p>}
+            {error && <p>{error}</p>}  {/* Display error message if present */}
 
-            {movieData && (
+            {movieData.length > 0 ? (
                 <div>
-                    <h2>{movieData.title}</h2>
-                    <p>{movieData.overview}</p>
-                    <p>Release Date: {movieData.releaseDate}</p>
+                    {movieData.map((movie) => (
+                        <div key={movie.id} style={{ marginBottom: '20px' }}>
+                            <h2>{movie.title}</h2>
+                            <p><strong>Release Date:</strong> {movie.releaseDate}</p>
+                            <p><strong>Rating:</strong> {movie.rating}</p>
+                            <p><strong>Overview:</strong> {movie.overview}</p>
+                            {movie.posterPath && (
+                                <img 
+                                    src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`} 
+                                    alt={movie.title}
+                                    style={{ width: '200px' }}
+                                />
+                            )}
+                        </div>
+                    ))}
                 </div>
+            ) : (
+                <p>No movies found. Try another search!</p>
             )}
         </div>
     );
