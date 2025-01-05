@@ -23,7 +23,7 @@ export default function Login() {
         const result = await signIn(credentials);
 
         if (result.success) {
-            navigate("/profile");
+            navigate("/profile/{userId}");
         } else {
             setError(result.message);
         }
