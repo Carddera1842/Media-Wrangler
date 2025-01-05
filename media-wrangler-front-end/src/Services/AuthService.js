@@ -49,6 +49,7 @@ export const checkSession = async () => {
             return { success: false };
         }
     } catch (error) {
+        console.error("Error during session check:", error);
         return { success: false, message: 'Network error' };
     }
 };

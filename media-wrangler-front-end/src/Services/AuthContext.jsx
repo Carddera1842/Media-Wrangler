@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
       const result = await login(credentials);
       if (result.success) {
         setIsSignedIn(true);
+        localStorage.setItem('user', JSON.stringify({ isSignedIn: true}));
       } else {
         alert(result.message);
       }
@@ -19,6 +20,7 @@ export function AuthProvider({ children }) {
       const result = await logout();
       if (result.success) {
         setIsSignedIn(false);
+        localStorage.removeItem('user');
       } else {
         alert(result.message);
       }
