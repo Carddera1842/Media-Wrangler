@@ -11,27 +11,27 @@ import { apiCreateReview } from "../../Services/ReviewService";
 
 function ReviewForm({title, genre, releaseDate, poster, id}) {
 
+  //Added for navigation purposes
+  const navigate = useNavigate();
 
+  //State Variables to capture the user input
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
   const [spoiler, setSpoiler] = useState('no');
-  const [movieMVP, setMovieMVP] = useState('');
   const [rating, setRating] = useState(0); 
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
 
-  
-  const navigate = useNavigate();
-
-
-
+  //State variables for if we use the Loved VS Hated Awards
   const [lovedAward, setLovedAward] = useState("");
   const [hatedAward, setHatedAward] = useState("");
 
-  const lovedAwards = [
+  
+  //Created hashMaps of Loved and Hated awards --- still deciding on phrases
+   const lovedAwards = [
     { value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
-    { value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
-    { value: "whiskey-shot", label: "Whiskey Shot Worthy", description: "Satisfyingly smooth – worth raising a glass!", icon: "🥃" },
+    { value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting -- a real bullseye!", icon: "🎯" },
+    { value: "whiskey-shot", label: "Whiskey Shot Worthy", description: "Satisfyingly smooth -- worth raising a glass!", icon: "🥃" },
   ];
 
   const hatedAwards = [
@@ -41,16 +41,14 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
   ];
 
   
-  //This is the tags function. Just splits the string into array elements currently...
+  //This is the tags function. Just splits the string into array elements currently...Will be changing so user can enter one tag at a time
   function tagElements(e) {
     let reviewTags = (e.target.value).split(",");
     setTags(reviewTags);
-
-    //if this is how we want to do the tags, I need to trim any whitespaces users could potentially enter
   }
   
 
- 
+ //Created an async function that will submit the MovieReview object to Spring Boot after all required fields are inputted
   async function handleSubmit(e) {
       e.preventDefault();
       
@@ -73,11 +71,14 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
         } 
       }
 
+      //I will make it so users can pick Loved OR Hated, not both, then I can set defaults on the variables 
+      //NOTE: For testing purposes-- you should pick an award for both 
       const movieReview = {
         dateWatched, 
         review, 
         spoiler, 
-        movieMVP, 
+        lovedAward,
+        hatedAward, 
         rating, 
         tags, 
         title, 
@@ -139,7 +140,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
             
               
 
-{/* Movie Watched Date */}
+{/* Movie Watched  --- Add a would you watch again to the right of it */}
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">Watched </label>
@@ -168,47 +169,59 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 
                 <br />
 
-{/* User can give MVP award for best aspect of film */}
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label htmlFor="awards">Pick an Award:</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field is-narrow">
-                      <div className="control">
-                        <div className="select is-warning">
-                          <select
-                            id="awards"
-                            name="awards"
-                            value={movieMVP} 
-                            onChange={(e) => setMovieMVP(e.target.value)} 
-                          >    
-                            <option title="Awarded to movies that shine like gold!" value="golden-spurs">
-                              Golden Spurs
-                            </option>
-                            <option title="For flawless direction or acting -- a real bullseye!" value="best-sharpshooter">
-                              Best Sharpshooter
-                            </option>
-                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
-                              Whiskey Shot Worthy
-                            </option>
-                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
-                              Whiskey Shot Worthy
-                            </option>
-                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
-                              Whiskey Shot Worthy
-                            </option>
-                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
-                              Whiskey Shot Worthy
-                            </option>
-                          </select>                        
-                        </div>
-                      </div>
+{/* User can give Loved VS Hated Award to the movie */}
+                <div className="field is-grouped is-grouped-centered">
+                  <div className="control">
+                    <label className="label has-text-centered" htmlFor="loved-award">
+                      Love It Award:
+                    </label>
+                    <div className="select is-warning">
+                      <select
+                        id="loved-award"
+                        name="loved-award"
+                        value={lovedAward}
+                        onChange={(e) => setLovedAward(e.target.value)}
+                      >
+                        <option value="">-- Select an Award --</option>
+                        {lovedAwards.map((award) => (
+                          <option key={award.value} value={award.value} title={award.description}>
+                            {award.icon} {award.label}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 
-{/* Contains Spoiler CheckBox */}
-                  <div>
+                  <div className="control">
+                    <p className="vs-text" style={{ margin: "auto 1rem" }}>VS</p>
+                  </div>
+
+                  <div className="control">
+                    <label className="label has-text-centered" htmlFor="hated-award">
+                      Hated It Award:
+                    </label>
+                    <div className="select is-warning">
+                      <select
+                        id="hated-award"
+                        name="hated-award"
+                        value={hatedAward}
+                        onChange={(e) => setHatedAward(e.target.value)}
+                      >
+                        <option value="">-- Select an Award --</option>
+                        {hatedAwards.map((award) => (
+                          <option key={award.value} value={award.value} title={award.description}>
+                            {award.icon} {award.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+
+                <br />
+
+                <div>
                   <label className="checkbox">
                     <input 
                       type="checkbox"
@@ -218,44 +231,9 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                     &nbsp; Does Review Contain Spoilers?
                   </label>
                   </div>
-
                 </div>
-
-                <br />
-
-
-
-                <label htmlFor="loved-award">Pick an Award (Loved It):</label>
-        <select
-          id="loved-award"
-          name="loved-award"
-          value={lovedAward}
-          onChange={(e) => setLovedAward(e.target.value)}
-        >
-          <option value="">-- Select an Award --</option>
-          {lovedAwards.map((award) => (
-            <option key={award.value} value={award.value} title={award.description}>
-              {award.icon} {award.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="hated-award">Pick an Award (Hated It):</label>
-        <select
-          id="hated-award"
-          name="hated-award"
-          value={hatedAward}
-          onChange={(e) => setHatedAward(e.target.value)}
-        >
-          <option value="">-- Select an Award --</option>
-          {hatedAwards.map((award) => (
-            <option key={award.value} value={award.value} title={award.description}>
-              {award.icon} {award.label}
-            </option>
-          ))}
-        </select>
+                <div>
+     
 
 
 
@@ -346,48 +324,3 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 }
 
 export default ReviewForm;
-
-
-
-
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   if (!dateWatched || !review || rating === 0) {
-//       alert("Please complete all required fields.");
-//       return;
-//   }
-
-//   const movieReview = {
-//       dateWatched,
-//       review,
-//       spoiler,
-//       movieMVP,
-//       rating,
-//       tags,
-//       title,
-//       genre,
-//       id,
-//       poster,
-//   };
-
-//   try {
-//       const response = await fetch('http://localhost:8080/api/reviews/create', {
-//           method: 'POST',
-//           headers: {
-//               'Content-Type': 'application/json'
-//           },
-//           body: JSON.stringify(movieReview)
-//       });
-
-//       if (!response.ok) {
-//           throw new Error('Failed to save review.');
-//       }
-
-//       const data = await response.json();
-//       alert('Review submitted successfully!');
-//       console.log('Response:', data);
-//   } catch (error) {
-//       console.error('Error submitting review:', error);
-//       alert('An error occurred while submitting your review.');
-//   }
-// };

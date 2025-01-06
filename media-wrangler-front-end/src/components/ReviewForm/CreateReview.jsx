@@ -1,7 +1,7 @@
 import React from "react";
 import ReviewForm from "./ReviewForm";
 import ToggleReviewForm from './ToggleReviewForm';
-import './ReviewForm.css';
+
 
 export default function CreateReview() {
 
@@ -9,7 +9,7 @@ export default function CreateReview() {
         {id: 1, 
             title: "It's a Wonderful Life",
             poster: "https://image.tmdb.org/t/p/original/qRitcyVpWdL7bSV7akDcKTR2YxL.jpg", 
-            releaseDate: "Dec 20, 1946", 
+            releaseDate: "1946-12 -20", 
             director: "Frank Capra",
             overview: "An angel is sent from Heaven to help a desperately frustrated businessman by showing him what life would have been like if he had never existed.",
             genre: ["Drama", "Family", "Fantasy", "Romance"]
@@ -35,18 +35,7 @@ export default function CreateReview() {
     return (
         <>
             <h1>Welcome to Review Page!</h1>
-               {/* <ReviewForm 
-                    key={ movies[0].id }
-                    title={ movies[0].title }
-                    poster={ movies[0].poster }
-                    releaseDate={ movies[0].releaseDate }
-                    director={ movies[0].director }
-                    overview={ movies[0].overview }
-                    genre={ movies[0].genre }
-                /> */}
-
-                <br />
-                <ToggleReviewForm
+               <ReviewForm 
                     key={ movies[0].id }
                     title={ movies[0].title }
                     poster={ movies[0].poster }
@@ -56,10 +45,23 @@ export default function CreateReview() {
                     genre={ movies[0].genre }
                 />
 
+                
+                {/* Start of the toggle review form-- only inputs are changed */}
+
+                {/* <ToggleReviewForm
+                    key={ movies[0].id }
+                    title={ movies[0].title }
+                    poster={ movies[0].poster }
+                    releaseDate={ movies[0].releaseDate }
+                    director={ movies[0].director }
+                    overview={ movies[0].overview }
+                    genre={ movies[0].genre }
+                /> */}
+
         </>
         
     );
 }
 
-//the release date in demo data is not the right type of data to be read
+//TODO: check if the release date in demo data is correct. Could cause testing issues if I am send the wrong data type back to Spring Boot
 

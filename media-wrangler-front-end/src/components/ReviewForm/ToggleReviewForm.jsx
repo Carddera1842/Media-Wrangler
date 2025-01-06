@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import StarRatings from "react-star-ratings";
-
+import './ReviewForm.css';
+import 'bulma/css/bulma.min.css';
 
 const ToggleReviewForm = ({ title, genre, releaseDate, poster, id }) => {
 
