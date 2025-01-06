@@ -1,11 +1,14 @@
 import { useState } from "react";
 import React from "react";
+// import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-// import StarRating from "../Rating/StarRating";
 
-import StarRatings from 'react-star-ratings';
+
+import StarRatings from 'react-star-ratings'; //eventually switch that out for the MUI star rating that is being used in MovieInteraction 
+import { apiCreateReview } from "../../Services/ReviewService";
 
 
 
@@ -18,7 +21,9 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
   const [movieMVP, setMovieMVP] = useState('');
   const [rating, setRating] = useState(0); 
   const [tags, setTags] = useState([]);
+  const [error, setError] = useState("");
   
+  const navigate = useNavigate();
 
   
   //This is the tags function. Just splits the string into array elements currently...
@@ -30,41 +35,76 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
   }
   
 
-  const handleSubmit = (e) => {
+ 
+  async function handleSubmit(e) {
       e.preventDefault();
 
-      //There is already a required on the fields, but if we would prefer to have extra info for user we can use these instead...
+      
       if(!dateWatched) {
         alert("You must pick a Date Watched to log in journal.");
         return;
       }
-
       if(!review){
         alert("Let your peers know what you thought, write your review.");
-      }
-
-      //pops up reminding the user must pick a rating 1-5. Without this, if the user leaves blank it will be a 0 rating
+      }      
       if(rating === 0){
         alert("You must rate the movie.");
         return;
-      }
-
-      //This makes sure that the user did not forget to click the spoiler box if there are actually spoilers. User can choose to not submit form and go back and click the box before submission. Or they can continue with submission if there are not any spoilers. 
+      } 
       if(spoiler === "no") {
-        const cancelSubmission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
-
-        if(cancelSubmission === false) {
+        const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
+        if(submission === false) {
           alert("Canceling the Movie Review Submission");
         return;
         } 
       }
 
-      const movieReview = { dateWatched, review, spoiler, movieMVP, rating, tags, title, genre, id, poster }
-      alert("Thank you for your submission!")
-      console.log("Submission complete");
-      console.log(movieReview);   
+      const movieReview = {
+        dateWatched, 
+        review, 
+        spoiler, 
+        movieMVP, 
+        rating, 
+        tags, 
+        title, 
+        genre, 
+        id, 
+        poster 
+      }
+
+      alert("Thank you for your submission!");
+      console.log(movieReview);
            
+      
+
+
+      //TODO: Figure out how to get the POST request to send back JSON and be accepted by Spring Boot (CORS is blocking POST requests)
+
+      //NOTE: I reference register branch for how a service would be incorporated hoping it would magical fix everything. 
+      // const responseMessage = await apiCreateReview(movieReview); 
+
+      //NOTE: I believe this is how it would work without the MoveReviewService. 
+      const responseMessage = await fetch('http://localhost:8080/api/reviews/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(movieReview)
+      });
+
+      //NOTE: Trying to see what is happening with the fetch
+      console.log(responseMessage);
+    
+      //NOTE: This was from register branch, works with the service and directs the navigation if working properly
+      if (responseMessage === "Success") {
+          navigate("/reviews/submitted");    //Probably eventually want it to direct to user journal so they can see the review as an entry
+      } else {
+          setError(responseMessage);
+      }
+
+      
+
   }
+
+
 
 
 
@@ -82,8 +122,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
             <form onSubmit={handleSubmit}>              
               <div className="review-form">
                 <div className="content is-normal">
-                  <h1>{ title } ({ releaseDate })</h1>
-                  
+                  <h1>{ title } ({ releaseDate })</h1>                  
                   <p>{ genre.join(", ") }</p>
                 </div>
             
@@ -111,16 +150,12 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                     </div>
                     <div className="field">
                       <div className="field-label is-normal">
-{/* Here is my star rating component */}
-                        {/* <StarRating /> */}
                       </div>                        
                     </div>
                   </div>
                 </div>
 
                 <br />
-
-{/* NOTE: Could add another Drop down that is for "room for improvement", "missed the mark" or "underwhelming" for when a user didn't favor the movie. OR.... Could add a negative drop down option for the user to pick. Maybe some funny awards for sucking or something--- "what did I just watch?", "Best effort, worst execution", "Most likely to be forgotten", etc .... we can also maybe try to incorporate some funny western/cowboy humor for some of the fields. I did not make it required because I am not even sure if it is asking user too much for the review  */}
 
 {/* User can give MVP award for best aspect of film */}
                 <div className="field is-horizontal">
@@ -251,3 +286,48 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 }
 
 export default ReviewForm;
+
+
+
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   if (!dateWatched || !review || rating === 0) {
+//       alert("Please complete all required fields.");
+//       return;
+//   }
+
+//   const movieReview = {
+//       dateWatched,
+//       review,
+//       spoiler,
+//       movieMVP,
+//       rating,
+//       tags,
+//       title,
+//       genre,
+//       id,
+//       poster,
+//   };
+
+//   try {
+//       const response = await fetch('http://localhost:8080/api/reviews/create', {
+//           method: 'POST',
+//           headers: {
+//               'Content-Type': 'application/json'
+//           },
+//           body: JSON.stringify(movieReview)
+//       });
+
+//       if (!response.ok) {
+//           throw new Error('Failed to save review.');
+//       }
+
+//       const data = await response.json();
+//       alert('Review submitted successfully!');
+//       console.log('Response:', data);
+//   } catch (error) {
+//       console.error('Error submitting review:', error);
+//       alert('An error occurred while submitting your review.');
+//   }
+// };
