@@ -1,4 +1,4 @@
-package com.mediawrangler.media_wrangler.Controllers;
+package com.mediawrangler.media_wrangler.controllers;
 
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
 import com.mediawrangler.media_wrangler.models.User;
@@ -59,19 +59,21 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest, HttpSession session) {
-        User user = userRepository.findByUsername(loginRequest.getUsername());
-        if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+        Map<String, Object> response = new HashMap<>();
+        boolean isAuthenticated = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+
+        if (isAuthenticated) {
+            User user = userRepository.findByUsername(loginRequest.getUsername());
             session.setAttribute("user", user.getId());
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("id", user.getId());
-            response.put("username", user.getUsername());
-            response.put("firstname", user.getFirstname());
-            response.put("lastname", user.getLastname());
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            response.put("success", true);
+            response.put("message", "Login successful!");
+            response.put("user", user);
+            return ResponseEntity.ok(response);
         }
-        return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+
+        response.put("success", false);
+        response.put("message", "Invalid username or password");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
     @GetMapping("/info")
@@ -88,6 +90,23 @@ public class UserController {
         return userRepository.findById(userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+  
+    @GetMapping("/session-status")
+    public ResponseEntity<?> checkSession(HttpSession session) {
+        Object userId = session.getAttribute("user");
+        if (userId != null) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser(HttpSession session) {
+        session.invalidate();
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Logout successful");
+        return ResponseEntity.ok(response);
     }
 
 }

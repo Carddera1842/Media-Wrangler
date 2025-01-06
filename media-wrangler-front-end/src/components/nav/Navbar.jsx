@@ -1,14 +1,36 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom'
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import React, { useContext } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../Services/AuthContext.jsx'
+import Box from '@mui/material/Box'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 
 export default function Navbar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logoutAction } = useAuth();
+
   const [value, setValue] = React.useState(0);
+  const tabRoutes = ['/', '/movies', '/search', '/login', '/register'];
+
+  React.useEffect(() => {
+    const currentTab = tabRoutes.indexOf(location.pathname);
+    if (currentTab !== -1) {
+      setValue(currentTab);
+    }
+  }, [location.pathname]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await logoutAction();
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
@@ -31,8 +53,22 @@ export default function Navbar() {
           <Tab label="Home" component={Link} to="/" sx={{ marginX: 3 }} />
           <Tab label="Movies" component={Link} to="/movies" sx={{ marginX: 3 }} />
           <Tab label="Search" component={Link} to="/search" sx={{ marginX: 3 }} />
-          <Tab label="Log In" component={Link} to="/login" sx={{ marginX: 3 }} />
-          <Tab label="Register" component={Link} to="/register" sx={{ marginX: 3 }} />
+
+          {!user ? (
+            <>
+              <Tab label="Log In" component={Link} to="/login" sx={{ marginX: 3 }} />
+              <Tab label="Register" component={Link} to="/register" sx={{ marginX: 3 }} />
+            </>
+          ) : (
+            <>
+              <Tab label="Profile" component={Link} to="/profile" sx={{ marginX: 3}} />
+              <Tab
+                label="Log out"
+                onClick={handleSignOut}
+                sx={{ marginX: 3, cursor: 'pointer' }}
+              />
+            </>
+          )}
         </Tabs>
         </Box>
       </Box>
