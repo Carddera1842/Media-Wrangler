@@ -2,11 +2,8 @@ import { useState } from "react";
 import React from "react";
 // import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-
-
 import StarRatings from 'react-star-ratings'; //eventually switch that out for the MUI star rating that is being used in MovieInteraction 
 import { apiCreateReview } from "../../Services/ReviewService";
 
@@ -22,8 +19,26 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
   const [rating, setRating] = useState(0); 
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
+
   
   const navigate = useNavigate();
+
+
+
+  const [lovedAward, setLovedAward] = useState("");
+  const [hatedAward, setHatedAward] = useState("");
+
+  const lovedAwards = [
+    { value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
+    { value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
+    { value: "whiskey-shot", label: "Whiskey Shot Worthy", description: "Satisfyingly smooth – worth raising a glass!", icon: "🥃" },
+  ];
+
+  const hatedAwards = [
+    { value: "dusty-trails", label: "Dusty Trails", description: "For a movie that was a long, boring journey.", icon: "👎" },
+    { value: "snake-oil", label: "Snake Oil", description: "All show, no substance.", icon: "💔" },
+    { value: "cactus-hugger", label: "Cactus Hugger", description: "A prickly, uncomfortable experience.", icon: "🌵" },
+  ];
 
   
   //This is the tags function. Just splits the string into array elements currently...
@@ -38,7 +53,6 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
  
   async function handleSubmit(e) {
       e.preventDefault();
-
       
       if(!dateWatched) {
         alert("You must pick a Date Watched to log in journal.");
@@ -106,9 +120,6 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 
 
 
-
-
- 
     return (
         <>
           <div className="review-container">
@@ -160,24 +171,37 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 {/* User can give MVP award for best aspect of film */}
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
-                    <label className="label">Movie MVP:</label>
+                    <label htmlFor="awards">Pick an Award:</label>
                   </div>
                   <div className="field-body">
                     <div className="field is-narrow">
                       <div className="control">
                         <div className="select is-warning">
                           <select
-                             value={movieMVP} 
-                             onChange={(e) => setMovieMVP(e.target.value)} 
-                          >
-                            <option>Select your MVP </option>
-                            <option>Plot/Story Line</option>
-                            <option>Character Development</option>
-                            <option>Cinematography</option>
-                            <option>Soundtrack/Scoring</option>
-                            <option>Special Effects</option>
-                            <option>Costume and Set Design</option>
-                          </select>
+                            id="awards"
+                            name="awards"
+                            value={movieMVP} 
+                            onChange={(e) => setMovieMVP(e.target.value)} 
+                          >    
+                            <option title="Awarded to movies that shine like gold!" value="golden-spurs">
+                              Golden Spurs
+                            </option>
+                            <option title="For flawless direction or acting -- a real bullseye!" value="best-sharpshooter">
+                              Best Sharpshooter
+                            </option>
+                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
+                              Whiskey Shot Worthy
+                            </option>
+                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
+                              Whiskey Shot Worthy
+                            </option>
+                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
+                              Whiskey Shot Worthy
+                            </option>
+                            <option title="Satisfyingly smooth -- worth raising a glass!" value="whiskey-shot">
+                              Whiskey Shot Worthy
+                            </option>
+                          </select>                        
                         </div>
                       </div>
                     </div>
@@ -198,6 +222,42 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                 </div>
 
                 <br />
+
+
+
+                <label htmlFor="loved-award">Pick an Award (Loved It):</label>
+        <select
+          id="loved-award"
+          name="loved-award"
+          value={lovedAward}
+          onChange={(e) => setLovedAward(e.target.value)}
+        >
+          <option value="">-- Select an Award --</option>
+          {lovedAwards.map((award) => (
+            <option key={award.value} value={award.value} title={award.description}>
+              {award.icon} {award.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="hated-award">Pick an Award (Hated It):</label>
+        <select
+          id="hated-award"
+          name="hated-award"
+          value={hatedAward}
+          onChange={(e) => setHatedAward(e.target.value)}
+        >
+          <option value="">-- Select an Award --</option>
+          {hatedAwards.map((award) => (
+            <option key={award.value} value={award.value} title={award.description}>
+              {award.icon} {award.label}
+            </option>
+          ))}
+        </select>
+
+
 
 {/* Comments Text Box */}
                 <div className="field is-horizontal">

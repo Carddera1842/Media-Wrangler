@@ -31,9 +31,7 @@ function App() {
         <Route path="/registrationsuccess" element={<registrationSuccess />}/>
         <Route path="/reviews/create" element={<ReviewsView />} />
         <Route path="/reviews/submitted" element={<DisplayReview />} />                  {/* endpoint will need to be changed */}
-        <Route path="/movies/testdetailcard" element={<MovieDetailView />} />            {/* endpoint will need to be changed */}
-
-        
+        <Route path="/movies/testdetailcard" element={<MovieDetailView />} />            {/* endpoint will need to be changed */}        
       </Routes>
         </div> 
     </>
