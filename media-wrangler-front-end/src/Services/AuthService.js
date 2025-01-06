@@ -1,49 +1,32 @@
 import axios from "axios";
 
-const API_BASE_URL = 'http://localhost:8080';
+const apiClient = axios.create ({
+    baseURL: 'http://localhost:8080'
+});
 
-export const login = async (credentials) => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/login`, credentials, {
-            withCredentials: true
-        });
+export const login = (data) => {
+    return apiClient.post('/login', data);
+};
 
-        if (response.status === 200) {
-            return { success: true, message: response.data.message };
+export const logout = (data) => {
+    return apiClient.post('/logout', data)
+};
+
+export const checkSession = (data) => {
+    return apiClient.post('/session-status', data);
+};
+
+apiClient.interceptors.response.use(
+    response => response,
+    error => {
+        console.errror('API call failed:', error);
+        if (error.response.status === 401) {
+            console.error('Unauthorized');
+        } else if (error.response.status === 404) {
+            console.error('Not found');
         }
-    } catch (error) {
-        return { success: false, message: error.response?.data?.message || 'Network error' };
+        return Promise.reject(error);
     }
-};
+);
 
-export const logout = async () => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/logout`, {}, {
-            withCredentials: true
-        });
-
-        if (response.status === 200) {
-            return { success: true, message: 'Logout successful' };
-        } 
-    } catch (error) {
-        console.error('Logout error:', error);
-        return { success: false, message: error.response?.data?.message || 'Network error'}
-    }
-};
-
-export const checkSession = async () => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/session-status`, {
-            withCredentials: true
-        });
-
-        if (response.status === 200) {
-            return { success: true };
-        } else {
-            return { success: false };
-        }
-    } catch (error) {
-        console.error("Error during session check:", error);
-        return { success: false, message: 'Network error' };
-    }
-};
+export default apiClient;

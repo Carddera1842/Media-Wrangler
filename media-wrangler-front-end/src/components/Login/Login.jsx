@@ -1,70 +1,56 @@
+import { Form, Field, ErrorMessage, FormikProvider, useFormik } from "formik";
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { apiLogin } from "../../Services/LoginService";
-import { AuthContext } from "../../Services/AuthContext";
+import { useAuth } from "../../Services/AuthContext";
 
 export default function Login() {
-
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const { loginAction } = useAuth();
     const [error, setError] = useState("");
 
-    const { signIn } = useContext(AuthContext)
-    const navigate = useNavigate();
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+        },
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
-
-        const credentials = {
-            username,
-            password
-        };
-        const result = await signIn(credentials);
-
-        if (result.success) {
-            navigate("/profile/{userId}");
-        } else {
-            setError(result.message);
+        onSubmit: async (values) => {
+            console.log("form values:", values);
+            try{
+                await loginAction(values);
+                navigate("/");
+            } catch (err) {
+                setError(err.message || "Login failed. Please retry!");
+            }
         }
-    };        
-    
+    });
 
     return (
-        <div>
-            <div className="field">
-                <label className="label">Username</label>
-            <div className="control">
-                <input 
-                    className="input" 
-                    type="text" 
-                    placeholder="Username" 
-                    value={username} 
-                    onChange = {(e) => setUsername(e.target.value)}>
-                </input>
-            </div>
-            </div>
-
-            <div className="field">
-                <label className="label">Password</label>
-            <div className="control">
-                <input
-                    className="input" 
+        <div className="App">
+          <center>
+            <h1>Login</h1>
+                <FormikProvider value = {formik}>
+                <Form>
+                    
+                  <div>
+                  <Field
+                    type="text"
+                    name="username"
+                    placeholder="Enter username"
+                  />
+                  <ErrorMessage name="username" component="div" />
+                  </div>
+                    <div>
+                  <Field 
                     type="password" 
-                    placeholder="Password" 
-                    value={password}
-                    onChange = {(e) => setPassword(e.target.value)}>
-                    </input>
-            </div>
-            </div>
-
-            <div className="control">
-                <button 
-                    type="submit"
-                    onClick={handleSubmit}>
-                Submit</button>
-            </div>
+                    name="password" 
+                    />
+                  <ErrorMessage name="password" component="div" />
+                  </div>
+                  <button type="submit">Log in</button>
+                </Form>
+            </FormikProvider>
+          </center>
         </div>
-    )
+    );
 }
-
