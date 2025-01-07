@@ -1,7 +1,6 @@
 package com.mediawrangler.media_wrangler.controllers;
 
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
-import com.mediawrangler.media_wrangler.dto.RegisterRequest;
 import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -35,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest, Errors errors) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, Errors errors) {
         if (errors.hasErrors()) {
             Map<String, String> validationErrors = new HashMap<>();
             errors.getFieldErrors().forEach(error ->
@@ -43,14 +42,6 @@ public class UserController {
             );
             return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
         }
-
-    User user = new User(
-      registerRequest.getUsername(),
-      registerRequest.getFirstName(),
-      registerRequest.getLastName(),
-      passwordEncoder.encode(registerRequest.getPassword()),
-      registerRequest.getEmail()
-    );
 
         try {
             userService.saveUser(user);
@@ -74,7 +65,6 @@ public class UserController {
         if (isAuthenticated) {
             User user = userRepository.findByUsername(loginRequest.getUsername());
             session.setAttribute("user", user.getId());
-
             response.put("success", true);
             response.put("message", "Login successful!");
             response.put("user", user);
@@ -95,6 +85,12 @@ public class UserController {
         return new ResponseEntity<>("User: " + user.getEmail(), HttpStatus.OK);
     }
 
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+        return userRepository.findById(userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+  
     @GetMapping("/session-status")
     public ResponseEntity<?> checkSession(HttpSession session) {
         Object userId = session.getAttribute("user");

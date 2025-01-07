@@ -36,34 +36,20 @@ export default function Navbar() {
   return (
     <Box sx={{
         display: 'flex',
-        flexDirection: { xs: 'comumn', sm: 'row' },
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         bgcolor: 'background.paper',
         padding: 2
       }}>
-        <Box sx={{ 
-          fontSize: { xs: 24, sm: 36 }, 
-          fontWeight: 'bold', 
-          fontFamily: 'sans-serif', 
-          textAlign: { sx: 'center', sm: 'left'},
-          width: { xs: '100%', sm: 'auto'},
-          }}>
+        <Box sx={{ fontSize: 36, fontWeight: 'bold', fontFamily: 'sans-serif' }}>
           Media Wrangler
         </Box>
         <Box sx={{
-          flexGrow: 1,
-          maxWidth: '100%',
-          minWidth: 0,
+          width: '50%',
           bgcolor: 'Background.paper',
           padding: 2
         }}>
-        <Tabs 
-          value={value} 
-          onChange={handleChange} 
-          variant="scrollable"
-          scrollButtons="auto"
-        >
+        <Tabs value={value} onChange={handleChange} centered>
           <Tab label="Home" component={Link} to="/" sx={{ marginX: 3 }} />
           <Tab label="Movies" component={Link} to="/movies" sx={{ marginX: 3 }} />
           <Tab label="Search" component={Link} to="/search" sx={{ marginX: 3 }} />
