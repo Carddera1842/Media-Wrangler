@@ -12,6 +12,7 @@ import LoginSuccess from './components/Login/LoginSuccess'
 import Register from './components/Register/Register'
 import registrationSuccess from './components/Register/RegistrationSuccess'
 import MovieSearch from './components/MovieSearch'
+import TestReviewForm from './components/ReviewForm/TestReviewForm'
 
 function App() {
   const movies = [
@@ -54,6 +55,7 @@ function App() {
         <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/registrationsuccess" element={<registrationSuccess />}/>
+        <Route path="/reviews/create" element={<TestReviewForm />} />
       </Routes>
         </div>
     </>
