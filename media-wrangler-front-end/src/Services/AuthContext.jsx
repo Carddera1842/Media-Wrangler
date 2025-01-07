@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
       const response = await logout(data); 
         // console.log("Logout successful", response.data);
         setUser(null);
-        localStorage.removeItem(user);
+        localStorage.removeItem("user");
     } catch (error) {
       console.error("Logout failed:", error.response?.data || error.message);
     } 

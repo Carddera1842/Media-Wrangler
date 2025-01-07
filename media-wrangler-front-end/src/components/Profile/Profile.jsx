@@ -15,6 +15,7 @@ const Profile = () => {
                 const userData = await UserService.getUserById(userId);
                 setUser(userData);
             } catch (err) {
+                console.error("error fetching user:", err);
                 setError("Failed to fetch user data.");
             }
         };
