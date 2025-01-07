@@ -1,6 +1,7 @@
 import React from "react";
 import ReviewForm from "./ReviewForm";
 import ToggleReviewForm from './ToggleReviewForm';
+import AwardReviewForm from './AwardReviewForm';
 
 
 export default function CreateReview() {
@@ -35,7 +36,20 @@ export default function CreateReview() {
     return (
         <>
             <h1>Welcome to Review Page!</h1>
-               <ReviewForm 
+
+{/* Test out the Traditional Form, need to add would you watch again */}
+               {/* <ReviewForm 
+                    key={ movies[0].id }
+                    title={ movies[0].title }
+                    poster={ movies[0].poster }
+                    releaseDate={ movies[0].releaseDate }
+                    director={ movies[0].director }
+                    overview={ movies[0].overview }
+                    genre={ movies[0].genre }
+                /> */}
+
+{/* Test out the Form that contains Movie Awards */}
+                <AwardReviewForm 
                     key={ movies[0].id }
                     title={ movies[0].title }
                     poster={ movies[0].poster }
@@ -46,8 +60,7 @@ export default function CreateReview() {
                 />
 
                 
-                {/* Start of the toggle review form-- only inputs are changed */}
-
+{/* Test out the Toggle Form, just the beginning of what it could be */}
                 {/* <ToggleReviewForm
                     key={ movies[0].id }
                     title={ movies[0].title }
@@ -56,7 +69,8 @@ export default function CreateReview() {
                     director={ movies[0].director }
                     overview={ movies[0].overview }
                     genre={ movies[0].genre }
-                /> */}
+                />  */}
+
 
         </>
         
