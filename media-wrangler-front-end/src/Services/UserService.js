@@ -5,7 +5,7 @@ const API_BASE_URL = "http://localhost:8080/profile";
 
 const getUserById = async (userId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/${userId}`);
+        const response = await axios.get(`${API_BASE_URL}/${userId}`, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error("Error fetching user data:", error);

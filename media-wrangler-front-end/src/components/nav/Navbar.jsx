@@ -61,7 +61,12 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Tab label="Profile" component={Link} to="/profile" sx={{ marginX: 3}} />
+              <Tab 
+                label="Profile" 
+                component={Link} 
+                to={user ? `/profile/${user.id}` : '/login'} 
+                sx={{ marginX: 3}} 
+              />
               <Tab
                 label="Log out"
                 onClick={handleSignOut}

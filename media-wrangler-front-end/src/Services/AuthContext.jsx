@@ -1,13 +1,13 @@
 import React, { useContext, createContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { login, logout, checkSession } from "./AuthService";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  // const navigate = useNavigate();
-
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null
+  });
 
   const loginAction = async (data) => {
     try {
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   const logoutAction = async (data) => {
     try {
       const response = await logout(data); 
-        console.log("Logout successful", response.data);
+        // console.log("Logout successful", response.data);
         setUser(null);
         localStorage.removeItem(user);
     } catch (error) {

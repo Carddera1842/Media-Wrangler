@@ -1,9 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { Form, Field, ErrorMessage, FormikProvider, useFormik } from "formik";
-import React, { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Services/AuthContext";
 
 export default function Login() {
@@ -18,7 +15,7 @@ export default function Login() {
         },
 
         onSubmit: async (values) => {
-            console.log("form values:", values);
+            // console.log("form values:", values);
             try{
                 await loginAction(values);
                 navigate("/");
