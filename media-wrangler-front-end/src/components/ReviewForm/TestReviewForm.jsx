@@ -1,33 +1,34 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
-const TestReviewForm = () => {
+const MovieReviewForm = () => {
 
     //state variables for the input capture
     const [review, setReview] = useState("");
+    const [error, setError] = useState("");
 
     //handleSubmit function 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        try {
-          const response = await fetch("http://localhost:8080/api/users/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ review }),
-          });
-    
-          if (response.ok) {
-            const data = await response.json();
-            console.log("Review submitted successfully:", data);
-          } else {
-            console.error("Failed to submit review:", response.status);
-          }
-        } catch (error) {
-          console.error("Error submitting review:", error);
+        setError(error);
+
+        const movieReviewData = {
+            review
+        };
+
+        let responseMessage = await apiMovieReview(movieReviewData);
+
+         console.log(responseMessage);
+        if (responseMessage === "Success") {
+            navigate("/login");
+        } else {
+            setError(responseMessage);
         }
-      };
+
+        console.log("Saving Movie Review ", review);
+    };
 
   return (
     <div>
@@ -46,4 +47,8 @@ const TestReviewForm = () => {
   )
 }
 
-export default TestReviewForm
+export default MovieReviewForm
+
+
+
+
