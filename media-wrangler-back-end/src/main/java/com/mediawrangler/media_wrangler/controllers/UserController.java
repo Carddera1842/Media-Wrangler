@@ -1,6 +1,7 @@
 package com.mediawrangler.media_wrangler.controllers;
 
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
+import com.mediawrangler.media_wrangler.dto.UserDTO;
 import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -86,10 +87,11 @@ public class UserController {
     }
 
     @GetMapping("/profile/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable int userId) {
         return userRepository.findById(userId)
-                .map(ResponseEntity::ok)
+                .map(user -> ResponseEntity.ok(new UserDTO(user)))
                 .orElse(ResponseEntity.notFound().build());
+    }
   
     @GetMapping("/session-status")
     public ResponseEntity<?> checkSession(HttpSession session) {
