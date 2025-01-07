@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MovieDetailCard from './MovieDetailCard/MovieDetailCard'
 
 function MovieSearch() {
     const [movieTitle, setMovieTitle] = useState('');
@@ -42,9 +43,16 @@ function MovieSearch() {
 
             {movieData && (
                 <div>
-                    <h2>{movieData.title}</h2>
-                    <p>{movieData.overview}</p>
-                    <p>Release Date: {movieData.releaseDate}</p>
+                    <MovieDetailCard
+                        id={movieData.id}
+                        poster={movieData.posterPath}  
+                        title={movieData.title} 
+                        releaseDate={movieData.releaseDate} 
+                        rating={movieData.rating} // maybe we should only use our rating stats and not the one from API????
+                        // director={movieData.director}  // Director -- not seeing Director given as property
+                        overview={movieData.overview}  
+                        genre={movieData.genres}  // not seeing Genres given as property
+                />              
                 </div>
             )}
         </div>
@@ -52,3 +60,4 @@ function MovieSearch() {
 }
 
 export default MovieSearch;
+
