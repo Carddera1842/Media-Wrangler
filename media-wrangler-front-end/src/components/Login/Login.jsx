@@ -1,7 +1,12 @@
 
+
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { apiLogin } from "../../Services/LoginService";
+
+
+
+
 
 export default function Login() {
 
@@ -19,6 +24,7 @@ export default function Login() {
             username,
             password
         };
+
         
        let responseMessage = await apiLogin(loginData);
 
@@ -29,6 +35,28 @@ export default function Login() {
             setError(responseMessage);
         }
        
+
+
+        try {
+            const response = await axios.post(
+                "http://localhost:8080/login",
+                loginData
+            );
+            console.log("Response:", response);
+            if (response.status === 200) {
+                // login();
+                console.log("Navigating to login success");
+                navigate("/loginSuccess");
+            } else {
+                // console.error("Login failed:", response);
+                setError("Login failed. Please try again");
+            }
+        } catch (error) {
+            // console.error("An error occurred:", error);
+            setError("An error occured. Please try again");
+        }
+
+        
 
         console.log("Logging in with: ", username, password);
     };
