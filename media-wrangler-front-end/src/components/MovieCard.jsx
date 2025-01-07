@@ -37,11 +37,11 @@ function MovieCard() {
                 onClick={handleClick}
                 onMouseOver= {() => handleMouseOver(movie.id)}
                 onMouseOut={handleMouseOut}
+                title={movie.title}
                 src={movie.poster} 
                 alt={movie.title} 
                 style={{
                     border: hoveredId === movie.id ? '2px solid rgb(99, 180, 176)' : 'none', 
-                    transition: 'border 0.3s ease', 
                   }}
                 />
                 
