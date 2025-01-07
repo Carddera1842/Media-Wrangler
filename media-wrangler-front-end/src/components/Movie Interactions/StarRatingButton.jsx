@@ -7,19 +7,27 @@ export default function StarRatingButton({ title, id } ) {
 
     const [userRating, setUserRating] = useState(0);   
  
+  // function handleOnChange(e){
+  //   setUserRating(e.target.value);
+  //   return console.log("User rated the movie with: " + userRating);
+  // }
+
   return (
-    <Stack spacing={1} direction="row" >
+    <>    
+     <Stack spacing={1} direction="row" >
         <Rating 
             name="half-rating" 
             defaultValue={0} 
             precision={0.5} 
             onChange={(e) => setUserRating(e.target.value)}
-        />
-
-        {/* NOTE: Leaving here to keep an eye on functionality for now-- especially if adding more props */}
-        {/* <p>{(userRating > 0 ? `Gave "${ title }" ${ userRating } Stars! (id# ${id})` : null)}</p> */}
-        
+        />      
     </Stack>
+
+
+    {/* NOTE: Leaving here to keep an eye on functionality for now-- especially if adding more props */}
+    {/* <p>{(userRating > 0 ? `Gave "${ title }" ${ userRating } Stars!)` : null)}</p> */}
+    
+    </>   
   );
 }
 

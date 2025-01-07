@@ -2,11 +2,11 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
-import StarRating from './StarRating';
-import LikeButton from './LikeButton';
 import PropTypes from 'prop-types';
-import WriteReviewButton from './WriteReviewButton';
 import Typography from '@mui/material/Typography';
+import StarRatingButton from './StarRatingButton';
+import WriteReviewButton from './WriteReviewButton';
+import LoveButton from './LoveButton';
 
 
 function MovieInteractions({ title, id }) {
@@ -16,13 +16,13 @@ function MovieInteractions({ title, id }) {
         <Button key="one" className="button-container">
             <div className="button-content">
                 <span className="button-label">Rate:</span>
-                <StarRating title={ title } id={ id }/>
+                <StarRatingButton title={ title } id={ id }/>
             </div>
         </Button>,
         <Button key="two" className="button-container">
             <div className="button-content">
                 <span className="button-label">Like:</span>
-                <LikeButton title={ title } id={ id } />
+                <LoveButton title={ title } id={ id } />
             </div>
         </Button>,
         <Button key="three" className="button-container">

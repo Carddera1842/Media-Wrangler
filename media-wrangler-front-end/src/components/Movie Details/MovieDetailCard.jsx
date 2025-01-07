@@ -8,17 +8,18 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
-import MovieInteractions from '../UserInteractions/MovieInteractions';
-import StarRating from '../UserInteractions/StarRating';
-import LikeButton from '../UserInteractions/LikeButton';
+import MovieInteractions from '../Movie Interactions/MovieInteractions';
+
 
 
 
 function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
 
   //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
-  const baseImageUrl = "https://image.tmdb.org/t/p/w300";
-  const fullPosterUrl = `${baseImageUrl}${poster}`;
+
+  //TODO: uncomment out the baseImageURL and fullPosterURL when the API is hooked back up...And switch { poster } back to { fullPosterURL }
+//   const baseImageUrl = "https://image.tmdb.org/t/p/w300";
+//   const fullPosterUrl = `${baseImageUrl}${poster}`;
     
     const yearReleased = new Date(releaseDate).getFullYear();
 
@@ -35,9 +36,6 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
         console.log("clicked movie poster");
     }
 
-    function handleWriteReview() {
-        console.log("user wants to write a review")
-    }
 
   return (
     <div className="movie-detail-container">
@@ -49,7 +47,7 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
                     component="img"
                     height="300"  
                     width="auto"   
-                    image={fullPosterUrl}
+                    image={ poster }
                     alt="Movie Poster"
                 />
                 </CardActionArea>
@@ -74,8 +72,6 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
                         size="small">Want to Watch</Button>
                     <Button onClick={handleWatched}
                         size="small">Watched</Button>
-                    {/* <Button onClick={handleWriteReview} 
-                        size="small">Write a Review</Button>              */}
                 </CardActions>
 
                 {/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
