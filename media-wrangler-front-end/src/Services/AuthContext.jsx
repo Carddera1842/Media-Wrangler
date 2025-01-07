@@ -36,14 +36,14 @@ export const AuthProvider = ({ children }) => {
     } 
   }
 
-  const checkSessionAction = async (data) => {
-    try {
-      const response = await checkSession(data); 
-        console.log("Session status", response.data);
-    } catch (error) {
-      console.error("Failed to fetch session status", error.response?.data || error.message);
-    } 
-  }
+  // const checkSessionAction = async (data) => {
+  //   try {
+  //     const response = await checkSession(data); 
+  //       console.log("Session status", response.data);
+  //   } catch (error) {
+  //     console.error("Failed to fetch session status", error.response?.data || error.message);
+  //   } 
+  // }
 
   return ( 
     <AuthContext.Provider

@@ -8,10 +8,9 @@ export default function LetterAvatars({ user }) {
   if (!user) {
     return <p>Loading...</p>
   }
-  
+
   const getInitials = (name) => {
     const names = name.split(" ");
-    console.log("User data in letteravatars:", user);
     return names.map((n) => n[0]).join("").toUpperCase();
   };
 
