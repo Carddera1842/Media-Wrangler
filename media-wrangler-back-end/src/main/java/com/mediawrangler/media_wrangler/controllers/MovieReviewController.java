@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 //Add CrossOrigin annotation to allow HTTP request/response exchange between front and back end
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/reviews")
 public class MovieReviewController {
 
     //Based off other branches, setup Service here
