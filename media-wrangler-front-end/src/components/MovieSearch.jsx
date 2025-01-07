@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MovieDetailCard from './MovieDetailCard/MovieDetailCard'
+import MovieDetailCard from '../components/MovieDetails/MovieDetailCard'
 
 function MovieSearch() {
     const [movieTitle, setMovieTitle] = useState('');

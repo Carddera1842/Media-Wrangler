@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
-import MovieInteractions from '../Movie Interactions/MovieInteractions';
+import MovieInteractions from '../MovieInteractions/InteractionsCard';
 
 
 

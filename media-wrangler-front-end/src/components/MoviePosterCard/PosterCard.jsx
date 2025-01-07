@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './MovieCard.css';
+import './PosterCard.css';
 function MovieCard() {
  
     //Testing the map() function -- will use demo data until search filters or user movie lists are available

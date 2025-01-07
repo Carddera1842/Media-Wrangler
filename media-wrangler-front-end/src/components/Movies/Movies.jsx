@@ -1,6 +1,6 @@
 import React from "react";
 import MovieDetailCard from "../MovieDetails/MovieDetailCard";
-import MovieCard from "../MovieCard";
+import MovieCard from "../MoviePosterCard/PosterCard";
 
 export default function Movies() {
 
