@@ -17,7 +17,6 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
   const [spoiler, setSpoiler] = useState('no');
-  const [movieMVP, setMovieMVP] = useState('');
   const [rating, setRating] = useState(0);
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
@@ -89,7 +88,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
         dateWatched,
         review,
         spoiler,
-        movieMVP,
+        lovedAward,
         rating,
         tags,
         title,
@@ -253,7 +252,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                 <label className="checkbox">
                     <input
                         type="checkbox"
-                        value={ spoiler === "yes" }
+                        value={ spoiler === "no" }
                         onChange={(e) => setSpoiler(e.target.value)}
                     />
                     &nbsp; Does Review Contain Spoilers?
