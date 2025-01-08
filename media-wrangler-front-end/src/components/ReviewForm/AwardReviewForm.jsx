@@ -20,26 +20,21 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
   const [rating, setRating] = useState(0);
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
+  const [award, setAward] = useState(null);
 
-
+  const [lovedAward, setLovedAward] = useState(null);
+  const [hatedAward, setHatedAward] = useState(null);
+  const [isLovedDisabled, setLovedDisabled] = useState(false);
+  const [isHatedDisabled, setHatedDisabled] = useState(false);
  
   const navigate = useNavigate();
 
-
-
-
-
-
-  const [lovedAward, setLovedAward] = useState("");
-  const [hatedAward, setHatedAward] = useState("");
-
-
+  //NOTE: Should I make these an Enum Class?
   const lovedAwards = [
     { value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
     { value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
     { value: "whiskey-shot", label: "Whiskey Shot Worthy", description: "Satisfyingly smooth – worth raising a glass!", icon: "🥃" },
-  ];
-
+];
 
   const hatedAwards = [
     { value: "dusty-trails", label: "Dusty Trails", description: "For a movie that was a long, boring journey.", icon: "👎" },
@@ -47,20 +42,35 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
     { value: "cactus-hugger", label: "Cactus Hugger", description: "A prickly, uncomfortable experience.", icon: "🌵" },
   ];
 
-
- 
+  //TODO: get the tag to work... 
+  //if this is how we want to do the tags, I need to trim any whitespaces users could potentially enter
   //This is the tags function. Just splits the string into array elements currently...
   function tagElements(e) {
     let reviewTags = (e.target.value).split(",");
-    setTags(reviewTags);
-
-
-    //if this is how we want to do the tags, I need to trim any whitespaces users could potentially enter
+    setTags(reviewTags);    
   }
  
+  function handleHatedAward(e){
+    setHatedAward(e.target.value);
+    setAward(e.target.value);
+    setLovedDisabled(true);
+    setHatedDisabled(false);
+  }
 
+  function handleLovedAward(e){
+    setLovedAward(e.target.value);
+    setAward(e.target.value);
+    setHatedDisabled(true);
+    setLovedDisabled(false);    
+  }
 
- 
+  function resetAwards() {
+    setHatedAward("");
+    setLovedAward("")
+    setHatedDisabled(false); 
+    setLovedDisabled(false); 
+  }
+
   async function handleSubmit(e) {
       e.preventDefault();
      
@@ -83,12 +93,11 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
         }
       }
 
-
       const movieReview = {
         dateWatched,
         review,
         spoiler,
-        lovedAward,
+        award,
         rating,
         tags,
         title,
@@ -97,50 +106,24 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
         poster
       }
 
-
       alert("Thank you for your submission!");
       console.log(movieReview);
-           
-     
 
-
-
-
-      //TODO: Figure out how to get the POST request to send back JSON and be accepted by Spring Boot (CORS is blocking POST requests)
-
-
-      //NOTE: I reference register branch for how a service would be incorporated hoping it would magical fix everything.
-      // const responseMessage = await apiCreateReview(movieReview);
-
-
-      //NOTE: I believe this is how it would work without the MoveReviewService.
+      //Sending movieReview to the backend  
       const responseMessage = await fetch('http://localhost:8080/reviews/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(movieReview)
-      });
+      });     
 
-
-      //NOTE: Trying to see what is happening with the fetch
       console.log(responseMessage);
-   
-      //NOTE: This was from register branch, works with the service and directs the navigation if working properly
+
       if (responseMessage === "Success") {
           navigate("/reviews/submitted");    //Probably eventually want it to direct to user journal so they can see the review as an entry
       } else {
           setError(responseMessage);
-      }
-
-
-     
-
-
+      }   
   }
-
-
-
-
-
 
     return (
         <>
@@ -205,7 +188,8 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                             id="loved-award"
                             name="loved-award"
                             value={lovedAward}
-                            onChange={(e) => setLovedAward(e.target.value)}
+                            onChange={handleLovedAward}
+                            disabled={isLovedDisabled}
                         >
                             <option value="">-- Select an Award --</option>
                             {lovedAwards.map((award) => (
@@ -217,9 +201,16 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                         </div>
                     </div>
 
-                    <div className="control">
+                    {/* <div className="control">
                         <p className="vs-text" style={{ margin: "auto 1rem" }}>VS</p>
-                    </div>
+                    </div> */}
+
+                    <button className="is-centered"
+                      type="button"
+                      onClick={resetAwards}
+                    >
+                VS <br /> RESET
+            </button>
                     
 {/* Negative Movie Award Dropdown */}
                     <div className="control">
@@ -231,7 +222,8 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                             id="hated-award"
                             name="hated-award"
                             value={hatedAward}
-                            onChange={(e) => setHatedAward(e.target.value)}
+                            onChange={handleHatedAward}
+                            disabled={isHatedDisabled}
                         >
                             <option value="">-- Select an Award --</option>
                             {hatedAwards.map((award) => (
