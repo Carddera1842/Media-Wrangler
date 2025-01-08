@@ -46,6 +46,7 @@ public class UserController {
         }
 
         try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.saveUser(user);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {

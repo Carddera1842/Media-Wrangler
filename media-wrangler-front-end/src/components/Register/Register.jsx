@@ -34,7 +34,7 @@ export default function Register() {
             setError(responseMessage);
         }
 
-        console.log("Registering: ", username, password);
+        console.log("Registering: ", username);
     };
 
     return (
