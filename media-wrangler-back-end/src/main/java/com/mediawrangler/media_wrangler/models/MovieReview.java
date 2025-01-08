@@ -25,21 +25,13 @@ public class MovieReview {
 //    @Size(max = 1000, message = "Review must be less than 1000 characters")
     private String review;
 
-//TODO: Still have to get spoiler checkbox logging correctly...
-    private String isSpoiler;
+//TODO: Still have to get spoiler checkbox logging correctly...changed back to boolean to see if I can get it to work
+    private boolean isSpoiler;
 
     private String award;
 
 //    @NotNull(message = "You must give movie a star rating")
     private int rating;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
-
-
-
-
 
 
 
@@ -48,7 +40,7 @@ public class MovieReview {
     }
 
     //overloaded constructor for setting review object with users review input
-    public MovieReview(String review, LocalDate dateWatched, String isSpoiler, String award, int rating) {
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating) {
         this.dateCreated = LocalDate.now();
         this.review = review;
         this.dateWatched = dateWatched;
@@ -73,11 +65,11 @@ public class MovieReview {
         this.award = award;
     }
 
-    public String isSpoiler() {
+    public boolean isSpoiler() {
         return isSpoiler;
     }
 
-    public void setSpoiler(String isSpoiler) {
+    public void setSpoiler(boolean isSpoiler) {
         this.isSpoiler = isSpoiler;
     }
 
