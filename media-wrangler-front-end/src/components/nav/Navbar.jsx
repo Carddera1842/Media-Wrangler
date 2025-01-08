@@ -11,14 +11,19 @@ export default function Navbar() {
   const { user, logoutAction } = useAuth();
 
   const [value, setValue] = React.useState(0);
-  const tabRoutes = ['/', '/movies', '/search', '/login', '/register'];
+
+  const tabRoutes = user
+  ? ['/', '/movies', '/search', `/profile/${user.id}`, '/logout']
+  : ['/', '/movies', '/search', '/login', '/register'];
 
   React.useEffect(() => {
     const currentTab = tabRoutes.indexOf(location.pathname);
     if (currentTab !== -1) {
       setValue(currentTab);
+    } else {
+      setValue(-1);
     }
-  }, [location.pathname]);
+  }, [location.pathname, tabRoutes]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
