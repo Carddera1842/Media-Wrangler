@@ -1,8 +1,7 @@
-package com.mediawrangler.media_wrangler.config;
+package com.mediawrangler.media_wrangler.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +22,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         http.csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Set up CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login", "/", "/movies", "/reviews/create").permitAll()  // Allow GET requests to API
+                        .requestMatchers("/register", "/login", "/", "/movies", "/reviews/create").permitAll()  // Allow GET requests to API
                         .anyRequest().authenticated()  // Secure other requests
                 );
         return http.build();
