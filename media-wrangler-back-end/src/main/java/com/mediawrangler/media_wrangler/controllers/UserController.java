@@ -18,8 +18,9 @@ import com.mediawrangler.media_wrangler.data.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
-//@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -48,10 +49,9 @@ public class UserController {
             userService.saveUser(user);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {
-
-            if (e.getMessage().contains("users.UK_username")) {
+            if (userRepository.existsByUsername(user.getUsername())) {
                 return new ResponseEntity<>(Map.of("username", "Username is already taken"), HttpStatus.BAD_REQUEST);
-            } else if (e.getMessage().contains("users.UK_email")) {
+            } else if (userRepository.existsByEmail(user.getEmail())) {
                 return new ResponseEntity<>(Map.of("email", "Email is already registered"), HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>(Map.of("error", "An unexpected error occurred"), HttpStatus.INTERNAL_SERVER_ERROR);
