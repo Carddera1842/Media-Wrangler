@@ -92,7 +92,7 @@ public class UserController {
                 .map(user -> ResponseEntity.ok(new UserDTO(user)))
                 .orElse(ResponseEntity.notFound().build());
     }
-  
+
     @GetMapping("/session-status")
     public ResponseEntity<?> checkSession(HttpSession session) {
         Object userId = session.getAttribute("user");
@@ -112,4 +112,3 @@ public class UserController {
     }
 
 }
-

@@ -22,6 +22,9 @@ export default function Login() {
             } catch (err) {
                 setError(err.message || "Login failed. Please retry!");
             }
+        } catch (error) {
+            // console.error("An error occurred:", error);
+            setError("An error occured. Please try again");
         }
     });
 
@@ -31,7 +34,7 @@ export default function Login() {
             <h1>Login</h1>
                 <FormikProvider value = {formik}>
                 <Form>
-                    
+
                   <div>
                   <Field
                     type="text"
@@ -41,9 +44,9 @@ export default function Login() {
                   <ErrorMessage name="username" component="div" />
                   </div>
                     <div>
-                  <Field 
+                  <Field
                     type="password" 
-                    name="password" 
+                    name="password"
                     />
                   <ErrorMessage name="password" component="div" />
                   </div>

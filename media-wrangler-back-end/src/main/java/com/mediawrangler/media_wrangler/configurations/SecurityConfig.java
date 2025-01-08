@@ -11,10 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public ServletContextInitializer initializer() {
-        return servletContext -> servletContext.setSessionTimeout(30);
-    }
+//    @Bean
+//    public ServletContextInitializer initializer() {
+//        return servletContext -> servletContext.setSessionTimeout(30);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
