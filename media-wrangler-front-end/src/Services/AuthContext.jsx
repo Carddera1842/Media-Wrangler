@@ -28,13 +28,13 @@ export const AuthProvider = ({ children }) => {
   const logoutAction = async (data) => {
     try {
       const response = await logout(data); 
-        // console.log("Logout successful", response.data);
-        setUser(null);
-        localStorage.removeItem("user");
+      // console.log("Logout successful", response.data);
+      setUser(null);
+      localStorage.removeItem("user");
     } catch (error) {
       console.error("Logout failed:", error.response?.data || error.message);
     } 
-  }
+  };
 
   // const checkSessionAction = async (data) => {
   //   try {

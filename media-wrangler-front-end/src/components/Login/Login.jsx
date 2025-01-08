@@ -9,24 +9,21 @@ export default function Login() {
     const [error, setError] = useState("");
 
     const formik = useFormik({
-        initialValues: {
-            username: "",
-            password: "",
+      initialValues: {
+        username: "",
+          password: "",
         },
 
-        onSubmit: async (values) => {
-            // console.log("form values:", values);
+      onSubmit: async (values) => {
+        // console.log("form values:", values);
             try{
                 await loginAction(values);
                 navigate("/");
             } catch (err) {
                 setError(err.message || "Login failed. Please retry!");
             }
-        } catch (error) {
-            // console.error("An error occurred:", error);
-            setError("An error occured. Please try again");
-        }
-    });
+      }
+});
 
     return (
         <div className="App">

@@ -19,7 +19,7 @@ export const checkSession = (data) => {
 apiClient.interceptors.response.use(
     response => response,
     error => {
-        console.errror('API call failed:', error);
+        console.error('API call failed:', error);
         if (error.response.status === 401) {
             console.error('Unauthorized');
         } else if (error.response.status === 404) {
