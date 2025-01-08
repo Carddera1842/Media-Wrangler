@@ -8,18 +8,21 @@ export async function apiRegister(registerData) {
         );
         console.log("Response:", response);
         if (response.status === 201) {
-            // login();
             console.log("Navigating to login");
-            // navigate("/registrationSuccess");
             return "Success"
         } else {
-            // console.error("Login failed:", response);
-            // setError("Registration failed. Please try again");
             return "Registration failed. Please try again"
         }
     } catch (error) {
-        // console.error("An error occurred:", error);
-        // setError("An error occured. Please try again");
-        return "An error occured. Please try again"
+        console.log("Error object:", error);
+        if (error.response) {
+            const backendErrors = error.response.data || {};
+            console.log("Backend errors:", backendErrors);
+            return backendErrors;
+        } else {
+            console.error("Unexpected error:", error);
+            return "An error occured. Please try again"
+        };
+        
     }
 }
