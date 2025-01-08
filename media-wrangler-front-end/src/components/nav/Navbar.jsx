@@ -21,7 +21,7 @@ export default function Navbar() {
     if (currentTab !== -1) {
       setValue(currentTab);
     } else {
-      setValue(-1);
+      setValue(0);
     }
   }, [location.pathname, tabRoutes]);
 
@@ -41,20 +41,37 @@ export default function Navbar() {
   return (
     <Box sx={{
         display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'space-between',
         bgcolor: 'background.paper',
-        padding: 2
+        padding: 2,
+        flexWrap: 'nowrap',
+        overflowX: 'auto',
       }}>
-        <Box sx={{ fontSize: 36, fontWeight: 'bold', fontFamily: 'sans-serif' }}>
+        <Box sx={{ 
+          fontSize: { xs: 24, sm: 36 },
+          fontWeight: 'bold',
+          fontFamily: 'sans-serif',
+          textAlign: { xs: 'center', sm: 'left' },
+          flexShrink: 0,
+          marginRight: 2, 
+        }}>
           Media Wrangler
         </Box>
         <Box sx={{
-          width: '50%',
-          bgcolor: 'Background.paper',
-          padding: 2
+          flexGrow: 1,
+          maxWidth: '100%',
+          minWidth: 0,
+          bgcolor: 'background.paper',
+          padding: 2,
         }}>
-        <Tabs value={value} onChange={handleChange} centered>
+        <Tabs 
+          value={value} 
+          onChange={handleChange} 
+          variant='scrollable'
+          scrollButtons="auto" 
+        >
           <Tab label="Home" component={Link} to="/" sx={{ marginX: 3 }} />
           <Tab label="Movies" component={Link} to="/movies" sx={{ marginX: 3 }} />
           <Tab label="Search" component={Link} to="/search" sx={{ marginX: 3 }} />
