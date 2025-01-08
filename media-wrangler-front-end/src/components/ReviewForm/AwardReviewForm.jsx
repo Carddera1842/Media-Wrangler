@@ -16,14 +16,14 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
-  const [spoiler, setSpoiler] = useState('no');
+  const [isSpoiler, setSpoiler] = useState(false);
   const [rating, setRating] = useState(0);
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
   const [award, setAward] = useState(null);
 
-  const [lovedAward, setLovedAward] = useState(null);
-  const [hatedAward, setHatedAward] = useState(null);
+  const [lovedAward, setLovedAward] = useState("");
+  const [hatedAward, setHatedAward] = useState("");
   const [isLovedDisabled, setLovedDisabled] = useState(false);
   const [isHatedDisabled, setHatedDisabled] = useState(false);
  
@@ -85,7 +85,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
         alert("You must rate the movie.");
         return;
       }
-      if(spoiler === "no") {
+      if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
         if(submission === false) {
           alert("Canceling the Movie Review Submission");
@@ -96,7 +96,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
       const movieReview = {
         dateWatched,
         review,
-        spoiler,
+        isSpoiler,
         award,
         rating,
         tags,
@@ -108,6 +108,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 
       alert("Thank you for your submission!");
       console.log(movieReview);
+      console.log(isSpoiler)
 
       //Sending movieReview to the backend  
       const responseMessage = await fetch('http://localhost:8080/reviews/create', {
@@ -201,9 +202,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                         </div>
                     </div>
 
-                    {/* <div className="control">
-                        <p className="vs-text" style={{ margin: "auto 1rem" }}>VS</p>
-                    </div> */}
+
 
                     <button className="is-centered"
                       type="button"
@@ -244,8 +243,8 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
                 <label className="checkbox">
                     <input
                         type="checkbox"
-                        value={ spoiler === "no" }
-                        onChange={(e) => setSpoiler(e.target.value)}
+                        value={ isSpoiler }
+                        onChange={(e) => setSpoiler(!isSpoiler)}
                     />
                     &nbsp; Does Review Contain Spoilers?
                 </label>
