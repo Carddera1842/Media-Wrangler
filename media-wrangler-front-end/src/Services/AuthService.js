@@ -5,15 +5,15 @@ const apiClient = axios.create ({
 });
 
 export const login = (data) => {
-    return apiClient.post('/login', data);
+    return apiClient.post('/users/login', data);
 };
 
 export const logout = (data) => {
-    return apiClient.post('/logout', data)
+    return apiClient.post('/users/logout', data)
 };
 
 export const checkSession = (data) => {
-    return apiClient.post('/session-status', data);
+    return apiClient.post('/users/session-status', data);
 };
 
 apiClient.interceptors.response.use(

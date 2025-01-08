@@ -18,8 +18,9 @@ import com.mediawrangler.media_wrangler.data.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
-//@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
