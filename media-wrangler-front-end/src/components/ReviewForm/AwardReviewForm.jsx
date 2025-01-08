@@ -115,7 +115,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 
 
       //NOTE: I believe this is how it would work without the MoveReviewService.
-      const responseMessage = await fetch('http://localhost:8080/api/reviews/create', {
+      const responseMessage = await fetch('http://localhost:8080/reviews/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(movieReview)
