@@ -9,11 +9,11 @@ function MovieSearch() {
     const handleSearch = async () => {
         setMovieData(null); // Reset previous movie data before making a new request
         setError(null); // Reset previous error message
-        
+
         try {
             // GET request to the backend API
             const response = await fetch(`http://localhost:8080/api/movies/search?title=${movieTitle}`);
-            
+
             if (!response.ok) {
                 throw new Error('Movie not found!');
             }
@@ -45,14 +45,14 @@ function MovieSearch() {
                 <div>
                     <MovieDetailCard
                         id={movieData.id}
-                        poster={movieData.posterPath}  
-                        title={movieData.title} 
-                        releaseDate={movieData.releaseDate} 
+                        poster={movieData.posterPath}
+                        title={movieData.title}
+                        releaseDate={movieData.releaseDate}
                         rating={movieData.rating} // maybe we should only use our rating stats and not the one from API????
                         // director={movieData.director}  // Director -- not seeing Director given as property
-                        overview={movieData.overview}  
+                        overview={movieData.overview}
                         genre={movieData.genres}  // not seeing Genres given as property
-                />              
+                />
                 </div>
             )}
         </div>
@@ -60,4 +60,3 @@ function MovieSearch() {
 }
 
 export default MovieSearch;
-

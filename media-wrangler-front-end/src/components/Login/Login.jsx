@@ -1,101 +1,59 @@
-
-
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { apiLogin } from "../../Services/LoginService";
-
-
-
-
+import { Form, Field, ErrorMessage, FormikProvider, useFormik } from "formik";
+import { useAuth } from "../../Services/AuthContext";
 
 export default function Login() {
-
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const { loginAction } = useAuth();
     const [error, setError] = useState("");
 
-    const navigate = useNavigate();
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+        },
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
-
-        const loginData = {
-            username,
-            password
-        };
-
-        
-       let responseMessage = await apiLogin(loginData);
-
-       console.log(responseMessage);
-        if (responseMessage === "Success") {
-            navigate("/loginSuccess");
-        } else {
-            setError(responseMessage);
-        }
-       
-
-
-        try {
-            const response = await axios.post(
-                "http://localhost:8080/login",
-                loginData
-            );
-            console.log("Response:", response);
-            if (response.status === 200) {
-                // login();
-                console.log("Navigating to login success");
-                navigate("/loginSuccess");
-            } else {
-                // console.error("Login failed:", response);
-                setError("Login failed. Please try again");
+        onSubmit: async (values) => {
+            // console.log("form values:", values);
+            try{
+                await loginAction(values);
+                navigate("/");
+            } catch (err) {
+                setError(err.message || "Login failed. Please retry!");
             }
         } catch (error) {
             // console.error("An error occurred:", error);
             setError("An error occured. Please try again");
         }
-
-        
-
-        console.log("Logging in with: ", username, password);
-    };
+    });
 
     return (
-        <div>
-            <div className="field">
-                <label className="label">Username</label>
-            <div className="control">
-                <input 
-                    className="input" 
-                    type="text" 
-                    placeholder="Username" 
-                    value={username} 
-                    onChange = {(e) => setUsername(e.target.value)}>
-                </input>
-            </div>
-            </div>
+        <div className="App">
+          <center>
+            <h1>Login</h1>
+                <FormikProvider value = {formik}>
+                <Form>
 
-            <div className="field">
-                <label className="label">Password</label>
-            <div className="control">
-                <input
-                    className="input" 
+                  <div>
+                  <Field
+                    type="text"
+                    name="username"
+                    placeholder="Enter username"
+                  />
+                  <ErrorMessage name="username" component="div" />
+                  </div>
+                    <div>
+                  <Field
                     type="password" 
-                    placeholder="Password" 
-                    value={password}
-                    onChange = {(e) => setPassword(e.target.value)}>
-                    </input>
-            </div>
-            </div>
-
-            <div className="control">
-                <button 
-                    type="submit"
-                    onClick={handleSubmit}>
-                Submit</button>
-            </div>
+                    name="password"
+                    />
+                  <ErrorMessage name="password" component="div" />
+                  </div>
+                  <button type="submit">Log in</button>
+                </Form>
+            </FormikProvider>
+          </center>
         </div>
-    )
+    );
 }
-
