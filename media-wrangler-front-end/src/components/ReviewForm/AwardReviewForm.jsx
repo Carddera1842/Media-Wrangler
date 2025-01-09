@@ -11,7 +11,8 @@ import Stack from '@mui/material/Stack';
 import InputTags from "../TagInput/InputTags";
 
 
-function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
+
+function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTagsChange }) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -46,10 +47,11 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
   //TODO: get the tag to work... 
   //if this is how we want to do the tags, I need to trim any whitespaces users could potentially enter
   //This is the tags function. Just splits the string into array elements currently...
-  function tagElements(e) {
-    let reviewTags = (e.target.value).split(",");
-    setTags(reviewTags);    
-  }
+  // function tagElements(e) {
+  //   let reviewTags = (e.target.value).split(",");
+  //   setTags(reviewTags);    
+  // }
+
  
   function handleHatedAward(e){
     setHatedAward(e.target.value);
@@ -306,7 +308,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
                   </div>
                   <br />
 {/* Add Tags Section -- unfinished */}
-                  <div className="field is-horizontal">
+                  {/* <div className="field is-horizontal">
                     <div className="field-label is-normal">
                       <label className="label">Add Tags</label>
                     </div>
@@ -322,7 +324,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
                         </div>
                       </div>
                     </div>
-                  </div>        
+                  </div>         */}
+                  <InputTags onTagsChange={(updatedTags) => setTags(updatedTags)} />
                   <br />      
                   {/* Just a bunch of divs to center the button, I can go in and do some css later for it */}     
                   <div className="field is-horizontal">
@@ -342,10 +345,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
                 </div>
               </form>
             </div>     
-            <br />
-            <br />
-            <br />
-            <InputTags /> 
         </>
     );
 }
