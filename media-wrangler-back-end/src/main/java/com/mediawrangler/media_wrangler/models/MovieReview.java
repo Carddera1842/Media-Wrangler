@@ -33,21 +33,40 @@ public class MovieReview {
 //    @NotNull(message = "You must give movie a star rating")
     private int rating;
 
+    private String watchAgain;
 
+//TODO: uncomment when ready to test with user
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     //empty constructor for hibernate
     public MovieReview() {
     }
 
-    //overloaded constructor for setting review object with users review input
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating) {
+    //overloaded constructor for easier testing (without User logged in)
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain) {
         this.dateCreated = LocalDate.now();
         this.review = review;
         this.dateWatched = dateWatched;
         this.isSpoiler = isSpoiler;
         this.award = award;
         this.rating = rating;
+        this.watchAgain = watchAgain;
     }
+
+//TODO: Uncomment constructor for when user is ready to be test with
+//overloaded constructor
+//    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, User user) {
+//        this.dateCreated = LocalDate.now();
+//        this.review = review;
+//        this.dateWatched = dateWatched;
+//        this.isSpoiler = isSpoiler;
+//        this.award = award;
+//        this.rating = rating;
+//        this.watchAgain = watchAgain;
+//        this.user = user;
+//    }
 
     public int getRating() {
         return rating;
@@ -73,10 +92,6 @@ public class MovieReview {
         this.isSpoiler = isSpoiler;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-
     public LocalDate getDateWatched() {
         return dateWatched;
     }
@@ -85,19 +100,44 @@ public class MovieReview {
         this.dateWatched = dateWatched;
     }
 
-    //getters for is and review
-    public int getId() {
-        return id;
-    }
-
     public String getReview() {
         return review;
     }
 
-    //Setter for review to update review when needed
     public void setReview(String review) {
         this.review = review;
     }
+
+    public String getWatchAgain() {
+        return watchAgain;
+    }
+
+    public void setWatchAgain(String watchAgain) {
+        this.watchAgain = watchAgain;
+    }
+
+//TODO: Uncomment when ready to test with User logged in
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
+
+    //getters for id and dateCreated since they should update (I could make an editDate)
+    public int getId() {
+        return id;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+
+
+
+
 
     //TODO: Add equals, hashcode, and toString methods later
     //TODO: Get the LocalDate to initialize during MovieReview object instantiation
