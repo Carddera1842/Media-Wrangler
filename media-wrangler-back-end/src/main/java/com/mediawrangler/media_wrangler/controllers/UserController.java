@@ -71,10 +71,10 @@ public class UserController {
             response.put("user", user);
             return ResponseEntity.ok(response);
         }
-
         response.put("success", false);
         response.put("message", "Invalid username or password");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+
     }
 
     @GetMapping("/info")
