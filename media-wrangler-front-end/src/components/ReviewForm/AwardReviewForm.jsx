@@ -3,9 +3,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-import StarRatings from 'react-star-ratings'; //eventually switch to the MUI star rating that is being used in MovieInteraction
+// import StarRatings from 'react-star-ratings'; //eventually switch to the MUI star rating that is being used in MovieInteraction
 import { apiMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
+import StarRatingButton from "../MovieInteractions/StarRatingButton";
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 
 
 function AwardReviewForm({title, genre, releaseDate, poster, id}) {
@@ -21,6 +24,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
   const [hatedAward, setHatedAward] = useState("");
   const [isLovedDisabled, setLovedDisabled] = useState(false);
   const [isHatedDisabled, setHatedDisabled] = useState(false);
+  const [wouldWatchAgain, setWatchAgain] = useState('');
  
   const navigate = useNavigate();
 
@@ -156,162 +160,183 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                     </div>
                     <div className="field">
                       <div className="field-label is-normal">
+{/* MUI star rating -- couldn't get the StarRatingButton to render here */}
+                        <Stack spacing={1} direction="row" >
+                          <Rating 
+                              name="half-rating" 
+                              defaultValue={0} 
+                              precision={0.5} 
+                              onChange={(e) => setRating(e.target.value)}
+                              sx={{
+                                '& .MuiRating-iconFilled': {
+                                    color: '#ff9800', // Color for filled stars (e.g., amber)
+                                },
+                                '& .MuiRating-iconEmpty': {
+                                    color: '#e0e0e0', // Color for empty stars (e.g., light gray)
+                                },
+                                '& .MuiRating-iconHover': {
+                                    color: '#ffcc00', // Hover color for stars (e.g., yellow)
+                                },
+                            }}
+                          />      
+                        </Stack>
                       </div>                        
                     </div>
                   </div>
                 </div>
-                <br />
+                <br />                
 {/* Positive Movie Award Dropdown */}
                 <div className="field is-grouped is-grouped-centered">
-                    <div className="control">
-                        <label className="label has-text-centered" htmlFor="loved-award">
-                        Love It Award:
-                        </label>
-                        <div className="select is-warning">
-                        <select
-                            id="loved-award"
-                            name="loved-award"
-                            value={lovedAward}
-                            onChange={handleLovedAward}
-                            disabled={isLovedDisabled}
-                        >
-                            <option value="">-- Select an Award --</option>
-                            {lovedAwards.map((award) => (
-                            <option key={award.value} value={award.value} title={award.description}>
-                                {award.icon} {award.label}
-                            </option>
-                            ))}
-                        </select>
-                        </div>
-                    </div>
-{/*Reset Button for dropdowns */}
-                    <button className="is-centered"
-                      type="button"
-                      onClick={resetAwards}
+                  <div className="control">
+                    <label className="label has-text-centered" htmlFor="loved-award">
+                      Love It Award:
+                    </label>
+                    <div className="select is-warning">
+                    <select
+                      id="loved-award"
+                      name="loved-award"
+                      value={lovedAward}
+                      onChange={handleLovedAward}
+                      disabled={isLovedDisabled}
                     >
-                      VS <br /> RESET
-                    </button>                    
+                      <option value="">-- Select an Award --</option>
+                      {lovedAwards.map((award) => (
+                      <option key={award.value} value={award.value} title={award.description}>
+                          {award.icon} {award.label}
+                      </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+{/*Reset Button for dropdowns */}
+                <button className="is-centered"
+                  type="button"
+                  onClick={resetAwards}
+                >
+                  VS <br /> RESET
+                </button>                    
 {/* Negative Movie Award Dropdown */}
-                    <div className="control">
-                        <label className="label has-text-centered" htmlFor="hated-award">
-                        Hated It Award:
-                        </label>
-                        <div className="select is-warning">
-                        <select
-                            id="hated-award"
-                            name="hated-award"
-                            value={hatedAward}
-                            onChange={handleHatedAward}
-                            disabled={isHatedDisabled}
-                        >
-                            <option value="">-- Select an Award --</option>
-                            {hatedAwards.map((award) => (
-                            <option key={award.value} value={award.value} title={award.description}>
-                                {award.icon} {award.label}
-                            </option>
-                            ))}
-                        </select>
-                        </div>
-                    </div>
-                    </div>
-                    <br />
+                <div className="control">
+                    <label className="label has-text-centered" htmlFor="hated-award">
+                      Hated It Award:
+                    </label>
+                    <div className="select is-warning">
+                    <select
+                      id="hated-award"
+                      name="hated-award"
+                      value={hatedAward}
+                      onChange={handleHatedAward}
+                      disabled={isHatedDisabled}
+                    >
+                      <option value="">-- Select an Award --</option>
+                      {hatedAwards.map((award) => (
+                      <option key={award.value} value={award.value} title={award.description}>
+                          {award.icon} {award.label}
+                      </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br />
 {/* Spoiler Checkbox  */}                
-                    <div>
-                        <label className="checkbox">
-                            <input
-                                type="checkbox"
-                                value={ isSpoiler }
-                                onChange={(e) => setSpoiler(!isSpoiler)}
-                            />
-                            &nbsp; Does Review Contain Spoilers?
-                        </label>
+                    <div className="inline-form">
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          value={ isSpoiler }
+                          onChange={(e) => setSpoiler(!isSpoiler)}
+                        />
+                          &nbsp; Does Review Contain Spoilers?
+                      </label>                        
                     </div>
                     <br />     
-                </div>
-                <div> 
+                  </div>                 
+                  <br />  
+                  <div> 
 {/* Comments Text Box */}
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label className="label">Review</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <textarea
-                          required
-                          value={ review }
-                          className="textarea"
-                          placeholder="Write your thoughts here ..."
-                          rows="10"
-                          onChange={(e) => setReview(e.target.value)}
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <br />
-
-{/* Add Tags Section -- unfinished */}
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label className="label">Add Tags</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <input
-                          className="input is-danger"
-                          type="text"
-                          placeholder="tag name here ..."
-                          onChange={tagElements}                      
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>           
-
-                <br />
-
-{/* Built in React Star Rating Component -- I have mui star component that does half stars, but I might now how to do that for this one */}
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label className="label">Rating</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <StarRatings
-                          rating={ rating }  
-                          starRatedColor="teal"  
-                          changeRating={(newRating) => setRating(newRating)}  
-                          numberOfStars={5}  
-                          name="rating"  
-                          starDimension="20px"  
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div className="field is-horizontal">
-                  <div className="field-label">
-                    {/* <!-- Left empty for spacing --> */}
+                  <div className="field is-horizontal">
+                    <div className="field-label is-normal">
+                      <label className="label">Review</label>
                     </div>
                     <div className="field-body">
                       <div className="field">
                         <div className="control">
-                          <button className="button is-primary">
-                            Submit Review
-                          </button>
+                          <textarea
+                            required
+                            value={ review }
+                            className="textarea"
+                            placeholder="Write your thoughts here ..."
+                            rows="10"
+                            onChange={(e) => setReview(e.target.value)}
+                          ></textarea>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <br />
+{/* Would you watch again Radio buttons */}
+                  <div>
+                    <label className="radio"> Would You Recommend This Movie? &nbsp;&nbsp;&nbsp;
+                      <input
+                        type="radio"
+                        name="watchAgain"
+                        value="yes"
+                        checked={wouldWatchAgain === 'yes'} // Bind state to the "yes" radio button
+                        onChange={() => setWatchAgain('yes')} // Set state to 'yes' when selected
+                      />
+                      &nbsp; Yes
+                    </label>
+                    <label className="radio">
+                      <input
+                        type="radio"
+                        name="watchAgain"
+                        value="no"
+                        checked={wouldWatchAgain === 'no'} // Bind state to the "no" radio button
+                        onChange={() => setWatchAgain('no')} // Set state to 'no' when selected
+                      />
+                      &nbsp; No
+                    </label>
+                  </div>
+                  <br />
+{/* Add Tags Section -- unfinished */}
+                  <div className="field is-horizontal">
+                    <div className="field-label is-normal">
+                      <label className="label">Add Tags</label>
+                    </div>
+                    <div className="field-body">
+                      <div className="field">
+                        <div className="control">
+                          <input
+                            className="input is-danger"
+                            type="text"
+                            placeholder="tag name here ..."
+                            onChange={tagElements}                      
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>        
+                  <br />      
+                  {/* Just a bunch of divs to center the button, I can go in a do some css later for it */}     
+                  <div className="field is-horizontal">
+                    <div className="field-label"></div>
+                    <div className="field-label"></div>
+                    <div className="field-label"></div>
+                      <div className="field-body">
+                        <div className="field">
+                          <div className="control">
+                            <button className="button is-primary">
+                              Submit Review
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>      
-      </>
+              </form>
+            </div>      
+        </>
     );
 }
 

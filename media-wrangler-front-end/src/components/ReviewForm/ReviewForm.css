@@ -10,6 +10,7 @@
   justify-content: space-between; 
   align-items: center; 
   gap: 20px; 
+  margin: 50px;
 }
 
 .poster {
@@ -25,10 +26,16 @@
 }
 
 .review-form {
-  flex: 1; 
-  max-width: 600px; 
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column; 
 }
 
 .checkbox {
-  margin-left: 10px; /* Adds space between the two radio buttons */
+  margin-left: 20px; 
+}
+
+.radio {
+  margin-left: 20px;
 }

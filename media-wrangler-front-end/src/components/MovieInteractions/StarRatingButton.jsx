@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 
 export default function StarRatingButton({ title, id } ) {
 
-    const [userRating, setUserRating] = useState(0);   
+    const [rating, setRating] = useState(0);   
  
-  // function handleOnChange(e){
-  //   setUserRating(e.target.value);
-  //   return console.log("User rated the movie with: " + userRating);
-  // }
+  function handleOnChange(e){
+    setRating(e.target.value);
+    // return console.log("User rated the movie with: " + rating);
+  }
 
   return (
     <>    
@@ -19,14 +19,20 @@ export default function StarRatingButton({ title, id } ) {
             name="half-rating" 
             defaultValue={0} 
             precision={0.5} 
-            onChange={(e) => setUserRating(e.target.value)}
+            onChange={handleOnChange}
+            sx={{
+              '& .MuiRating-iconFilled': {
+                  color: '#ff9800', // Color for filled stars (e.g., amber)
+              },
+              '& .MuiRating-iconEmpty': {
+                  color: '#e0e0e0', // Color for empty stars (e.g., light gray)
+              },
+              '& .MuiRating-iconHover': {
+                  color: '#ffcc00', // Hover color for stars (e.g., yellow)
+              },
+          }}
         />      
-    </Stack>
-
-
-    {/* NOTE: Leaving here to keep an eye on functionality for now-- especially if adding more props */}
-    {/* <p>{(userRating > 0 ? `Gave "${ title }" ${ userRating } Stars!)` : null)}</p> */}
-    
+    </Stack>    
     </>   
   );
 }
