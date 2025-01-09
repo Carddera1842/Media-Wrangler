@@ -14,6 +14,7 @@ public class User {
 
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
+    @Column(unique = true, nullable = false)
     private String username;
 
     @NotBlank(message = "First name is required")
@@ -31,18 +32,8 @@ public class User {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
+    @Column(unique = true, nullable = false)
     private String email;
-
-    public User(String username, String firstname, String lastname, String password, String email) {
-        this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.password = password;
-        this.email = email;
-    }
-
-    public User() {
-    }
 
     public int getId() {
         return id;

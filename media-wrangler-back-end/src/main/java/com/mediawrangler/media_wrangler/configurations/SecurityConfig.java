@@ -2,25 +2,53 @@ package com.mediawrangler.media_wrangler.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
-public class SecurityConfig {
+@EnableWebSecurity
+public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors()
-                .and()
-                .csrf().disable()
-                .authorizeHttpRequests()
-                .anyRequest().permitAll();
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // disable CSRF and configure CORS
+        http.csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Set up CORS
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register", "/login", "/", "/movies", "/reviews/create").permitAll()  // Allow GET requests to API
+                        .requestMatchers("/users/register", "/users/login", "/users/logout", "/", "/movies", "/reviews/create").permitAll()  // Allow GET requests to API
+                        .requestMatchers("/users/logout").authenticated()
+                        .anyRequest().authenticated()  // Secure other requests
+                );
         return http.build();
+    }
+
+    // configure CORS settings
+    private CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("http://localhost:5173"); // Your frontend URL
+        corsConfig.addAllowedMethod("*"); // Allow all HTTP methods
+        corsConfig.addAllowedHeader("*"); // Allow all headers
+        corsConfig.setAllowCredentials(true); // Allow credentials
+
+        return request -> corsConfig; // Return the configuration for each request
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        // manual mapping if needed
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:5173") // Your frontend URL
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 
     @Bean
@@ -28,3 +56,5 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
+
