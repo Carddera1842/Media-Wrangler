@@ -7,7 +7,7 @@ import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import LoginSuccess from './components/Login/LoginSuccess'
 import Register from './components/Register/Register'
-import MovieSearch from './components/MovieSearch'
+import MovieSearch from './components/Search/MovieSearch'
 import TestReviewForm from './components/ReviewForm/TestReviewForm'
 import Profile from './components/Profile/Profile'
 import { PrivateRoutes } from './Services/PrivateRoutes'
@@ -47,7 +47,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />}/>
-        <Route path="/search" element={<Search />}/>
+        <Route path="/search" element={<MovieSearch />}/>
         <Route path="/login" element={<Login />}/>
         {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/profile/:userId" element={<Profile />}/>
