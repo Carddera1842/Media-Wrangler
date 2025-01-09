@@ -10,7 +10,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 
 
-function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
+function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -24,21 +24,22 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
   const [isLovedDisabled, setLovedDisabled] = useState(false);
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
-  const [isChecked, setChecked] = useState(false);
+  // const [isChecked, setChecked] = useState(false);
  
   const navigate = useNavigate();
 
-  //NOTE: Should I make these an Enum Class?
+  //NOTE: Should I make these an Enum Class? I should 
+  //NOTE: Added id onto each object element in the arrays to work with mapping more conventionally
   const lovedAwards = [
-    { value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
-    { value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
-    { value: "whiskey-shot", label: "Whiskey Shot Worthy", description: "Satisfyingly smooth – worth raising a glass!", icon: "🥃" },
+    { id: 1, value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
+    { id: 2, value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
+    { id: 3, value: "whiskey-shot", label: "Whiskey Shot Worthy", description: "Satisfyingly smooth – worth raising a glass!", icon: "🥃" },
 ];
 
   const hatedAwards = [
-    { value: "dusty-trails", label: "Dusty Trails", description: "For a movie that was a long, boring journey.", icon: "👎" },
-    { value: "snake-oil", label: "Snake Oil", description: "All show, no substance.", icon: "💔" },
-    { value: "cactus-hugger", label: "Cactus Hugger", description: "A prickly, uncomfortable experience.", icon: "🌵" },
+    { id: 1, value: "dusty-trails", label: "Dusty Trails", description: "For a movie that was a long, boring journey.", icon: "👎" },
+    { id: 2, value: "snake-oil", label: "Snake Oil", description: "All show, no substance.", icon: "💔" },
+    { id: 3, value: "cactus-hugger", label: "Cactus Hugger", description: "A prickly, uncomfortable experience.", icon: "🌵" },
   ];
 
   //TODO: get the tag to work... 
@@ -69,12 +70,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
     setHatedDisabled(false); 
     setLovedDisabled(false); 
   }
-
-  // const handleChecked = (e) => {
-  //   setChecked(e.target.checked);
-  //   setChecked(!isChecked);
-  //   setSpoiler(!isSpoiler);  
-  // };
 
   async function handleSubmit(e) {
       e.preventDefault();
@@ -107,14 +102,15 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
         tags,
         title,
         genre,
-        MovieId,
+        movieId,
         poster, 
         watchAgain
       }
 
       alert("Thank you for your submission!");
       console.log(movieReviewData);
-      console.log(isSpoiler) //TODO: once spoiler is logging right in database, remove this
+      console.log(isSpoiler); //TODO: once spoiler is logging right in database, remove this
+      //TODO: could I possibly log who the user is somewhere in form submission to test why user_id doesn't log
 
       try {
         const responseMessage = await apiMovieReview(movieReviewData); 
@@ -192,7 +188,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
                   </div>
                 </div>
                 <br />                
-{/* Positive Movie Award Dropdown */}
+{/* Positive Movie Award Dropdown ---> htmlFor replaces the for attribute in React when you aren't wrapping the label around */}
                 <div className="field is-grouped is-grouped-centered">
                   <div className="control">
                     <label className="label has-text-centered" htmlFor="loved-award">
@@ -208,7 +204,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
                     >
                       <option value="">-- Select an Award --</option>
                       {lovedAwards.map((award) => (
-                      <option key={award.value} value={award.value} title={award.description}>
+                      <option key={award.id} value={award.value} title={award.description}>
                           {award.icon} {award.label}
                       </option>
                       ))}
@@ -237,7 +233,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
                     >
                       <option value="">-- Select an Award --</option>
                       {hatedAwards.map((award) => (
-                      <option key={award.value} value={award.value} title={award.description}>
+                      <option key={award.id} value={award.value} title={award.description}>
                           {award.icon} {award.label}
                       </option>
                       ))}
@@ -251,6 +247,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
                       <label className="checkbox">
                         <input
                           type="checkbox" 
+                          name="isSpoiler"
+                          value={ isSpoiler }
                           checked={ isSpoiler } 
                           onChange={(e) => setSpoiler(e.target.checked)}
                         />
@@ -351,7 +349,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
 export default AwardReviewForm;
 
 AwardReviewForm.propTypes = {
-    id: PropTypes.number,
+    movieId: PropTypes.number,
     title: PropTypes.string,
     releaseDate: PropTypes.string, 
     overview: PropTypes.string, 
