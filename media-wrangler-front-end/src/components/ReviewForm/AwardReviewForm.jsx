@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
 import StarRatings from 'react-star-ratings'; //eventually switch that out for the MUI star rating that is being used in MovieInteraction
-import { apiCreateReview } from "../../Services/ReviewService";
+import { apiMovieReview } from "../../Services/MovieReviewService";
 
 
 
@@ -93,7 +93,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
         }
       }
 
-      const movieReview = {
+      const movieReviewData = {
         dateWatched,
         review,
         isSpoiler,
@@ -107,24 +107,42 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
       }
 
       alert("Thank you for your submission!");
-      console.log(movieReview);
+      console.log(movieReviewData);
       console.log(isSpoiler)
 
       //Sending movieReview to the backend  
-      const responseMessage = await fetch('http://localhost:8080/reviews/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(movieReview)
-      });     
+      // const responseMessage = await fetch('http://localhost:8080/reviews/create', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(movieReview)
+      // });     
 
-      console.log(responseMessage);
+      //TODO: Utilize the MovieReviewService
+      try {
+        const responseMessage = await apiMovieReview(movieReviewData); 
 
-      if (responseMessage === "Success") {
-          navigate("/reviews/submitted");    //Probably eventually want it to direct to user journal so they can see the review as an entry
-      } else {
+        if (responseMessage === "Success") {
+          navigate("/review"); 
+        } else {
           setError(responseMessage);
-      }   
-  }
+        }
+        
+      } catch (error) {
+          console.error("Unexpected error during movie review submission: ", error);
+          setError({error: "An unexpected error occurred. Please try again"})
+      }
+    };
+  
+
+
+      // console.log(responseMessage);
+
+      // if (responseMessage === "Success") {
+      //     navigate("/reviews/submitted");    //Probably eventually want it to direct to user journal so they can see the review as an entry
+      // } else {
+      //     setError(responseMessage);
+      // }   
+  
 
     return (
         <>
