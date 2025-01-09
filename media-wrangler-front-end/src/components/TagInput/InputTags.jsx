@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Chip from '@mui/material/Chip';
+// import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
@@ -17,20 +17,17 @@ export default function Tags() {
     <Stack spacing={3} sx={{ width: 500 }}>
       <Autocomplete
         multiple
-        id="tags-outlined"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        defaultValue={[top100Films[13]]}
-        filterSelectedOptions
+        id="tags-free-solo"
+        options={[]} // No predefined options
+        freeSolo // Allow users to input custom values
         renderInput={(params) => (
           <TextField
             {...params}
-            label="filterSelectedOptions"
-            placeholder="Favorites"
+            label="Custom Tags"
+            placeholder="Add tags"
           />
         )}
       />
-      
     </Stack>
   );
 }
