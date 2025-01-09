@@ -5,14 +5,16 @@ import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
 import { apiMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
-// import StarRatingButton from "../MovieInteractions/StarRatingButton";  Couldn't render it properly as a child component inside form
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import InputTags from "../TagInput/InputTags";
 
+// import StarRatingButton from "../MovieInteractions/StarRatingButton";  
+// Couldn't render it properly as a child component inside form, but I think I was passing prop in the wrong direction
+// Check out again, follow steps as I did in Tags input
 
 
-function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTagsChange }) {
+function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -26,12 +28,10 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTags
   const [isLovedDisabled, setLovedDisabled] = useState(false);
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
-  // const [isChecked, setChecked] = useState(false);
  
   const navigate = useNavigate();
 
   //NOTE: Should I make these an Enum Class? I should 
-  //NOTE: Added id onto each object element in the arrays to work with mapping more conventionally
   const lovedAwards = [
     { id: 1, value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
     { id: 2, value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
@@ -43,15 +43,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTags
     { id: 2, value: "snake-oil", label: "Snake Oil", description: "All show, no substance.", icon: "💔" },
     { id: 3, value: "cactus-hugger", label: "Cactus Hugger", description: "A prickly, uncomfortable experience.", icon: "🌵" },
   ];
-
-  //TODO: get the tag to work... 
-  //if this is how we want to do the tags, I need to trim any whitespaces users could potentially enter
-  //This is the tags function. Just splits the string into array elements currently...
-  // function tagElements(e) {
-  //   let reviewTags = (e.target.value).split(",");
-  //   setTags(reviewTags);    
-  // }
-
  
   function handleHatedAward(e){
     setHatedAward(e.target.value);
@@ -72,6 +63,10 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTags
     setLovedAward("")
     setHatedDisabled(false); 
     setLovedDisabled(false); 
+  }
+
+  function updateTags(updatedTags) {
+    setTags(updatedTags);
   }
 
   async function handleSubmit(e) {
@@ -113,7 +108,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTags
       alert("Thank you for your submission!");
       console.log(movieReviewData);
       console.log(isSpoiler); //TODO: once spoiler is logging right in database, remove this
-      //TODO: could I possibly log who the user is somewhere in form submission to test why user_id doesn't log
 
       try {
         const responseMessage = await apiMovieReview(movieReviewData); 
@@ -308,24 +302,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTags
                   </div>
                   <br />
 {/* Add Tags Section -- unfinished */}
-                  {/* <div className="field is-horizontal">
-                    <div className="field-label is-normal">
-                      <label className="label">Add Tags</label>
-                    </div>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <input
-                            className="input is-danger"
-                            type="text"
-                            placeholder="tag name here ..."
-                            onChange={tagElements}                      
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>         */}
-                  <InputTags onTagsChange={(updatedTags) => setTags(updatedTags)} />
+{/* Passing the onTagsChange prop to InputTags Component, then the InputTags handleTagsChange executes  */}
+                  <InputTags onTagsChange={updateTags} />
                   <br />      
                   {/* Just a bunch of divs to center the button, I can go in and do some css later for it */}     
                   <div className="field is-horizontal">
@@ -348,8 +326,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId, handleTags
         </>
     );
 }
-
-
 export default AwardReviewForm;
 
 AwardReviewForm.propTypes = {
