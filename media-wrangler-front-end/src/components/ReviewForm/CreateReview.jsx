@@ -51,6 +51,7 @@ export default function CreateReview() {
 {/* Test out the Form that contains Movie Awards */}
                 <AwardReviewForm 
                     key={ movies[0].id }
+                    movieId={ movies[0].id}
                     title={ movies[0].title }
                     poster={ movies[0].poster }
                     releaseDate={ movies[0].releaseDate }

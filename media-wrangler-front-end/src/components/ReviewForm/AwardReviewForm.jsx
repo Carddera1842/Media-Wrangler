@@ -10,7 +10,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 
 
-function AwardReviewForm({title, genre, releaseDate, poster, id}) {
+function AwardReviewForm({title, genre, releaseDate, poster, MovieId}) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -70,11 +70,11 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
     setLovedDisabled(false); 
   }
 
-  const handleChecked = (e) => {
-    setChecked(e.target.checked);
-    setChecked(!isChecked);
-    setSpoiler(!isSpoiler);  
-  };
+  // const handleChecked = (e) => {
+  //   setChecked(e.target.checked);
+  //   setChecked(!isChecked);
+  //   setSpoiler(!isSpoiler);  
+  // };
 
   async function handleSubmit(e) {
       e.preventDefault();
@@ -107,8 +107,9 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
         tags,
         title,
         genre,
-        id,
-        poster
+        MovieId,
+        poster, 
+        watchAgain
       }
 
       alert("Thank you for your submission!");
@@ -250,8 +251,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                       <label className="checkbox">
                         <input
                           type="checkbox" 
-                          checked={isChecked } 
-                          onChange={handleChecked}
+                          checked={ isSpoiler } 
+                          onChange={(e) => setSpoiler(e.target.checked)}
                         />
                           &nbsp; Does Review Contain Spoilers?
                       </label>                        
@@ -283,13 +284,13 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                   <br />
 {/* Would you watch again Radio buttons */}
                   <div>
-                    <label className="radio"> Would You Recommend This Movie? &nbsp;&nbsp;&nbsp;
+                    <label className="radio"> Would You Watch This Movie Again? &nbsp;&nbsp;&nbsp;
                       <input
                         type="radio"
                         name="watchAgain"
                         value="yes"
-                        checked={watchAgain === 'yes'} // Bind state to the "yes" radio button
-                        onChange={() => setWatchAgain('yes')} // Set state to 'yes' when selected
+                        checked={watchAgain === 'yes'} 
+                        onChange={(e) => setWatchAgain(e.target.value)} 
                       />
                       &nbsp; Yes
                     </label>
@@ -298,8 +299,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                         type="radio"
                         name="watchAgain"
                         value="no"
-                        checked={watchAgain === 'no'} // Bind state to the "no" radio button
-                        onChange={() => setWatchAgain('no')} // Set state to 'no' when selected
+                        checked={watchAgain === 'no'} 
+                        onChange={(e) => setWatchAgain(e.target.value)} 
                       />
                       &nbsp; No
                     </label>
