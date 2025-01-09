@@ -22,8 +22,6 @@ public class Movie {
         this.posterPath = posterPath;
     }
 
-    // Getters and Setters
-
     public int getId() {
         return id;
     }

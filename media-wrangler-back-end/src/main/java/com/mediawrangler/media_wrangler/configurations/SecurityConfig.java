@@ -18,33 +18,30 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // disable CSRF and configure CORS
-        http.csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Set up CORS
+        http.csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login", "/users/logout", "/", "/movies", "/reviews/create", "/api/movies/search").permitAll()  // Allow GET requests to API
+                        .requestMatchers("/users/register", "/users/login", "/users/logout", "/", "/movies", "/reviews/create", "/api/movies/search").permitAll()
                         .requestMatchers("/users/logout").authenticated()
-                        .anyRequest().authenticated()  // Secure other requests
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }
 
-    // configure CORS settings
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOrigin("http://localhost:5173"); // Your frontend URL
-        corsConfig.addAllowedMethod("*"); // Allow all HTTP methods
-        corsConfig.addAllowedHeader("*"); // Allow all headers
-        corsConfig.setAllowCredentials(true); // Allow credentials
+        corsConfig.addAllowedOrigin("http://localhost:5173");
+        corsConfig.addAllowedMethod("*");
+        corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowCredentials(true);
 
-        return request -> corsConfig; // Return the configuration for each request
+        return request -> corsConfig;
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        // manual mapping if needed
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173") // Your frontend URL
+                .allowedOrigins("http://localhost:5173")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
