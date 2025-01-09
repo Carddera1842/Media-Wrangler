@@ -37,6 +37,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, Errors errors) {
+
         if (errors.hasErrors()) {
             Map<String, String> validationErrors = new HashMap<>();
             errors.getFieldErrors().forEach(error ->

@@ -35,6 +35,16 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    public User() {}
+
+    public User(String username, String firstname, String lastname, String password, String email) {
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }
