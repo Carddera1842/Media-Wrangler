@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 // import StarRatingButton from "../MovieInteractions/StarRatingButton";  Couldn't render it properly as a child component inside form
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import InputTags from "../TagInput/InputTags";
 
 
 function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
@@ -340,7 +341,11 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId}) {
                   </div>
                 </div>
               </form>
-            </div>      
+            </div>     
+            <br />
+            <br />
+            <br />
+            <InputTags /> 
         </>
     );
 }
