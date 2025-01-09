@@ -36,9 +36,9 @@ public class MovieReview {
     private String watchAgain;
 
 //TODO: uncomment when ready to test with user
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //empty constructor for hibernate
     public MovieReview() {
@@ -57,16 +57,16 @@ public class MovieReview {
 
 //TODO: Uncomment constructor for when user is ready to be test with
 //overloaded constructor
-//    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, User user) {
-//        this.dateCreated = LocalDate.now();
-//        this.review = review;
-//        this.dateWatched = dateWatched;
-//        this.isSpoiler = isSpoiler;
-//        this.award = award;
-//        this.rating = rating;
-//        this.watchAgain = watchAgain;
-//        this.user = user;
-//    }
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, User user) {
+        this.dateCreated = LocalDate.now();
+        this.review = review;
+        this.dateWatched = dateWatched;
+        this.isSpoiler = isSpoiler;
+        this.award = award;
+        this.rating = rating;
+        this.watchAgain = watchAgain;
+        this.user = user;
+    }
 
     public int getRating() {
         return rating;
@@ -117,13 +117,13 @@ public class MovieReview {
     }
 
 //TODO: Uncomment when ready to test with User logged in
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     //getters for id and dateCreated since they should update (I could make an editDate)
     public int getId() {
