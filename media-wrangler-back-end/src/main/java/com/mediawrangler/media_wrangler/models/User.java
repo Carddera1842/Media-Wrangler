@@ -19,10 +19,12 @@ public class User {
 
     @NotBlank(message = "First name is required")
     @Size(max = 50, message = "First name must be less than 50 characters")
+    @Column(name = "first_name")
     private String firstname;
 
     @NotBlank(message = "Last name is required")
     @Size(max = 50, message = "Last name must be less than 50 characters")
+    @Column(name = "last_name")
     private String lastname;
 
     @NotBlank(message = "Password is required")
@@ -34,6 +36,11 @@ public class User {
     @Email(message = "Invalid email format")
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean enabled;
 
     public int getId() {
         return id;
@@ -81,5 +88,21 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
