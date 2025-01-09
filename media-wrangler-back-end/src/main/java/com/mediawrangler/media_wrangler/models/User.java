@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class User {
 
@@ -37,10 +39,14 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "verification_code", length = 64)
-    private String verificationCode;
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified = false;
 
-    private boolean enabled;
+    @Column(name = "verification_token",nullable = true)
+    private String verificationToken;
+
+    @Column(name = "token_expiration_date", nullable = true)
+    private LocalDateTime tokenExpirationDate;
 
     public int getId() {
         return id;
@@ -90,19 +96,27 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getVerificationCode() {
-        return verificationCode;
+    public boolean isEmailVerified() {
+        return emailVerified;
     }
 
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public String getVerificationToken() {
+        return verificationToken;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public LocalDateTime getTokenExpirationDate() {
+        return tokenExpirationDate;
+    }
+
+    public void setTokenExpirationDate(LocalDateTime tokenExpirationDate) {
+        this.tokenExpirationDate = tokenExpirationDate;
     }
 }
