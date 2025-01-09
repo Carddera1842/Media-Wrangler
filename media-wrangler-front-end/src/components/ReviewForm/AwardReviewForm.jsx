@@ -3,10 +3,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-// import StarRatings from 'react-star-ratings'; //eventually switch to the MUI star rating that is being used in MovieInteraction
 import { apiMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
-import StarRatingButton from "../MovieInteractions/StarRatingButton";
+// import StarRatingButton from "../MovieInteractions/StarRatingButton";  Couldn't render it properly as a child component inside form
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 
@@ -24,7 +23,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
   const [hatedAward, setHatedAward] = useState("");
   const [isLovedDisabled, setLovedDisabled] = useState(false);
   const [isHatedDisabled, setHatedDisabled] = useState(false);
-  const [wouldWatchAgain, setWatchAgain] = useState('');
+  const [watchAgain, setWatchAgain] = useState('');
+  const [isChecked, setChecked] = useState(false);
  
   const navigate = useNavigate();
 
@@ -70,6 +70,12 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
     setLovedDisabled(false); 
   }
 
+  const handleChecked = (e) => {
+    setChecked(e.target.checked);
+    setChecked(!isChecked);
+    setSpoiler(!isSpoiler);  
+  };
+
   async function handleSubmit(e) {
       e.preventDefault();
      
@@ -113,7 +119,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
         const responseMessage = await apiMovieReview(movieReviewData); 
 
         if (responseMessage === "Success") {
-          navigate("/review"); 
+          navigate("/reviews/view"); 
         } else {
           setError(responseMessage);
         }
@@ -243,9 +249,9 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                     <div className="inline-form">
                       <label className="checkbox">
                         <input
-                          type="checkbox"
-                          value={ isSpoiler }
-                          onChange={(e) => setSpoiler(!isSpoiler)}
+                          type="checkbox" 
+                          checked={isChecked } 
+                          onChange={handleChecked}
                         />
                           &nbsp; Does Review Contain Spoilers?
                       </label>                        
@@ -282,7 +288,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                         type="radio"
                         name="watchAgain"
                         value="yes"
-                        checked={wouldWatchAgain === 'yes'} // Bind state to the "yes" radio button
+                        checked={watchAgain === 'yes'} // Bind state to the "yes" radio button
                         onChange={() => setWatchAgain('yes')} // Set state to 'yes' when selected
                       />
                       &nbsp; Yes
@@ -292,7 +298,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                         type="radio"
                         name="watchAgain"
                         value="no"
-                        checked={wouldWatchAgain === 'no'} // Bind state to the "no" radio button
+                        checked={watchAgain === 'no'} // Bind state to the "no" radio button
                         onChange={() => setWatchAgain('no')} // Set state to 'no' when selected
                       />
                       &nbsp; No
@@ -318,7 +324,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                     </div>
                   </div>        
                   <br />      
-                  {/* Just a bunch of divs to center the button, I can go in a do some css later for it */}     
+                  {/* Just a bunch of divs to center the button, I can go in and do some css later for it */}     
                   <div className="field is-horizontal">
                     <div className="field-label"></div>
                     <div className="field-label"></div>

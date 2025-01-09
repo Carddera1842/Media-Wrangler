@@ -14,7 +14,7 @@ import registrationSuccess from './components/Register/RegistrationSuccess'
 import MovieSearch from './components/MovieSearch'
 import TestReviewForm from './components/ReviewForm/TestReviewForm'
 import CreateReview from './components/ReviewForm/CreateReview'
-import DisplayReview from './components/ReviewForm/DisplayReview'
+import DisplayReview from './components/ReviewDisplay/DisplayReview'
 
 function App() {
 
@@ -27,13 +27,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />}/>
-        <Route path="/review" element={<DisplayReview />}/> 
         <Route path="/login" element={<Login />}/>
         <Route path="/search" element={<MovieSearch />}/>
         <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/registrationsuccess" element={<registrationSuccess />}/>
-        <Route path="/reviews/create" element={<CreateReview />} />     {/* This is to demonstrate different form versions */}    
+        <Route path="/reviews/create" element={<CreateReview />} />     {/* This is to demonstrate different form versions */}   
+        <Route path="/reviews/view" element={<DisplayReview />}/>  
       </Routes>
         </div>
     </>
