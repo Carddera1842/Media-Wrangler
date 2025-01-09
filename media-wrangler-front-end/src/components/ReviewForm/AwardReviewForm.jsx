@@ -1,6 +1,5 @@
 import { useState } from "react";
 import React from "react";
-// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
@@ -18,7 +17,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
   const [award, setAward] = useState(null);
-
   const [lovedAward, setLovedAward] = useState("");
   const [hatedAward, setHatedAward] = useState("");
   const [isLovedDisabled, setLovedDisabled] = useState(false);
@@ -107,7 +105,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
       console.log(movieReviewData);
       console.log(isSpoiler) //TODO: once spoiler is logging right in database, remove this
 
-      //TODO: Utilize the MovieReviewService
       try {
         const responseMessage = await apiMovieReview(movieReviewData); 
 
@@ -126,25 +123,17 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
     return (
         <>
           <div className="review-container">
-
-
 {/* Movie Poster Image */}
             <div className="poster">
               <img src={ poster } ></img>
             </div>
-
-
 {/* Movie Review Form */}
             <form onSubmit={handleSubmit}>              
               <div className="review-form">
                 <div className="content is-normal">
                   <h1>{ title } ({ releaseDate })</h1>                  
                   <p>{ genre.join(", ") }</p>
-                </div>
-           
-             
-
-
+                </div>    
 {/* Movie Watched Date */}
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
@@ -171,10 +160,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                     </div>
                   </div>
                 </div>
-
-
                 <br />
-
 {/* Positive Movie Award Dropdown */}
                 <div className="field is-grouped is-grouped-centered">
                     <div className="control">
@@ -198,16 +184,13 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                         </select>
                         </div>
                     </div>
-
-
-
+{/*Reset Button for dropdowns */}
                     <button className="is-centered"
                       type="button"
                       onClick={resetAwards}
                     >
-                VS <br /> RESET
-            </button>
-                    
+                      VS <br /> RESET
+                    </button>                    
 {/* Negative Movie Award Dropdown */}
                     <div className="control">
                         <label className="label has-text-centered" htmlFor="hated-award">
@@ -231,25 +214,21 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                         </div>
                     </div>
                     </div>
-
-
-            <br />
-
+                    <br />
 {/* Spoiler Checkbox  */}                
-            <div>
-                <label className="checkbox">
-                    <input
-                        type="checkbox"
-                        value={ isSpoiler }
-                        onChange={(e) => setSpoiler(!isSpoiler)}
-                    />
-                    &nbsp; Does Review Contain Spoilers?
-                </label>
-            </div>
-            <br />     
-        </div>
-        <div>
- 
+                    <div>
+                        <label className="checkbox">
+                            <input
+                                type="checkbox"
+                                value={ isSpoiler }
+                                onChange={(e) => setSpoiler(!isSpoiler)}
+                            />
+                            &nbsp; Does Review Contain Spoilers?
+                        </label>
+                    </div>
+                    <br />     
+                </div>
+                <div> 
 {/* Comments Text Box */}
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
@@ -270,7 +249,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, id}) {
                     </div>
                   </div>
                 </div>
-
                 <br />
 
 {/* Add Tags Section -- unfinished */}
@@ -345,6 +323,6 @@ AwardReviewForm.propTypes = {
     title: PropTypes.string,
     releaseDate: PropTypes.string, 
     overview: PropTypes.string, 
-    poster: PropTypes.string
-
+    poster: PropTypes.string,
+    genre: PropTypes.array
 }
