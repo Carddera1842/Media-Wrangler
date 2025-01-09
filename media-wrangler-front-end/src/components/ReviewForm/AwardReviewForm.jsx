@@ -4,15 +4,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-import StarRatings from 'react-star-ratings'; //eventually switch that out for the MUI star rating that is being used in MovieInteraction
+import StarRatings from 'react-star-ratings'; //eventually switch to the MUI star rating that is being used in MovieInteraction
 import { apiMovieReview } from "../../Services/MovieReviewService";
+import PropTypes from 'prop-types';
 
 
-
-
-
-
-function ReviewForm({title, genre, releaseDate, poster, id}) {
+function AwardReviewForm({title, genre, releaseDate, poster, id}) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -93,7 +90,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
         }
       }
 
-      const movieReviewData = {
+      const movieReviewData = { 
         dateWatched,
         review,
         isSpoiler,
@@ -108,14 +105,7 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 
       alert("Thank you for your submission!");
       console.log(movieReviewData);
-      console.log(isSpoiler)
-
-      //Sending movieReview to the backend  
-      // const responseMessage = await fetch('http://localhost:8080/reviews/create', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(movieReview)
-      // });     
+      console.log(isSpoiler) //TODO: once spoiler is logging right in database, remove this
 
       //TODO: Utilize the MovieReviewService
       try {
@@ -132,17 +122,6 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
           setError({error: "An unexpected error occurred. Please try again"})
       }
     };
-  
-
-
-      // console.log(responseMessage);
-
-      // if (responseMessage === "Success") {
-      //     navigate("/reviews/submitted");    //Probably eventually want it to direct to user journal so they can see the review as an entry
-      // } else {
-      //     setError(responseMessage);
-      // }   
-  
 
     return (
         <>
@@ -359,57 +338,13 @@ function ReviewForm({title, genre, releaseDate, poster, id}) {
 }
 
 
-export default ReviewForm;
+export default AwardReviewForm;
 
+AwardReviewForm.propTypes = {
+    id: PropTypes.number,
+    title: PropTypes.string,
+    releaseDate: PropTypes.string, 
+    overview: PropTypes.string, 
+    poster: PropTypes.string
 
-
-
-
-
-
-
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   if (!dateWatched || !review || rating === 0) {
-//       alert("Please complete all required fields.");
-//       return;
-//   }
-
-
-//   const movieReview = {
-//       dateWatched,
-//       review,
-//       spoiler,
-//       movieMVP,
-//       rating,
-//       tags,
-//       title,
-//       genre,
-//       id,
-//       poster,
-//   };
-
-
-//   try {
-//       const response = await fetch('http://localhost:8080/api/reviews/create', {
-//           method: 'POST',
-//           headers: {
-//               'Content-Type': 'application/json'
-//           },
-//           body: JSON.stringify(movieReview)
-//       });
-
-
-//       if (!response.ok) {
-//           throw new Error('Failed to save review.');
-//       }
-
-
-//       const data = await response.json();
-//       alert('Review submitted successfully!');
-//       console.log('Response:', data);
-//   } catch (error) {
-//       console.error('Error submitting review:', error);
-//       alert('An error occurred while submitting your review.');
-//   }
-// };
+}
