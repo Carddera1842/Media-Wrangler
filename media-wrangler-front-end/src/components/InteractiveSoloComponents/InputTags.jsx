@@ -1,0 +1,100 @@
+import React, { useState } from "react";
+import Stack from "@mui/material/Stack";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import { Chip } from "@mui/material";
+
+
+/* 
+  NOTE: I believe that I can still use the map method and provide some predefined tags to the user as well. 
+         If we wanted to add some cowboy slang tags we could provide those, or... maybe we could take the tags
+         that users have already created and populate a tagsList for the users to access as well as create their own
+
+         options={[]} : we can make predefined tags
+         freeSolo : is allowing user to create their own tags
+*/
+
+
+//onTagsChange is passed down to the child TagInput
+//TODO: Add prop validation for onTagsChange
+export default function TagInput({ onTagsChange }) {
+  const [tags, setTags] = useState([]); 
+
+  //function is triggered, and the inputs are trimmed of whitespaces, updated local tags state and then the trimmed tags are passed to the parent component (AwardMovieReview) and sets them.
+  const handleTagsChange = (event, newTags) => {
+    const trimmedTags = newTags.map(tag => tag.trim());
+    setTags(trimmedTags);
+    onTagsChange(trimmedTags);
+};
+
+  return (
+    <Stack spacing={3} sx={{ width: 500 }}>
+      <Autocomplete
+        multiple
+        id="tags-free-solo"
+        options={[]} 
+        freeSolo 
+        value={tags} 
+        onChange={handleTagsChange} 
+        renderInput={(params) => (
+          <TextField 
+            {...params}
+            label="Add tags"
+            placeholder="Create a tag..."
+            sx={{
+              "& .MuiInputBase-root": {
+                backgroundColor: "#212121", // <-- changes the background of the actual text box
+                color: "Teal", // <--- changes the color of the text for tag entry
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#00bfa5", // <--changes the border color (when not hovered over)
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#827717",  
+                borderWidth: "2px",      
+                boxShadow: "0 0 8px 2px rgba(130, 119, 23, 0.6)", // <-- found a glowing effect on the input field
+              },
+
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#0d47a1", // <-- changes border color when it is actually clicked on and user is writing (focused)
+              },
+              "& .MuiInputBase-input::placeholder": {
+                color: "white",  // Placeholder color
+              },
+              "& .MuiInputLabel-root": {
+                color: "#00bfa5",  // Change the label color here
+              },
+              "& .MuiAutocomplete-clearIndicator": {
+                color: "#f44336",  // Color for the clear button (red)
+                "&:hover": {
+                  color: "#d32f2f", // Darker red when hovered
+                },
+              }
+
+
+            }}
+            />
+          )}
+          renderTags={(value, getTagProps) => 
+            value.map((option, index) => (
+              <Chip
+                key={index}
+                label={option}
+                {...getTagProps({ index })}
+                sx={{
+                  backgroundColor: "#ffa000", // Background color of each tag (saved tag)
+                  color: "#fff",              // Text color of each tag
+                  margin: "4px",              // Space between tags
+                  "&:hover": {
+                    backgroundColor: "#00796b",  // Darker color on hover
+                  },
+                }}
+              />
+            ))
+          }
+        />
+    </Stack>
+  );
+}
+
+//NOTE: Look up something about a Chip component from mui so i can change the color of the saved tags.

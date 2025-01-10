@@ -3,10 +3,10 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
-import StarRatingButton from './StarRatingButton';
-import WriteReviewButton from './WriteReviewButton';
-import LoveButton from './LoveButton';
+import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
+import LoveButton from '../InteractiveSoloComponents/LoveButton';
+import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
+
 
 
 function MovieInteractions({ title, id }) {
@@ -44,34 +44,18 @@ function MovieInteractions({ title, id }) {
             m: 1,
             },
         }}
-        >
-        
-
-        <ButtonGroup
-            orientation="vertical"
-            aria-label="Vertical button group"
-            sx={{
-                backgroundColor:"rgb(41, 43, 45)",  
-                border: '2px solid teal',     
-                borderRadius: '8px',           
-            }}
-        >
-            {buttons}
-        </ButtonGroup>
-        {/* <ButtonGroup 
-            orientation="vertical"
-            aria-label="Vertical button group"
-            variant="contained"
-        >
-            {buttons}
-        </ButtonGroup> */}
-        {/* <ButtonGroup
-            orientation="vertical"
-            aria-label="Vertical button group"
-            variant="text"
-        >
-            {buttons}
-        </ButtonGroup> */}
+        >      
+            <ButtonGroup
+                orientation="vertical"
+                aria-label="Vertical button group"
+                sx={{
+                    backgroundColor:"rgb(41, 43, 45)",  
+                    border: '2px solid teal',     
+                    borderRadius: '8px',           
+                }}
+            >
+                {buttons}
+            </ButtonGroup>
         </Box>
     </div>
   );

@@ -35,7 +35,6 @@ export default function CreateReview() {
 
     return (
         <>
-            <h1>Welcome to Review Page!</h1>
 
 {/* Test out the Traditional Form, need to add would you watch again */}
                {/* <ReviewForm 

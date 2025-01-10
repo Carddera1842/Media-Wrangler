@@ -7,7 +7,9 @@ import { apiMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import InputTags from "../TagInput/InputTags";
+import InputTags from "../InteractiveSoloComponents/InputTags";
+import { Checkbox } from "@mui/material";
+import RadioButton from '../InteractiveSoloComponents/RadioButton';
 
 // import StarRatingButton from "../MovieInteractions/StarRatingButton";  
 // Couldn't render it properly as a child component inside form, but I think I was passing prop in the wrong direction
@@ -133,22 +135,25 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
             </div>
 {/* Movie Review Form */}
             <form onSubmit={handleSubmit}>              
-              <div className="review-form">
-                <div className="content is-normal">
-                  <h1>{ title } ({ releaseDate })</h1>                  
-                  <p>{ genre.join(", ") }</p>
-                </div>    
+                <div className="review-form">
+                  <div className="form-header">
+                    <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
+                      {title} <span style={{ fontSize: '20px', margin: '0', color: "teal" }}> ({releaseDate}) </span> 
+                    </h3>
+                    <p>{genre.join(", ")}</p>
+                  </div>   
 {/* Movie Watched Date */}
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
-                    <label className="label">Watched </label>
-                  </div>  
+                    <label htmlFor="dateWatched" className="label">Watched : </label>
+                  </div>                  
                   <div className="field-body">
                     <div className="field">
                       <p className="control is-expanded has-icons-left">
                         <input
                           required
-                          className="input is-info"
+                          name="dateWatched"
+                          className="input is-primary"
                           type="date"
                           value={ dateWatched }
                           onChange={(e) => setDateWatched(e.target.value)}
@@ -183,13 +188,12 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                       </div>                        
                     </div>
                   </div>
-                </div>
-                <br />                
+                </div>                               
 {/* Positive Movie Award Dropdown ---> htmlFor replaces the for attribute in React when you aren't wrapping the label around */}
                 <div className="field is-grouped is-grouped-centered">
                   <div className="control">
                     <label className="label has-text-centered" htmlFor="loved-award">
-                      Love It Award:
+                      Loved It Award:
                     </label>
                     <div className="select is-warning">
                     <select
@@ -238,73 +242,66 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                   </div>
                 </div>
               </div>
-              <br />
-{/* Spoiler Checkbox  */}                
-                    <div className="inline-form">
-                      <label className="checkbox">
-                        <input
-                          type="checkbox" 
-                          name="isSpoiler"
-                          value={ isSpoiler }
-                          checked={ isSpoiler } 
-                          onChange={(e) => setSpoiler(e.target.checked)}
-                        />
-                          &nbsp; Does Review Contain Spoilers?
-                      </label>                        
-                    </div>
-                    <br />     
-                  </div>                 
-                  <br />  
-                  <div> 
+{/* Would you watch again Radio buttons  */}              
+<div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <label className="radio-label">
+                      Would You Watch This Movie Again?
+                      <div className="radio-group">
+                        <label className="radio">
+                          <RadioButton
+                            name="watchAgain"
+                            value="yes"
+                            checked={watchAgain === 'yes'}
+                            onChange={(e) => setWatchAgain(e.target.value)}
+                          />
+                          Yes
+                        </label>
+                        <label className="radio">
+                          <RadioButton
+                            name="watchAgain"
+                            value="no"
+                            checked={watchAgain === 'no'}
+                            onChange={(e) => setWatchAgain(e.target.value)}
+                          />
+                          No
+                        </label>
+                      </div>
+                    </label>
+                  </div>
 {/* Comments Text Box */}
-                  <div className="field is-horizontal">
-                    <div className="field-label is-normal">
-                      <label className="label">Review</label>
-                    </div>
-                    <div className="field-body">
+                  <div>
+                   <div className="field-body">
                       <div className="field">
                         <div className="control">
                           <textarea
+                            id="review-comments"
                             required
                             value={ review }
-                            className="textarea"
+                            className="textarea is-success"
                             placeholder="Write your thoughts here ..."
-                            rows="10"
+                            rows="6"
                             onChange={(e) => setReview(e.target.value)}
                           ></textarea>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <br />
-{/* Would you watch again Radio buttons */}
-                  <div>
-                    <label className="radio"> Would You Watch This Movie Again? &nbsp;&nbsp;&nbsp;
-                      <input
-                        type="radio"
-                        name="watchAgain"
-                        value="yes"
-                        checked={watchAgain === 'yes'} 
-                        onChange={(e) => setWatchAgain(e.target.value)} 
+                  </div>                  
+{/*  Spoiler Checkbox */}
+                  <div className="inline-form" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+                    <label className="checkbox" style={{ display: 'flex', alignItems: 'center' }}>
+                      <Checkbox 
+                        name="isSpoiler" 
+                        checked={isSpoiler} 
+                        onChange={(e) => setSpoiler(e.target.checked)} 
                       />
-                      &nbsp; Yes
+                      &nbsp; Does Review Contain Spoilers?
                     </label>
-                    <label className="radio">
-                      <input
-                        type="radio"
-                        name="watchAgain"
-                        value="no"
-                        checked={watchAgain === 'no'} 
-                        onChange={(e) => setWatchAgain(e.target.value)} 
-                      />
-                      &nbsp; No
-                    </label>
-                  </div>
-                  <br />
-{/* Add Tags Section -- unfinished */}
+                  </div>               
 {/* Passing the onTagsChange prop to InputTags Component, then the InputTags handleTagsChange executes  */}
-                  <InputTags onTagsChange={updateTags} />
-                  <br />      
+                  <div>                    
+                    <InputTags onTagsChange={updateTags} className="tag-input-container" />
+                  </div>                  
+                  <br />                 
                   {/* Just a bunch of divs to center the button, I can go in and do some css later for it */}     
                   <div className="field is-horizontal">
                     <div className="field-label"></div>
@@ -313,9 +310,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                       <div className="field-body">
                         <div className="field">
                           <div className="control">
-                            <button className="button is-primary">
-                              Submit Review
-                            </button>
+                          <button className="button is-warning">Submit Review</button>
                           </div>
                         </div>
                       </div>

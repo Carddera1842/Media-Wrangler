@@ -8,8 +8,6 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
-import MovieInteractions from '../MovieInteractions/InteractionsCard';
-
 
 
 
@@ -73,16 +71,10 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
                     <Button onClick={handleWatched}
                         size="small">Watched</Button>
                 </CardActions>
-
-                {/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
-                {/* <StarRating title={ title } id={ id } />
-                <LikeButton title={ title } id={ id } />          */}
-                
-        </Card>
-        <div className="movie-interactions-container">
-           <MovieInteractions title={ title } id={ id } />  
-        </div>
-       
+{/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
+{/* <StarRating title={ title } id={ id } />
+<LikeButton title={ title } id={ id } />          */}                
+        </Card>       
     </div>
   );
 }
