@@ -26,7 +26,7 @@ function App() {
         <Route path="/movies" element={<Movies />}/>
         <Route path="/review" element={<ReviewForm />}/>
         <Route path="/login" element={<Login />}/>
-        <Route path="/search" element={<MovieSearch />}/>
+        <Route path="/search" element={<Search />}/>
         <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/registrationsuccess" element={<registrationSuccess />}/>

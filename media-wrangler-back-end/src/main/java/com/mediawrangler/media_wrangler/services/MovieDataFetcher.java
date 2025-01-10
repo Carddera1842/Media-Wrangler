@@ -42,50 +42,54 @@ public class MovieDataFetcher {
     public static ArrayList<Movie> movieSearch(String searchString) {
         OkHttpClient client = new OkHttpClient();
         ArrayList<Movie> movieArrayList = new ArrayList<>();
-        String apiUrl = "https://api.themoviedb.org/3/search/movie?" + "query=" + searchString + "&include_adult=false&language=en-US&page=1";
 
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .header("Authorization", "Bearer " + API_READ_ACCESS_KEY)
-                .build();
+        for (int i = 1; i < 6; i++) {
+            String apiUrl = "https://api.themoviedb.org/3/search/movie?" + "query=" + searchString + "&include_adult=false&language=en-US&page=" + i;
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                System.out.println("Request failed with status: " + response.code());
-                return null;
-            }
+            Request request = new Request.Builder()
+                    .url(apiUrl)
+                    .header("Authorization", "Bearer " + API_READ_ACCESS_KEY)
+                    .build();
 
-            // parse response and transform into array
-            String responseBody = response.body().string();
-            JSONObject jsonResponse = new JSONObject(responseBody);
-            JSONArray results = jsonResponse.getJSONArray("results");
-
-            // extract details for each movie
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject movieJson = results.getJSONObject(i);
-
-                // Extract the required fields for the Movie object
-                int id = movieJson.getInt("id");
-                String title = movieJson.getString("title");
-                String releaseDate = movieJson.getString("release_date");
-                double rating = movieJson.getDouble("vote_average");
-                String overview = movieJson.getString("overview");
-                String posterPath = movieJson.optString("poster_path", null);
-
-
-                if (posterPath == null || posterPath.isEmpty()) {
-                    posterPath = "no-poster-found.jpg";  // needs image for this, and alt handling in front end
+            try (Response response = client.newCall(request).execute()) {
+                if (!response.isSuccessful()) {
+                    System.out.println("Request failed with status: " + response.code());
+                    return null;
                 }
 
-                Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath);
+                // parse response and transform into array
+                String responseBody = response.body().string();
+                JSONObject jsonResponse = new JSONObject(responseBody);
+                JSONArray results = jsonResponse.getJSONArray("results");
 
-                movieArrayList.add(movie);
+                // extract details for each movie
+                for (int j = 0; j < results.length(); j++) {
+                    JSONObject movieJson = results.getJSONObject(j);
+
+                    // Extract the required fields for the Movie object
+                    int id = movieJson.getInt("id");
+                    String title = movieJson.getString("title");
+                    String releaseDate = movieJson.getString("release_date");
+                    double rating = movieJson.getDouble("vote_average");
+                    String overview = movieJson.getString("overview");
+                    String posterPath = movieJson.optString("poster_path", null);
+
+
+                    if (posterPath == null || posterPath.isEmpty()) {
+                        posterPath = "no-poster-found.jpg";  // needs image for this, and alt handling in front end
+                    }
+
+                    Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath);
+
+                    movieArrayList.add(movie);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
+
 
         return movieArrayList;
     }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MovieCard from "../MoviePosterCard/PosterCard";
 
 function Search() {
     const [movieSearch, setMovieSearch] = useState('');
@@ -12,7 +13,8 @@ function Search() {
         
         try {
             // GET request to the backend API
-            const response = await fetch(`http://localhost:8080/api/movies/search?searchString=${movieSearch}`);
+            const response = await fetch(`http://localhost:8080/api/movies/search?searchString=${movieSearch}`, {
+            });
             
             if (!response.ok) {
                 throw new Error('Movie not found!');
@@ -29,7 +31,7 @@ function Search() {
     };
 
     let searchMessage = ""
-    if (!hasSearched) {
+    if (hasSearched) {
         searchMessage = "No movies found. Try another search!"
     }
 
@@ -47,21 +49,9 @@ function Search() {
             {error && <p>{error}</p>}  {/* Display error message if present */}
 
             {movieData.length > 0 ? (
-                <div>
+                <div id="movie-search">
                     {movieData.map((movie) => (
-                        <div key={movie.id} style={{ marginBottom: '20px' }}>
-                            <h2>{movie.title}</h2>
-                            <p><strong>Release Date:</strong> {movie.releaseDate}</p>
-                            <p><strong>Rating:</strong> {movie.rating}</p>
-                            <p><strong>Overview:</strong> {movie.overview}</p>
-                            {movie.posterPath && (
-                                <img 
-                                    src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`} 
-                                    alt={movie.title}
-                                    style={{ width: '200px' }}
-                                />
-                            )}
-                        </div>
+                        <MovieCard key={movie.id} movie={movie} />
                     ))}
                 </div>
             ) : (

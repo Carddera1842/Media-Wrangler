@@ -12,6 +12,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +26,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         http.csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Set up CORS from custom configuration
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login", "/", "/movies", "/reviews/create").permitAll()  // Allow GET requests to API
+                        .requestMatchers("/users/register", "/users/login", "/", "/movies", "/reviews/create", "/api/movies/search").permitAll()  // Allow GET requests to API
                         .requestMatchers("/api/users/register", "/api/users/login").permitAll() // Allow register/login
                         .anyRequest().authenticated()  // Secure other requests
                 );

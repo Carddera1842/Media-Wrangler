@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import MovieCard from "./MoviePosterCard/PosterCard";
 
 function MovieSearch() {
     const [movieSearch, setMovieSearch] = useState('');
     const [movieData, setMovieData] = useState([]);
     const [error, setError] = useState(null);
+    const [hasSearched, setHasSearched] = useState(false);
 
     const handleSearch = async () => {
         setMovieData([]); // Reset previous movie data before making a new request
@@ -11,7 +13,8 @@ function MovieSearch() {
         
         try {
             // GET request to the backend API
-            const response = await fetch(`http://localhost:8080/api/movies/search?searchString=${movieSearch}`);
+            const response = await fetch(`http://localhost:8080/api/movies/search?searchString=${movieSearch}`, {
+            });
             
             if (!response.ok) {
                 throw new Error('Movie not found!');
@@ -27,6 +30,11 @@ function MovieSearch() {
         }
     };
 
+    let searchMessage = ""
+    if (hasSearched) {
+        searchMessage = "No movies found. Try another search!"
+    }
+
     return (
         <div>
             <h1>Search for Movies</h1>
@@ -41,25 +49,13 @@ function MovieSearch() {
             {error && <p>{error}</p>}  {/* Display error message if present */}
 
             {movieData.length > 0 ? (
-                <div>
+                <div id="movie-search">
                     {movieData.map((movie) => (
-                        <div key={movie.id} style={{ marginBottom: '20px' }}>
-                            <h2>{movie.title}</h2>
-                            <p><strong>Release Date:</strong> {movie.releaseDate}</p>
-                            <p><strong>Rating:</strong> {movie.rating}</p>
-                            <p><strong>Overview:</strong> {movie.overview}</p>
-                            {movie.posterPath && (
-                                <img 
-                                    src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`} 
-                                    alt={movie.title}
-                                    style={{ width: '200px' }}
-                                />
-                            )}
-                        </div>
+                        <MovieCard key={movie.id} movie={movie} />
                     ))}
                 </div>
             ) : (
-                <p>No movies found. Try another search!</p>
+                <p>{searchMessage}</p>
             )}
         </div>
     );
