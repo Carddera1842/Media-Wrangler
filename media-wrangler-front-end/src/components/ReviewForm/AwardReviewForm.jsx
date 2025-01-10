@@ -10,6 +10,8 @@ import Stack from '@mui/material/Stack';
 import InputTags from "../InteractiveSoloComponents/InputTags";
 import { Checkbox } from "@mui/material";
 import RadioButton from '../InteractiveSoloComponents/RadioButton';
+import AwardEnum from "../enums/AwardEnum";
+
 
 // import StarRatingButton from "../MovieInteractions/StarRatingButton";  
 // Couldn't render it properly as a child component inside form, but I think I was passing prop in the wrong direction
@@ -33,19 +35,9 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
  
   const navigate = useNavigate();
 
-  //NOTE: Should I make these an Enum Class? I should 
-  const lovedAwards = [
-    { id: 1, value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
-    { id: 2, value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
-    { id: 3, value: "whiskey-shot", label: "Whiskey Shot Worthy", description: "Satisfyingly smooth – worth raising a glass!", icon: "🥃" },
-];
+  const lovedAwards = Object.values(AwardEnum.loved);
+  const hatedAwards = Object.values(AwardEnum.hated);
 
-  const hatedAwards = [
-    { id: 1, value: "dusty-trails", label: "Dusty Trails", description: "For a movie that was a long, boring journey.", icon: "👎" },
-    { id: 2, value: "snake-oil", label: "Snake Oil", description: "All show, no substance.", icon: "💔" },
-    { id: 3, value: "cactus-hugger", label: "Cactus Hugger", description: "A prickly, uncomfortable experience.", icon: "🌵" },
-  ];
- 
   function handleHatedAward(e){
     setHatedAward(e.target.value);
     setAward(e.target.value);
@@ -74,8 +66,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
   async function handleSubmit(e) {
       e.preventDefault();
      
-      if(!dateWatched) {
-        alert("You must pick a Date Watched to log in journal.");
+      if(!dateWatched) {    
+        alert("You must pick a Date Watched to log in your journal.");
         return;
       }
       if(!review){
@@ -151,7 +143,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                     <div className="field">
                       <p className="control is-expanded has-icons-left">
                         <input
-                          required
+                      
                           name="dateWatched"
                           className="input is-primary"
                           type="date"
@@ -217,7 +209,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                   type="button"
                   onClick={resetAwards}
                 >
-                  VS <br /> RESET
+                  <br />RESET<br />🆚
                 </button>                    
 {/* Negative Movie Award Dropdown */}
                 <div className="control">
@@ -299,7 +291,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                   </div>               
 {/* Passing the onTagsChange prop to InputTags Component, then the InputTags handleTagsChange executes  */}
                   <div>                    
-                    <InputTags onTagsChange={updateTags} className="tag-input-container" />
+                    <InputTags onTagsChange={updateTags} />
                   </div>                  
                   <br />                 
                   {/* Just a bunch of divs to center the button, I can go in and do some css later for it */}     
