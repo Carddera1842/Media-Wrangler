@@ -1,21 +1,14 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
 import { apiMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
 import InputTags from "../InteractiveSoloComponents/InputTags";
 import { Checkbox } from "@mui/material";
 import RadioButton from '../InteractiveSoloComponents/RadioButton';
 import AwardEnum from "../enums/AwardEnum";
-
-
-// import StarRatingButton from "../MovieInteractions/StarRatingButton";  
-// Couldn't render it properly as a child component inside form, but I think I was passing prop in the wrong direction
-// Check out again, follow steps as I did in Tags input
+import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 
 
 function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
@@ -67,7 +60,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
       e.preventDefault();
      
       if(!dateWatched) {    
-        alert("You must pick a Date Watched to log in your journal.");
+        alert("You must pick a date watched to log in your journal.");
         return;
       }
       if(!review){
@@ -77,6 +70,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
         alert("You must rate the movie.");
         return;
       }
+
+      //TODO: Adjust this alert/confirm depending on how the spoilers input is executed
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
         if(submission === false) {
@@ -101,7 +96,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
 
       alert("Thank you for your submission!");
       console.log(movieReviewData);
-      console.log(isSpoiler); //TODO: once spoiler is logging right in database, remove this
+    
 
       try {
         const responseMessage = await apiMovieReview(movieReviewData); 
@@ -121,11 +116,9 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
     return (
         <>
           <div className="review-container">
-{/* Movie Poster Image */}
             <div className="poster">
               <img src={ poster } ></img>
             </div>
-{/* Movie Review Form */}
             <form onSubmit={handleSubmit}>              
                 <div className="review-form">
                   <div className="form-header">
@@ -134,108 +127,89 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                     </h3>
                     <p>{genre.join(", ")}</p>
                   </div>   
-{/* Movie Watched Date */}
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label htmlFor="dateWatched" className="label">Watched : </label>
-                  </div>                  
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control is-expanded has-icons-left">
-                        <input
-                      
-                          name="dateWatched"
-                          className="input is-primary"
-                          type="date"
-                          value={ dateWatched }
-                          onChange={(e) => setDateWatched(e.target.value)}
-                        />
-                        <span className="icon is-small is-left">
-                          <i className="fas fa-user"></i>
-                        </span>
-                      </p>
+                  <div className="field is-horizontal">
+                    <div className="field-label is-normal">
+                      <label htmlFor="dateWatched" className="label">Watched : </label>
+                    </div>                  
+                    <div className="field-body">
+                      <div className="field">
+                        <p className="control is-expanded has-icons-left">
+                          <input
+                            required
+                            name="dateWatched"
+                            className="input is-primary"
+                            type="date"
+                            value={ dateWatched }
+                            onChange={(e) => setDateWatched(e.target.value)}
+                          />
+                          <span className="icon is-small is-left">
+                            <i className="fas fa-user"></i>
+                          </span>
+                        </p>
+                      </div>
+                      <div className="field">
+                        <div className="field-label is-normal">
+                          <StarRatingButton
+                            name="half-rating" 
+                            defaultValue={0} 
+                            precision={0.5} 
+                            onChange={(e) => setRating(e.target.value)}
+                          />
+                        </div>                        
+                      </div>
                     </div>
-                    <div className="field">
-                      <div className="field-label is-normal">
-{/* MUI star rating -- couldn't get the StarRatingButton to render here */}
-                        <Stack spacing={1} direction="row" >
-                          <Rating 
-                              name="half-rating" 
-                              defaultValue={0} 
-                              precision={0.5} 
-                              onChange={(e) => setRating(e.target.value)}
-                              sx={{
-                                '& .MuiRating-iconFilled': {
-                                    color: '#ff9800', // Color for filled stars (e.g., amber)
-                                },
-                                '& .MuiRating-iconEmpty': {
-                                    color: '#e0e0e0', // Color for empty stars (e.g., light gray)
-                                },
-                                '& .MuiRating-iconHover': {
-                                    color: '#ffcc00', // Hover color for stars (e.g., yellow)
-                                },
-                            }}
-                          />      
-                        </Stack>
-                      </div>                        
+                  </div>                             
+                  <div className="field is-grouped is-grouped-centered">
+                    <div className="control">
+                      <label className="label has-text-centered" htmlFor="loved-award">
+                        Loved It Award:
+                      </label>
+                      <div className="select is-warning">
+                        <select
+                          id="loved-award"
+                          name="loved-award"
+                          value={lovedAward}
+                          onChange={handleLovedAward}
+                          disabled={isLovedDisabled}
+                        >
+                          <option value="">-- Select an Award --</option>
+                          {lovedAwards.map((award) => (
+                          <option key={award.id} value={award.value} title={award.description}>
+                              {award.icon} {award.label}
+                          </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                </div>                               
-{/* Positive Movie Award Dropdown ---> htmlFor replaces the for attribute in React when you aren't wrapping the label around */}
-                <div className="field is-grouped is-grouped-centered">
-                  <div className="control">
-                    <label className="label has-text-centered" htmlFor="loved-award">
-                      Loved It Award:
-                    </label>
-                    <div className="select is-warning">
-                    <select
-                      id="loved-award"
-                      name="loved-award"
-                      value={lovedAward}
-                      onChange={handleLovedAward}
-                      disabled={isLovedDisabled}
+                    <button className="is-centered"
+                      type="button"
+                      onClick={resetAwards}
                     >
-                      <option value="">-- Select an Award --</option>
-                      {lovedAwards.map((award) => (
-                      <option key={award.id} value={award.value} title={award.description}>
-                          {award.icon} {award.label}
-                      </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-{/*Reset Button for dropdowns */}
-                <button className="is-centered"
-                  type="button"
-                  onClick={resetAwards}
-                >
-                  <br />RESET<br />🆚
-                </button>                    
-{/* Negative Movie Award Dropdown */}
-                <div className="control">
-                    <label className="label has-text-centered" htmlFor="hated-award">
-                      Hated It Award:
-                    </label>
-                    <div className="select is-warning">
-                    <select
-                      id="hated-award"
-                      name="hated-award"
-                      value={hatedAward}
-                      onChange={handleHatedAward}
-                      disabled={isHatedDisabled}
-                    >
-                      <option value="">-- Select an Award --</option>
-                      {hatedAwards.map((award) => (
-                      <option key={award.id} value={award.value} title={award.description}>
-                          {award.icon} {award.label}
-                      </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-{/* Would you watch again Radio buttons  */}              
-<div style={{ textAlign: 'center', marginTop: '20px' }}>
+                      <br />RESET<br />🆚
+                    </button>                    
+                    <div className="control">
+                      <label className="label has-text-centered" htmlFor="hated-award">
+                        Hated It Award:
+                      </label>
+                      <div className="select is-warning">
+                        <select
+                          id="hated-award"
+                          name="hated-award"
+                          value={hatedAward}
+                          onChange={handleHatedAward}
+                          disabled={isHatedDisabled}
+                        >
+                          <option value="">-- Select an Award --</option>
+                          {hatedAwards.map((award) => (
+                          <option key={award.id} value={award.value} title={award.description}>
+                              {award.icon} {award.label}
+                          </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>           
+                  <div style={{ textAlign: 'center', marginTop: '20px' }}>
                     <label className="radio-label">
                       Would You Watch This Movie Again?
                       <div className="radio-group">
@@ -246,7 +220,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                             checked={watchAgain === 'yes'}
                             onChange={(e) => setWatchAgain(e.target.value)}
                           />
-                          Yes
+                            Yes
                         </label>
                         <label className="radio">
                           <RadioButton
@@ -255,12 +229,11 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                             checked={watchAgain === 'no'}
                             onChange={(e) => setWatchAgain(e.target.value)}
                           />
-                          No
+                            No
                         </label>
                       </div>
                     </label>
                   </div>
-{/* Comments Text Box */}
                   <div>
                    <div className="field-body">
                       <div className="field">
@@ -278,7 +251,6 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                       </div>
                     </div>
                   </div>                  
-{/*  Spoiler Checkbox */}
                   <div className="inline-form" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
                     <label className="checkbox" style={{ display: 'flex', alignItems: 'center' }}>
                       <Checkbox 
@@ -286,15 +258,13 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                         checked={isSpoiler} 
                         onChange={(e) => setSpoiler(e.target.checked)} 
                       />
-                      &nbsp; Does Review Contain Spoilers?
+                        &nbsp; Does Review Contain Spoilers?
                     </label>
                   </div>               
-{/* Passing the onTagsChange prop to InputTags Component, then the InputTags handleTagsChange executes  */}
                   <div>                    
                     <InputTags onTagsChange={updateTags} />
                   </div>                  
-                  <br />                 
-                  {/* Just a bunch of divs to center the button, I can go in and do some css later for it */}     
+                  <br />               
                   <div className="field is-horizontal">
                     <div className="field-label"></div>
                     <div className="field-label"></div>
@@ -302,7 +272,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                       <div className="field-body">
                         <div className="field">
                           <div className="control">
-                          <button className="button is-warning">Submit Review</button>
+                            <button className="button is-warning">Submit Review</button>
                           </div>
                         </div>
                       </div>

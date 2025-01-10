@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { teal } from '@mui/material/colors';
 import Radio from '@mui/material/Radio';
+import PropTypes from 'prop-types';
 
 export default function ColorRadioButtons({ name, value, checked, onChange }) {
     return (
@@ -10,11 +10,19 @@ export default function ColorRadioButtons({ name, value, checked, onChange }) {
         checked={checked}
         onChange={onChange}
         sx={{
-          color: teal[800],
+          color: "#0d47a1",
           '&.Mui-checked': {
-            color: teal[300],
+            color: "#2196f3",
           },
         }}
       />
     );
   }
+
+  //TODO: Add props validation
+ColorRadioButtons.propTypes = {
+  name: PropTypes.string.isRequired,  
+  value: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired, 
+};
