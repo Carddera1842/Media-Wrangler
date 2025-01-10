@@ -3,21 +3,14 @@ import DrawIcon from '@mui/icons-material/Draw';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
 
-function WriteReviewButton({ title, id }) {
+function WriteReviewButton({ title, id, onClick }) {
 
-    const [isClicked, setClicked] = useState(false);
 
-    function handleClick() {
-        setClicked(true);
-        console.log("user wants to write a review");
-    }
 
   return (
     <div>
         <IconButton 
-            onClick={handleClick}
-            // onMouseOver={handleMouseOver} 
-            // onMouseOut={handleMouseOut}
+            onClick={ onClick }
         >     
             <DrawIcon 
                 sx={{
@@ -25,10 +18,6 @@ function WriteReviewButton({ title, id }) {
                 }} 
             />
         </IconButton>  
-        
-        {/* NOTE: Leaving here to keep an eye on functionality for now-- especially if adding more props */}
-        {/* <p>{(isClicked === true ? `Write ${title}(${id}) a Review!` : null )}</p>     */}
-
     </div>
   )
 }
@@ -37,7 +26,8 @@ export default WriteReviewButton
 
 WriteReviewButton.propTypes = {
     id: PropTypes.number,
-    title: PropTypes.string
+    title: PropTypes.string, 
+    onClick: PropTypes.func.isRequired
 }
 
 /*

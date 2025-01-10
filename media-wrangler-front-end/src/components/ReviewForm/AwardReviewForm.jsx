@@ -288,8 +288,7 @@ export default AwardReviewForm;
 AwardReviewForm.propTypes = {
     movieId: PropTypes.number,
     title: PropTypes.string,
-    releaseDate: PropTypes.string, 
-    overview: PropTypes.string, 
+    releaseDate: PropTypes.string,  
     poster: PropTypes.string,
     genre: PropTypes.array
 }

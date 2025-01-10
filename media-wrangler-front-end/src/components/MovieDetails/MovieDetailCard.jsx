@@ -8,10 +8,11 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
+import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
 
 
 
-function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
+function MovieDetailCard({ title, releaseDate, overview, poster, movieId }) {
 
   //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
 
@@ -74,7 +75,8 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
 {/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
 {/* <StarRating title={ title } id={ id } />
 <LikeButton title={ title } id={ id } />          */}                
-        </Card>       
+        </Card>  
+        <InteractionsCard />     
     </div>
   );
 }
@@ -82,7 +84,7 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
 export default MovieDetailCard;
 
 MovieDetailCard.propTypes = {
-    id: PropTypes.number,
+    movieId: PropTypes.number,
     title: PropTypes.string,
     releaseDate: PropTypes.string, 
     overview: PropTypes.string, 

@@ -19,7 +19,8 @@ export default function ColorRadioButtons({ name, value, checked, onChange }) {
     );
   }
 
-  //TODO: Add props validation
+  
+//TODO: Add props validation
 ColorRadioButtons.propTypes = {
   name: PropTypes.string.isRequired,  
   value: PropTypes.string.isRequired,

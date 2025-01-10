@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
@@ -6,34 +6,75 @@ import PropTypes from 'prop-types';
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import LoveButton from '../InteractiveSoloComponents/LoveButton';
 import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
+import { useNavigate } from "react-router-dom";
 
 
 
-function MovieInteractions({ title, id }) {
-  
-  
+
+function InteractionsCard({ title, movieId }) {
+
+    const [rating, setRating] = useState(0);
+    const [isLiked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
+    
+
+    const navigate = useNavigate();
+
+    function handleLikeClick() {
+        setLiked(!isLiked); // Toggle isLiked
+        if (isLiked) {
+            setLikeCount(likeCount - 1); // Decrease likeCount if it was liked
+        } else {
+            setLikeCount(likeCount + 1); // Increase likeCount if it wasn't liked
+        }
+    }
+
+    function handleWriteReviewClick() {
+        navigate("/reviews/create");
+        console.log("user wants to write a review");
+    }
+      
+    
     const buttons = [
         <Button key="one" className="button-container">
             <div className="button-content">
                 <span className="button-label">Rate:</span>
-                <StarRatingButton title={ title } id={ id }/>
+                <StarRatingButton
+                    name="half-rating" 
+                    title={ title }
+                    movieId={ movieId }
+                    defaultValue={0} 
+                    precision={0.5} 
+                    onChange={(e) => setRating(e.target.value)}
+                />
+                <p>{rating}</p>
             </div>
         </Button>,
         <Button key="two" className="button-container">
             <div className="button-content">
                 <span className="button-label">Like:</span>
-                <LoveButton title={ title } id={ id } />
+                <LoveButton 
+                    name="like-button"
+                    title={ title } 
+                    movieId={ movieId } 
+                    value={ isLiked }                    
+                    onClick={ handleLikeClick }                   
+                />
+                    <p>{likeCount}</p>
             </div>
         </Button>,
         <Button key="three" className="button-container">
             <div className="button-content">
                 <span className="button-label">Write Review:</span>
-                <WriteReviewButton title={ title } id={ id } />
+                <WriteReviewButton 
+                    name="write-review"
+                    title={ title } 
+                    movieId={ movieId }
+                    onClick={ handleWriteReviewClick }  
+                />
             </div>
         </Button>
     ];
-       
-    //NOTE: We can pick if there is a style out of the three we like better & changes to css can be altered to match our color scheme
     
     return (
       <div >
@@ -50,7 +91,6 @@ function MovieInteractions({ title, id }) {
                 aria-label="Vertical button group"
                 sx={{
                     backgroundColor:"rgb(41, 43, 45)",  
-                    border: '2px solid teal',     
                     borderRadius: '8px',           
                 }}
             >
@@ -61,9 +101,20 @@ function MovieInteractions({ title, id }) {
   );
 }
 
-export default MovieInteractions;
+export default InteractionsCard;
 
-MovieInteractions.propTypes = {
-    id: PropTypes.number,
+InteractionsCard.propTypes = {
+    movieId: PropTypes.number,
     title: PropTypes.string
 }
+
+
+/* --- FUNCTIONALITY CHECK LIST:---
+
+** StarRatingButton: it is setting the users rating correctly, not sure if title and movieId are working it 
+
+** LovedButton: clicking adds or removes to the liked count. The heart goes from gray to red when liked or not. 
+
+** WriteReviewButton: With a double click, it takes user to "/reviews/create"
+
+*/

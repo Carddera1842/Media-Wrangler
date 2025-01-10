@@ -3,7 +3,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import PropTypes from 'prop-types';
 
-export default function StarRatingButton({ defaultValue, precision, onChange, name, id, title } ) {
+export default function StarRatingButton({ defaultValue, precision, onChange, name, movieId, title } ) {
 
   return (
     <>    
@@ -30,7 +30,15 @@ export default function StarRatingButton({ defaultValue, precision, onChange, na
   );
 }
 
+
+//TODO: Add props validation -- believe I must require title and movieId for proper storage in database
+//Actually, I think that these (movieId, title) would be set in the interactionsCard.jsx and don't need to be here
 StarRatingButton.propTypes = {
-    id: PropTypes.number,
-    title: PropTypes.string
-}
+  name: PropTypes.string.isRequired,  
+  defaultValue: PropTypes.string.isRequired,
+  precision: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired, 
+  movieId: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired
+};
+

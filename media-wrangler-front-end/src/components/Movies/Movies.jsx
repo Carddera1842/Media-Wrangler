@@ -52,10 +52,7 @@ export default function Movies() {
                 poster={ movies[1].poster } 
                 releaseDate={ movies[1].releaseDate }
                 overview={ movies[1].overview } 
-            />
-
-            <InteractionsCard />
-    
+            />    
         </>
         
 
