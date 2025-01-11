@@ -83,11 +83,11 @@ export default function InputTags({ onTagsChange }) {
                 label={ option }
                 {...getTagProps({ index })}
                 sx={{
-                  backgroundColor: "#ffa000", 
+                  backgroundColor: "#00838f", 
                   color: "#fff",             
                   margin: "4px",             
                   "&:hover": {
-                    backgroundColor: "#00796b",  
+                    backgroundColor: "#ffb300",  
                   },
                 }}
               />

@@ -1,0 +1,16 @@
+
+
+.spoiler-alert {
+    font-size: 16px;
+    color: #d50000; 
+    display: flex;
+    padding: 5px;
+}
+
+.user-review {
+    margin: 15px;
+}
+
+.movie-info-container {
+    padding: 15px;  
+}

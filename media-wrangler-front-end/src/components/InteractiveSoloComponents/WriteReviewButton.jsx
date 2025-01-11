@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import DrawIcon from '@mui/icons-material/Draw';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
+import EditIcon from '@mui/icons-material/Edit';
+import Fab from '@mui/material/Fab';
 
 function WriteReviewButton({ title, id, onClick }) {
 
@@ -11,12 +13,10 @@ function WriteReviewButton({ title, id, onClick }) {
     <div>
         <IconButton 
             onClick={ onClick }
-        >     
-            <DrawIcon 
-                sx={{
-                    fontSize: "40px"
-                }} 
-            />
+        >   
+            <Fab color="primary" aria-label="edit">
+                <EditIcon />
+            </Fab>  
         </IconButton>  
     </div>
   )

@@ -1,97 +1,50 @@
-/* 
-  I just googled some styling to get a visual going, but we can adjust once everything is functional and we are beautifying things
-  I think that I need to rename the css files that are for the specific components. I remember something about adding module into, maybe?
-  Helps with scope issues if I am correct. Once we get ready to style I can go back through and update it all 
-*/
+label {
+  color: white;
+}
 
-/* .poster-review-container {
+.paper-container {
+  display: flex;
+  justify-content: center;
   align-items: center;
+  min-height: 50vh; 
 }
-
-.review-container {
-  display: flex;
-  justify-content: space-between; 
-  align-items: center; 
-  gap: 20px; 
-  margin: 50px;
-}
-
-.poster {
-  flex: 0 0 30%; 
-  max-width: 600px; 
-  max-height: 700px;
-}
-
-.poster img {
-  width: 100%; 
-  height: auto; 
-  border-radius: 8px; 
-}
-
-.review-form {
-  flex: 1;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column; 
-}
-
-.checkbox {
-  margin-left: 20px; 
-}
-
-.radio {
-  margin-left: 20px;
-} */
-
-
-
 
 .review-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   gap: 20px;
   border: 2px solid white;
+  padding: 10px;
 }
 
 .poster {
   flex: 0 1 auto;
   max-width: 300px;
+  margin: 10px;
 }
 
 form {
   flex: 1 1 500px;
   max-width: 600px;
-}
-
-@media (max-width: 768px) {
-  .review-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .poster {
-    max-width: 100%;
-  }
-
-  form {
-    max-width: 100%;
-  }
+  max-height: auto;
 }
 
 .review-form {
   width: 100%;
+  padding: 10px;
 }
 
 .form-header {
   text-align: center;
-  margin-bottom: 20px; /* Adds space between the header and the rest of the form */
+  margin-bottom: 20px; 
 }
 
 .form-header h3,
 .form-header p {
-  margin: 0; /* Removes default margin */
+  margin: 0; 
+  color: white;
 }
+
 
 
