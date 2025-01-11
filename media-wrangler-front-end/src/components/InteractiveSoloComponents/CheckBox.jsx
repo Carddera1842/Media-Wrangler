@@ -2,16 +2,16 @@ import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import PropTypes from 'prop-types';
 
-const label = { inputProps: { 'aria-label': 'Does review contain spoilers?' } };
+const label = { inputProps: { 'aria-label': 'Does review contain spoilers?' } }; //<--- was with the code from mui, allows for screen readers to pick up what input is
 
 export default function ColorCheckboxes({ name, value, checked, onChange }) {
   return (
     <div>
       <Checkbox
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
+        name={ name }
+        value={ value }
+        checked={ checked }
+        onChange={ onChange }
         {...label}
         sx={{
           color: "#0d47a1", 
@@ -24,7 +24,6 @@ export default function ColorCheckboxes({ name, value, checked, onChange }) {
   );
 }
 
-//TODO: Add props validation
 ColorCheckboxes.propTypes = {
   name: PropTypes.string.isRequired,  
   value: PropTypes.string.isRequired,

@@ -11,27 +11,29 @@ import { useNavigate } from "react-router-dom";
 
 
 
-function InteractionsCard({ title, movieId }) {
+
+function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
 
     const [rating, setRating] = useState(0);
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     
-
     const navigate = useNavigate();
 
     function handleLikeClick() {
-        setLiked(!isLiked); // Toggle isLiked
+        setLiked(!isLiked); 
         if (isLiked) {
-            setLikeCount(likeCount - 1); // Decrease likeCount if it was liked
+            setLikeCount(likeCount - 1); 
         } else {
-            setLikeCount(likeCount + 1); // Increase likeCount if it wasn't liked
+            setLikeCount(likeCount + 1); 
         }
     }
 
+    //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
-        navigate("/reviews/create");
-        console.log("user wants to write a review");
+        navigate("/reviews/create", {
+            state: { title, movieId, poster, releaseDate, genre }  
+        });
     }
       
     
@@ -47,7 +49,7 @@ function InteractionsCard({ title, movieId }) {
                     precision={0.5} 
                     onChange={(e) => setRating(e.target.value)}
                 />
-                <p>{rating}</p>
+                <p>{ rating } for { title }</p>
             </div>
         </Button>,
         <Button key="two" className="button-container">
@@ -60,7 +62,7 @@ function InteractionsCard({ title, movieId }) {
                     value={ isLiked }                    
                     onClick={ handleLikeClick }                   
                 />
-                    <p>{likeCount}</p>
+                    <p>{ likeCount } for { title }</p>
             </div>
         </Button>,
         <Button key="three" className="button-container">
@@ -72,6 +74,7 @@ function InteractionsCard({ title, movieId }) {
                     movieId={ movieId }
                     onClick={ handleWriteReviewClick }  
                 />
+                <p>Review { title }</p>
             </div>
         </Button>
     ];
@@ -109,7 +112,7 @@ InteractionsCard.propTypes = {
 }
 
 
-/* --- FUNCTIONALITY CHECK LIST:---
+/* --- FUNCTIONALITY CHECK LIST:--- >>> The title is being passed to the components from the movie object, but struggling for the id still <<<
 
 ** StarRatingButton: it is setting the users rating correctly, not sure if title and movieId are working it 
 

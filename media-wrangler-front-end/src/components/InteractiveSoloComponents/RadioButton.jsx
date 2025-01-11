@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 export default function ColorRadioButtons({ name, value, checked, onChange }) {
     return (
       <Radio
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
+        name={ name }
+        value={ value }
+        checked={ checked }
+        onChange={ onChange }
         sx={{
           color: "#0d47a1",
           '&.Mui-checked': {

@@ -11,7 +11,7 @@ import AwardEnum from "../enums/AwardEnum";
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 
 
-function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
+function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -30,6 +30,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
 
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
+
+  const yearReleased = new Date(releaseDate).getFullYear();
 
   function handleHatedAward(e){
     setHatedAward(e.target.value);
@@ -95,7 +97,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
       }
 
       alert("Thank you for your submission!");
-      console.log(movieReviewData);
+      console.log("Submitting review for: ", title + "(" + movieId + ")", "New review object: ", movieReviewData);
     
 
       try {
@@ -119,13 +121,13 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
             <div className="poster">
               <img src={ poster } ></img>
             </div>
-            <form onSubmit={handleSubmit}>              
+            <form onSubmit={ handleSubmit }>              
                 <div className="review-form">
                   <div className="form-header">
                     <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
-                      {title} <span style={{ fontSize: '20px', margin: '0', color: "teal" }}> ({releaseDate}) </span> 
+                      { title } <span style={{ fontSize: '20px', margin: '0', color: "teal" }}> ({ yearReleased }) </span> 
                     </h3>
-                    <p>{genre.join(", ")}</p>
+                    <p>{ genre.join(", ") }</p>
                   </div>   
                   <div className="field is-horizontal">
                     <div className="field-label is-normal">
@@ -140,7 +142,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                             className="input is-primary"
                             type="date"
                             value={ dateWatched }
-                            onChange={(e) => setDateWatched(e.target.value)}
+                            onChange={ (e) => setDateWatched(e.target.value) }
                           />
                           <span className="icon is-small is-left">
                             <i className="fas fa-user"></i>
@@ -151,9 +153,9 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                         <div className="field-label is-normal">
                           <StarRatingButton
                             name="half-rating" 
-                            defaultValue={0} 
-                            precision={0.5} 
-                            onChange={(e) => setRating(e.target.value)}
+                            defaultValue={ 0 } 
+                            precision={ 0.5 } 
+                            onChange={ (e) => setRating(e.target.value) }
                           />
                         </div>                        
                       </div>
@@ -168,14 +170,14 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                         <select
                           id="loved-award"
                           name="loved-award"
-                          value={lovedAward}
-                          onChange={handleLovedAward}
-                          disabled={isLovedDisabled}
+                          value={ lovedAward }
+                          onChange={ handleLovedAward }
+                          disabled={ isLovedDisabled }
                         >
                           <option value="">-- Select an Award --</option>
-                          {lovedAwards.map((award) => (
-                          <option key={award.id} value={award.value} title={award.description}>
-                              {award.icon} {award.label}
+                          { lovedAwards.map((award) => (
+                          <option key={ award.id } value={ award.value } title={ award.description }>
+                              { award.icon } { award.label }
                           </option>
                           ))}
                         </select>
@@ -183,7 +185,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                     </div>
                     <button className="is-centered"
                       type="button"
-                      onClick={resetAwards}
+                      onClick={ resetAwards }
                     >
                       <br />RESET<br />🆚
                     </button>                    
@@ -195,14 +197,14 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                         <select
                           id="hated-award"
                           name="hated-award"
-                          value={hatedAward}
-                          onChange={handleHatedAward}
-                          disabled={isHatedDisabled}
+                          value={ hatedAward }
+                          onChange={ handleHatedAward }
+                          disabled={ isHatedDisabled }
                         >
                           <option value="">-- Select an Award --</option>
-                          {hatedAwards.map((award) => (
-                          <option key={award.id} value={award.value} title={award.description}>
-                              {award.icon} {award.label}
+                          { hatedAwards.map((award) => (
+                          <option key={ award.id } value={ award.value } title={ award.description }>
+                              { award.icon } { award.label }
                           </option>
                           ))}
                         </select>
@@ -217,8 +219,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                           <RadioButton
                             name="watchAgain"
                             value="yes"
-                            checked={watchAgain === 'yes'}
-                            onChange={(e) => setWatchAgain(e.target.value)}
+                            checked={ watchAgain === 'yes' }
+                            onChange={ (e) => setWatchAgain(e.target.value) }
                           />
                             Yes
                         </label>
@@ -226,8 +228,8 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                           <RadioButton
                             name="watchAgain"
                             value="no"
-                            checked={watchAgain === 'no'}
-                            onChange={(e) => setWatchAgain(e.target.value)}
+                            checked={ watchAgain === 'no' }
+                            onChange={ (e) => setWatchAgain(e.target.value) }
                           />
                             No
                         </label>
@@ -245,7 +247,7 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                             className="textarea is-success"
                             placeholder="Write your thoughts here ..."
                             rows="6"
-                            onChange={(e) => setReview(e.target.value)}
+                            onChange={ (e) => setReview(e.target.value) }
                           ></textarea>
                         </div>
                       </div>
@@ -255,14 +257,14 @@ function AwardReviewForm({title, genre, releaseDate, poster, movieId }) {
                     <label className="checkbox" style={{ display: 'flex', alignItems: 'center' }}>
                       <Checkbox 
                         name="isSpoiler" 
-                        checked={isSpoiler} 
-                        onChange={(e) => setSpoiler(e.target.checked)} 
+                        checked={ isSpoiler } 
+                        onChange={ (e) => setSpoiler(e.target.checked) } 
                       />
                         &nbsp; Does Review Contain Spoilers?
                     </label>
                   </div>               
                   <div>                    
-                    <InputTags onTagsChange={updateTags} />
+                    <InputTags onTagsChange={ updateTags } />
                   </div>                  
                   <br />               
                   <div className="field is-horizontal">

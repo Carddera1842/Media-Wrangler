@@ -31,12 +31,16 @@ WriteReviewButton.propTypes = {
 }
 
 /*
-TODO: FIGURE THIS ONE OUT ONCE SQL IS TRACKING EVERYTHING:
-NOTE: Eventually, I want to figure out how I will check to see if user has already written a one for a movie. Maybe when "review" 
-is submitted we can update a state variable that can then be used for conditional rendering of "write review" and "edit review" 
----OR---
-Some function/SQL search that checks the database and searches for the movie id in the user/review table. If found, "edit review" renders
-Maybe both, IDK yet... 
+
+NOTE:   I believe that maybe the location.state can be used to pass the username and userId down to the MovieReviewForm and InteractionsCard to help store 
+        their data properly. 
+
+        if we use the location tracker and nothing is returned, then that means that a user is not logged in -- at which point I can have an alert that tells 
+        the they must login to use those features (or register if they have not already)
+
+NOTE:   I will probably need to have a table for ratings and likes in addition to the reviews table. Some users will not want to write full 
+        reviews and this will help keep track of the stats on the movies, and can still be mappedBy the user_id
+
  */
 
 

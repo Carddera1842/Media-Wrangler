@@ -3,6 +3,7 @@ import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Chip } from "@mui/material";
+import PropType from 'prop-types';
 
 
 /* 
@@ -17,7 +18,7 @@ import { Chip } from "@mui/material";
 
 //onTagsChange is passed down to the child TagInput
 //TODO: Add prop validation for onTagsChange
-export default function TagInput({ onTagsChange }) {
+export default function InputTags({ onTagsChange }) {
   const [tags, setTags] = useState([]); 
 
   //function is triggered, and the inputs are trimmed of whitespaces, updated local tags state and then the trimmed tags are passed to the parent component (AwardMovieReview) and sets them.
@@ -28,14 +29,14 @@ export default function TagInput({ onTagsChange }) {
 };
 
   return (
-    <Stack spacing={3} sx={{ width: 500 }}>
+    <Stack spacing={ 3 } sx={{ width: 500 }}>
       <Autocomplete
         multiple
         id="tags-free-solo"
-        options={[]} 
+        options={ [] } 
         freeSolo 
-        value={tags} 
-        onChange={handleTagsChange} 
+        value={ tags } 
+        onChange={ handleTagsChange } 
         renderInput={(params) => (
           <TextField 
             {...params}
@@ -59,15 +60,15 @@ export default function TagInput({ onTagsChange }) {
                 borderColor: "#0d47a1", // <-- changes border color when it is actually clicked on and user is writing (focused)
               },
               "& .MuiInputBase-input::placeholder": {
-                color: "white",  // Placeholder color
+                color: "white",  
               },
               "& .MuiInputLabel-root": {
-                color: "#00bfa5",  // Change the label color here
+                color: "#00bfa5",  
               },
-              "& .MuiAutocomplete-clearIndicator": {
-                color: "#f44336",  // Color for the clear button (red)
+              "& .MuiAutocomplete-clearIndicator": {   // <--- making the X red for now
+                color: "#f44336",  
                 "&:hover": {
-                  color: "#d32f2f", // Darker red when hovered
+                  color: "#d32f2f", 
                 },
               }
 
@@ -78,15 +79,15 @@ export default function TagInput({ onTagsChange }) {
           renderTags={(value, getTagProps) => 
             value.map((option, index) => (
               <Chip
-                key={index}
-                label={option}
+                key={ index }
+                label={ option }
                 {...getTagProps({ index })}
                 sx={{
-                  backgroundColor: "#ffa000", // Background color of each tag (saved tag)
-                  color: "#fff",              // Text color of each tag
-                  margin: "4px",              // Space between tags
+                  backgroundColor: "#ffa000", 
+                  color: "#fff",             
+                  margin: "4px",             
                   "&:hover": {
-                    backgroundColor: "#00796b",  // Darker color on hover
+                    backgroundColor: "#00796b",  
                   },
                 }}
               />
@@ -97,4 +98,5 @@ export default function TagInput({ onTagsChange }) {
   );
 }
 
-//NOTE: Look up something about a Chip component from mui so i can change the color of the saved tags.
+
+//TODO: add validation for onTagsChange -- says it is a property of any, but I thought it would be a function ??

@@ -12,7 +12,7 @@ import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
 
 
 
-function MovieDetailCard({ title, releaseDate, overview, poster, movieId }) {
+function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre }) {
 
   //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
 
@@ -61,6 +61,10 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId }) {
                     <b>Date Released: </b> { releaseDate }
                     </Typography>
                     <br />
+                    <Typography variant="body2" sx={{ color: 'black' }}>
+                        <b>Genre:</b>{ genre.join(', ') }
+                    </Typography>
+                    <br />
                     <Typography variant="body2" sx={{ color: 'black' }}  >
                         <b>Overview: </b>{ overview }
                     </Typography>          
@@ -71,12 +75,15 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId }) {
                         size="small">Want to Watch</Button>
                     <Button onClick={handleWatched}
                         size="small">Watched</Button>
-                </CardActions>
-{/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
-{/* <StarRating title={ title } id={ id } />
-<LikeButton title={ title } id={ id } />          */}                
+                </CardActions>          
         </Card>  
-        <InteractionsCard />     
+        <InteractionsCard 
+        title= { title }
+        releaseDate= { releaseDate }
+        overview= { overview }
+        poster= { poster }
+        movieId= { movieId }
+        genre={ genre } />     
     </div>
   );
 }
@@ -88,7 +95,8 @@ MovieDetailCard.propTypes = {
     title: PropTypes.string,
     releaseDate: PropTypes.string, 
     overview: PropTypes.string, 
-    poster: PropTypes.string
+    poster: PropTypes.string,
+    genre: PropTypes.array
 
 }
 

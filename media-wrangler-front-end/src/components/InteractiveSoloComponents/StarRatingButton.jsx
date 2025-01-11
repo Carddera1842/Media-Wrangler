@@ -7,7 +7,7 @@ export default function StarRatingButton({ defaultValue, precision, onChange, na
 
   return (
     <>    
-     <Stack spacing={1} direction="row" >
+     <Stack spacing={ 1 } direction="row" >
         <Rating 
             name={ name } 
             defaultValue={ defaultValue }
@@ -30,12 +30,9 @@ export default function StarRatingButton({ defaultValue, precision, onChange, na
   );
 }
 
-
-//TODO: Add props validation -- believe I must require title and movieId for proper storage in database
-//Actually, I think that these (movieId, title) would be set in the interactionsCard.jsx and don't need to be here
 StarRatingButton.propTypes = {
   name: PropTypes.string.isRequired,  
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.number.isRequired,
   precision: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired, 
   movieId: PropTypes.number.isRequired,
