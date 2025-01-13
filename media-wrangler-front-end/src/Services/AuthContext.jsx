@@ -1,13 +1,36 @@
-import React, { useContext, createContext, useState } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
 import { login, logout, checkSession } from "./AuthService";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null
-  });
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect (() => {
+    const initializeAuth = async () => {
+      const storedUser = localStorage.getItem("user");
+
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          const response = await verifySession();
+          if (response.status === 200) {
+            setUser(parsedUser);
+          } else {
+            throw new Error("Session invalid");
+          }
+        } catch (error) {
+          console.error("Session verification failed:", error.message);
+          localStorage.removeItem("user");
+        }
+      }
+
+      setLoading(false);
+    };
+
+    initializeAuth();
+  }, []);
 
   const loginAction = async (data) => {
     try {
@@ -52,7 +75,7 @@ export const AuthProvider = ({ children }) => {
         user,
         loginAction,
         logoutAction,
-        checkSession,
+        loading,
       }}
     >
       {children}
