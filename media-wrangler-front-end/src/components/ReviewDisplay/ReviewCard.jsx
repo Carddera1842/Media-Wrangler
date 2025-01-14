@@ -7,13 +7,13 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import './ReviewCard.css';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
-import { Avatar } from '@mui/material';
-import { Chip } from '@mui/material'
+// import { Avatar } from '@mui/material';
+// import { Chip } from '@mui/material'
 
 
 function ReviewCard({ title, releaseDate, poster, movieId, awardValue, awardIcon, dateWatched, isSpoiler, rating, review, isLiked, tags, username }) {
@@ -40,7 +40,8 @@ function ReviewCard({ title, releaseDate, poster, movieId, awardValue, awardIcon
                     </CardActionArea>
                     <CardContent className="user-review">            
                         <Typography gutterBottom variant="h4" component="div">
-                            {/* {(isLiked && <FavoriteIcon sx={{ fontSize: '30px', color: "red" }} /> )} { title } */}
+                            {/* {(isLiked && <FavoriteIcon sx={{ fontSize: '30px', color: "red" }} /> )}  */}
+                            { title }
                             <span style={{ marginLeft: '8px', fontSize: '1.5rem', color: '#00695c' }}>
                                 ({yearReleased})
                             </span>
