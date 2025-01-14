@@ -112,9 +112,10 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         const responseMessage = await apiMovieReview(movieReviewData); 
 
         if (responseMessage === "Success") {
-          navigate("/reviews/view"), {
-            state: { movieReviewData }
-          }    
+          navigate("/reviews/view", {
+            state: movieReviewData
+          });
+        
 
         } else {
           setError(responseMessage);
