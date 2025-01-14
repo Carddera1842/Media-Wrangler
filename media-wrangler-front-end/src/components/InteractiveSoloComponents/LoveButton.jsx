@@ -16,8 +16,8 @@ export default function LoveButton({ title, movieId, onClick, name, value }) {
         name={ name }
         value={ value }
         sx={{
-          color: value ? 'red' : 'gray', // Red if liked, gray otherwise
-          transition: 'color 0.3s', // Smooth transition for color
+          color: value ? 'red' : 'gray', 
+          transition: 'color 0.3s', 
         }}
       >
         <FavoriteIcon sx={{ fontSize: '40px' }} />

@@ -14,3 +14,10 @@
 .movie-info-container {
     padding: 15px;  
 }
+
+.username {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+

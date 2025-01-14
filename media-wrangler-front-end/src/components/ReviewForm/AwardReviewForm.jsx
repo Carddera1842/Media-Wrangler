@@ -10,7 +10,6 @@ import RadioButton from '../InteractiveSoloComponents/RadioButton';
 import AwardEnum from "../enums/AwardEnum";
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import Paper from '@mui/material/Paper';
-import { fontSize } from "@mui/system";
 
 
 function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
@@ -27,6 +26,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
   const [isLovedDisabled, setLovedDisabled] = useState(false);
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
+  
  
   const navigate = useNavigate();
 
@@ -63,17 +63,23 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
   async function handleSubmit(e) {
       e.preventDefault();
      
-      if(!dateWatched) {    
+      if(!dateWatched) {   
         alert("You must pick a date watched to log in your journal.");
         return;
       }
       if(!review){
         alert("Let your peers know what you thought, write your review.");
+        return;
       }      
       if(rating === 0){
         alert("You must rate the movie.");
         return;
       }
+      if(watchAgain === ""){
+        alert("Would you watch movie again, pick yes or no...");
+        return;
+      }
+  
 
       //TODO: Adjust this alert/confirm depending on how the spoilers input is executed
       if(isSpoiler === false) {
@@ -84,18 +90,18 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         }
       }
 
+      //add award and username into the object
       const movieReviewData = { 
         dateWatched,
         review,
         isSpoiler,
-        award,
         rating,
         tags,
         title,
         genre,
         movieId,
         poster, 
-        watchAgain
+        watchAgain,
       }
 
       alert("Thank you for your submission!");
@@ -106,7 +112,10 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         const responseMessage = await apiMovieReview(movieReviewData); 
 
         if (responseMessage === "Success") {
-          navigate("/reviews/view"); 
+          navigate("/reviews/view"), {
+            state: { movieReviewData }
+          }    
+
         } else {
           setError(responseMessage);
         }
@@ -118,7 +127,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
     };
 
     return (
-        <>
+        <>       
         <div className="paper-container">
           <Paper 
             elevation={0} 
@@ -284,7 +293,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
                       </label>
                     </div>               
                     <div>                    
-                      <InputTags onTagsChange={ updateTags } />
+                      <InputTags onChange={ updateTags } />
                     </div>                  
                     <br />               
                     <div className="field is-horizontal">                     

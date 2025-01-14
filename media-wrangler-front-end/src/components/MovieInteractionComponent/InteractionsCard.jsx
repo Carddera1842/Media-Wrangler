@@ -10,8 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 
 
-
-
 function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
 
     const [rating, setRating] = useState(0);
@@ -19,6 +17,13 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
     const [likeCount, setLikeCount] = useState(0);
     
     const navigate = useNavigate();
+
+    function onChangeRating(e) {
+        setRating(e.target.value);
+    }
+    //TODO: Remove: only for testing purposes
+    console.log("The user has given ", rating, "stars to ", { title }, "(",{ movieId },")");
+    
 
     function handleLikeClick() {
         setLiked(!isLiked); 
@@ -28,6 +33,8 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
             setLikeCount(likeCount + 1); 
         }
     }
+    //TODO: Remove: only for testing purposes
+    console.log("user clicked the heart for ", { title }, "(",{ movieId },")", isLiked, likeCount);
 
     //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
@@ -47,7 +54,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                     movieId={ movieId }
                     defaultValue={0} 
                     precision={0.5} 
-                    onChange={(e) => setRating(e.target.value)}
+                    onChange={ onChangeRating }
                 />
                 <p>{ rating } for { title }</p>
             </div>
@@ -107,17 +114,10 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
 export default InteractionsCard;
 
 InteractionsCard.propTypes = {
-    movieId: PropTypes.number,
-    title: PropTypes.string
+    movieId: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.array.isRequired,
+    poster: PropTypes.string.isRequired,
+    releaseDate: PropTypes.string.isRequired
 }
 
-
-/* --- FUNCTIONALITY CHECK LIST:--- >>> The title is being passed to the components from the movie object, but struggling for the id still <<<
-
-** StarRatingButton: it is setting the users rating correctly, not sure if title and movieId are working it 
-
-** LovedButton: clicking adds or removes to the liked count. The heart goes from gray to red when liked or not. 
-
-** WriteReviewButton: With a double click, it takes user to "/reviews/create"
-
-*/

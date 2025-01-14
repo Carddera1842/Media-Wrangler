@@ -16,16 +16,16 @@ import PropType from 'prop-types';
 */
 
 
-//onTagsChange is passed down to the child TagInput
-//TODO: Add prop validation for onTagsChange
-export default function InputTags({ onTagsChange }) {
+//onChange is passed down to the child TagInput
+
+export default function InputTags({ onChange }) {
   const [tags, setTags] = useState([]); 
 
   //function is triggered, and the inputs are trimmed of whitespaces, updated local tags state and then the trimmed tags are passed to the parent component (AwardMovieReview) and sets them.
   const handleTagsChange = (event, newTags) => {
     const trimmedTags = newTags.map(tag => tag.trim());
     setTags(trimmedTags);
-    onTagsChange(trimmedTags);
+    onChange(trimmedTags);
 };
 
   return (
@@ -71,8 +71,6 @@ export default function InputTags({ onTagsChange }) {
                   color: "#d32f2f", 
                 },
               }
-
-
             }}
             />
           )}
@@ -98,5 +96,9 @@ export default function InputTags({ onTagsChange }) {
   );
 }
 
+InputTags.PropType = {
+  onChange: PropType.func.isRequired
+}
 
-//TODO: add validation for onTagsChange -- says it is a property of any, but I thought it would be a function ??
+
+//TODO: add validation for onTagsChange -- I thought it would be a function ??
