@@ -98,17 +98,13 @@ public class UserService {
 
     public boolean verifyEmailToken(String token) {
         User user = userRepository.findByVerificationToken(token);
-        if (user == null) {
-            return false;
+        if (user != null && user.getTokenExpirationDate().isAfter(LocalDateTime.now())) {
+            user.setEmailVerified(true);
+            user.setVerificationToken(null);
+            userRepository.save(user);
+            return true;
         }
-        if (user.getTokenExpirationDate().isBefore(LocalDateTime.now())) {
-            return false;
-        }
-        user.setEmailVerified(true);
-        user.setVerificationToken(null);
-        user.setTokenExpirationDate(null);
-        userRepository.save(user);
-        return true;
+        return false;
     }
 }
 

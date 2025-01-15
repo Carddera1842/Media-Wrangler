@@ -79,7 +79,6 @@ public class UserController {
 
     @GetMapping("/verify")
     public ResponseEntity<?> verifyEmail(@RequestParam("token") String token) {
-//        System.out.println("Received token: " + token);
         try {
             boolean isVerified = userService.verifyEmailToken(token);
             if (isVerified) {
