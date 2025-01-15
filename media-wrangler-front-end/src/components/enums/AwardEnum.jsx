@@ -2,7 +2,7 @@ import React from 'react'
 
 const AwardEnum = {
     loved: {
-      WRANGLER_ROUNDUP_WINNER: { id: 1, value: "wrangler-roundup-winner", label: "Wrangler Roundup Winner", description: "Kept you on your seat, like a wild rodeo ride", icon: "🤠" },
+      WRANGLER_WINNER: { id: 1, value: "wrangler-winner", label: "Wrangler Winner", description: "Kept you on your seat, like a wild rodeo ride", icon: "🤠" },
       GOLDEN_SPURS: { id: 2, value: "golden-spurs", label: "Golden Spurs", description: "Awarded to movies that shine like gold!", icon: "⭐" },
       HIGH_NOON_HERO: { id: 3, value: "high-noon-hero", label: "High Noon Hero", description: "For a movie with a standout hero who saves the day in the nick of time", icon: "🌞" },
       BEST_SHARPSHOOTER: { id: 4, value: "best-sharpshooter", label: "Best Sharpshooter", description: "For flawless direction or acting – a real bullseye!", icon: "🎯" },
