@@ -7,6 +7,7 @@ import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import LoveButton from '../InteractiveSoloComponents/LoveButton';
 import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
 import { useNavigate } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -56,7 +57,6 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                     precision={0.5} 
                     onChange={ onChangeRating }
                 />
-                <p>{ rating } for { title }</p>
             </div>
         </Button>,
         <Button key="two" className="button-container">
@@ -69,7 +69,6 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                     value={ isLiked }                    
                     onClick={ handleLikeClick }                   
                 />
-                    <p>{ likeCount } for { title }</p>
             </div>
         </Button>,
         <Button key="three" className="button-container">
@@ -81,9 +80,19 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                     movieId={ movieId }
                     onClick={ handleWriteReviewClick }  
                 />
-                <p>Review { title }</p>
             </div>
-        </Button>
+            </Button>,
+                    <Button key="four" className="button-container">
+                    <div className="button-content">
+                        <span className="button-label"> Add to Lists </span>
+                        <AddIcon />
+                    </div>
+                    </Button>,
+                            <Button key="five" className="button-container">
+                            <div className="button-content">
+                                <span className="button-label">Your Journal</span>
+                            </div>
+                        </Button>
     ];
     
     return (
