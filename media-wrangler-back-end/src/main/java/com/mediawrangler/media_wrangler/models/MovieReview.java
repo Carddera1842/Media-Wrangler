@@ -13,7 +13,7 @@ public class MovieReview {
     //Add for SQL to store review
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     //stamps date for when the review is submitted/created
     private LocalDate dateCreated;
@@ -44,12 +44,19 @@ public class MovieReview {
 //    @JoinColumn(name = "user_id")
 //    private User user;
 
+    //To track the movie until movie data gets sent to database from API
+    private String title;
+    private String poster;
+    private String yearReleased;
+
+
+
     //empty constructor for hibernate
     public MovieReview() {
     }
 
     //overloaded constructor for easier testing (without User logged in)
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain) {
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String poster, String yearReleased) {
         this.dateCreated = LocalDate.now();
         this.review = review;
         this.dateWatched = dateWatched;
@@ -57,20 +64,12 @@ public class MovieReview {
         this.award = award;
         this.rating = rating;
         this.watchAgain = watchAgain;
+        this.title = title;
+        this.poster = poster;
+        this.yearReleased = yearReleased;
     }
 
-//TODO: Uncomment constructor for when user is ready to be test with
-//overloaded constructor
-//    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, User user) {
-//        this.dateCreated = LocalDate.now();
-//        this.review = review;
-//        this.dateWatched = dateWatched;
-//        this.isSpoiler = isSpoiler;
-//        this.award = award;
-//        this.rating = rating;
-//        this.watchAgain = watchAgain;
-//        this.user = user;
-//    }
+
 
     public int getRating() {
         return rating;
@@ -120,9 +119,41 @@ public class MovieReview {
         this.watchAgain = watchAgain;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public String getYearReleased() {
+        return yearReleased;
+    }
+
+    public void setYearReleased(String yearReleased) {
+        this.yearReleased = yearReleased;
+    }
 
     //getters for id and dateCreated since they should update (I could make an editDate)
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

@@ -19,6 +19,7 @@ import java.util.Optional;
 public class MovieReviewController {
 
     //Based off other branches, setup Service here
+    @Autowired
     private final MovieReviewService movieReviewService;
 
     //Constructor injection of MovieReviewService -- constructor that takes in service
@@ -45,7 +46,7 @@ public class MovieReviewController {
     }
 
     @GetMapping("view/{id}")
-    public ResponseEntity<?> viewReview(@PathVariable Long id) {
+    public ResponseEntity<?> findReviewById(@PathVariable Long id) {
         try {
             Optional<MovieReview> optionalMovieReview = movieReviewService.findReviewById(id);
 
@@ -59,6 +60,8 @@ public class MovieReviewController {
             return new ResponseEntity<>("An error occurred while retrieving the review", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 
 

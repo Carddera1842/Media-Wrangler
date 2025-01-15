@@ -2,6 +2,7 @@ package com.mediawrangler.media_wrangler.services;
 
 import com.mediawrangler.media_wrangler.data.MovieReviewRepository;
 import com.mediawrangler.media_wrangler.models.MovieReview;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 @Service
 public class MovieReviewService {
 
+    @Autowired
     private final MovieReviewRepository movieReviewRepository;
 
 
