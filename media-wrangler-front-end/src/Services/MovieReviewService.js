@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function submitMovieReview(movieReviewData) {
+async function submitMovieReview(movieReviewData) {
     try {
         const response = await axios.post(
             'http://localhost:8080/reviews/create',
@@ -19,3 +19,27 @@ export async function submitMovieReview(movieReviewData) {
         return ("An error occurred. Please try again", error);
     }
 }
+
+
+
+async function fetchMovieReview(id) {
+    try {
+        const response = await axios.get(`http://localhost:8080/reviews/view/${id}`, { withCredentials: true });
+
+
+        if (response.status === 200) {
+            const reviewData = response.data;
+            console.log('Review data:', reviewData);
+            return reviewData;
+        } else {
+            return "Review not found or error occurred. Please try again";
+        }
+    } catch (error) {
+        console.log("Error: ", error);
+        return "An error occurred. Please try again";
+    }
+
+};
+
+export { submitMovieReview, fetchMovieReview };
+
