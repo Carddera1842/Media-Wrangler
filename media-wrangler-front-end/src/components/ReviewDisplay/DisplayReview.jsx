@@ -3,6 +3,7 @@ import JournalReviewCard from "./JournalReviewCard";
 import { useLocation } from "react-router-dom";
 
 
+
 //NOTE: The DisplayReview Page is rendering @localhost:5173/reviews/view  <--- the state of the movie review object
 //is passed to DisplayReview.jsx and handed down to the ReviewCard.jsx to show the user that their submission was a success.
 
@@ -21,22 +22,22 @@ export default function DisplayReview() {
 
     return (
         <>
-        <h1> Movie review will display here...</h1>
+            <h1> Movie review will display here...</h1>
 
-        {title && movieId && poster&& genre && watchAgain && tags && rating && isSpoiler && review && dateWatched && (
-                    <JournalReviewCard 
-                        movieId={ movieId } 
-                        title={ title } 
-                        poster={ poster }                    
-                        genre={ genre }
-                        watchAgain={ watchAgain }
-                        tags={ tags }
-                        rating={ rating }
-                        isSpoiler={ isSpoiler }
-                        review={ review }
-                        dateWatched={ dateWatched }
-                    />
-                )}      
+            {title && movieId && poster&& genre && watchAgain && tags && rating && isSpoiler && review && dateWatched && (
+                <JournalReviewCard 
+                    movieId={ movieId } 
+                    title={ title } 
+                    poster={ poster }                    
+                    genre={ genre }
+                    watchAgain={ watchAgain }
+                    tags={ tags }
+                    rating={ rating }
+                    isSpoiler={ isSpoiler }
+                    review={ review }
+                    dateWatched={ dateWatched }
+                />
+            )}               
         </>
     );
 }

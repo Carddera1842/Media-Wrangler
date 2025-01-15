@@ -14,6 +14,7 @@ import MovieSearch from './components/MovieSearch'
 import CreateReview from './components/ReviewForm/CreateReview'
 import DisplayReview from './components/ReviewDisplay/DisplayReview'
 import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview';
+import MovieReviewListCard from './components/ReviewDisplay/MovieReviewListCard'
 
 function App() {
 
@@ -31,9 +32,10 @@ function App() {
         <Route path="/loginsuccess" element={<LoginSuccess />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/registrationsuccess" element={<registrationSuccess />}/>
-        <Route path="/reviews/create" element={<CreateReview />} />     {/* This is to demonstrate different form versions */}   
-        <Route path="/reviews/view" element={<DisplayReview />}/> 
-        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} /> 
+        <Route path="/reviews/create" element={<CreateReview />} />           {/* This is to demonstrate different form versions */}   
+        <Route path="/reviews/view" element={<DisplayReview />}/>             {/* User is redirected here to see review they just submitted */}
+        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} /> {/* This displays a review by id */}
+        <Route path="/reviews/movie" element={<MovieReviewListCard />} />     {/* This displays what reviews may look like on movie detail page */}
       </Routes>
         </div>
     </>
