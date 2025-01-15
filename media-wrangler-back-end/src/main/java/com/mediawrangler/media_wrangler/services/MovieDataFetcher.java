@@ -75,10 +75,6 @@ public class MovieDataFetcher {
                     String posterPath = movieJson.optString("poster_path", null);
 
 
-                    if (posterPath == null || posterPath.isEmpty()) {
-                        posterPath = "no-poster-found.jpg";  // needs image for this, and alt handling in front end
-                    }
-
                     Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath);
 
                     movieArrayList.add(movie);

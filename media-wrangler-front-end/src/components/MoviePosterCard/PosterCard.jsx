@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './PosterCard.css';
+import fallbackImage from '../../../Resources/default-fallback-image.jpg'
+
 function MovieCard({ movie }) {
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -15,7 +17,7 @@ function MovieCard({ movie }) {
       console.log("Poster Clicked");
   };
 
-  const imageUrl = movie.posterPath ? `https://image.tmdb.org/t/p/w500${movie.posterPath}` : 'default-fallback-image.jpg';
+  const imageUrl = movie.posterPath ? `https://image.tmdb.org/t/p/w780${movie.posterPath}` : fallbackImage;
 
   return (
       <div>
