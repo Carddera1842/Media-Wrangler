@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
 import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
+import { Paper } from "@mui/material";
 
 
 
@@ -37,6 +38,15 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre 
 
 
   return (
+    <>
+              <Paper 
+            elevation={0} 
+            sx={{
+                maxWidth: 1100, 
+                background: "#004d40", 
+                margin: "30px auto", 
+                padding: "20px",             
+            }} >
     <div className="movie-detail-container">
         <Card sx={{maxWidth: 1000}} variant="outlined">
             <div className="movie-info-container">
@@ -85,6 +95,8 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre 
         movieId= { movieId }
         genre={ genre } />     
     </div>
+    </Paper>
+    </>
   );
 }
 

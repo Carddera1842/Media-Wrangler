@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-import { apiMovieReview } from "../../Services/MovieReviewService";
+import { submitMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
 import { Checkbox } from "@mui/material";
@@ -102,6 +102,8 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         movieId,
         poster, 
         watchAgain,
+        award,
+        yearReleased
       }
 
       alert("Thank you for your submission!");
@@ -109,7 +111,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
     
 
       try {
-        const responseMessage = await apiMovieReview(movieReviewData); 
+        const responseMessage = await submitMovieReview(movieReviewData); 
 
         if (responseMessage === "Success") {
           navigate("/reviews/view", {

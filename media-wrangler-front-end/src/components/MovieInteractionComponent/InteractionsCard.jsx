@@ -101,7 +101,8 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                 aria-label="Vertical button group"
                 sx={{
                     backgroundColor:"rgb(41, 43, 45)",  
-                    borderRadius: '8px',           
+                    borderRadius: '8px',   
+                    border: "2px solid #ff8f00"        
                 }}
             >
                 {buttons}
