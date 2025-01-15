@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, CardContent, Typography, Button, CardActions, Avatar, Paper, Divider } from '@mui/material';
+import "../ReviewDisplay/JournalReviewCard.css";
 
 
 
@@ -13,9 +14,9 @@ const MovieReviewListCard = () => {
             maxWidth: 1100,
             background: "#004d40",
             padding: "10px",
-            margin: "10px",        
+            margin: "10px auto",        
         }} >
-      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "5px solid #ff8f00" }}>
+      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid #ff8f00" }}>
         <CardContent>
           <Typography variant="h6" component="div" className="username" color="text.secondary">
             <Avatar>Test</Avatar>     {/* replace with the users avatar */}

@@ -29,12 +29,21 @@
 
 
  
-  .paper-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-  }
+.paper-container {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 50vh;
+}
+
+.review-container {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 20px;
+border: 2px solid white;
+padding: 10px;
+}
 
 
  
