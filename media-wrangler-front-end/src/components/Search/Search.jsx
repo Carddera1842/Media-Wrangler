@@ -6,6 +6,7 @@ function Search() {
     const [movieData, setMovieData] = useState([]);
     const [error, setError] = useState(null);
     const [hasSearched, setHasSearched] = useState(false);
+    const [searchType, setSearchType] = useState('title');
 
     const handleSearch = async () => {
         setMovieData([]); // Reset previous movie data before making a new request
@@ -13,7 +14,7 @@ function Search() {
         
         try {
             // GET request to the backend API
-            const response = await fetch(`http://localhost:8080/api/movies/search?searchString=${movieSearch}`, {
+            const response = await fetch(`http://localhost:8080/api/movies/search?searchString=${movieSearch}&searchType=${searchType}`, {
             });
             
             if (!response.ok) {
@@ -38,6 +39,23 @@ function Search() {
     return (
         <div>
             <h1>Search for Movies</h1>
+
+            <div>
+                <button 
+                    onClick={() => setSearchType('title')} 
+                    style={{ backgroundColor: searchType === 'title' ? 'lightblue' : '' }}
+                >
+                    Search by Title
+                </button>
+                <button 
+                    onClick={() => setSearchType('person')} 
+                    style={{ backgroundColor: searchType === 'person' ? 'lightgreen' : '' }}
+                >
+                    Search by Person
+                </button>
+            </div>
+
+
             <input
                 type="text"
                 value={movieSearch}

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -36,8 +37,13 @@ public class MovieController {
 
     // Fetch array of Movie objects from string search
     @GetMapping("/search")
-    public ArrayList<Movie> getArrayListByStringSearch(@RequestParam String searchString) {
+    public ArrayList<Movie> getArrayListByStringSearch(@RequestParam String searchString, @RequestParam String searchType) {
         System.out.println("Received request to fetch movie: " + searchString);
-        return movieDataFetcher.movieSearch(searchString);
+
+        if (Objects.equals(searchType, "title")) {
+            return movieDataFetcher.movieSearch(searchString);
+        } else {
+            return movieDataFetcher.personSearch(searchString);
+        }
     }
 }
