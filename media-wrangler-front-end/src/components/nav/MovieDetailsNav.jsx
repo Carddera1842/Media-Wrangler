@@ -4,6 +4,13 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { Card, Typography } from '@mui/material';
 
+
+
+//TODO: Maybe incorporate a Chip to put the Cast and Crew names in their own button type style for display
+//TODO: Look into a layout for the other info to be displayed within the tab bar. I have to look at how the API is returning data first
+
+
+
 function MovieDetailsNav() {
 
     const [value, setValue] = useState('one');
@@ -13,8 +20,7 @@ function MovieDetailsNav() {
     };
 
 
-
-    //Need to provide the tabs with data to display... will make dynamic once merged with API branch
+    //Need to provide the tabs with data to display from API... will make dynamic once merged with API branch
     const tabData = {
         one: "Cast details go here",
         two: "Crew details go here",
@@ -26,7 +32,7 @@ function MovieDetailsNav() {
   
     return (
         <>
-        <Box 
+          <Box 
             sx={{
             width: "500px",
             background: "#004d40", 
@@ -36,32 +42,32 @@ function MovieDetailsNav() {
             marginBottom: "30px",
             border: "2px solid white"
             }} >
-        <Tabs
-          value={ value }
-          onChange={ handleChange }
-          textColor="white"
-          indicatorColor="primary"       
-        >
-          <Tab value="one" label="Cast" />
-          <Tab value="two" label="Crew" />
-          <Tab value="three" label="Details" />
-          <Tab value="four" label="Releases" />
-          <Tab value="five" label="Genres" />
-        </Tabs>
-        <Card 
-            sx={{
-            width: "450px",
-            margin: "10px auto",
-            border: "2px solid #ff8f00",
-            background: "rgb(41, 43, 45)",
-            padding: "10px"
-            }} >
-            <Typography variant="body2" color="white">
-                { tabData[value] }
-            </Typography>            
-        </Card>
-      </Box>    
-      </>
+              <Tabs
+                value={ value }
+                onChange={ handleChange }
+                textColor="white"
+                indicatorColor="primary"    
+              >
+                <Tab value="one" label="Cast" />
+                <Tab value="two" label="Crew" />
+                <Tab value="three" label="Details" />
+                <Tab value="four" label="Releases" />
+                <Tab value="five" label="Genres" />
+              </Tabs>
+              <Card 
+                sx={{
+                width: "450px",
+                margin: "10px auto",
+                border: "2px solid #ff8f00",
+                background: "rgb(41, 43, 45)",
+                padding: "10px"
+                }} >
+                <Typography variant="body2" color="white">
+                    { tabData[value] }
+                </Typography>            
+              </Card>
+            </Box>    
+        </>
     );
 }
 

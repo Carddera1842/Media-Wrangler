@@ -12,17 +12,18 @@ import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
 import { Paper } from "@mui/material";
 
 
-/* 
-    TODO: The "watched" and "want to watch" buttons need to be finished when the lists are ready for them. These buttons can be used, we can add them to the InteractionsCard -- OR-- they can be incorporated in a different way based on what the feature designer would like to do
-    
-    TODO: uncomment out the baseImageURL and fullPosterURL when the API is hooked back up...And switch { poster } back to { fullPosterURL }
-    const baseImageUrl = "https://image.tmdb.org/t/p/w300";
-    const fullPosterUrl = `${baseImageUrl}${poster}`;
-    
-    NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
 
-*/
+    //TODO: The "watched" and "want to watch" buttons need to be finished when the lists are ready for them. These buttons can be used, we can add them to the InteractionsCard -- OR-- they can be incorporated in a different way based on what the feature designer would like to do
+    
+    //TODO: uncomment out the baseImageURL and fullPosterURL when the API is hooked back up...And switch { poster } back to { fullPosterURL }
+    // const baseImageUrl = "https://image.tmdb.org/t/p/w300";
+    // const fullPosterUrl = `${baseImageUrl}${poster}`;
+    
+    // NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
 
+    //TODO: May remove the Genres from the Movie Detail Card if we want to put them in Movie Detail Tab/Navbar
+
+    //TODO: Finish up the info we want to be displayed for the Movie
 
 function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre }) {
 
@@ -68,9 +69,9 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre 
                             />
                         </CardActionArea>
                         <CardContent>            
-                            <Typography gutterBottom variant="h2" component="div">
+                            <Typography gutterBottom variant="h3" component="div">
                                 { title } 
-                                <span style={{ marginLeft: '8px', fontSize: '1.5rem', color: 'teal' }}>
+                                <span style={{ marginLeft: '8px', fontSize: '2rem', color: '#ff8f00' }}>
                                     ({yearReleased})
                                 </span>
                             </Typography>          
@@ -79,7 +80,7 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre 
                             </Typography>
                             <br />
                             <Typography variant="body2" sx={{ color: 'black' }}>
-                                <b>Genre:</b>{ genre.join(', ') }
+                                <b>Genres: </b>{ genre.join(', ') }
                             </Typography>
                             <br />
                             <Typography variant="body2" sx={{ color: 'black' }}  >
