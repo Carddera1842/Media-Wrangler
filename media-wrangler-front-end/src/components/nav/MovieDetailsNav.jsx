@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import { Card, Typography } from '@mui/material';
+import { Card, Typography, Tabs, Tab, Box } from '@mui/material';
 
 
 
-//TODO: Maybe incorporate a Chip to put the Cast and Crew names in their own button type style for display
+//TODO: Maybe incorporate a Chip to put the Cast and Crew names in their own button type style for display. I am going to use a color chip, but eventually being able to use the clickable link Chip would be great if we wanted users to be guided to a page for actor selected.
 //TODO: Look into a layout for the other info to be displayed within the tab bar. I have to look at how the API is returning data first
 
 

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Box from '@mui/material/Box';
+import { Button, ButtonGroup, Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import LoveButton from '../InteractiveSoloComponents/LoveButton';
