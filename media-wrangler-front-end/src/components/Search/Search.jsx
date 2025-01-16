@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MovieCard from "../MoviePosterCard/PosterCard";
+import './Search.css'
 
 function Search() {
     const [movieSearch, setMovieSearch] = useState('');
@@ -36,33 +37,39 @@ function Search() {
         searchMessage = "No movies found. Try another search!"
     }
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {  
+            handleSearch();
+        }
+    };
+
     return (
         <div>
             <h1>Search for Movies</h1>
 
-            <div>
+            <div className="button-container">
                 <button 
                     onClick={() => setSearchType('title')} 
-                    style={{ backgroundColor: searchType === 'title' ? 'lightblue' : '' }}
+                    className={`button ${searchType === 'title' ? 'selected' : ''}`}
                 >
                     Search by Title
                 </button>
                 <button 
                     onClick={() => setSearchType('person')} 
-                    style={{ backgroundColor: searchType === 'person' ? 'lightgreen' : '' }}
+                    className={`button ${searchType === 'person' ? 'selected' : ''}`}
                 >
                     Search by Person
                 </button>
             </div>
-
 
             <input
                 type="text"
                 value={movieSearch}
                 onChange={(e) => setMovieSearch(e.target.value)}
                 placeholder="Enter movie title"
+                onKeyDown={handleKeyDown}
             />
-            <button onClick={handleSearch}>Search</button>
+            <button className='search-button' onClick={handleSearch}>Search</button>
 
             {error && <p>{error}</p>}  {/* Display error message if present */}
 
