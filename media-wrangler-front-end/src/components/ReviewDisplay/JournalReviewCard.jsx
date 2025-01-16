@@ -26,7 +26,7 @@ export default function TestJournalReviewCard({ title, poster, watchAgain, tags,
             sx={{
                 maxWidth: 1200,
                 background: "#004d40",
-                margin: "30px",
+                margin: "30px auto",
                 padding: "20px",
                 transform: "scale(.9)",
                 transition: "transform 0.3s, box-shadow 0.3s",

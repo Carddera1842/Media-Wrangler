@@ -1,6 +1,7 @@
 import React from "react";
 import MovieDetailCard from "../MovieDetails/MovieDetailCard";
 import MovieReviewListCard from "../ReviewDisplay/MovieReviewListCard";
+import MovieDetailsNav from "../nav/MovieDetailsNav";
 
 
 //This is just to display the PosterCard, MovieDetailCard & InteractionsCard
@@ -37,7 +38,7 @@ export default function Movies() {
 
     return (
         <>
-            <h1>Browse for movies</h1>
+            <h1>Movie Details Page: </h1>
             <MovieDetailCard 
                 movieId={ movies[1].id }
                 title={ movies[1].title }
@@ -47,10 +48,12 @@ export default function Movies() {
                 genre= {movies[1].genre}
             />
 
-        <MovieReviewListCard />
-        <MovieReviewListCard />
-        <MovieReviewListCard />
-        <MovieReviewListCard /> 
+            <MovieDetailsNav />
+
+            <MovieReviewListCard />
+            <MovieReviewListCard />
+            <MovieReviewListCard />
+            <MovieReviewListCard /> 
         </>
         
 

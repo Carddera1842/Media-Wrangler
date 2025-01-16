@@ -9,7 +9,11 @@ import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 
+/*
+    TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
 
+    TODO: The "liked" button counter needs some focus, figure out how to save the counts so we can display the total "likes" across all reviews
+*/
 
 function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
 
@@ -48,7 +52,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
     const buttons = [
         <Button key="one" className="button-container">
             <div className="button-content">
-                <span className="button-label">Rate:</span>
+                <span className="button-label">Rate</span>
                 <StarRatingButton
                     name="half-rating" 
                     title={ title }
@@ -61,7 +65,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
         </Button>,
         <Button key="two" className="button-container">
             <div className="button-content">
-                <span className="button-label">Like:</span>
+                <span className="button-label">Likes { likeCount }</span>
                 <LoveButton 
                     name="like-button"
                     title={ title } 
@@ -73,7 +77,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
         </Button>,
         <Button key="three" className="button-container">
             <div className="button-content">
-                <span className="button-label">Write Review:</span>
+                <span className="button-label">Write Review</span>
                 <WriteReviewButton 
                     name="write-review"
                     title={ title } 
@@ -82,17 +86,17 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                 />
             </div>
             </Button>,
-                    <Button key="four" className="button-container">
+            <Button key="four" className="button-container">
+            <div className="button-content">
+                <span className="button-label"> Add to Lists </span>
+                <AddIcon />
+            </div>
+            </Button>,
+                    <Button key="five" className="button-container">
                     <div className="button-content">
-                        <span className="button-label"> Add to Lists </span>
-                        <AddIcon />
+                        <span className="button-label">Your Journal</span>
                     </div>
-                    </Button>,
-                            <Button key="five" className="button-container">
-                            <div className="button-content">
-                                <span className="button-label">Your Journal</span>
-                            </div>
-                        </Button>
+                </Button>
     ];
     
     return (
