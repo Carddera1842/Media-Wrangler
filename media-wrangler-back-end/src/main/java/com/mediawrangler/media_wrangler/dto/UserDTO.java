@@ -1,18 +1,26 @@
 package com.mediawrangler.media_wrangler.dto;
 
-public class RegisterRequest {
-    private String username;
+import com.mediawrangler.media_wrangler.models.User;
+
+public class UserDTO {
+    private int id;
     private String firstName;
     private String lastName;
-    private String password;
     private String email;
 
-    public String getUsername() {
-        return username;
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstname();
+        this.lastName = user.getLastname();
+        this.email = user.getEmail();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -31,14 +39,6 @@ public class RegisterRequest {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -46,5 +46,4 @@ public class RegisterRequest {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }
