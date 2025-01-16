@@ -43,6 +43,7 @@ export default function Navbar() {
         display: 'flex',
         flexDirection: { xs: 'column', sm: 'row' },
         alignItems: 'center',
+
         // justifyContent: 'space-between',
         bgcolor: 'background.paper',
         padding: 2,
@@ -57,6 +58,7 @@ export default function Navbar() {
           flexShrink: 0,
           marginRight: 2, 
         }}>
+
           Media Wrangler
         </Box>
         <Box sx={{
@@ -65,6 +67,7 @@ export default function Navbar() {
           minWidth: 0,
           bgcolor: 'background.paper',
           padding: 2,
+
         }}>
         <Tabs 
           value={value} 
