@@ -12,5 +12,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.verificationToken = :token")
     User findByVerificationToken(@Param("token") String token);
+
+    User findByEmailVerifiedTrue();
 }
 

@@ -8,7 +8,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -39,8 +40,6 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         sendVerificationEmail(user);
-
-
         return userRepository.save(user);
     }
 
@@ -61,7 +60,7 @@ public class UserService {
 
     public void sendVerificationEmail(User user) {
 
-        String verificationUrl = "http://localhost:5173/login?token=" + user.getVerificationToken();
+        String verificationUrl = "http://localhost:5173/verify?token=" + user.getVerificationToken();
 
         String subject = "Verify Your Email Address";
         String htmlContent = """
@@ -72,7 +71,7 @@ public class UserService {
                         <p>Hi <strong>%s</strong>,</p>
                         <p>Thank you for registering with us. Please click the link below to verify your email address:</p>
                         <div style="text-align: center; margin: 20px 0;">
-                            <a href="%s" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: black; background-color: #9E5231; text-decoration: none; border-radius: 5px;">Verify Email</a>
+                            <a href="%s" rel="nofollow" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: black; background-color: #9E5231; text-decoration: none; border-radius: 5px;">Verify Email</a>
                         </div>
                         <p>If you did not sign up for Media Wrangler, you can safely ignore this email.</p>
                         <p>Best regards,<br>Media Wrangler Team</p>
@@ -96,15 +95,29 @@ public class UserService {
         }
     }
 
+    @Transactional
     public boolean verifyEmailToken(String token) {
         User user = userRepository.findByVerificationToken(token);
-        if (user != null && user.getTokenExpirationDate().isAfter(LocalDateTime.now())) {
-            user.setEmailVerified(true);
-            user.setVerificationToken(null);
-            userRepository.save(user);
-            return true;
+        if (user == null) {
+            System.out.println("No user found for token: " + token);
+            User alreadyVerifiedUser = userRepository.findByEmailVerifiedTrue();
+            if (alreadyVerifiedUser != null) {
+                System.out.println("Token already used, user is verified.");
+                return true;
+            }
+            return false;
         }
-        return false;
+        if (user.getTokenExpirationDate().isBefore(LocalDateTime.now())) {
+            System.out.println("Token expired for user: " + user.getUsername());
+            return false;
+        }
+        System.out.println("Token is valid. Updating user...");
+        user.setEmailVerified(true);
+        user.setVerificationToken(null);
+        userRepository.save(user);
+        return true;
     }
+
+
 }
 

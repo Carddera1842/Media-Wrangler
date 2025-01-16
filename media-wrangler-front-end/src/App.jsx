@@ -9,6 +9,7 @@ import LoginSuccess from './components/Login/LoginSuccess'
 import Register from './components/Register/Register'
 import MovieSearch from './components/Search/MovieSearch'
 import TestReviewForm from './components/ReviewForm/TestReviewForm'
+import VerifyEmail from './components/VerifyEmail/VerifyEmail';
 import Profile from './components/Profile/Profile'
 import { PrivateRoutes } from './Services/PrivateRoutes'
 
@@ -49,6 +50,7 @@ function App() {
         <Route path="/movies" element={<Movies />}/>
         <Route path="/search" element={<MovieSearch />}/>
         <Route path="/login" element={<Login />}/>
+        <Route path="/verify" element={<VerifyEmail />} />
         {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/profile/:userId" element={<Profile />}/>
         {/* </Route> */}
