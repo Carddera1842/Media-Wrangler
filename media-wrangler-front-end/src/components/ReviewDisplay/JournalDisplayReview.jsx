@@ -13,9 +13,6 @@ export default function DisplayReview() {
     const [loading, setLoading] = useState(true);
 
 
- 
-
-
     useEffect(() => {
         async function fetchData() {
             const data = await fetchMovieReview(id);
@@ -40,13 +37,8 @@ export default function DisplayReview() {
 
     return (
         <>
-        <h1>Movie Review:</h1>
-        <JournalReviewCard {...review} />
-        
-       
-       
-
-
+            <h1>Movie Review:</h1>
+            <JournalReviewCard {...review} />    
         </>
     );
  
