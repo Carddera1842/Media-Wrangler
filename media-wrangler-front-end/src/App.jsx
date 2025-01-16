@@ -12,6 +12,7 @@ import TestReviewForm from './components/ReviewForm/TestReviewForm'
 import VerifyEmail from './components/VerifyEmail/VerifyEmail';
 import Profile from './components/Profile/Profile'
 import { PrivateRoutes } from './Services/PrivateRoutes'
+import VerificationSent from './components/VerifyEmail/VerificationSent'
 
 function App() {
   const movies = [
@@ -51,6 +52,7 @@ function App() {
         <Route path="/search" element={<MovieSearch />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/verify" element={<VerifyEmail />} />
+        <Route path="/check-email" element={<VerificationSent />} />
         {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/profile/:userId" element={<Profile />}/>
         {/* </Route> */}

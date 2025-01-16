@@ -35,7 +35,8 @@ export default function Register() {
             const responseMessage = await apiRegister(registerData);
     
             if (responseMessage === "Success") {
-                navigate("/login");
+                
+                    navigate("/check-email");
             } else {
                 setErrors(responseMessage);
             }
