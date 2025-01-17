@@ -7,7 +7,7 @@ import { fetchMovieReview } from "../../Services/MovieReviewService";
 
 
 
-export default function DisplayReview() {
+export default function JournalDisplayReview() {
     const { id } = useParams();
     const [review, setReview] = useState(null);
     const [loading, setLoading] = useState(true);
