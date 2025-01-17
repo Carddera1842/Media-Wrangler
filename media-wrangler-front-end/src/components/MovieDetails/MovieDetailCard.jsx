@@ -8,12 +8,12 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
-import MovieInteractions from '../MovieInteractions/InteractionsCard';
+import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
+import { Paper } from "@mui/material";
 
 
 
-
-function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
+function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre }) {
 
   //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
 
@@ -38,6 +38,15 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
 
 
   return (
+    <>
+              <Paper 
+            elevation={0} 
+            sx={{
+                maxWidth: 1100, 
+                background: "#004d40", 
+                margin: "30px auto", 
+                padding: "20px",             
+            }} >
     <div className="movie-detail-container">
         <Card sx={{maxWidth: 1000}} variant="outlined">
             <div className="movie-info-container">
@@ -62,6 +71,10 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
                     <b>Date Released: </b> { releaseDate }
                     </Typography>
                     <br />
+                    <Typography variant="body2" sx={{ color: 'black' }}>
+                        <b>Genre:</b>{ genre.join(', ') }
+                    </Typography>
+                    <br />
                     <Typography variant="body2" sx={{ color: 'black' }}  >
                         <b>Overview: </b>{ overview }
                     </Typography>          
@@ -72,29 +85,30 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
                         size="small">Want to Watch</Button>
                     <Button onClick={handleWatched}
                         size="small">Watched</Button>
-                </CardActions>
-
-                {/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
-                {/* <StarRating title={ title } id={ id } />
-                <LikeButton title={ title } id={ id } />          */}
-                
-        </Card>
-        <div className="movie-interactions-container">
-           <MovieInteractions title={ title } id={ id } />  
-        </div>
-       
+                </CardActions>          
+        </Card>  
+        <InteractionsCard 
+        title= { title }
+        releaseDate= { releaseDate }
+        overview= { overview }
+        poster= { poster }
+        movieId= { movieId }
+        genre={ genre } />     
     </div>
+    </Paper>
+    </>
   );
 }
 
 export default MovieDetailCard;
 
 MovieDetailCard.propTypes = {
-    id: PropTypes.number,
+    movieId: PropTypes.number,
     title: PropTypes.string,
     releaseDate: PropTypes.string, 
     overview: PropTypes.string, 
-    poster: PropTypes.string
+    poster: PropTypes.string,
+    genre: PropTypes.array
 
 }
 
