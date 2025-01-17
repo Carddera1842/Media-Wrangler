@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,11 +36,11 @@ public class SecurityConfig implements WebMvcConfigurer {
         return http.build();
     }
 
-    @Bean
+@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setAllowCredentials(true);
-        corsConfig.addAllowedOrigin("http://localhost:5173"); // Adjust based on frontend
+        corsConfig.addAllowedOrigin("http://localhost:5173"); 
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
         return request -> corsConfig;
@@ -48,8 +49,9 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        // manual mapping if needed
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173")
+                .allowedOrigins("http://localhost:5173") // Your frontend URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
@@ -70,5 +72,4 @@ public class SecurityConfig implements WebMvcConfigurer {
         }
     }
 }
-
 

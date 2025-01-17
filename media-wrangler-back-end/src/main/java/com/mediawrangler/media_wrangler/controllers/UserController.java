@@ -1,5 +1,6 @@
 package com.mediawrangler.media_wrangler.controllers;
 
+import com.mediawrangler.media_wrangler.Exception.UserNotFound;
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
 import com.mediawrangler.media_wrangler.dto.UserDTO;
 import com.mediawrangler.media_wrangler.exception.UserNotFoundException;
@@ -100,7 +101,7 @@ public class UserController {
                 .map(user -> ResponseEntity.ok(new UserDTO(user)))
                 .orElse(ResponseEntity.notFound().build());
     }
-
+  
     @PutMapping("/profile/{userId}")
     public ResponseEntity<?> updateUserProfile(@PathVariable int userId, @Valid @RequestBody UserDTO userDTO, HttpSession session) {
         Object loggedInUserId = session.getAttribute("user");
@@ -120,7 +121,15 @@ public class UserController {
         }
     }
 
-
+    @DeleteMapping("/profile/{userId}")
+    String deleteUser(@PathVariable int userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFound(userId);
+        }
+        userRepository.deleteById(userId);
+        return "User with id " + userId + " has been deleted";
+    }
+  
     @GetMapping("/session-status")
     public ResponseEntity<?> checkSession(HttpSession session) {
         Object userId = session.getAttribute("user");
