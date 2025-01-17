@@ -29,8 +29,16 @@ public class SecurityConfig implements WebMvcConfigurer {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login","/users/logout", "/", "/movies", "/reviews/create", "/api/movies/search", "/users/session-status","/users/logout","/users/profile/**").permitAll()
-
+                        .requestMatchers(
+                                "/users/register",
+                                "/users/login",
+                                "/users/logout",
+                                "/",
+                                "/movies",
+                                "/reviews/create",
+                                "/api/movies/search",
+                                "/users/profile/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

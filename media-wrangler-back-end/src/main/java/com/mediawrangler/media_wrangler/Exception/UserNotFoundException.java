@@ -1,4 +1,4 @@
-package com.mediawrangler.media_wrangler.exception;
+package com.mediawrangler.media_wrangler.Exception;
 
 public class UserNotFoundException extends RuntimeException {
 

@@ -3,7 +3,7 @@ package com.mediawrangler.media_wrangler.controllers;
 import com.mediawrangler.media_wrangler.Exception.UserNotFound;
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
 import com.mediawrangler.media_wrangler.dto.UserDTO;
-import com.mediawrangler.media_wrangler.exception.UserNotFoundException;
+import com.mediawrangler.media_wrangler.Exception.UserNotFoundException;
 import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -139,8 +139,6 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("sessionValid", false, "message", "Session invalid or expired"));
     }
-
-
 
     @PostMapping("/logout")
     public ResponseEntity<?> logoutUser(HttpSession session) {
