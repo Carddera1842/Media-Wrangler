@@ -19,6 +19,7 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        user.setBio("");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -36,6 +37,7 @@ public class UserService {
         if (userDTO.getLastname() != null) user.setLastname(userDTO.getLastname());
         if (userDTO.getEmail() != null) user.setEmail(userDTO.getEmail());
         if (userDTO.getUsername() != null) user.setUsername(userDTO.getUsername());
+        if (userDTO.getBio() != null) user.setBio(userDTO.getBio());
 
         return userRepository.save(user);
     }

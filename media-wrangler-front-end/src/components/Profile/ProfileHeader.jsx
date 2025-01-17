@@ -13,6 +13,7 @@ export default function LetterAvatars({ user }) {
     lastname: user.lastname,  
     email: user.email,
     username: user.username,
+    bio: user.bio || "", // Added bio field
   });
 
   const getInitials = (name) => {
@@ -60,14 +61,14 @@ export default function LetterAvatars({ user }) {
             <input
               type="text"
               name="firstname"
-              value={formData.firstname} 
+              value={formData.firstname}
               onChange={handleChange}
               placeholder="First Name"
             />
             <input
               type="text"
-              name="lastname" 
-              value={formData.lastname} 
+              name="lastname"
+              value={formData.lastname}
               onChange={handleChange}
               placeholder="Last Name"
             />
@@ -85,6 +86,20 @@ export default function LetterAvatars({ user }) {
               onChange={handleChange}
               placeholder="Username"
             />
+            <textarea
+              name="bio"
+              value={formData.bio} // Bio input
+              onChange={handleChange}
+              placeholder="Add a short bio"
+              rows={3}
+              style={{
+                resize: "none",
+                width: "100%",
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />
             <Button variant="contained" onClick={handleSave}>
               Save
             </Button>
@@ -97,6 +112,7 @@ export default function LetterAvatars({ user }) {
             <Typography variant="h6">{user.username}</Typography>
             <Typography>{`${user.firstname} ${user.lastname}`}</Typography>
             <Typography>{user.email}</Typography>
+            <Typography sx={{ fontStyle: "italic" }}>{user.bio || "No bio available"}</Typography>
           </Stack>
         )}
 

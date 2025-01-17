@@ -3,6 +3,7 @@ package com.mediawrangler.media_wrangler.dto;
 import com.mediawrangler.media_wrangler.models.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class UserDTO {
     private int id;
@@ -19,6 +20,9 @@ public class UserDTO {
 
     @NotBlank(message = "Username is required")
     private String username;
+
+    @Size(max=500)
+    String bio;
 
     public UserDTO() {
     }
@@ -72,4 +76,11 @@ public class UserDTO {
         this.username = username;
     }
 
+    public @Size(max = 500) String getBio() {
+        return bio;
+    }
+
+    public void setBio(@Size(max = 500) String bio) {
+        this.bio = bio;
+    }
 }
