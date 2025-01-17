@@ -23,7 +23,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         http.csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Set up CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login", "/users/logout", "/", "/movies", "/reviews/create", "/api/movies/search").permitAll()
+                        .requestMatchers("/users/register", "/users/login", "/users/logout", "/", "/movies", "/reviews/create", "/api/movies/search", "/users/profile/**").permitAll()
                         .requestMatchers("/users/logout").authenticated()
                         .anyRequest().authenticated()
                         .requestMatchers("/users/register", "/users/login", "/", "/movies", "/reviews/create", "/reviews/view/{id}").permitAll()  // Allow GET requests to API
