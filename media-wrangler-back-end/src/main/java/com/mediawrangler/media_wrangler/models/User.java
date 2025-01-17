@@ -35,14 +35,19 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(length = 500)
+    private String bio;
+
+
     public User() {}
 
-    public User(String username, String firstname, String lastname, String password, String email) {
+    public User(String username, String firstname, String lastname, String password, String email, String bio) {
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
         this.email = email;
+        this.bio = bio;
     }
 
     public int getId() {
@@ -91,5 +96,13 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

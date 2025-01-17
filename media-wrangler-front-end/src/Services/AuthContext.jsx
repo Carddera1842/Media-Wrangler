@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
-import { login, logout, checkSession } from "./AuthService";
+import apiClient, { login, logout, checkSession } from "./AuthService";
 
 const AuthContext = createContext();
 
@@ -10,43 +10,62 @@ export const AuthProvider = ({ children }) => {
   useEffect (() => {
     const initializeAuth = async () => {
       const storedUser = localStorage.getItem("user");
-
+    
       if (storedUser) {
         try {
           const parsedUser = JSON.parse(storedUser);
-          const response = await verifySession();
+          console.log("Stored user:", parsedUser);
+          const response = await checkSession();
+          console.log("Session verification response:", response);
+    
           if (response.status === 200) {
-            setUser(parsedUser);
+            setUser(parsedUser); 
           } else {
-            throw new Error("Session invalid");
+            console.warn("Session status check returned:", response.status);
+
           }
         } catch (error) {
           console.error("Session verification failed:", error.message);
-          localStorage.removeItem("user");
+
         }
       }
-
+    
       setLoading(false);
     };
+    
 
     initializeAuth();
   }, []);
 
   const loginAction = async (data) => {
     try {
-      const response = await login(data); 
-      const { user } = response.data
-      console.log("Login successful", response.data);
+      const response = await login(data);
+      const { user } = response.data;
+      console.log("Login successful", user);
       if (user) {
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
       } else {
-        throw new Error("Invalid response form the server");
+        throw new Error("Invalid response from the server");
       }
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
-    } 
-  }
+    }
+  };
+  
+  const updateProfile = async (data) => {
+    try {
+      console.log("Updating profile with data:", data);
+      const response = await apiClient.put(`/users/profile/${data.id}`, data);
+      console.log("Profile updated successfully:", response.data);
+      setUser(response.data);
+      localStorage.setItem("user", JSON.stringify(response.data));
+    } catch (error) {
+      console.error("Profile update failed:", error.response?.data || error.message);
+      throw error;
+    }
+  };
+  
 
   const logoutAction = async (data) => {
     try {
@@ -75,6 +94,7 @@ export const AuthProvider = ({ children }) => {
         user,
         loginAction,
         logoutAction,
+        updateProfile,
         loading,
       }}
     >
