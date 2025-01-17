@@ -42,8 +42,12 @@ function MovieDetailsNav() {
               <Tabs
                 value={ value }
                 onChange={ handleChange }
-                textColor="white"
-                indicatorColor="primary"    
+                indicatorColor="primary" 
+                sx={{
+                  '& .MuiTab-root': {
+                    color: 'white',  // Set custom text color to white
+                  },
+                }}   
               >
                 <Tab value="one" label="Cast" />
                 <Tab value="two" label="Crew" />

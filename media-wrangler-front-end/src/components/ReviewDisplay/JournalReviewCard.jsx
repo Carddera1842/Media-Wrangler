@@ -37,8 +37,8 @@ export default function JournalReviewCard({ title, poster, watchAgain, tags, rat
                         <div>
                             {/* <Chip avatar={<Avatar>CHO</Avatar>} label={ username } /> */}
                        
-                            <Typography>
-                                <h3>Username here...</h3>
+                            <Typography variant='h6'>
+                                Username here...
                             <div>
                                 <img style={{height: "300px", width: "auto", margin: "10px"}} src={ poster } alt="movie poster" />
                             </div>
@@ -50,7 +50,7 @@ export default function JournalReviewCard({ title, poster, watchAgain, tags, rat
                             />                      
                             </Typography>
                             <Typography className="spoiler-alert" >                                                  
-                                {(isSpoiler && <p className="spoiler-alert"><PriorityHighIcon />Contains Spoilers </p>)}
+                                {(isSpoiler && <Typography className="spoiler-alert"><PriorityHighIcon />Contains Spoilers </Typography>)}
                             </Typography>
                         </div>                                    
                         <CardContent className="user-review">    
