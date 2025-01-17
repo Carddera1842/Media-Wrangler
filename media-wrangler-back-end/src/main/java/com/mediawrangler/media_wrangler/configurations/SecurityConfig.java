@@ -1,7 +1,8 @@
-package com.mediawrangler.media_wrangler.configurations;
+package com.mediawrangler.media_wrangler.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,30 +19,35 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        // disable CSRF and configure CORS
+        http.csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Set up CORS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/register", "/users/login", "/users/logout", "/", "/movies", "/reviews/create", "/api/movies/search", "/users/profile/**").permitAll()
                         .requestMatchers("/users/logout").authenticated()
                         .anyRequest().authenticated()
+                        .requestMatchers("/users/register", "/users/login", "/", "/movies", "/reviews/create", "/reviews/view/{id}").permitAll()  // Allow GET requests to API
+                        .anyRequest().authenticated()  // Secure other requests
                 );
         return http.build();
     }
 
+    // configure CORS settings
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOrigin("http://localhost:5173");
-        corsConfig.addAllowedMethod("*");
-        corsConfig.addAllowedHeader("*");
-        corsConfig.setAllowCredentials(true);
+        corsConfig.addAllowedOrigin("http://localhost:5173"); // Your frontend URL
+        corsConfig.addAllowedMethod("*"); // Allow all HTTP methods
+        corsConfig.addAllowedHeader("*"); // Allow all headers
+        corsConfig.setAllowCredentials(true); // Allow credentials
 
-        return request -> corsConfig;
+        return request -> corsConfig; // Return the configuration for each request
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        // manual mapping if needed
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173")
+                .allowedOrigins("http://localhost:5173") // Your frontend URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
@@ -52,5 +58,4 @@ public class SecurityConfig implements WebMvcConfigurer {
         return new BCryptPasswordEncoder();
     }
 }
-
 
