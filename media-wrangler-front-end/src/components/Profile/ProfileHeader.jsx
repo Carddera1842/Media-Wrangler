@@ -13,7 +13,7 @@ export default function LetterAvatars({ user }) {
     lastname: user.lastname,  
     email: user.email,
     username: user.username,
-    bio: user.bio || "", // Added bio field
+    bio: user.bio || "", 
   });
 
   const getInitials = (name) => {
@@ -88,7 +88,7 @@ export default function LetterAvatars({ user }) {
             />
             <textarea
               name="bio"
-              value={formData.bio} // Bio input
+              value={formData.bio}
               onChange={handleChange}
               placeholder="Add a short bio"
               rows={3}

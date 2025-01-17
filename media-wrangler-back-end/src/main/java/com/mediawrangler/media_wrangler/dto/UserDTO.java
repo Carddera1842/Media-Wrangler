@@ -34,6 +34,7 @@ public class UserDTO {
         this.email = user.getEmail();
         this.username = user.getUsername();
         this.username = user.getUsername();
+        this.bio = user.getBio();
     }
 
     public int getId() {
