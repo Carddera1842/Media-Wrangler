@@ -26,7 +26,7 @@ const MovieReviewListCard = () => {
           </Typography>
           <Divider sx={{marginTop: "10px", marginBottom: "15px"}}/>                
           <Typography variant="body2" color="text.primary" >
-            <p>Here is the users textarea input for the review that they submitted</p>   {/* replace to be dynamic */}
+            Here is the users textarea input for the review that they submitted  {/* replace to be dynamic */}
           </Typography>
         </CardContent>
         <CardActions>
