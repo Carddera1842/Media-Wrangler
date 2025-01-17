@@ -1,7 +1,7 @@
 package com.mediawrangler.media_wrangler.services;
 
+import com.mediawrangler.media_wrangler.Exception.UserNotFoundException;
 import com.mediawrangler.media_wrangler.dto.UserDTO;
-smaimport com.mediawrangler.media_wrangler.Exception.UserNotFoundException;
 import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.data.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
