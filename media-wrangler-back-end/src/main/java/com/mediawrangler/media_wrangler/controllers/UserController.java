@@ -1,5 +1,6 @@
 package com.mediawrangler.media_wrangler.controllers;
 
+import com.mediawrangler.media_wrangler.Exception.UserNotFound;
 import com.mediawrangler.media_wrangler.dto.LoginRequest;
 import com.mediawrangler.media_wrangler.dto.UserDTO;
 import com.mediawrangler.media_wrangler.models.User;
@@ -92,6 +93,15 @@ public class UserController {
         return userRepository.findById(userId)
                 .map(user -> ResponseEntity.ok(new UserDTO(user)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/profile/{userId}")
+    String deleteUser(@PathVariable int userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFound(userId);
+        }
+        userRepository.deleteById(userId);
+        return "User with id " + userId + " has been deleted";
     }
 
     @GetMapping("/session-status")
