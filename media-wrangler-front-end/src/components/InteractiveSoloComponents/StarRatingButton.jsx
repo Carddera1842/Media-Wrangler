@@ -28,11 +28,11 @@ export default function StarRatingButton({ defaultValue, precision, onChange, na
 }
 
 StarRatingButton.propTypes = {
-  name: PropTypes.string.isRequired,  
-  defaultValue: PropTypes.number.isRequired,
-  precision: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired, 
-  movieId: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired
+  name: PropTypes.string,  
+  defaultValue: PropTypes.number,
+  precision: PropTypes.number,
+  onChange: PropTypes.func, 
+  movieId: PropTypes.number,
+  title: PropTypes.string
 };
 
