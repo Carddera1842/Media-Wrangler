@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 
 //NOTE: The DisplayReview Page is rendering @localhost:5173/reviews/view  <--- the state of the movie review object
-//is passed to DisplayReview.jsx and handed down to the ReviewCard.jsx to show the user that their submission was a success.
+//      is passed to DisplayReview.jsx and handed down to the JournalReviewCard.jsx to show the user that their submission was a success.
 
 
 export default function DisplayReview() {
@@ -17,14 +17,14 @@ export default function DisplayReview() {
     console.log("location state ", location.state);
 
 //we are going to set the movieReviewDate to location state or it will return an empty object...
-    const { dateWatched, review, isSpoiler, rating, tags, title, genre, movieId, poster, watchAgain } = location.state || {};
+    const { dateWatched, review, isSpoiler, rating, tags, title, genre, movieId, poster, watchAgain, yearReleased } = location.state || {};
 
 
     return (
         <>
             <h1> Movie review will display here...</h1>
 
-            {title && movieId && poster&& genre && watchAgain && tags && rating && isSpoiler && review && dateWatched && (
+            {title && movieId && poster&& genre && watchAgain && tags && rating && isSpoiler && review && dateWatched && yearReleased && (
                 <JournalReviewCard 
                     movieId={ movieId } 
                     title={ title } 
@@ -36,6 +36,7 @@ export default function DisplayReview() {
                     isSpoiler={ isSpoiler }
                     review={ review }
                     dateWatched={ dateWatched }
+                    yearReleased={ yearReleased }
                 />
             )}               
         </>

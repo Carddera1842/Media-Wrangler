@@ -11,6 +11,7 @@ function PosterCard() {
   //   const fullPosterUrl = `${baseImageUrl}${poster}`;
 
   //TODO: Add more styling to poster card -- increase size and adjust highlighting
+
   //TODO: Add a more stylish Tiptool for hovering over poster to get movie title --> found some in mui library
  
   
@@ -71,15 +72,4 @@ function PosterCard() {
 }
 export default PosterCard;
 
-/*
-NOTE: The width and height can be adjusted. We probably want a smaller poster size for the poster grid that will display the movie-cards and possibly to attach to the movie-review-form
-We probably want an image a bit larger for the movie-detail-card when we are targeting in on one specific movie 
 
-
-NOTE: We may not want to display the movie title in the poster grid (or horizontal display) because the titles will not allow for a good flow with the various lengths. 
-
-NOTE: We just need to decide if we want the results to list horizontal or vertically. For the homepage, if we are viewing the trending movies I think horizontally would be best, but for the search results a vertical display might be nice. No preference either way
-
------
-NOTE: Make sure not to add () after clickHandler inside the {} because it would then be calling the function instead of acting as a function
-*/

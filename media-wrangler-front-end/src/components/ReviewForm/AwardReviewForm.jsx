@@ -5,11 +5,11 @@ import './ReviewForm.css';
 import { submitMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
-import { Checkbox } from "@mui/material";
+import { Checkbox, Paper } from "@mui/material";
 import RadioButton from '../InteractiveSoloComponents/RadioButton';
 import AwardEnum from "../enums/AwardEnum";
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
-import Paper from '@mui/material/Paper';
+
 
 
 function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
@@ -204,12 +204,14 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
                             onChange={ handleLovedAward }
                             disabled={ isLovedDisabled }
                           >
+                           
                             <option value="">-- Select an Award --</option>
                             { lovedAwards.map((award) => (
                             <option key={ award.id } value={ award.value } title={ award.description }>
                                 { award.icon } { award.label }
                             </option>
                             ))}
+                           
                           </select>
                         </div>
                       </div>
