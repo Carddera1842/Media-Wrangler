@@ -1,9 +1,6 @@
 package com.mediawrangler.media_wrangler.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -20,12 +17,16 @@ public class Comment {
 
     //Need to add a user and movieReview field inside class when I get them storing properly
     //userId & movieReviewId (Many to One relationships)
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Comment() {
     }
 
-    public Comment(String userComment) {
+    public Comment(String userComment, User user) {
         this.userComment = userComment;
+        this.user = user;
         this.dateCreated = LocalDate.now();
     }
 
@@ -35,5 +36,13 @@ public class Comment {
 
     public void setUserComment(String userComment) {
         this.userComment = userComment;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
