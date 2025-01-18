@@ -43,9 +43,9 @@ public class MovieReview {
     private List<String> tags = new ArrayList<>();
 
 //TODO: uncomment when ready to test with user
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
 //TODO: uncomment when ready to test relationships
 //    @ManyToOne
@@ -64,7 +64,7 @@ public class MovieReview {
     }
 
     //overloaded constructor for easier testing (without User logged in)
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String poster, String yearReleased) {
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String poster, String yearReleased, User user) {
         this.dateCreated = LocalDate.now();
         this.review = review;
         this.dateWatched = dateWatched;
@@ -75,6 +75,7 @@ public class MovieReview {
         this.title = title;
         this.poster = poster;
         this.yearReleased = yearReleased;
+        this.user = user;
     }
 
 
@@ -170,13 +171,13 @@ public class MovieReview {
     }
 
     //TODO: Uncomment when ready to test with User logged in
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 
 

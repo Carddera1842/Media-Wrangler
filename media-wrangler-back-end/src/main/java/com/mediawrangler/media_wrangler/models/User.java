@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Entity
 public class User {
 
@@ -37,6 +39,10 @@ public class User {
 
     @Column(length = 500)
     private String bio;
+
+    //TODO: add review field
+    @OneToMany(mappedBy = "user")
+    private List<MovieReview> movieReviews;
 
 
     public User() {}
@@ -104,5 +110,13 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public List<MovieReview> getMovieReviews() {
+        return movieReviews;
+    }
+
+    public void setMovieReviews(List<MovieReview> movieReviews) {
+        this.movieReviews = movieReviews;
     }
 }
