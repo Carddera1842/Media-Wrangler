@@ -1,0 +1,47 @@
+.posterContainer {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+  }
+  
+  .posterImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    transition: border 0.3s ease;
+  }
+  
+  .addButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(158, 82, 49, 0.85);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  
+  .addButton:hover {
+    background-color: rgba(184, 100, 63, 0.9);
+    transform: scale(1.1);
+  }
+  
+  .addButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(158, 82, 49, 0.5);
+  }
