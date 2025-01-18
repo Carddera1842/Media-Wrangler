@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -37,21 +38,25 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/movies",
                                 "/reviews/create",
                                 "/api/movies/search",
-                                "/users/profile/**"
+                                "/users/profile/**",
+                                "/api/lists/add-movie"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
     }
 
-@Bean
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowCredentials(true);
-        corsConfig.addAllowedOrigin("http://localhost:5173"); 
-        corsConfig.addAllowedMethod("*");
-        corsConfig.addAllowedHeader("*");
-        return request -> corsConfig;
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:5173"); // Frontend URL
+        configuration.addAllowedMethod("*"); // Allow all HTTP methods
+        configuration.addAllowedHeader("*"); // Allow all headers
+        configuration.setAllowCredentials(true); // Allow credentials for session sharing
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Apply CORS to all endpoints
+        return source;
     }
 
 
