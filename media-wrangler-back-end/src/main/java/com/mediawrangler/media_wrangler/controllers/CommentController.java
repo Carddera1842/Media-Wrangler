@@ -27,21 +27,15 @@ public class CommentController {
         this.commentRepository = commentRepository;
     }
 
-
-    //I currently do not have validation or errors to be checked for tester form
-    // Changed the saveReview object in the return response to a String message stating success
-    @PostMapping("/reviews/{movieReviewId}/comments")
-    public ResponseEntity<?> createComment(@PathVariable Long movieReviewId, @RequestBody Comment comment) {
+    @PostMapping("/movies")
+    public ResponseEntity<?> createComment(@RequestBody Comment comment) {
         try {
-            Comment savedComment = CommentService.saveComment(comment);
+            Comment savedComment = commentService.saveComment(comment); // Use the service instance
             return new ResponseEntity<>("Comment Submission successful", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while saving the comment", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 
 
 }
