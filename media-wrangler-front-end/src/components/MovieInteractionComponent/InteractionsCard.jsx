@@ -49,7 +49,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
             navigate('/login');
         }
         navigate("/reviews/create", {
-            state: { title, movieId, poster, releaseDate, genre, userId: user.userId }  
+            state: { title, movieId, poster, releaseDate, genre, user }  
         });
     }
       

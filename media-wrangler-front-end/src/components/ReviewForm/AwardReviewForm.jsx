@@ -28,8 +28,9 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
   
-  const { userId } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const userId = user.id;
 
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
