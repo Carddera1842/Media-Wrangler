@@ -31,10 +31,9 @@ function App() {
           <Route path="/profile/:userId" element={<Profile />}/>
         {/* </Route> */}
         <Route path="/register" element={<Register />}/>
-        <Route path="/reviews/create" element={<CreateReview />} />           {/* This is to demonstrate different form versions */}   
-        <Route path="/reviews/view" element={<DisplayReview />}/>             {/* User is redirected here to see review they just submitted */}
+        <Route path="/reviews/create" element={<CreateReview />} />             
+        <Route path="/reviews/view" element={<DisplayReview />}/>             {/* User is redirected to message of success, should probably redirect to the user's journal or profile in the future*/}
         <Route path="/reviews/view/:id" element={<JournalDisplayReview />} /> {/* This displays a review by id */}
-        <Route path="/reviews/movie" element={<MovieReviewListCard />} />     {/* This displays what reviews may look like on movie detail page */}
       </Routes>
         </div>
     </>
