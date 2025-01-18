@@ -30,7 +30,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
   
   const { user } = useAuth();
   const navigate = useNavigate();
-  const userId = user.id;
+  
 
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
@@ -106,7 +106,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         watchAgain,
         award,
         yearReleased,
-        userId
+        user
       }
 
       alert("Thank you for your submission!");
