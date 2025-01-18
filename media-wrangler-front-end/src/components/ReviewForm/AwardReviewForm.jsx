@@ -9,6 +9,7 @@ import { Checkbox, Paper } from "@mui/material";
 import RadioButton from '../InteractiveSoloComponents/RadioButton';
 import AwardEnum from "../enums/AwardEnum";
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
+import { useAuth } from '../../Services/AuthContext';
 
 
 
@@ -27,7 +28,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
   
- 
+  const { userId } = useAuth();
   const navigate = useNavigate();
 
   const lovedAwards = Object.values(AwardEnum.loved);
@@ -103,11 +104,12 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         poster, 
         watchAgain,
         award,
-        yearReleased
+        yearReleased,
+        userId
       }
 
       alert("Thank you for your submission!");
-      console.log("Submitting review for: ", title + "(" + movieId + ")", "New review object: ", movieReviewData);
+      console.log("Submitting review for:", movieReviewData);
     
 
       try {

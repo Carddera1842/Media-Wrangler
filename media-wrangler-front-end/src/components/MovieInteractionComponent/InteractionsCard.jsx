@@ -7,6 +7,7 @@ import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useAuth } from '../../Services/AuthContext';
 
 /*
     TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
@@ -20,13 +21,15 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     
+    
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     function onChangeRating(e) {
         setRating(e.target.value);
     }
     //TODO: Remove: only for testing purposes
-    console.log("The user has given ", rating, "stars to ", { title }, "(",{ movieId },")");
+    console.log(user.id, " has given ", rating, "stars to ", { title }, "(",{ movieId },")");
     
 
     function handleLikeClick() {
@@ -41,8 +44,12 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
 
     //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
+        if(!user) {
+            alert("You must be logged in to write a review");
+            navigate('/login');
+        }
         navigate("/reviews/create", {
-            state: { title, movieId, poster, releaseDate, genre }  
+            state: { title, movieId, poster, releaseDate, genre, userId: user.userId }  
         });
     }
       
