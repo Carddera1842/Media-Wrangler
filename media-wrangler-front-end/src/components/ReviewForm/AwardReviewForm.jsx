@@ -109,7 +109,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         user
       }
 
-      alert("Thank you for your submission!");
+     
       console.log("Submitting review for:", movieReviewData);
     
 
