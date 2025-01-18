@@ -39,7 +39,9 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/reviews/create",
                                 "/api/movies/search",
                                 "/users/profile/**",
-                                "/api/lists/add-movie"
+                                "/api/lists/add-movie",
+                                "/api/lists/user-lists",
+                                "/api/lists/add"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );
@@ -49,13 +51,13 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:5173"); // Frontend URL
-        configuration.addAllowedMethod("*"); // Allow all HTTP methods
-        configuration.addAllowedHeader("*"); // Allow all headers
-        configuration.setAllowCredentials(true); // Allow credentials for session sharing
+        configuration.addAllowedOrigin("http://localhost:5173");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply CORS to all endpoints
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
