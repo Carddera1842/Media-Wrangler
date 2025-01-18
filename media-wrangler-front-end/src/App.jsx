@@ -25,7 +25,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />}/>
-        <Route path="/search" element={<MovieSearch />}/>
+        
+        <Route path="/search" element={<Search />}/>
         <Route path="/login" element={<Login />}/>
         {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/profile/:userId" element={<Profile />}/>
