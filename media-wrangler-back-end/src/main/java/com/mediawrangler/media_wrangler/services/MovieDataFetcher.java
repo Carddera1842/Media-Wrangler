@@ -1,5 +1,6 @@
 package com.mediawrangler.media_wrangler.services;
 
+import com.mediawrangler.media_wrangler.models.CastMember;
 import com.mediawrangler.media_wrangler.models.Movie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -73,6 +74,7 @@ public class MovieDataFetcher {
                     double rating = movieJson.getDouble("vote_average");
                     String overview = movieJson.getString("overview");
                     String posterPath = movieJson.optString("poster_path", null);
+
 
 
                     Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath);
@@ -214,7 +216,7 @@ public class MovieDataFetcher {
 
     // fetches movie details by ID
     private static Movie fetchMovieDetails(OkHttpClient client, int movieId) {
-        String apiUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?" + "&language=en-US";
+        String apiUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?" + "&language=en-US" + "append_to_response=credits";
 
         Request request = new Request.Builder()
                 .url(apiUrl)
@@ -232,6 +234,7 @@ public class MovieDataFetcher {
             // parse the movie details response
             String responseBody = response.body().string();
             JSONObject jsonResponse = new JSONObject(responseBody);
+
 
             // Extract movie data
             String title = jsonResponse.getString("title");
