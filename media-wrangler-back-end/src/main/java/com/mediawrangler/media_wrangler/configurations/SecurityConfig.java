@@ -41,7 +41,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/users/profile/**",
                                 "/api/lists/add-movie",
                                 "/api/lists/user-lists",
-                                "/api/lists/add"
+                                "/api/lists/add",
+                                "/api/lists/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );

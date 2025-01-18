@@ -81,4 +81,10 @@ public class ListController {
         return ResponseEntity.ok("List created successfully!");
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<MovieList>> getAllMovieLists() {
+        List<MovieList> movieLists = movieListRepository.findAll();
+        return ResponseEntity.ok(movieLists);
+    }
+
 }
