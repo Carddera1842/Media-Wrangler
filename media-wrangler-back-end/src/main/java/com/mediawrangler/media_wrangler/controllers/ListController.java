@@ -57,9 +57,6 @@ public class ListController {
         return ResponseEntity.ok(uniqueListNames);
     }
 
-
-
-
     @PostMapping("/add")
     public ResponseEntity<String> addList(@RequestBody Map<String, Object> payload) {
         int userId = (int) payload.get("userId");
@@ -68,7 +65,6 @@ public class ListController {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Check if the list already exists for the user
         boolean listExists = movieListRepository.findByUser(user)
                 .stream()
                 .anyMatch(list -> list.getListName().equalsIgnoreCase(listName));
@@ -77,12 +73,10 @@ public class ListController {
             return ResponseEntity.badRequest().body("List already exists.");
         }
 
-        // Create a new MovieList object
         MovieList movieList = new MovieList();
         movieList.setUser(user);
         movieList.setListName(listName);
 
-        // Save the list
         movieListRepository.save(movieList);
         return ResponseEntity.ok("List created successfully!");
     }
