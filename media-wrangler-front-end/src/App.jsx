@@ -14,6 +14,7 @@ import CreateReview from './components/ReviewForm/CreateReview';
 import DisplayReview from './components/ReviewDisplay/DisplayReview';
 import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview';
 import MovieReviewListCard from './components/ReviewDisplay/MovieReviewListCard';
+import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/movies" element={<Movies />}/>
         
         <Route path="/search" element={<Search />}/>
+        <Route path="/movie/:id" element={<MovieDetailsPage />} />
         <Route path="/login" element={<Login />}/>
         {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/profile/:userId" element={<Profile />}/>
