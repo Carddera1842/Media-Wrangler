@@ -47,10 +47,6 @@ export default function LetterAvatars({ user }) {
       component="section"
       sx={{
         display: "flex",
-        p: 2,
-        border: "1px solid grey",
-        width: "50%",
-        margin: "0 auto",
       }}
     >
       <Stack direction="row" spacing={2} alignItems="center" sx={{ width: "100%" }}>
