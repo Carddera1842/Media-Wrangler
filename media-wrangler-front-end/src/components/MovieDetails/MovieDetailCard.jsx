@@ -20,8 +20,8 @@ function MovieDetailCard({ movieDetails }) {
 
     console.log('Received movieDetails:', movieDetails);
 
-    const baseImageUrl = "https://image.tmdb.org/t/p/w300";
-    const fullPosterUrl = `${baseImageUrl}${movieDetails.posterPath}`;
+    const baseImageURL = "https://image.tmdb.org/t/p/w300";
+    const fullPosterURL = `${baseImageURL}${movieDetails.posterPath}`;
     
     const yearReleased = new Date(movieDetails.releaseDate).getFullYear();
 
@@ -59,7 +59,7 @@ function MovieDetailCard({ movieDetails }) {
                                 component="img"
                                 height="300"  
                                 width="auto"   
-                                image={ fullPosterUrl }
+                                image={ fullPosterURL }
                                 alt="Movie Poster"
                             />
                         </CardActionArea>
@@ -91,12 +91,7 @@ function MovieDetailCard({ movieDetails }) {
                     </CardActions>          
                 </Card>  
                 <InteractionsCard 
-                    title= { movieDetails.title }
-                    releaseDate= { movieDetails.releaseDate }
-                    overview= { movieDetails.overview }
-                    poster= { movieDetails.poster }
-                    movieId= { movieDetails.id }
-                    
+                    movieDetails={ movieDetails }                
                 />     
             </div>
         </Paper>

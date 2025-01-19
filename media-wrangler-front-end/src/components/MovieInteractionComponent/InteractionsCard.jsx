@@ -14,7 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
     TODO: The "liked" button counter needs some focus, figure out how to save the counts so we can display the total "likes" across all reviews
 */
 
-function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
+function InteractionsCard({ movieDetails }) {
 
     const [rating, setRating] = useState(0);
     const [isLiked, setLiked] = useState(false);
@@ -25,8 +25,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
     function onChangeRating(e) {
         setRating(e.target.value);
     }
-    //TODO: Remove: only for testing purposes
-    console.log("The user has given ", rating, "stars to ", { title }, "(",{ movieId },")");
+   
     
 
     function handleLikeClick() {
@@ -42,7 +41,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
     //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
         navigate("/reviews/create", {
-            state: { title, movieId, poster, releaseDate, genre }  
+            state: { movieDetails }  
         });
     }
       
@@ -53,7 +52,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                 <span className="button-label">Rate</span>
                 <StarRatingButton
                     name="half-rating" 
-                    title={ title }
+                    title={ movieDetails.title }
                     defaultValue={0} 
                     precision={0.5} 
                     onChange={ onChangeRating }
@@ -64,7 +63,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
             key="two" 
             className="button-container"
             name="like-button"
-            title={ title } 
+            title={ movieDetails.title } 
             value={ isLiked }                    
             onClick={ handleLikeClick }
         > 
@@ -79,7 +78,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
             key="three" 
             className="button-container"
             name="write-review"
-            title={ title } 
+            title={ movieDetails.title } 
             onClick={ handleWriteReviewClick } 
         >
             <div className="button-content">

@@ -13,16 +13,16 @@ function MovieDetailsPage() {
         try {
             const response = await fetch(`http://localhost:8080/api/movies/${id}`);
             
-            // Log the response and its headers
+           
             console.log('Response:', response);
             
-
+            //was having some weird warnings and couldn't get the data as a json, so I did text instead
             const textResponse = await response.text();
             console.log('Raw Response Body:', textResponse);
     
             if (response.ok) {
-                const movieDetails = JSON.parse(textResponse); // Manually parse the JSON
-                console.log('Parsed Movie Details:', movieDetails);
+                const movieDetails = JSON.parse(textResponse); 
+                console.log('Movie Details:', movieDetails);
                 setMovieDetails(movieDetails);
             } else {
                 console.error('Failed to fetch movie details from the backend.');
@@ -51,7 +51,7 @@ function MovieDetailsPage() {
     <div>
       {movieDetails && (
         <div>
-            <MovieDetailCard movieDetails={movieDetails} />
+            <MovieDetailCard movieDetails={ movieDetails } />
         </div>
       )}
       {/* <div>

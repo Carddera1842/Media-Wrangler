@@ -12,7 +12,7 @@ import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 
 
 
-function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
+function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -34,6 +34,9 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
   const hatedAwards = Object.values(AwardEnum.hated);
 
   const yearReleased = new Date(releaseDate).getFullYear();
+
+  const baseImageURL = "https://image.tmdb.org/t/p/w300";
+  const fullPosterURL = `${baseImageURL}${posterPath}`;
 
   function handleHatedAward(e){
     setHatedAward(e.target.value);
@@ -90,7 +93,7 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         }
       }
 
-      //add award and username into the object
+      
       const movieReviewData = { 
         dateWatched,
         review,
@@ -98,9 +101,8 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
         rating,
         tags,
         title,
-        genre,
         movieId,
-        poster, 
+        fullPosterURL, 
         watchAgain,
         award,
         yearReleased
@@ -152,9 +154,9 @@ function AwardReviewForm({ title, genre, releaseDate, poster, movieId }) {
                       <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
                        <b>{ title }</b> <span style={{ fontSize: '19px', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span> 
                       </h3>
-                      <p>{ genre.join(", ") }</p>
+                      {/* <p>{ genre.join(", ") }</p> */}
                     </div> 
-                <img src={ poster } ></img>
+                <img src={ fullPosterURL } ></img>
               </div>
               <form onSubmit={ handleSubmit }>              
                   <div className="review-form">
