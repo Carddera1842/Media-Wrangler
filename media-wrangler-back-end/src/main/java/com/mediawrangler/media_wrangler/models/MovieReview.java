@@ -64,8 +64,8 @@ public class MovieReview {
     }
 
     //overloaded constructor for easier testing (without User logged in)
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String fullPosterURL, String yearReleased) {
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String poster, String yearReleased, User user) {
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating,
+                       String watchAgain, String title, String fullPosterURL, String yearReleased, User user ) {
         this.dateCreated = LocalDate.now();
         this.review = review;
         this.dateWatched = dateWatched;
