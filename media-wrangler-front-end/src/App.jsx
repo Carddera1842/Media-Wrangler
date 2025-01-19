@@ -25,8 +25,7 @@ function App() {
         <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}/>
-        
+        <Route path="/movies" element={<Movies />}/>                        {/* There is nothing on this page anymore, could be removed */}        
         <Route path="/search" element={<Search />}/>
         <Route path="/movies/:id" element={<MovieDetailsPage />} />
         <Route path="/login" element={<Login />}/>
@@ -45,9 +44,12 @@ function App() {
 
 export default App
 
+/*TODO: the reviews/view/id to display JournalReview no longer is working. I probably need to update the code now that 
+        I have more moving parts...
+        Can probably use this for the users journal. Could have dateWatched, movie poster and movie title that is clickable. When user clicks on one it directs them to the view of that particular one
 
 
-
+*/
 
 
 

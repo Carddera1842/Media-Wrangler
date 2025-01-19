@@ -3,6 +3,7 @@ import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, 
 import './MovieDetailCard.css';
 import PropTypes from 'prop-types';
 import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
+import MovieDetailsNav from '../nav/MovieDetailsNav';
 
 
 
@@ -90,11 +91,10 @@ function MovieDetailCard({ movieDetails }) {
                             size="small">Watched</Button>
                     </CardActions>          
                 </Card>  
-                <InteractionsCard 
-                    movieDetails={ movieDetails }                
-                />     
+                <InteractionsCard movieDetails={ movieDetails } />     
             </div>
         </Paper>
+        <MovieDetailsNav movieDetails={ movieDetails } />
     </>
   );
 }
