@@ -46,7 +46,7 @@ public class MovieReview {
 
     //To track the movie until movie data gets sent to database from API
     private String title;
-    private String poster;
+    private String fullPosterURL;
     private String yearReleased;
 
 
@@ -56,7 +56,7 @@ public class MovieReview {
     }
 
     //overloaded constructor for easier testing (without User logged in)
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String poster, String yearReleased) {
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String fullPosterURL, String yearReleased) {
         this.dateCreated = LocalDate.now();
         this.review = review;
         this.dateWatched = dateWatched;
@@ -65,7 +65,7 @@ public class MovieReview {
         this.rating = rating;
         this.watchAgain = watchAgain;
         this.title = title;
-        this.poster = poster;
+        this.fullPosterURL = fullPosterURL;
         this.yearReleased = yearReleased;
     }
 
@@ -127,12 +127,12 @@ public class MovieReview {
         this.title = title;
     }
 
-    public String getPoster() {
-        return poster;
+    public String getFullPosterURL() {
+        return fullPosterURL;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setPoster(String fullPosterURL) {
+        this.fullPosterURL = fullPosterURL;
     }
 
 
