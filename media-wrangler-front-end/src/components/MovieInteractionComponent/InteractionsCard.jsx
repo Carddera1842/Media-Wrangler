@@ -7,6 +7,7 @@ import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useAuth } from '../../Services/AuthContext';
 
 /*
     TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
@@ -20,12 +21,14 @@ function InteractionsCard({ movieDetails }) {
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     
+
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     function onChangeRating(e) {
         setRating(e.target.value);
     }
-   
+
     
 
     function handleLikeClick() {
@@ -40,8 +43,12 @@ function InteractionsCard({ movieDetails }) {
 
     //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
+        if(!user) {
+            alert("You must be logged in to write a review");
+            navigate('/login');
+        }
         navigate("/reviews/create", {
-            state: { movieDetails }  
+            state: { movieDetails, user }
         });
     }
       
@@ -63,7 +70,7 @@ function InteractionsCard({ movieDetails }) {
             key="two" 
             className="button-container"
             name="like-button"
-            title={ movieDetails.title } 
+            title={ movieDetails.title }
             value={ isLiked }                    
             onClick={ handleLikeClick }
         > 
@@ -78,7 +85,7 @@ function InteractionsCard({ movieDetails }) {
             key="three" 
             className="button-container"
             name="write-review"
-            title={ movieDetails.title } 
+            title={ movieDetails.title }
             onClick={ handleWriteReviewClick } 
         >
             <div className="button-content">

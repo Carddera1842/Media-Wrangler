@@ -1,6 +1,9 @@
 package com.mediawrangler.media_wrangler.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,12 +22,12 @@ public class MovieReview {
     private LocalDate dateCreated;
 
 
-//    @NotNull(message = "You must enter a date watched")
+    @NotNull(message = "You must enter a date watched")
     private LocalDate dateWatched;
 
 //    Might want to change the max to higher than 1000
-//    @NotBlank(message = "We want to hear your thoughts, write your movie review")
-//    @Size(max = 1000, message = "Review must be less than 1000 characters")
+    @NotBlank(message = "We want to hear your thoughts, write your movie review")
+    @Size(max = 1000, message = "Review must be less than 1000 characters")
     private String review;
 
 //TODO: Still have to get spoiler checkbox logging correctly...changed back to boolean to see if I can get it to work
@@ -32,7 +35,7 @@ public class MovieReview {
 
     private String award;
 
-//    @NotNull(message = "You must give movie a star rating")
+    @NotNull(message = "You must give movie a star rating")
     private int rating;
 
     private String watchAgain;
@@ -40,9 +43,14 @@ public class MovieReview {
     private List<String> tags = new ArrayList<>();
 
 //TODO: uncomment when ready to test with user
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
+//TODO: uncomment when ready to test relationships
 //    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+//    private List<Comment> comments;
+
 
     //To track the movie until movie data gets sent to database from API
     private String title;
@@ -57,6 +65,7 @@ public class MovieReview {
 
     //overloaded constructor for easier testing (without User logged in)
     public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String fullPosterURL, String yearReleased) {
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating, String watchAgain, String title, String poster, String yearReleased, User user) {
         this.dateCreated = LocalDate.now();
         this.review = review;
         this.dateWatched = dateWatched;
@@ -67,6 +76,7 @@ public class MovieReview {
         this.title = title;
         this.fullPosterURL = fullPosterURL;
         this.yearReleased = yearReleased;
+        this.user = user;
     }
 
 
@@ -162,13 +172,13 @@ public class MovieReview {
     }
 
     //TODO: Uncomment when ready to test with User logged in
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 
 
