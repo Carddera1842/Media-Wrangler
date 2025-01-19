@@ -37,7 +37,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/",
                                 "/movies",
                                 "/reviews/create",
-                                "/api/movies/search",
+                                "/api/movies/**",
                                 "/users/profile/**",
                                 "/api/lists/add-movie",
                                 "/api/lists/user-lists",
