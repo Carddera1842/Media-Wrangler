@@ -10,21 +10,42 @@ function MovieDetailsPage() {
   useEffect(() => {
     
     const fetchMovieDetails = async () => {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNGY4N2NjNmIxZTZhMzQyMThjNjdjYWM1NGMwYzE0ZiIsIm5iZiI6MTczNDE5MTM5MS43NzcsInN1YiI6IjY3NWRhOTFmZjFiZjk2ZGMyNDc4MTA4ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4trA-9bv10lqcfQyhPxFTeKRWMyyPjIhgM_3Vri9Y6Y`);
-      const movieDetails = await response.json();
-      setMovieDetails(movieDetails);
-    };
+        try {
+            const response = await fetch(`http://localhost:8080/api/movies/${id}`);
+            
+            // Log the response and its headers
+            console.log('Response:', response);
+            
 
-    // Fetch reviews from your backend
+            const textResponse = await response.text();
+            console.log('Raw Response Body:', textResponse);
+    
+            if (response.ok) {
+                const movieDetails = JSON.parse(textResponse); // Manually parse the JSON
+                console.log('Parsed Movie Details:', movieDetails);
+                setMovieDetails(movieDetails);
+            } else {
+                console.error('Failed to fetch movie details from the backend.');
+            }
+        } catch (error) {
+            console.error('Error fetching movie details:', error);
+        }
+    };
+    
+    fetchMovieDetails();
+    }, [id]);
+
+
+   
     const fetchReviews = async () => {
       const response = await fetch(`/api/reviews?movieId=${id}`);
       const data = await response.json();
       setReviews(data);
     };
 
-    fetchMovieDetails();
+   
     fetchReviews();
-  }, [id]);
+
 
   return (
     <div>

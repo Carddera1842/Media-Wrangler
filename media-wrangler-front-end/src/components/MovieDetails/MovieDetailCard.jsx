@@ -10,19 +10,20 @@ import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
     //TODO: The "watched" and "want to watch" buttons need to be finished when the lists are ready for them. These buttons can be used, we can add them to the InteractionsCard -- OR-- they can be incorporated in a different way based on what the feature designer would like to do
     
     //TODO: uncomment out the baseImageURL and fullPosterURL when the API is hooked back up...And switch { poster } back to { fullPosterURL }
-    // const baseImageUrl = "https://image.tmdb.org/t/p/w300";
-    // const fullPosterUrl = `${baseImageUrl}${poster}`;
+  
     
-    // NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
+   
 
-    //TODO: May remove the Genres from the Movie Detail Card if we want to put them in Movie Detail Tab/Navbar
+   
 
-    //TODO: Finish up the info we want to be displayed for the Movie
+function MovieDetailCard({ movieDetails }) {
 
-function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre }) {
+    console.log('Received movieDetails:', movieDetails);
 
+    const baseImageUrl = "https://image.tmdb.org/t/p/w300";
+    const fullPosterUrl = `${baseImageUrl}${movieDetails.posterPath}`;
     
-    const yearReleased = new Date(releaseDate).getFullYear();
+    const yearReleased = new Date(movieDetails.releaseDate).getFullYear();
 
     //NOTE: console.logs are temporary, just checking for basic functionality before moving forward
     function handleWantToWatch() {
@@ -58,27 +59,27 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre 
                                 component="img"
                                 height="300"  
                                 width="auto"   
-                                image={ poster }
+                                image={ fullPosterUrl }
                                 alt="Movie Poster"
                             />
                         </CardActionArea>
                         <CardContent>            
                             <Typography gutterBottom variant="h3" component="div">
-                                { title } 
+                                { movieDetails.title } 
                                 <span style={{ marginLeft: '8px', fontSize: '2rem', color: '#ff8f00' }}>
                                     ({yearReleased})
                                 </span>
                             </Typography>          
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                <b>Date Released: </b> { releaseDate }
+                                <b>Date Released: </b> { movieDetails.releaseDate }
                             </Typography>
                             <br />
-                            <Typography variant="body2" sx={{ color: 'black' }}>
+                            {/* <Typography variant="body2" sx={{ color: 'black' }}>
                                 <b>Genres: </b>{ genre.join(', ') }
-                            </Typography>
+                            </Typography> */}
                             <br />
                             <Typography variant="body2" sx={{ color: 'black' }}  >
-                                <b>Overview: </b>{ overview }
+                                <b>Overview: </b>{ movieDetails.overview }
                             </Typography>          
                         </CardContent>
                     </div> 
@@ -90,12 +91,12 @@ function MovieDetailCard({ title, releaseDate, overview, poster, movieId, genre 
                     </CardActions>          
                 </Card>  
                 <InteractionsCard 
-                    title= { title }
-                    releaseDate= { releaseDate }
-                    overview= { overview }
-                    poster= { poster }
-                    movieId= { movieId }
-                    genre={ genre } 
+                    title= { movieDetails.title }
+                    releaseDate= { movieDetails.releaseDate }
+                    overview= { movieDetails.overview }
+                    poster= { movieDetails.poster }
+                    movieId= { movieDetails.id }
+                    
                 />     
             </div>
         </Paper>

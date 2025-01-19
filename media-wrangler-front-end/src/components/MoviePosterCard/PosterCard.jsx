@@ -19,7 +19,7 @@ function MovieCard({ movie }) {
 
 
     function handleClick() {
-        navigate(`/movie/${movie.id}`);
+        navigate(`/movies/${movie.id}`);
         }
     
   
