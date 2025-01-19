@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import enUS from "date-fns/locale/en-US";
@@ -18,10 +18,37 @@ const localizer = dateFnsLocalizer({
 });
 
 function CalendarPlaceholder({ user }) {
+  const [events, setEvents] = useState([]); // State for storing events
   const [title, setTitle] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [showModal, setShowModal] = useState(false);
+
+  // Fetch events from the backend on component mount
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/events/user/${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          const formattedEvents = data.map((event) => ({
+            ...event,
+            start: new Date(event.start),
+            end: new Date(event.end),
+          }));
+          setEvents(formattedEvents);
+        } else {
+          console.error("Failed to fetch events.");
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    if (user) {
+      fetchEvents();
+    }
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,11 +73,17 @@ function CalendarPlaceholder({ user }) {
       });
 
       if (response.ok) {
-        alert("Event added successfully!");
+        const newEvent = {
+          title,
+          start: new Date(start),
+          end: new Date(end),
+        };
+        setEvents([...events, newEvent]); // Add the new event to the state
         setTitle("");
         setStart("");
         setEnd("");
-        setShowModal(false); // Close modal on successful submission
+        setShowModal(false); // Close modal
+        alert("Event added successfully!");
       } else {
         alert("Failed to add event.");
       }
@@ -61,13 +94,10 @@ function CalendarPlaceholder({ user }) {
   };
 
   const handleSelectSlot = (slotInfo) => {
-    // Prefill start and end dates and open modal
     setStart(slotInfo.start.toISOString().slice(0, 16)); // Format for datetime-local input
     setEnd(slotInfo.end.toISOString().slice(0, 16));
-    setShowModal(true);
+    setShowModal(true); // Open modal
   };
-
-  const events = []; // Placeholder for events
 
   return (
     <>

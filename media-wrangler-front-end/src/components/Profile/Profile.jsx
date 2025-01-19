@@ -3,7 +3,7 @@ import { useAuth } from "../../Services/AuthContext";
 import ProfileHeader from "./ProfileHeader";
 import MovieListTable from "./MovieListTable";
 import CalendarPlaceholder from "./Calendar";
-import './Profile.css'
+import './Profile.css';
 
 const Profile = () => {
   const { user, error } = useAuth();
@@ -12,21 +12,21 @@ const Profile = () => {
   if (!user) return <p>Loading...</p>;
 
   return (
-    <>
     <div className="profile-page">
       <div className="profile-main">
-        <div className="profile-header">
-          <ProfileHeader user={user} />
+        <div className="profile-left">
+          <div className="profile-header">
+            <ProfileHeader user={user} />
+          </div>
+          <div className="profile-calendar">
+            <CalendarPlaceholder user={user} />
+          </div>
         </div>
-        <div className="profile-calendar">
-          <CalendarPlaceholder user={user} />
+        <div className="profile-sidebar">
+          <MovieListTable />
         </div>
-      </div>
-      <div className="profile-sidebar">
-        <MovieListTable />
       </div>
     </div>
-    </>
   );
 };
 

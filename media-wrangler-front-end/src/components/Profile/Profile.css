@@ -1,51 +1,58 @@
 .profile-page {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 20px;
-    padding: 20px;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.profile-main {
+  display: flex;
+  flex: 1; /* Main section and sidebar split equally */
+  gap: 20px;
+}
+
+.profile-left {
+  display: flex;
+  flex-direction: column; /* Stack ProfileHeader and Calendar vertically */
+  flex: 1; /* Take up half the width */
+  gap: 20px;
+}
+
+.profile-header {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-calendar {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-sidebar {
+  flex: 1; /* Take up half the width */
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-page {
+    flex-direction: column; /* Stack main and sidebar vertically */
+    align-items: center;
   }
-  
+
   .profile-main {
-    flex: 2; /* Main section takes more space */
-    display: flex;
-    flex-direction: column; /* Stack ProfileHeader above the Calendar */
+    flex-direction: column;
     gap: 20px;
-    min-width: 300px; /* Prevent shrinking too much on small screens */
   }
-  
-  .profile-header {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profile-calendar {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
+
+  .profile-left,
   .profile-sidebar {
-    flex: 1; /* Sidebar takes less space */
-    min-width: 300px; /* Set minimum width for the sidebar */
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width on smaller screens */
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .profile-page {
-      flex-direction: column; /* Stack main and sidebar vertically */
-      align-items: center;
-    }
-  
-    .profile-main,
-    .profile-sidebar {
-      width: 100%; /* Full width on smaller screens */
-    }
-  }
-  
+}
