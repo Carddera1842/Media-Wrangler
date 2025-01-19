@@ -1,0 +1,86 @@
+/* Profile container */
+.profile-calendar-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px;
+  padding: 20px;
+}
+
+/* Calendar card */
+.calendar-card {
+  flex: 1;
+  max-width: 600px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.calendar-card h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Event form card */
+.event-form-card {
+  flex: 1;
+  max-width: 400px;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-form-card h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Event form */
+.event-form .form-group {
+  margin-bottom: 15px;
+}
+
+.event-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.event-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.event-form input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .profile-calendar-container {
+    flex-direction: column;
+  }
+}
