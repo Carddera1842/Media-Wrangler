@@ -87,4 +87,19 @@ public class ListController {
         return ResponseEntity.ok(movieLists);
     }
 
+    @DeleteMapping("/{listId}/movie/{movieId}")
+    public ResponseEntity<String> deleteMovieFromList(@PathVariable int listId, @PathVariable int movieId) {
+        // Find the movie list by its ID
+        MovieList movieList = movieListRepository.findById(listId)
+                .orElseThrow(() -> new RuntimeException("List not found"));
+
+        if (movieList.getMovieId() == movieId) {
+            movieListRepository.delete(movieList);
+            return ResponseEntity.ok("Movie removed from the list successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Movie ID does not match the list.");
+        }
+    }
+
+
 }

@@ -274,12 +274,6 @@ function MovieCard({ movie }) {
 export default MovieCard;
 
 
-
-
-
-
-
-
 /*
 NOTE: The width and height can be adjusted. We probably want a smaller poster size for the poster grid that will display the movie-cards and possibly to attach to the movie-review-form
 We probably want an image a bit larger for the movie-detail-card when we are targeting in on one specific movie 

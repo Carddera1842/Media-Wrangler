@@ -6,10 +6,11 @@ import { useAuth } from '../../Services/AuthContext';
 const MovieListTable = () => {
   const [movieLists, setMovieLists] = useState([]);
   const [movies, setMovies] = useState({});
-  const [filter, setFilter] = useState(''); 
+  const [filter, setFilter] = useState('');
   const { user } = useAuth();
 
-  const TMDB_API_KEY = "YOUR_TMDB_API_KEY";
+  const TMDB_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNGY4N2NjNmIxZTZhMzQyMThjNjdjYWM1NGMwYzE0ZiIsIm5iZiI6MTczNDE5MTM5MS43NzcsInN1YiI6IjY3NWRhOTFmZjFiZjk2ZGMyNDc4MTA4ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4trA-9bv10lqcfQyhPxFTeKRWMyyPjIhgM_3Vri9Y6Y";
+;
 
   useEffect(() => {
     const fetchMovieLists = async () => {
@@ -69,6 +70,27 @@ const MovieListTable = () => {
     setFilter(event.target.value);
   };
 
+  const handleDelete = async (listId, movieId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/lists/${listId}/movie/${movieId}`,
+        {
+          method: 'DELETE',
+        }
+      );
+      if (response.ok) {
+        setMovieLists((prevLists) =>
+          prevLists.filter((list) => list.id !== listId || list.movieId !== movieId)
+        );
+        alert('Movie removed from the list successfully.');
+      } else {
+        console.error('Failed to delete the movie.');
+      }
+    } catch (error) {
+      console.error('Error deleting movie:', error);
+    }
+  };
+
   const filteredLists = filter
     ? movieLists.filter((list) => list.listName.includes(filter))
     : movieLists;
@@ -78,31 +100,37 @@ const MovieListTable = () => {
       <h1>Movie Lists</h1>
 
       <div>
-  <label htmlFor="filterDropdown">Filter by List Name: </label>
-  <select id="filterDropdown" value={filter} onChange={handleFilterChange}>
-    <option value="">All</option>
-    {Array.from(new Set(movieLists.map((list) => list.listName))).map((listName, index) => (
-      <option key={index} value={listName}>
-        {listName}
-      </option>
-    ))}
-  </select>
-</div>
+        <label htmlFor="filterDropdown">Filter by List Name: </label>
+        <select id="filterDropdown" value={filter} onChange={handleFilterChange}>
+          <option value="">All</option>
+          {Array.from(new Set(movieLists.map((list) => list.listName))).map((listName, index) => (
+            <option key={index} value={listName}>
+              {listName}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <div className="poster-grid">
+      <div id="movie-search">
         {filteredLists
           .filter((list) => list.movieId !== 0)
           .map((list) => (
-            <div key={list.id} className="poster-item">
+            <div key={list.id} className="posterContainer">
               {movies[list.movieId]?.poster_path ? (
                 <img
                   src={`https://image.tmdb.org/t/p/w200${movies[list.movieId].poster_path}`}
                   alt={movies[list.movieId].title}
-                  style={{ width: '150px', height: 'auto' }}
+                  className="posterImage"
                 />
               ) : (
                 <p>Loading...</p>
               )}
+              <button
+                className="deleteButton"
+                onClick={() => handleDelete(list.id, list.movieId)}
+              >
+                x
+              </button>
             </div>
           ))}
       </div>
