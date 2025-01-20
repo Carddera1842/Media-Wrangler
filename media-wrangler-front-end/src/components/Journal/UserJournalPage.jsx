@@ -60,7 +60,8 @@ function UserJournalPage() {
     
 
     return (
-        <div>
+        <>
+        <div>            
             <h1>Users Movie Reviews:</h1>
             <Paper 
             elevation={0} 
@@ -89,7 +90,7 @@ function UserJournalPage() {
                     <TableBody>
                         {reviews.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={5} align="center">No reviews found.</TableCell>
+                                <TableCell colSpan={5} align="center">No journal started yet, please write a review to make an entry...</TableCell>
                             </TableRow>
                         ) : (
                             reviews.map((review) => (
@@ -135,8 +136,9 @@ function UserJournalPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            </Paper>
-        </div>
+            </Paper> 
+            </div>
+        </>
     );
 };
 

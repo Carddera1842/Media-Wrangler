@@ -24,7 +24,7 @@ function App() {
         <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}/>             {/* There is nothing on this page anymore, could be removed */}        
+        <Route path="/movies" element={<Movies />}/>          {/* There is nothing on this page anymore, could be removed/replaced */}        
         <Route path="/search" element={<Search />}/>
         <Route path="/movies/:id" element={<MovieDetailsPage />} />
         <Route path="/login" element={<Login />}/>
@@ -33,8 +33,8 @@ function App() {
         {/* </Route> */}
         <Route path="/register" element={<Register />}/>
         <Route path="/reviews/create" element={<CreateReview />} />             
-        <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>             {/* User is redirected to UserJournalPage*/}
-        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />           {/* This displays a review by id */}
+        <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>          {/* User is redirected to UserJournalPage*/}
+        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />        {/* User id redirected to display review from journal */}
       </Routes>
         </div>
     </>
@@ -43,14 +43,4 @@ function App() {
 
 export default App
 
-/*TODO: the reviews/view/id to display JournalReview no longer is working. I probably need to update the code now that 
-        I have more moving parts...
-        Can probably use this for the users journal. Could have dateWatched, movie poster and movie title that is clickable. When user clicks on one it directs them to the view of that particular one
 
-
-*/
-
-
-
-
- 
