@@ -21,7 +21,7 @@ function InteractionsCard({ movieDetails }) {
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     
-
+    
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -49,6 +49,17 @@ function InteractionsCard({ movieDetails }) {
         }
         navigate("/reviews/create", {
             state: { movieDetails, user }
+        });
+    }
+
+    function handleJournalClick() {
+        if(!user) {
+            alert("You must be logged in to visit your journal");
+            navigate('/login');
+        }
+        navigate(`/reviews/user/${user.id}`, {
+            state: { user }
+
         });
     }
       
@@ -98,7 +109,12 @@ function InteractionsCard({ movieDetails }) {
                     <AddIcon />
                 </div>
             </Button>,
-            <Button key="five" className="button-container">
+            <Button 
+                key="five" 
+                className="button-container"
+                name="route-to-journal"
+                onClick={ handleJournalClick }
+            >
                 <div className="button-content">
                     <span className="button-label">Your Journal</span>
                 </div>

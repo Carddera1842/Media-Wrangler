@@ -12,19 +12,27 @@ const MovieReviewListCard = () => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
+  const [userComments, setUserComments] = useState([]);
   const [error, setError] = useState('');
 
 
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleCommentClick = () => {
+
+
+  function handleCommentClick() {
     setShowCommentBox(prev => !prev);
   };
 
-  const handleCommentChange = (event) => {
+  function handleCommentChange(event) {
     setUserComment(event.target.value);
   };
+
+  function handleCancelComment() {
+    setUserComment('');
+    setShowCommentBox(false);
+  }
 
 
 
@@ -37,12 +45,12 @@ const MovieReviewListCard = () => {
   }
    
     if(!userComment) {   
-      alert("You must write a comment or hit cancel");
+      alert("You must write a comment or press cancel");
       return;
     }
      
 
-  
+    //TODO: Add in review once the cards are dynamic
     const userCommentData = { 
       userComment,
       user
@@ -112,9 +120,9 @@ const MovieReviewListCard = () => {
               value={userComment}
               onChange={handleCommentChange}
               sx={{ marginBottom: 2 }}
-            />
-            <Button size="small" onClick={handleSaveComment}>Save Comment</Button>
-            {/* <Button size="small" >Cancel Comment</Button> */}
+            />            
+            <Button size="small" onClick={handleSaveComment}>Save</Button>
+            <Button size="small" onClick={handleCancelComment} >Cancel </Button>
           </CardContent>
         )}
       </Card>

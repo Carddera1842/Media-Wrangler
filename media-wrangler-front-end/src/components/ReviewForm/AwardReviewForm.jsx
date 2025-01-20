@@ -119,9 +119,9 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         const responseMessage = await submitMovieReview(movieReviewData); 
 
         if (responseMessage === "Success") {
-          navigate("/reviews/view", {
-            state: movieReviewData
-          });
+          navigate(`/reviews/user/${user.id}`, {
+              state: movieReviewData, // Pass the movieReviewData as part of the navigation state
+          });    
         
 
         } else {
