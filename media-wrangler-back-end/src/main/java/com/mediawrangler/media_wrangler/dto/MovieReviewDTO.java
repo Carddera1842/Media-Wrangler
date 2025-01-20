@@ -1,5 +1,6 @@
 package com.mediawrangler.media_wrangler.dto;
 
+import com.mediawrangler.media_wrangler.models.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,28 +29,60 @@ public class MovieReviewDTO {
 
     private String watchAgain;
 
+    private boolean isSpoiler;
+
     private List<String> tags = new ArrayList<>();
 
-    public MovieReviewDTO(LocalDate dateWatched, String review, String award, int rating, String watchAgain, List<String> tags) {
+    private int userId;
+
+    private String title;
+    private String fullPosterURL;
+    private String yearReleased;
+    private Long movieId;
+
+
+
+    public MovieReviewDTO() {
+        this.dateCreated = LocalDate.now();
+    }
+
+
+    public MovieReviewDTO(LocalDate dateWatched, String review, String award, int rating, String watchAgain, boolean isSpoiler,
+                          List<String> tags, String title, String fullPosterURL, String yearReleased, Long movieId, Long id, int userId) {
+        this.dateCreated = LocalDate.now();
         this.dateWatched = dateWatched;
         this.review = review;
         this.award = award;
         this.rating = rating;
         this.watchAgain = watchAgain;
         this.tags = tags;
-        this.dateCreated = LocalDate.now();
+        this.title = title;
+        this.fullPosterURL = fullPosterURL;
+        this.yearReleased = yearReleased;
+        this.movieId = movieId;
+        this.isSpoiler = isSpoiler;
+        this.id = id;
+        this.userId = userId;
     }
+
+
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDate getDateCreated() {
         return dateCreated;
     }
 
 
+
+
+    //* Review data...
     public @NotNull(message = "You must enter a date watched") LocalDate getDateWatched() {
         return dateWatched;
     }
@@ -97,5 +130,63 @@ public class MovieReviewDTO {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public boolean isSpoiler() {
+        return isSpoiler;
+    }
+
+    public void setSpoiler(boolean spoiler) {
+        isSpoiler = spoiler;
+    }
+
+
+
+    //* User data
+
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+
+
+
+    //* Movie info
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getFullPosterURL() {
+        return fullPosterURL;
+    }
+
+    public void setFullPosterURL(String fullPosterURL) {
+        this.fullPosterURL = fullPosterURL;
+    }
+
+    public String getYearReleased() {
+        return yearReleased;
+    }
+
+    public void setYearReleased(String yearReleased) {
+        this.yearReleased = yearReleased;
+    }
+
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 }

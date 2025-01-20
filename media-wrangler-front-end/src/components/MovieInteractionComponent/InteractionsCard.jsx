@@ -21,14 +21,14 @@ function InteractionsCard({ movieDetails }) {
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     
-    
+
     const { user } = useAuth();
     const navigate = useNavigate();
 
     function onChangeRating(e) {
         setRating(e.target.value);
     }
-   
+
     
 
     function handleLikeClick() {
@@ -48,7 +48,7 @@ function InteractionsCard({ movieDetails }) {
             navigate('/login');
         }
         navigate("/reviews/create", {
-            state: { movieDetails }  
+            state: { movieDetails, user }
         });
     }
       
@@ -70,7 +70,7 @@ function InteractionsCard({ movieDetails }) {
             key="two" 
             className="button-container"
             name="like-button"
-            title={ movieDetails.title } 
+            title={ movieDetails.title }
             value={ isLiked }                    
             onClick={ handleLikeClick }
         > 
@@ -85,7 +85,7 @@ function InteractionsCard({ movieDetails }) {
             key="three" 
             className="button-container"
             name="write-review"
-            title={ movieDetails.title } 
+            title={ movieDetails.title }
             onClick={ handleWriteReviewClick } 
         >
             <div className="button-content">
