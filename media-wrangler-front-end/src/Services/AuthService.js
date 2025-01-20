@@ -13,6 +13,10 @@ export const logout = (data) => {
     return apiClient.post('/users/logout', data)
 };
 
+export const deleteProfile = (userId) => {
+  return apiClient.delete(`/users/profile/${userId}`);
+};
+
 export const checkSession = async () => {
     try {
       const response = await apiClient.get('/users/session-status'); 

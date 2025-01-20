@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
-import apiClient, { login, logout, checkSession } from "./AuthService";
+import apiClient, { login, logout, checkSession, deleteProfile } from "./AuthService";
 
 const AuthContext = createContext();
 
@@ -79,6 +79,21 @@ export const AuthProvider = ({ children }) => {
     } 
   };
 
+  const deleteProfileAction = async () => {
+    try {
+      if (user) {
+        const response = await deleteProfile(user.id);
+        console.log("Profile deleted successfully:", response.data);
+        setUser(null);
+        localStorage.removeItem("user");
+        return response.data
+      }
+    } catch (error) {
+      console.error("Error deleting profile:", error.response?.data || error.message)
+      throw error;
+    }
+  }
+
   // const checkSessionAction = async (data) => {
   //   try {
   //     const response = await checkSession(data); 
@@ -95,6 +110,7 @@ export const AuthProvider = ({ children }) => {
         loginAction,
         logoutAction,
         updateProfile,
+        deleteProfile: deleteProfileAction,
         loading,
       }}
     >

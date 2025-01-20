@@ -3,9 +3,10 @@ import { useAuth } from "../../Services/AuthContext";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { Box, Typography, Button } from "@mui/material";
+import { deleteProfile } from "../../Services/AuthService";
 
 export default function LetterAvatars({ user }) {
-  const { updateProfile } = useAuth();
+  const { updateProfile, deleteProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     id: user.id,
@@ -35,6 +36,17 @@ export default function LetterAvatars({ user }) {
     } catch (error) {
       console.error("Profile update failed:", error.message);
       alert("Failed to update profile.");
+    }
+  };
+
+  const handleDeleteProfile = async () => {
+    try {
+      if (user) {
+        await deleteProfile();
+        console.log("Profile deleted successfully");
+      }
+    } catch (error) {
+      console.error("Error deleting profile:", error.message);
     }
   };
 
@@ -117,13 +129,23 @@ export default function LetterAvatars({ user }) {
         )}
 
         {!isEditing && (
-          <Button
-            variant="contained"
-            sx={{ marginLeft: "auto" }}
-            onClick={() => setIsEditing(true)}
-          >
-            Edit Profile
-          </Button>
+          <div>
+            <Button
+              variant="contained"
+              sx={{ marginLeft: "auto" }}
+              onClick={() => setIsEditing(true)}
+            >
+              Edit Profile
+            </Button>
+
+            <Button
+              variant="contained"
+              sx={{ marginLeft: "auto" }}
+              onClick={handleDeleteProfile}
+              >
+                Delete Profile
+            </Button>
+          </div>
         )}
       </Stack>
     </Box>
