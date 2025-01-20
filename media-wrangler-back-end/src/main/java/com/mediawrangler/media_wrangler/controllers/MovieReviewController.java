@@ -2,6 +2,7 @@ package com.mediawrangler.media_wrangler.controllers;
 
 
 import com.mediawrangler.media_wrangler.data.MovieReviewRepository;
+import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.services.MovieReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -62,8 +64,21 @@ public class MovieReviewController {
     }
 
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> findAllReviewsByUser(@PathVariable int userId) {
+        try {
+            // Fetch all reviews for the given user ID
+            List<MovieReviewDTO> userReviews = movieReviewService.getReviewsByUser(userId);
 
-
+            if (userReviews.isEmpty()) {
+                return new ResponseEntity<>("No reviews found for this user", HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(userReviews, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while retrieving reviews", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
 
