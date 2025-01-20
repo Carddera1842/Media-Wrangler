@@ -19,6 +19,7 @@ import QuestionDetail from './components/Discussions/Answers.jsx'
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
 import DiscussionPage from './components/Discussions/Discussions.jsx'
+import AddEventForm from './components/ComingSoon/ComingSoon.jsx'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
           <Route path="/questions" element={<DiscussionPage />} />
           <Route path="/questions/:id" element={<QuestionDetail />} />
+          <Route path="/upcoming" element={<AddEventForm />} />
         </Routes>
       </div>
     </ListProvider>

@@ -23,7 +23,7 @@ function EventComponent({ user }) {
           title,
           start,
           end,
-          userId: user.id, // Send the user's ID
+          userId: user.id, 
         }),
       });
 
