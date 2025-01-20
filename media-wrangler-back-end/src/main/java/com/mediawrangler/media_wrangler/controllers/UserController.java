@@ -122,12 +122,19 @@ public class UserController {
     }
 
     @DeleteMapping("/profile/{userId}")
-    String deleteUser(@PathVariable int userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable int userId, HttpSession session) {
+        Object sessionUserId = session.getAttribute("user");
+
+        if (sessionUserId == null || (int) sessionUserId != userId) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized access to delete this profile");
+        }
+
         if (!userRepository.existsById(userId)) {
             throw new UserNotFound(userId);
         }
+
         userRepository.deleteById(userId);
-        return "User with id " + userId + " has been deleted";
+        return ResponseEntity.ok("User with id " + userId + " has been deleted");
     }
   
     @GetMapping("/session-status")
