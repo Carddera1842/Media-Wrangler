@@ -57,9 +57,6 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             <Typography variant="h4" component="div">
                                 { title }
                                 <span style={{ fontSize: '1.5rem', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span>
-                                {/* <Typography variant='body2' sx={{ color: 'text.secondary'}}>
-                                    Watched on { dateWatched }  
-                                </Typography> */}
                                 <hr style={{ background: isSpoiler ? "#d50000" : "teal" }} />
                             </Typography>                                                                          
                             <Typography variant="body1" sx={{ color: 'text.primary', textAlign: 'center', fontSize: '22px' }}>
