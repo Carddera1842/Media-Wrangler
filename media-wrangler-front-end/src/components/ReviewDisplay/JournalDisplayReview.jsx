@@ -38,6 +38,18 @@ export default function JournalDisplayReview() {
     return (
         <>
             <h1>Movie Review:</h1>
+            <JournalReviewCard 
+                title = { review.title }
+                fullPosterURL = { review.fullPosterURL }
+                watchAgain = { review.watchAgain }
+                tags = { review.tags }
+                rating = { review.rating }
+                isSpoiler = { review.isSpoiler }
+                review = { review.review }
+                dateWatched = { review.dateWatched }
+                award = { review.award }
+                yearReleased = { review.yearReleased }
+            />
              
         </>
     );

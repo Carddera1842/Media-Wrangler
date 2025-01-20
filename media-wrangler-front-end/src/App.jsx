@@ -24,7 +24,7 @@ function App() {
         <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}/>                        {/* There is nothing on this page anymore, could be removed */}        
+        <Route path="/movies" element={<Movies />}/>             {/* There is nothing on this page anymore, could be removed */}        
         <Route path="/search" element={<Search />}/>
         <Route path="/movies/:id" element={<MovieDetailsPage />} />
         <Route path="/login" element={<Login />}/>
@@ -34,7 +34,7 @@ function App() {
         <Route path="/register" element={<Register />}/>
         <Route path="/reviews/create" element={<CreateReview />} />             
         <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>             {/* User is redirected to UserJournalPage*/}
-        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} /> {/* This displays a review by id */}
+        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />           {/* This displays a review by id */}
       </Routes>
         </div>
     </>

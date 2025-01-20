@@ -103,7 +103,7 @@ function UserJournalPage() {
                                     </StyledTableCell>
                                     <StyledTableCell align="center">
                                     <span
-                                        onClick={() => navigate(`/reviews/${review.id}`)}
+                                        onClick={() => navigate(`/reviews/view/${review.id}`)}
                                         style={{
                                             color: "white",
                                             fontWeight: "bold",
@@ -127,7 +127,7 @@ function UserJournalPage() {
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
                                         <Button>Edit</Button> 
-                                        <Button>Delete</Button>
+                                        <Button color="error">Delete</Button>
                                     </StyledTableCell>                                    
                                 </StyledTableRow>
                             ))

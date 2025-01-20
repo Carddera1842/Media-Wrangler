@@ -81,7 +81,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             <Typography>
                                 <b>Your Tags:</b>
                             </Typography>    
-                            {/* <Stack
+                            <Stack
                                 direction="row"
                                 divider={<Divider orientation="vertical" flexItem sx={{borderWidth: 1, borderColor: isSpoiler ? '#d50000' : "#00695c" }} />}
                                 spacing={2}
@@ -91,7 +91,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                         <Typography variant="body2" sx={{ color: 'text.secondary'}}>{ tag }
                                         </Typography>
                                     </div>))}
-                            </Stack> */}
+                            </Stack>
                         </CardContent>            
                     </div>                
                     <CardActions>
