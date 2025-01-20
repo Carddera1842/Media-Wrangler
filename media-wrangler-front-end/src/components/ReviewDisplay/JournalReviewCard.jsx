@@ -13,7 +13,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
-export default function JournalReviewCard({ title, poster, watchAgain, tags, rating, isSpoiler, review, dateWatched, award, yearReleased }) {
+export default function JournalReviewCard({ title, fullPosterURL, watchAgain, tags, rating, isSpoiler, review, dateWatched, award, yearReleased }) {
     return (
         <>
          
@@ -40,7 +40,7 @@ export default function JournalReviewCard({ title, poster, watchAgain, tags, rat
                             <Typography variant='h6'>
                                 Username here...
                             <div>
-                                <img style={{height: "300px", width: "auto", margin: "10px"}} src={ poster } alt="movie poster" />
+                                <img style={{height: "300px", width: "auto", margin: "10px"}} src={ fullPosterURL } alt="movie poster" />
                             </div>
                             <StarRatingButton
                                 name="rating"
@@ -84,7 +84,7 @@ export default function JournalReviewCard({ title, poster, watchAgain, tags, rat
                             <Typography>
                                 <b>Your Tags:</b>
                             </Typography>    
-                            <Stack
+                            {/* <Stack
                                 direction="row"
                                 divider={<Divider orientation="vertical" flexItem sx={{borderWidth: 1, borderColor: isSpoiler ? '#d50000' : "#00695c" }} />}
                                 spacing={2}
@@ -94,7 +94,7 @@ export default function JournalReviewCard({ title, poster, watchAgain, tags, rat
                                         <Typography variant="body2" sx={{ color: 'text.secondary'}}>{ tag }
                                         </Typography>
                                     </div>))}
-                            </Stack>
+                            </Stack> */}
                         </CardContent>            
                     </div>                
                     <CardActions>

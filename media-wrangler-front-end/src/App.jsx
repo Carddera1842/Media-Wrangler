@@ -11,10 +11,9 @@ import MovieSearch from './components/Search/MovieSearch'
 import Profile from './components/Profile/Profile'
 import { PrivateRoutes } from './Services/PrivateRoutes'
 import CreateReview from './components/ReviewForm/CreateReview';
-import DisplayReview from './components/ReviewDisplay/DisplayReview';
 import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview';
-import MovieReviewListCard from './components/ReviewDisplay/MovieReviewListCard';
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
+import UserJournalPage from './components/Journal/UserJournalPage'
 
 function App() {
 
@@ -34,7 +33,7 @@ function App() {
         {/* </Route> */}
         <Route path="/register" element={<Register />}/>
         <Route path="/reviews/create" element={<CreateReview />} />             
-        <Route path="/reviews/view" element={<DisplayReview />}/>             {/* User is redirected to message of success, should probably redirect to the user's journal or profile in the future*/}
+        <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>             {/* User is redirected to UserJournalPage*/}
         <Route path="/reviews/view/:id" element={<JournalDisplayReview />} /> {/* This displays a review by id */}
       </Routes>
         </div>

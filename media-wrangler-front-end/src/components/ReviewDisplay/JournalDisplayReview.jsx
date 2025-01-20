@@ -38,7 +38,7 @@ export default function JournalDisplayReview() {
     return (
         <>
             <h1>Movie Review:</h1>
-            <JournalReviewCard {...review} />    
+             
         </>
     );
  
