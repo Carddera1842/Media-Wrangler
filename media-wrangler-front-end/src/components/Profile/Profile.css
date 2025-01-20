@@ -1,58 +1,51 @@
-.profile-page {
-  display: flex;
-  gap: 20px;
+.profile-body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('/Background Profile.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #ffffff;
   padding: 20px;
 }
 
-.profile-main {
+.profile-page {
   display: flex;
-  flex: 1; /* Main section and sidebar split equally */
+  flex-direction: column;
   gap: 20px;
 }
 
-.profile-left {
+.profile-top {
   display: flex;
-  flex-direction: column; /* Stack ProfileHeader and Calendar vertically */
-  flex: 1; /* Take up half the width */
   gap: 20px;
 }
 
 .profile-header {
-  background: #f9f9f9;
+  flex: 1;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 650px;
 }
 
 .profile-calendar {
+  flex: 1; 
+  border-radius: 10px;
+}
+
+.profile-bottom {
+  flex: 1; 
   background: #ffffff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.profile-sidebar {
-  flex: 1; /* Take up half the width */
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-  .profile-page {
-    flex-direction: column; /* Stack main and sidebar vertically */
-    align-items: center;
+  .profile-top {
+    flex-direction: column; 
   }
 
-  .profile-main {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .profile-left,
-  .profile-sidebar {
-    width: 100%; /* Full width on smaller screens */
+  .profile-header,
+  .profile-calendar,
+  .profile-bottom {
+    width: 100%;
   }
 }

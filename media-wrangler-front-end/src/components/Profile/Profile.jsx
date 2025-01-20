@@ -12,9 +12,9 @@ const Profile = () => {
   if (!user) return <p>Loading...</p>;
 
   return (
-    <div className="profile-page">
-      <div className="profile-main">
-        <div className="profile-left">
+    <div className="profile-body">
+      <div className="profile-page">
+        <div className="profile-top">
           <div className="profile-header">
             <ProfileHeader user={user} />
           </div>
@@ -22,7 +22,7 @@ const Profile = () => {
             <CalendarPlaceholder user={user} />
           </div>
         </div>
-        <div className="profile-sidebar">
+        <div className="profile-bottom">
           <MovieListTable />
         </div>
       </div>

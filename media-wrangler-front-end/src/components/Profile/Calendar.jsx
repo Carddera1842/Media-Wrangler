@@ -18,13 +18,12 @@ const localizer = dateFnsLocalizer({
 });
 
 function CalendarPlaceholder({ user }) {
-  const [events, setEvents] = useState([]); // State for storing events
+  const [events, setEvents] = useState([]);
   const [title, setTitle] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // Fetch events from the backend on component mount
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -78,11 +77,11 @@ function CalendarPlaceholder({ user }) {
           start: new Date(start),
           end: new Date(end),
         };
-        setEvents([...events, newEvent]); // Add the new event to the state
+        setEvents([...events, newEvent]);
         setTitle("");
         setStart("");
         setEnd("");
-        setShowModal(false); // Close modal
+        setShowModal(false);
         alert("Event added successfully!");
       } else {
         alert("Failed to add event.");
@@ -94,15 +93,14 @@ function CalendarPlaceholder({ user }) {
   };
 
   const handleSelectSlot = (slotInfo) => {
-    setStart(slotInfo.start.toISOString().slice(0, 16)); // Format for datetime-local input
+    setStart(slotInfo.start.toISOString().slice(0, 16)); 
     setEnd(slotInfo.end.toISOString().slice(0, 16));
-    setShowModal(true); // Open modal
+    setShowModal(true);
   };
 
   return (
     <>
       <div className="calendar-card">
-        <h2>Calendar</h2>
         <Calendar
           localizer={localizer}
           events={events}
@@ -116,7 +114,6 @@ function CalendarPlaceholder({ user }) {
         />
       </div>
 
-      {/* Modal for Adding Event */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
