@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +37,7 @@ public class MovieReviewController {
 
 
 
-    //I currently do not have validation or errors to be checked for tester form
-    // Changed the saveReview object in the return response to a String message stating success
+
     @PostMapping("/create")
         public ResponseEntity<?> createReview(@RequestBody MovieReview movieReview) {
         try {
@@ -67,11 +68,10 @@ public class MovieReviewController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> findAllReviewsByUser(@PathVariable int userId) {
         try {
-            // Fetch all reviews for the given user ID
             List<MovieReviewDTO> userReviews = movieReviewService.getReviewsByUser(userId);
 
             if (userReviews.isEmpty()) {
-                return new ResponseEntity<>("No reviews found for this user", HttpStatus.NOT_FOUND);
+                return ResponseEntity.ok(Collections.emptyList());
             } else {
                 return new ResponseEntity<>(userReviews, HttpStatus.OK);
             }
