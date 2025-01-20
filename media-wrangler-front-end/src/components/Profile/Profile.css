@@ -26,13 +26,25 @@
 }
 
 .profile-calendar {
-  flex: 1; 
+  flex: 2; 
   border-radius: 10px;
 }
 
+.profile-middle-bottom {
+  display: flex;
+  gap: 20px; 
+  margin-top: 20px;
+}
+
+.profile-middle {
+  flex: 1;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .profile-bottom {
-  flex: 1; 
-  background: #ffffff;
+  flex: 2; 
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -44,7 +56,15 @@
   }
 
   .profile-header,
-  .profile-calendar,
+  .profile-calendar {
+    width: 100%;
+  }
+
+  .profile-middle-bottom {
+    flex-direction: column; 
+  }
+
+  .profile-middle,
   .profile-bottom {
     width: 100%;
   }
