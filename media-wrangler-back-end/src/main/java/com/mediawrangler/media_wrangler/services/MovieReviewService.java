@@ -32,9 +32,34 @@ public class MovieReviewService {
     }
 
 
-    public Optional<MovieReview> findReviewById(Long id){
-        return movieReviewRepository.findById(id);
+    public Optional<MovieReviewDTO> getReviewById(Long id) {
+        Optional<MovieReview> optionalReview = movieReviewRepository.findById(id);
+
+        if (optionalReview.isPresent()) {
+            MovieReview review = optionalReview.get();
+            MovieReviewDTO dto = new MovieReviewDTO();
+
+
+            dto.setMovieId(review.getMovieId());
+            dto.setTitle(review.getTitle());
+            dto.setFullPosterURL(review.getFullPosterURL());
+            dto.setYearReleased(review.getYearReleased());
+            dto.setReview(review.getReview());
+            dto.setRating(review.getRating());
+            dto.setSpoiler(review.isSpoiler());
+            dto.setWatchAgain(review.getWatchAgain());
+            dto.setAward(review.getAward());
+            dto.setTags(review.getTags());
+            dto.setDateWatched(review.getDateWatched());
+            dto.setId(review.getId());
+            dto.setUserId(review.getUser().getId());
+
+            return Optional.of(dto);
+        }
+
+        return Optional.empty();
     }
+
 
     public List<MovieReviewDTO> getReviewsByUser(int userId) {
         List<MovieReview> reviews = movieReviewRepository.findByUserId(userId);

@@ -50,10 +50,10 @@ public class MovieReviewController {
     @GetMapping("view/{id}")
     public ResponseEntity<?> findReviewById(@PathVariable Long id) {
         try {
-            Optional<MovieReview> optionalMovieReview = movieReviewService.findReviewById(id);
+            Optional<MovieReviewDTO> optionalMovieReview = movieReviewService.getReviewById(id);
 
             if (optionalMovieReview.isPresent()) {
-                MovieReview savedReview = (MovieReview) optionalMovieReview.get();
+                MovieReviewDTO savedReview = (MovieReviewDTO) optionalMovieReview.get();
                 return new ResponseEntity<>(savedReview, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Review not found", HttpStatus.NOT_FOUND);
