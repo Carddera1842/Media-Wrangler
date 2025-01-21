@@ -32,20 +32,16 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers(HttpMethod.DELETE, "/users/profile/**").authenticated()
                         .requestMatchers(
-                                "/users/register",
-                                "/users/login",
-                                "/users/logout",
-                                "/",
+                                 "/",
+                                "/users/**",
                                 "/movies",
                                 "/reviews/create",
                                 "/api/movies/**",
                                 "/users/profile/**",
-                                "/api/lists/add-movie",
-                                "/api/lists/user-lists",
-                                "/api/lists/add",
                                 "/api/lists/**",
-                                "/api/events/add",
-                                "/api/events/**"
+                                "/api/events/**",
+                                "/questions/**",
+                                "/answers/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );

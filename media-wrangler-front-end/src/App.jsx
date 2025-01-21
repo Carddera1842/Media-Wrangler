@@ -14,9 +14,12 @@ import CreateReview from './components/ReviewForm/CreateReview'
 import DisplayReview from './components/ReviewDisplay/DisplayReview'
 import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview'
 import MovieReviewListCard from './components/ReviewDisplay/MovieReviewListCard'
+import QuestionDetail from './components/Discussions/Answers.jsx'
 
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
+import DiscussionPage from './components/Discussions/Discussions.jsx'
+import AddEventForm from './components/ComingSoon/ComingSoon.jsx'
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function App() {
           <Route path="/reviews/create" element={<CreateReview />} />
           <Route path="/reviews/view" element={<DisplayReview />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
+          <Route path="/questions" element={<DiscussionPage />} />
+          <Route path="/questions/:id" element={<QuestionDetail />} />
+          <Route path="/upcoming" element={<AddEventForm />} />
         </Routes>
       </div>
     </ListProvider>

@@ -3,7 +3,7 @@ import { useAuth } from "../../Services/AuthContext";
 import ProfileHeader from "./ProfileHeader";
 import MovieListTable from "./MovieListTable";
 import CalendarPlaceholder from "./Calendar";
-import './Profile.css';
+import "./Profile.css";
 
 const Profile = () => {
   const { user, error } = useAuth();
@@ -22,8 +22,14 @@ const Profile = () => {
             <CalendarPlaceholder user={user} />
           </div>
         </div>
-        <div className="profile-bottom">
-          <MovieListTable />
+        <div className="profile-middle-bottom">
+          <div className="profile-middle">
+            <h2>New Section</h2>
+            <p>This is the new section next to the movie list.</p>
+          </div>
+          <div className="profile-bottom">
+            <MovieListTable />
+          </div>
         </div>
       </div>
     </div>
