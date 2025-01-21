@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { useNavigate } from 'react-router-dom';
 
 function MovieCard({ movie }) {
   const { user } = useAuth();
@@ -20,6 +21,8 @@ function MovieCard({ movie }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [showAddListForm, setShowAddListForm] = useState(false);
   const [hoveredId, setHoveredId] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -50,7 +53,7 @@ function MovieCard({ movie }) {
   };
 
   const handlePosterClick = () => {
-    console.log("Poster Clicked");
+    navigate(`/movies/${movie.id}`);
   };
 
   const handleAddClick = (event) => {
