@@ -30,6 +30,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers(HttpMethod.DELETE, "/users/profile/**").authenticated()
                         .requestMatchers(
                                 "/users/register",
                                 "/users/login",
