@@ -8,7 +8,7 @@ import { Card, Typography, Tabs, Tab, Box } from '@mui/material';
 
 
 
-function MovieDetailsNav() {
+function MovieDetailsNav({ movieDetails }) {
 
     const [value, setValue] = useState('one');
 
