@@ -7,12 +7,16 @@ import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import Profile from './components/Profile/Profile'
+import CreateReview from './components/ReviewForm/CreateReview'
+import DisplayReview from './components/ReviewDisplay/DisplayReview'
+import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview'
+import QuestionDetail from './components/Discussions/Answers.jsx'
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
-import CreateReview from './components/ReviewForm/CreateReview';
-import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview';
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
 import UserJournalPage from './components/Journal/UserJournalPage'
+import DiscussionPage from './components/Discussions/Discussions.jsx'
+import AddEventForm from './components/ComingSoon/ComingSoon.jsx'
 
 function App() {
   return (
@@ -20,18 +24,22 @@ function App() {
     <ListProvider>
       <Navbar />
       <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}/>          
-        <Route path="/search" element={<Search />}/>
-        <Route path="/movies/:id" element={<MovieDetailsPage />} />
-        <Route path="/login" element={<Login />}/>
-        <Route path="/profile/:userId" element={<Profile />}/>
-        <Route path="/register" element={<Register />}/>
-        <Route path="/reviews/create" element={<CreateReview />} />             
-        <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>         
-        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />       
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/movies/:id" element={<MovieDetailsPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/reviews/create" element={<CreateReview />} />
+          <Route path="/reviews/view" element={<DisplayReview />} />
+          <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
+          <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
+          <Route path="/questions" element={<DiscussionPage />} />
+          <Route path="/questions/:id" element={<QuestionDetail />} />
+          <Route path="/upcoming" element={<AddEventForm />} />
+        </Routes>
       </div>
     </ListProvider>
     </AuthProvider>
