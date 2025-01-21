@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../Services/AuthContext";
 import ProfileHeader from "./ProfileHeader";
 import FavoriteFilms from "./FavoriteFilms";
+import MovieListTable from "./MovieListTable";
 
 const Profile = () => {
     const { userId } = useParams();
@@ -15,6 +16,7 @@ const Profile = () => {
         <div>
             <ProfileHeader user={user} />
             <FavoriteFilms />
+            <MovieListTable />
         </div>
     )
 };
