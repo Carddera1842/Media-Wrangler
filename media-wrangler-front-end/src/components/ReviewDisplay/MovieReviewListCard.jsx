@@ -11,7 +11,7 @@ import { fontSize } from '@mui/system';
 
 
 
-const MovieReviewListCard = ({ rating, award, review }) => {
+const MovieReviewListCard = ({ rating, award, review, userId, username, firstname, lastname }) => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
@@ -101,10 +101,11 @@ const MovieReviewListCard = ({ rating, award, review }) => {
         <CardContent>
           <Typography variant="h5" component="div" className="username" color="text.secondary">
             <AvatarHeader 
-              user = { user }
+              firstname = { firstname }
+              lastname = { lastname }
             />                       
             <span
-                onClick={() => navigate(`/profile/${user.id}`)}
+                onClick={() => navigate(`/profile/${userId}`)}
                 style={{
                     color: "#004d40",
                     fontWeight: "bold",
@@ -116,7 +117,7 @@ const MovieReviewListCard = ({ rating, award, review }) => {
                     textUnderlineOffset: "3px",
                 }}
             >
-                { user.username }
+                { username }
             </span>            
               <Rating name="read-only" value={ rating } readOnly />         
           </Typography> 
