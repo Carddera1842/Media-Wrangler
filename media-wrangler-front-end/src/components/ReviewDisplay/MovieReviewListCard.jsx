@@ -1,11 +1,89 @@
-import React from 'react'
-import { Card, CardContent, Typography, Button, CardActions, Avatar, Paper, Divider } from '@mui/material';
+import React, { useState } from 'react'
+import { Card, CardContent, Typography, Button, CardActions, Avatar, Paper, Divider, TextField } from '@mui/material';
 import "../ReviewDisplay/JournalReviewCard.css";
+import submitUserComment from "../../Services/CommentService";
+import { useAuth } from '../../Services/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const MovieReviewListCard = () => {
+
+  const [showCommentBox, setShowCommentBox] = useState(false);
+  const [userComment, setUserComment] = useState('');
+  const [userComments, setUserComments] = useState([]);
+  const [error, setError] = useState('');
+
+
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+
+
+  function handleCommentClick() {
+    setShowCommentBox(prev => !prev);
+  };
+
+  function handleCommentChange(event) {
+    setUserComment(event.target.value);
+  };
+
+  function handleCancelComment() {
+    setUserComment('');
+    setShowCommentBox(false);
+  }
+
+
+
+  async function handleSaveComment(e) {
+    e.preventDefault();
+
+    if(!user) {
+      alert("You must be logged in to write a review");
+      navigate('/login');
+  }
+   
+    if(!userComment) {   
+      alert("You must write a comment or press cancel");
+      return;
+    }
+     
+
+    //TODO: Add in review once the cards are dynamic
+    const userCommentData = { 
+      userComment,
+      user
+    }
+
+
+    
+    console.log("Submitting user comment for:", userCommentData);
+  
+
+    try {
+      const responseMessage = await submitUserComment(userCommentData); 
+
+      if (responseMessage === "Success") {
+        console.log("Comment saved successfully!")
+      
+
+      } else {
+        setError(responseMessage);
+      }
+      
+    } catch (error) {
+        console.error("Unexpected error during movie review submission: ", error);
+        setError({error: "An unexpected error occurred. Please try again"});
+
+    } finally {
+      setUserComment('');
+      setShowCommentBox(false); 
+    }
+  };
+
+
+
   return (
     <div className='searched-movie-review-list'>  
       <Paper
@@ -31,8 +109,22 @@ const MovieReviewListCard = () => {
         </CardContent>
         <CardActions>
           <Button size="small" >Like</Button>
-          <Button size="small" >Comment</Button>
+          <Button size="small" onClick={handleCommentClick} >Comment</Button>
         </CardActions>
+        {showCommentBox && (
+          <CardContent>
+            <TextField
+              label="Write a comment"
+              fullWidth
+              multiline
+              value={userComment}
+              onChange={handleCommentChange}
+              sx={{ marginBottom: 2 }}
+            />            
+            <Button size="small" onClick={handleSaveComment}>Save</Button>
+            <Button size="small" onClick={handleCancelComment} >Cancel </Button>
+          </CardContent>
+        )}
       </Card>
       </Paper>
     </div>

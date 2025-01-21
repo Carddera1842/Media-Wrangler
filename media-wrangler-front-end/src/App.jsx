@@ -11,9 +11,9 @@ import MovieSearch from './components/Search/MovieSearch'
 import Profile from './components/Profile/Profile'
 import { PrivateRoutes } from './Services/PrivateRoutes'
 import CreateReview from './components/ReviewForm/CreateReview';
-import DisplayReview from './components/ReviewDisplay/DisplayReview';
 import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview';
-import MovieReviewListCard from './components/ReviewDisplay/MovieReviewListCard';
+import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
+import UserJournalPage from './components/Journal/UserJournalPage'
 
 function App() {
 
@@ -24,17 +24,17 @@ function App() {
         <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}/>
-        
+        <Route path="/movies" element={<Movies />}/>          {/* There is nothing on this page anymore, could be removed/replaced */}        
         <Route path="/search" element={<Search />}/>
+        <Route path="/movies/:id" element={<MovieDetailsPage />} />
         <Route path="/login" element={<Login />}/>
         {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/profile/:userId" element={<Profile />}/>
         {/* </Route> */}
         <Route path="/register" element={<Register />}/>
         <Route path="/reviews/create" element={<CreateReview />} />             
-        <Route path="/reviews/view" element={<DisplayReview />}/>             {/* User is redirected to message of success, should probably redirect to the user's journal or profile in the future*/}
-        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} /> {/* This displays a review by id */}
+        <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>          {/* User is redirected to UserJournalPage*/}
+        <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />        {/* User id redirected to display review from journal */}
       </Routes>
         </div>
     </>
@@ -44,10 +44,3 @@ function App() {
 export default App
 
 
-
-
-
-
-
-
- 

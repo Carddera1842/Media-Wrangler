@@ -7,6 +7,7 @@ import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useAuth } from '../../Services/AuthContext';
 
 /*
     TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
@@ -14,19 +15,20 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
     TODO: The "liked" button counter needs some focus, figure out how to save the counts so we can display the total "likes" across all reviews
 */
 
-function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
+function InteractionsCard({ movieDetails }) {
 
     const [rating, setRating] = useState(0);
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     
+    
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     function onChangeRating(e) {
         setRating(e.target.value);
     }
-    //TODO: Remove: only for testing purposes
-    console.log("The user has given ", rating, "stars to ", { title }, "(",{ movieId },")");
+
     
 
     function handleLikeClick() {
@@ -41,8 +43,23 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
 
     //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
+        if(!user) {
+            alert("You must be logged in to write a review");
+            navigate('/login');
+        }
         navigate("/reviews/create", {
-            state: { title, movieId, poster, releaseDate, genre }  
+            state: { movieDetails, user }
+        });
+    }
+
+    function handleJournalClick() {
+        if(!user) {
+            alert("You must be logged in to visit your journal");
+            navigate('/login');
+        }
+        navigate(`/reviews/user/${user.id}`, {
+            state: { user }
+
         });
     }
       
@@ -53,7 +70,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                 <span className="button-label">Rate</span>
                 <StarRatingButton
                     name="half-rating" 
-                    title={ title }
+                    title={ movieDetails.title }
                     defaultValue={0} 
                     precision={0.5} 
                     onChange={ onChangeRating }
@@ -64,7 +81,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
             key="two" 
             className="button-container"
             name="like-button"
-            title={ title } 
+            title={ movieDetails.title }
             value={ isLiked }                    
             onClick={ handleLikeClick }
         > 
@@ -79,7 +96,7 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
             key="three" 
             className="button-container"
             name="write-review"
-            title={ title } 
+            title={ movieDetails.title }
             onClick={ handleWriteReviewClick } 
         >
             <div className="button-content">
@@ -92,7 +109,12 @@ function InteractionsCard({ title, movieId, poster, releaseDate, genre }) {
                     <AddIcon />
                 </div>
             </Button>,
-            <Button key="five" className="button-container">
+            <Button 
+                key="five" 
+                className="button-container"
+                name="route-to-journal"
+                onClick={ handleJournalClick }
+            >
                 <div className="button-content">
                     <span className="button-label">Your Journal</span>
                 </div>
