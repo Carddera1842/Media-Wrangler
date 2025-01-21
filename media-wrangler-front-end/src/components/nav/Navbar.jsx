@@ -76,10 +76,9 @@ export default function Navbar() {
           scrollButtons="auto" 
         >
           <Tab label="Home" component={Link} to="/" sx={{ marginX: 3 }} />
-          <Tab label="Movies" component={Link} to="/movies" sx={{ marginX: 3 }} />
+          <Tab label="Discover" component={Link} to="/movies" sx={{ marginX: 3 }} />
           <Tab label="Search" component={Link} to="/search" sx={{ marginX: 3 }} />
           <Tab label="Discussions" component={Link} to="/questions" sx={{marginX: 3}} />
-          <Tab label="Coming Soon" component={Link} to="upcoming" sx={{marginX: 3}} />
 
           {!user ? (
             <>

@@ -16,7 +16,7 @@ import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
 import UserJournalPage from './components/Journal/UserJournalPage'
 import DiscussionPage from './components/Discussions/Discussions.jsx'
-import AddEventForm from './components/ComingSoon/ComingSoon.jsx'
+import DiscoverPage from './components/Discover/UpcomingReleases.jsx'
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies" element={<DiscoverPage />} />
           <Route path="/search" element={<Search />} />
           <Route path="/movies/:id" element={<MovieDetailsPage />} />
           <Route path="/login" element={<Login />} />
@@ -38,7 +38,6 @@ function App() {
           <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
           <Route path="/questions" element={<DiscussionPage />} />
           <Route path="/questions/:id" element={<QuestionDetail />} />
-          <Route path="/upcoming" element={<AddEventForm />} />
         </Routes>
       </div>
     </ListProvider>
