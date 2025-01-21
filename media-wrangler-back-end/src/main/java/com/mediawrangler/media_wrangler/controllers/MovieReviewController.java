@@ -48,7 +48,8 @@ public class MovieReviewController {
         }
     }
 
-    @GetMapping("view/{id}")
+
+    @GetMapping("/view/{id}")
     public ResponseEntity<?> findReviewById(@PathVariable Long id) {
         try {
             Optional<MovieReviewDTO> optionalMovieReview = movieReviewService.getReviewById(id);
@@ -77,6 +78,22 @@ public class MovieReviewController {
             }
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while retrieving reviews", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/movies/{movieId}")
+    public ResponseEntity<?> getReviewsByMovieId(@PathVariable Long movieId) {
+        try {
+            List<MovieReviewDTO> movieReviews = movieReviewService.getReviewsByMovieId(movieId);
+
+            if (movieReviews.isEmpty()) {
+                return ResponseEntity.ok(Collections.emptyList());
+            }  else {
+                return new ResponseEntity<>(movieReviews, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while retrieving movie reviews", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
