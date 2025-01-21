@@ -150,10 +150,10 @@ function InteractionsCard({ movieDetails }) {
 export default InteractionsCard;
 
 InteractionsCard.propTypes = {
-    movieId: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.array.isRequired,
-    poster: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired
+    movieId: PropTypes.number,
+    title: PropTypes.string,
+    genre: PropTypes.array,
+    poster: PropTypes.string,
+    releaseDate: PropTypes.string
 }
 

@@ -67,7 +67,12 @@ function MovieDetailsPage() {
             key = { review.id }
             rating = { review.rating }
             award = { review.award }
-            review = { review.review }          
+            review = { review.review } 
+            userId = { review.userId }
+            username = { review.username }
+            firstname = { review.username }
+            lastname = { review.lastname } 
+                   
           />
           )))}
          
