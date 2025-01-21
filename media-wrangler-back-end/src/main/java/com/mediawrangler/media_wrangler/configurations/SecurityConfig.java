@@ -40,7 +40,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/reviews/user/**",
                                 "/reviews/view/**",
                                 "/api/movies/search",
-                                "/users/profile/**"
+                                "/users/profile/**",
                                 "/api/movies/**",
                                 "/users/profile/**",
                                 "/api/lists/**",
