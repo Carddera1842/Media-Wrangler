@@ -1,4 +1,26 @@
-#movie-search {
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  
+  img {
+    display: block;
+    max-width: 100px;
+    height: auto;
+  }
+  
+  #movie-search {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
     gap: 16px;
@@ -29,8 +51,25 @@
     border: 2px solid rgb(99, 180, 176);
   }
   
-  .addButton {
-    position: absolute;
+  @media (max-width: 600px) {
+    #movie-search {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+  
+    .posterContainer {
+      width: 120px;
+    }
+  
+    .deleteButton {
+      width: 25px;
+      height: 25px;
+      font-size: 14px;
+    }
+  }
+
+  .deleteButton {
+     position: absolute;
     top: 8px;
     right: 8px;
     background-color: rgba(158, 82, 49, 0.85);
@@ -52,30 +91,13 @@
     overflow: hidden;
   }
   
-  .addButton:hover {
-    background-color: rgba(184, 100, 63, 0.9);
+  .deleteButton:hover {
+    background-color: rgba(255, 69, 58, 1);
     transform: scale(1.1);
   }
-  
-  .addButton:focus {
+
+  .deleteButton:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(158, 82, 49, 0.5); 
-  }
-  
-  @media (max-width: 600px) {
-    #movie-search {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
-    }
-  
-    .posterContainer {
-      width: 120px;
-    }
-  
-    .addButton {
-      width: 25px;
-      height: 25px;
-      font-size: 14px;
-    }
   }
   
