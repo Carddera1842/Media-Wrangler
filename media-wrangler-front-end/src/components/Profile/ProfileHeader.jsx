@@ -3,7 +3,9 @@ import { useAuth } from "../../Services/AuthContext";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { Box, Typography, Button } from "@mui/material";
+import "./ProfileHeader.css";
 import { deleteProfile } from "../../Services/AuthService";
+
 
 export default function LetterAvatars({ user }) {
   const { updateProfile, deleteProfile } = useAuth();
@@ -11,10 +13,10 @@ export default function LetterAvatars({ user }) {
   const [formData, setFormData] = useState({
     id: user.id,
     firstname: user.firstname,
-    lastname: user.lastname,  
+    lastname: user.lastname,
     email: user.email,
     username: user.username,
-    bio: user.bio || "", 
+    bio: user.bio || "",
   });
 
   const getInitials = (name) => {
@@ -55,21 +57,20 @@ export default function LetterAvatars({ user }) {
   }
 
   return (
-    <Box
-      component="section"
-      sx={{
-        display: "flex",
-        p: 2,
-        border: "1px solid grey",
-        width: "50%",
-        margin: "0 auto",
-      }}
-    >
-      <Stack direction="row" spacing={2} alignItems="center" sx={{ width: "100%" }}>
-        <Avatar>{getInitials(user.firstname + " " + user.lastname)}</Avatar>
+    <Box component="section" className="profile-header-container">
+      <div className="poster-heading">
+    
+      </div>
+      <Stack direction="column" alignItems="center" className="profile-header-content">
+
+        <Avatar className="profile-avatar">
+          <span className="avatar-initials">
+          {getInitials(user.firstname + " " + user.lastname)}
+          </span>
+          </Avatar>
 
         {isEditing ? (
-          <Stack spacing={1} sx={{ flexGrow: 1 }}>
+          <Stack spacing={1} className="profile-edit-form">
             <input
               type="text"
               name="firstname"
@@ -104,13 +105,7 @@ export default function LetterAvatars({ user }) {
               onChange={handleChange}
               placeholder="Add a short bio"
               rows={3}
-              style={{
-                resize: "none",
-                width: "100%",
-                padding: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-              }}
+              className="profile-bio-textarea"
             />
             <Button variant="contained" onClick={handleSave}>
               Save
@@ -120,15 +115,22 @@ export default function LetterAvatars({ user }) {
             </Button>
           </Stack>
         ) : (
-          <Stack sx={{ flexGrow: 1 }}>
+          <Stack className="profile-view-content">
             <Typography variant="h6">{user.username}</Typography>
             <Typography>{`${user.firstname} ${user.lastname}`}</Typography>
             <Typography>{user.email}</Typography>
-            <Typography sx={{ fontStyle: "italic" }}>{user.bio || "No bio available"}</Typography>
+            <Typography className="profile-bio">{user.bio || "No bio available"}</Typography>
           </Stack>
         )}
 
         {!isEditing && (
+          <Button
+            variant="contained"
+            className="edit-profile-button"
+            onClick={() => setIsEditing(true)}
+          >
+            Edit Profile
+          </Button>
           <div>
             <Button
               variant="contained"
