@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MovieDetailCard from "./MovieDetailCard";
 import MovieDetailsNav from "../nav/MovieDetailsNav";
-// import MovieReviewListCard from "../ReviewDisplay/MovieReviewListCard";
+import MovieReviewListCard from "../ReviewDisplay/MovieReviewListCard";
 import { fetchMovieDetails, fetchMovieReviewsByMovieId } from "../../Services/MovieReviewService";
 import TestReviewCard from "../ReviewDisplay/TestReviewCard";
 
@@ -63,11 +63,11 @@ function MovieDetailsPage() {
               <p>Be the first to write this movie a review!</p>
           ) : (
             reviews.map((review) => (
-          <TestReviewCard
+          <MovieReviewListCard
             key = { review.id }
             rating = { review.rating }
             award = { review.award }
-            review = { review.review }
+            review = { review.review }          
           />
           )))}
          

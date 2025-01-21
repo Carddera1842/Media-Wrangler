@@ -4,11 +4,14 @@ import "../ReviewDisplay/JournalReviewCard.css";
 import submitUserComment from "../../Services/CommentService";
 import { useAuth } from '../../Services/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import Rating from '@mui/material/Rating';
+import AvatarHeader from '../Profile/AvatarHeader';
+import { fontSize } from '@mui/system';
 
 
 
 
-const MovieReviewListCard = () => {
+const MovieReviewListCard = ({ rating, award, review }) => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
@@ -96,16 +99,34 @@ const MovieReviewListCard = () => {
         }} >
       <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid #ff8f00" }}>
         <CardContent>
-          <Typography variant="h6" component="div" className="username" color="text.secondary">
-            <Avatar>Test</Avatar>     {/* replace with the users avatar */}
-            <Typography>reviewed by USERNAME</Typography> {/* replace USERNAME with { username } */}
-            <Typography>⭐⭐⭐⭐</Typography> {/* replace with the starRatingButton on readOnly, passing the state from the movie */}
-            <span style={{ color: "black" }} ><Typography> 🤠 WRANGLER WINNER</Typography></span>
+          <Typography variant="h5" component="div" className="username" color="text.secondary">
+            <AvatarHeader 
+              user = { user }
+            />                       
+            <span
+                onClick={() => navigate(`/profile/${user.id}`)}
+                style={{
+                    color: "#004d40",
+                    fontWeight: "bold",
+                    fontSize: "22px",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    textDecorationThickness: "1px",
+                    textDecorationColor: "#ff8f00", 
+                    textUnderlineOffset: "3px",
+                }}
+            >
+                { user.username }
+            </span>            
+              <Rating name="read-only" value={ rating } readOnly />         
+          </Typography> 
+          <Divider sx={{ marginBottom: "20px"}}/>
+          <Typography>
+            User Presented the Movie with <span style={{ color: "black", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
+              {award}</span> Award 
           </Typography>
-          <Divider sx={{marginTop: "10px", marginBottom: "15px"}}/>                
-          <Typography variant="body2" color="text.primary" >
-            Here is the users textarea input for the review that they submitted  {/* replace to be dynamic */}
-          </Typography>
+          <br />                          
+          <Typography variant="body2" color="text.primary" > { review } </Typography>
         </CardContent>
         <CardActions>
           <Button size="small" >Like</Button>
