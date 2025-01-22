@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class MovieReview {
 
-    //Add for SQL to store review
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +36,7 @@ public class MovieReview {
     private String award;
 
     @NotNull(message = "You must give movie a star rating")
-    private int rating;
+    private double rating;
 
     private String watchAgain;
 
@@ -65,7 +65,7 @@ public class MovieReview {
     }
 
     //overloaded constructor for easier testing (without User logged in)
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating,
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, double rating,
                        String watchAgain, String title, String fullPosterURL, String yearReleased, User user, Long movieId ) {
         this.dateCreated = LocalDate.now();
         this.review = review;
@@ -93,11 +93,11 @@ public class MovieReview {
 
 
     //* All the review fields here...
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

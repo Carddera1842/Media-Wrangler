@@ -3,36 +3,39 @@ package com.mediawrangler.media_wrangler.models;
 import jakarta.persistence.*;
 
 @Entity
-public class MovieLike {
+public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long movieId;
+    private double rating;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public MovieLike() {
+    private Long movieId;
+
+    public Rating() {
     }
 
-    public MovieLike(Long movieId, User user) {
-        this.movieId = movieId;
+    public Rating(double rating, User user, Long movieId) {
+        this.rating = rating;
         this.user = user;
+        this.movieId = movieId;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getMovieId() {
-        return movieId;
+    public double getRating() {
+        return rating;
     }
 
-    public void setMovieId(Long movieId) {
-        this.movieId = movieId;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public User getUser() {
@@ -43,5 +46,11 @@ public class MovieLike {
         this.user = user;
     }
 
+    public Long getMovieId() {
+        return movieId;
+    }
 
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
+    }
 }

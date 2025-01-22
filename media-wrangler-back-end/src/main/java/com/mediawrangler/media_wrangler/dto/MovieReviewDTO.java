@@ -21,7 +21,7 @@ public class MovieReviewDTO {
     private String review;
     private String award;
     @NotNull(message = "You must give movie a star rating")
-    private int rating;
+    private double rating;
     private String watchAgain;
     private boolean isSpoiler;
     private List<String> tags = new ArrayList<>();
@@ -49,7 +49,7 @@ public class MovieReviewDTO {
     }
 
 
-    public MovieReviewDTO(LocalDate dateWatched, String review, String award, int rating, String watchAgain, boolean isSpoiler,
+    public MovieReviewDTO(LocalDate dateWatched, String review, String award, double rating, String watchAgain, boolean isSpoiler,
                           List<String> tags, String title, String fullPosterURL, String yearReleased, Long movieId, Long id,
                           int userId, String username, String firstname, String lastname) {
         this.dateCreated = LocalDate.now();
@@ -115,11 +115,11 @@ public class MovieReviewDTO {
     }
 
     @NotNull(message = "You must give movie a star rating")
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(@NotNull(message = "You must give movie a star rating") int rating) {
+    public void setRating(@NotNull(message = "You must give movie a star rating") double rating) {
         this.rating = rating;
     }
 

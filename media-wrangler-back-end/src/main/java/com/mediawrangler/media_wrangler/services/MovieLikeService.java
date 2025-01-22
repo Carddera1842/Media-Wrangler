@@ -91,7 +91,7 @@ public class MovieLikeService {
 
 
 
-    public boolean hasUserLikedMovie(Long movieId, Long userId) {
+    public boolean hasUserLikedMovie(Long movieId, int userId) {
         return movieLikeRepository.existsByMovieIdAndUserId(movieId, userId);
     }
 

@@ -41,7 +41,7 @@ public class MovieLikeController {
 
 
     @GetMapping("/check-like/{movieId}/{userId}")
-    public boolean hasUserLikedMovie(@PathVariable Long movieId, @PathVariable Long userId) {
+    public boolean hasUserLikedMovie(@PathVariable Long movieId, @PathVariable int userId) {
         return movieLikeService.hasUserLikedMovie(movieId, userId);
     }
 

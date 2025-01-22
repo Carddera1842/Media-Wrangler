@@ -18,6 +18,6 @@ public interface MovieLikeRepository extends JpaRepository<MovieLike, Long> {
 
     List<MovieLike> findByUserId(int userId);
 
-    boolean existsByMovieIdAndUserId(Long movieId, Long userId);
+    boolean existsByMovieIdAndUserId(Long movieId, int userId);
 
 }
