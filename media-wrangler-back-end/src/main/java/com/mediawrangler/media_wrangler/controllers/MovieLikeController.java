@@ -38,4 +38,17 @@ public class MovieLikeController {
     public void deleteLike(@RequestParam Long movieId, @RequestParam int userId) {
         movieLikeService.deleteLike(movieId, userId);
     }
+
+
+    @GetMapping("/check-like/{movieId}/{userId}")
+    public boolean hasUserLikedMovie(@PathVariable Long movieId, @PathVariable Long userId) {
+        return movieLikeService.hasUserLikedMovie(movieId, userId);
+    }
+
+
+    @GetMapping("/{movieId}/like-count")
+    public long getLikeCount(@PathVariable Long movieId) {
+        return movieLikeService.getLikesCountForMovie(movieId);
+    }
+
 }

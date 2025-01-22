@@ -17,4 +17,7 @@ public interface MovieLikeRepository extends JpaRepository<MovieLike, Long> {
     List<MovieLike> findByMovieId(Long movieId);
 
     List<MovieLike> findByUserId(int userId);
+
+    boolean existsByMovieIdAndUserId(Long movieId, Long userId);
+
 }

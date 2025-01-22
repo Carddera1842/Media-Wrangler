@@ -48,7 +48,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/questions/**",
                                 "/answers/**",
                                 "/reviews/movies/**",
-                                "/api/movie-likes"
+                                "/api/movie-likes/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );
