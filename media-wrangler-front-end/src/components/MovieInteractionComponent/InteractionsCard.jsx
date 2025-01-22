@@ -46,16 +46,16 @@ function InteractionsCard({ movieDetails }) {
         try {
             if (!isLiked) {
                 const result = await submitMovieLike(data);
-                if (result !== "Success") {
-                    console.log("Error liking the movie:", result);
-                    setLiked(false);  
+                if (result === "Success") {
+                    console.log("Success liking the movie:", result);
+                    setLiked(true);  
                     setLikeCount(likeCount);  
                 }
             } else {
                 const result = await removeMovieLike(movieId, userId);
-                if (result !== "Success") {
-                    console.log("Error removing the like movie:", result);
-                    setLiked(true);  
+                if (result === "Success") {
+                    console.log("Success removing the like movie:", result);
+                    setLiked(false);  
                     setLikeCount(likeCount);  
                 } else {
                     setLikeCount(likeCount - 1);  
