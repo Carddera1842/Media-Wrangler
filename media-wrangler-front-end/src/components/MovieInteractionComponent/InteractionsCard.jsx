@@ -53,7 +53,7 @@ function InteractionsCard({ movieDetails }) {
 
     async function handleLikeClick() {
         setLiked(!isLiked);
-        setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+        setLikeCount(likeCount + 1);
 
         console.log("movieDetails.id: ", movieId);
         console.log("user.id :", userId);
@@ -69,17 +69,15 @@ function InteractionsCard({ movieDetails }) {
                 if (result === "Success") {
                     console.log("Success liking the movie:", result);
                     setLiked(true);  
-                    setLikeCount(likeCount);  
+                    setLikeCount(likeCount + 1);  
                 }
             } else {
                 const result = await removeMovieLike(movieId, userId);
                 if (result === "Success") {
                     console.log("Success removing the like movie:", result);
                     setLiked(false);  
-                    setLikeCount(likeCount);  
-                } else {
                     setLikeCount(likeCount - 1);  
-                }
+                }            
             }
         } catch (error) {
             console.error("An error occurred:", error);

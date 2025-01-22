@@ -26,13 +26,14 @@ import axios from "axios";
     }
 
 
-    async function removeMovieLike(movieId, userId) {
+    async function removeMovieLike( movieId, userId) {
         try {
             const response = await axios.delete(
-                'http://localhost:8080/like/movies', {
-                    data: { movieId, userId },  
-                    withCredentials: true,
-                }
+                `http://localhost:8080/api/movie-likes/delete/${movieId}/${userId}`, 
+                    { movieId, userId }, 
+                    {  
+                        withCredentials: true,
+                    }
             );
             console.log("Response:", response);
             if (response.status === 200) { 
