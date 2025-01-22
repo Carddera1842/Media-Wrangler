@@ -9,6 +9,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import AvatarHeader from '../Profile/AvatarHeader';
 import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 
 
@@ -41,6 +42,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                 <Card sx={{ border: "4px solid #ff8f00" }} variant="outlined">
                     <div className="movie-info-container">
                         <div>                       
+                        <Typography variant="h5" component="div" className="username" color="text.secondary">
                             <AvatarHeader 
                             firstname = { firstname }
                             lastname = { lastname }
@@ -59,7 +61,8 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                 }}
                             >
                                 { username }
-                            </span> 
+                            </span>  
+                        </Typography>
                             <Typography variant="h5" component="div" className="username" color="text.secondary">  
                             <div>
                                 <img style={{height: "300px", width: "auto", margin: "10px"}} src={ fullPosterURL } alt="movie poster" />
@@ -75,25 +78,16 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                 { title }
                                 <span style={{ fontSize: '1.5rem', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span>
                                 <hr style={{ background: isSpoiler ? "#d50000" : "teal" }} />
-                            </Typography>                                                                          
+                            </Typography>
+                                                                                                     
                             <Typography variant="body1" sx={{ color: 'text.primary', textAlign: 'center', fontSize: '22px' }}>
-                                <b> { award } </b>
-                           
+                            You Awarded the Movie with the <b> "{ award }" </b> Award                           
                             </Typography>                            
                             <br />                                      
                             <Typography variant="body1" sx={{ color: 'black' }}  >
                                 { review }
                             </Typography>
                             <br />
-                            <Typography variant='body2' sx={{ color: 'text.secondary'}}>
-                                    Watched on { dateWatched }  
-                            </Typography>
-                            <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <Typography variant='body2' sx={{ color: 'text.secondary'}}>
-                                    Would You Watch Again?                                                          
-                                </Typography>
-                                {(watchAgain === "yes" ? <CheckCircleIcon sx={{fontSize: "25px", color: "blue", marginLeft: "5px"}} /> :                        <CancelIcon sx={{fontSize: "25px", color: "red", marginLeft: "5px"}} />  )}                           
-                            </Box>
                             <br />
                             <Typography>
                                 <b>Your Tags:</b>
@@ -109,6 +103,15 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                         </Typography>
                                     </div>))}
                             </Stack>
+                            <Typography variant='body2' sx={{ color: 'text.secondary'}}>
+                                    Watched on { dateWatched }  
+                            </Typography>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <Typography variant='body2' sx={{ color: 'text.secondary'}}>
+                                    Would You Watch Again?                                                          
+                                </Typography>
+                                {(watchAgain === "yes" ? <CheckCircleIcon sx={{fontSize: "25px", color: "blue", marginLeft: "5px"}} /> :                        <CancelIcon sx={{fontSize: "25px", color: "red", marginLeft: "5px"}} />  )}                           
+                            </Box>
                         </CardContent>            
                     </div>                
                     <CardActions>

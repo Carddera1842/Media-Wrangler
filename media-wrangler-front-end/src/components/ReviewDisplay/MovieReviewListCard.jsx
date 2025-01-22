@@ -123,8 +123,8 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
           </Typography> 
           <Divider sx={{ marginBottom: "20px"}}/>
           <Typography>
-            User Presented the Movie with <span style={{ color: "black", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
-              {award}</span> Award 
+            User Presented Movie with the <span style={{ color: "black", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
+              "{award}"</span> Award 
           </Typography>
           <br />                          
           <Typography variant="body2" color="text.primary" > { review } </Typography>
