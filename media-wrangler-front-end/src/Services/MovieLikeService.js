@@ -47,4 +47,35 @@ import axios from "axios";
         }
     }
 
-    export { submitMovieLike, removeMovieLike };
+
+    async function checkIfUserLikedMovie(movieId, userId) {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/movie-likes/check-like/${movieId}/${userId}`, {
+                withCredentials: true
+            });
+            console.log(response.data);
+            return response.data; 
+        } catch (error) {
+            console.error("Error checking like status:", error);
+            return false; 
+        }
+    }
+    
+
+
+    async function fetchLikeCount(movieId) {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/movie-likes/${movieId}/like-count`, {
+                withCredentials: true,
+            });
+            return response.data; 
+        } catch (error) {
+            console.error("Error fetching like count:", error);
+            return 0; 
+        }
+    }
+
+
+
+
+    export { submitMovieLike, removeMovieLike, checkIfUserLikedMovie, fetchLikeCount };
