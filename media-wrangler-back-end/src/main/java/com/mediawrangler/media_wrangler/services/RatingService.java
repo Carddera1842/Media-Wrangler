@@ -2,9 +2,13 @@ package com.mediawrangler.media_wrangler.services;
 
 import com.mediawrangler.media_wrangler.data.RatingRepository;
 import com.mediawrangler.media_wrangler.data.UserRepository;
+import com.mediawrangler.media_wrangler.dto.MovieLikeDTO;
 import com.mediawrangler.media_wrangler.dto.RatingDTO;
+import com.mediawrangler.media_wrangler.models.MovieLike;
+import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.models.Rating;
 import com.mediawrangler.media_wrangler.models.User;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -15,11 +19,31 @@ public class RatingService {
 
     @Autowired
     private final RatingRepository ratingRepository;
+
+    @Autowired
     private final UserRepository userRepository;
+
 
     public RatingService(RatingRepository ratingRepository, UserRepository userRepository) {
         this.ratingRepository = ratingRepository;
         this.userRepository = userRepository;
+    }
+
+    public RatingDTO addLike(RatingDTO ratingDTO) {
+        User user = userRepository.findById(ratingDTO.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Rating rating = new Rating();
+        rating.setMovieId(ratingDTO.getMovieId());
+        rating.setUser(user);
+
+        Rating savedRating = ratingRepository.save(rating);
+
+        RatingDTO savedRatingDTO = new RatingDTO();
+        savedRatingDTO.setMovieId(savedRating.getMovieId());
+        savedRatingDTO.setUserId(savedRating.getUser().getId());
+
+        return savedRatingDTO;
     }
 
 
@@ -69,20 +93,16 @@ public class RatingService {
     }
 
 
-//    public void updateUserRating(Long movieId, User user, double newRating) {
-//        Optional<Rating> existingRating = ratingRepository.findByMovieIdAndUserId(movieId, user.getId());
-//
-//        if (existingRating.isPresent()) {
-//            ratingRepository.updateRating(movieId, user, newRating);
-//        } else {
-//            Rating newRatingEntry = new Rating();
-//            newRatingEntry.setMovieId(movieId);
-//            newRatingEntry.setUser(user);
-//            newRatingEntry.setRating(newRating);
-//
-//            ratingRepository.save(newRatingEntry);
-//        }
-//    }
+    public void updateUserRating(Long movieId, User user, Double newRating) {
+        Optional<Rating> existingRating = ratingRepository.findByMovieIdAndUser(movieId, user);
+        if (existingRating.isPresent()) {
+            Rating rating = existingRating.get();
+            rating.setRating(newRating);
+            ratingRepository.save(rating);
+        } else {
+            throw new EntityNotFoundException("Rating not found for the given movie and user.");
+        }
+    }
 
 
 }

@@ -4,6 +4,7 @@ import com.mediawrangler.media_wrangler.models.Rating;
 import com.mediawrangler.media_wrangler.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +19,6 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     boolean existsByMovieIdAndUserId(Long movieId, int userId);
 
-//    @Query("UPDATE Rating r SET r.rating = :newRating WHERE r.movieId = :movieId AND r.userId = :userId")
-//    void updateRating(Long movieId, User user, double newRating);
+    Optional<Rating> findByMovieIdAndUser(Long movieId, User user);
 
-    @Query("SELECT AVG(r.rating) FROM Rating r WHERE r.movieId = :movieId")
-    double findAverageRatingByMovieId(Long movieId);
 }

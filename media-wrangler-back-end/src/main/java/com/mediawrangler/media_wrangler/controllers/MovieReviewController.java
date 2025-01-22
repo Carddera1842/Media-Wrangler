@@ -16,26 +16,19 @@ import java.util.List;
 import java.util.Optional;
 
 
-//Add CrossOrigin annotation to allow HTTP request/response exchange between front and back end
+
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 @RestController
 @RequestMapping("/reviews")
 public class MovieReviewController {
 
-    //Based off other branches, setup Service here
+
     @Autowired
     private final MovieReviewService movieReviewService;
 
-    //Constructor injection of MovieReviewService -- constructor that takes in service
     public MovieReviewController(MovieReviewService movieReviewService) {
         this.movieReviewService = movieReviewService;
     }
-
-    //Add movieReviewRepository to perform CRUD functions
-    @Autowired
-    private MovieReviewRepository movieReviewRepository;
-
-
 
 
     @PostMapping("/create")
