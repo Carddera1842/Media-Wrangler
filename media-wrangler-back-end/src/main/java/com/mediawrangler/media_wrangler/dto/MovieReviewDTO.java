@@ -1,5 +1,6 @@
 package com.mediawrangler.media_wrangler.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mediawrangler.media_wrangler.models.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public class MovieReviewDTO {
     @NotNull(message = "You must give movie a star rating")
     private double rating;
     private String watchAgain;
+    @JsonProperty("isSpoiler")
     private boolean isSpoiler;
     private List<String> tags = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.mediawrangler.media_wrangler.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,7 +35,7 @@ public class MovieReview {
     @Size(max = 1000, message = "Review must be less than 1000 characters")
     private String review;
 
-//TODO: Still have to get spoiler checkbox logging correctly...changed back to boolean to see if I can get it to work
+    @JsonProperty("isSpoiler")
     private boolean isSpoiler;
 
     private String award;

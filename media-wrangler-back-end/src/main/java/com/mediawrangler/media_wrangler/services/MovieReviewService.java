@@ -51,6 +51,9 @@ public class MovieReviewService {
             dto.setDateWatched(review.getDateWatched());
             dto.setId(review.getId());
             dto.setUserId(review.getUser().getId());
+            dto.setLastname(review.getUser().getLastname());
+            dto.setFirstname(review.getUser().getFirstname());
+            dto.setUsername(review.getUser().getUsername());
 
             return Optional.of(dto);
         }
