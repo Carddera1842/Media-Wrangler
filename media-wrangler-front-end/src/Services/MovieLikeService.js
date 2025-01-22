@@ -1,11 +1,15 @@
 import axios from "axios";
 
     async function submitMovieLike(data) {
+
+        console.log("data: ", data);
+
         try {
             const response = await axios.post(
-                "http://localhost:8080/api/likes/movies", {
-                   data , 
-                    withCredentials: true,
+                "http://localhost:8080/api/movie-likes", 
+                data,  
+                {
+                    withCredentials: true,  
                 }
             );
             console.log("Response:", response);
@@ -16,7 +20,8 @@ import axios from "axios";
                 return ("Movie Like failed. Please try again");
             }
         } catch (error) {
-            return ("An error occurred. Please try again", error);
+            console.error("Error occurred:", error);
+            return "An error occurred. Please try again";
         }
     }
 

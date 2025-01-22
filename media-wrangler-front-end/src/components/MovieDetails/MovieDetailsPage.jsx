@@ -71,8 +71,7 @@ function MovieDetailsPage() {
             userId = { review.userId }
             username = { review.username }
             firstname = { review.username }
-            lastname = { review.lastname } 
-                   
+            lastname = { review.lastname }                    
           />
           )))}
          
