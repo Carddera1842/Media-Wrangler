@@ -29,7 +29,8 @@ public class RatingService {
         this.userRepository = userRepository;
     }
 
-    public RatingDTO addLike(RatingDTO ratingDTO) {
+
+    public RatingDTO addRating(RatingDTO ratingDTO) {
         User user = userRepository.findById(ratingDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
