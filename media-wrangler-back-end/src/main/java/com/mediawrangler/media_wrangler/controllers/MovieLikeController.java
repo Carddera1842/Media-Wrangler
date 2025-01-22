@@ -7,22 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/like")
+@RequestMapping("api/likes")
 public class MovieLikeController {
 
     @Autowired
     private MovieLikeService likeService;
 
-
-    @PostMapping("")
-    public ResponseEntity<MovieLike> likeMovie(@RequestBody MovieLike movieLike) {
+    //@localhost:8080/like/movie
+    @PostMapping("/movies")
+    public ResponseEntity<?> likeMovie(@RequestBody MovieLike movieLike) {
         MovieLike savedLike = likeService.saveLike(movieLike);
         return ResponseEntity.ok(savedLike);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/movie")
     public ResponseEntity<MovieLike> unLikeMovie(@RequestBody MovieLike movieLike) {
         MovieLike unLiked = likeService.removeLike(movieLike);
         if (unLiked != null) {
