@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, ButtonGroup, Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAuth } from '../../Services/AuthContext';
-import { submitMovieLike, removeMovieLike } from '../../Services/MovieLikeService';
+import { submitMovieLike, removeMovieLike, checkIfUserLikedMovie, fetchLikeCount } from '../../Services/MovieLikeService';
 
 /*
     TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
@@ -18,8 +18,7 @@ function InteractionsCard({ movieDetails }) {
 
     const [rating, setRating] = useState(0);
     const [isLiked, setLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(0);
-    
+    const [likeCount, setLikeCount] = useState(0);    
     
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -30,6 +29,27 @@ function InteractionsCard({ movieDetails }) {
 
     const movieId = movieDetails.id;
     const userId = user.id;
+
+
+    useEffect(() => {
+        async function checkLikeStatus() {
+            const liked = await checkIfUserLikedMovie(movieId, userId);
+            setLiked(liked);
+        };
+        checkLikeStatus();
+    }, [movieId, userId]);
+
+
+
+    useEffect(() => {
+        const getLikeCount = async () => {
+            const count = await fetchLikeCount(movieId);
+            setLikeCount(count);
+        };
+        getLikeCount();
+    }, [movieId]);
+
+
 
     async function handleLikeClick() {
         setLiked(!isLiked);
