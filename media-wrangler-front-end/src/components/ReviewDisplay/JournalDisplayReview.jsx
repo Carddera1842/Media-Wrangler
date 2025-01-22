@@ -49,6 +49,10 @@ export default function JournalDisplayReview() {
                 dateWatched = { review.dateWatched }
                 award = { review.award }
                 yearReleased = { review.yearReleased }
+                username = { review.username }
+                firstname = { review.username }
+                lastname = { review.lastname }  
+                userId = { review.userId }
             />
              
         </>
