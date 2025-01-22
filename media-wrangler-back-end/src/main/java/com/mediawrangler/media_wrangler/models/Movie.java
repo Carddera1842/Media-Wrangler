@@ -1,5 +1,6 @@
 package com.mediawrangler.media_wrangler.models;
 
+
 public class Movie {
     private int id;
     private String title;
