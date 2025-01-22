@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Button, ButtonGroup, Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
-import LoveButton from '../InteractiveSoloComponents/LoveButton';
-import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAuth } from '../../Services/AuthContext';
+import { submitMovieLike, removeMovieLike } from '../../Services/MovieLikeService';
 
 /*
     TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
@@ -29,17 +28,49 @@ function InteractionsCard({ movieDetails }) {
         setRating(e.target.value);
     }
 
-    
+    const movieId = movieDetails.id;
+    const userId = user.id;
 
-    function handleLikeClick() {
-        setLiked(!isLiked); 
-        if (isLiked) {
-            setLikeCount(likeCount - 1); 
-        } else {
-            setLikeCount(likeCount + 1); 
+    async function handleLikeClick() {
+        setLiked(!isLiked);
+        setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+
+        console.log("movieDetails.id: ", movieId);
+        console.log("user.id :", userId);
+   
+        const data = {
+            movieId,
+            userId
+        }
+
+        try {
+            if (!isLiked) {
+                const result = await submitMovieLike(data);
+                if (result !== "Success") {
+                    console.log("Error liking the movie:", result);
+                    setLiked(false);  
+                    setLikeCount(likeCount);  
+                }
+            } else {
+                const result = await removeMovieLike(movieId, userId);
+                if (result !== "Success") {
+                    console.log("Error removing the like movie:", result);
+                    setLiked(true);  
+                    setLikeCount(likeCount);  
+                } else {
+                    setLikeCount(likeCount - 1);  
+                }
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+            setLiked(!isLiked);  
+            setLikeCount(isLiked ? likeCount + 1 : likeCount - 1);  
         }
     }
- 
+   
+
+
+
 
     //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
