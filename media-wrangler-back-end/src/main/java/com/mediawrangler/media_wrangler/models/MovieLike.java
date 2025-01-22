@@ -9,7 +9,6 @@ public class MovieLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private Long movieId;
 
     @ManyToOne
