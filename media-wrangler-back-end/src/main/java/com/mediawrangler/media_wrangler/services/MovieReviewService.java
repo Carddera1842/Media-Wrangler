@@ -85,6 +85,9 @@ public class MovieReviewService {
     }
 
 
+    //TODO: Update the MovieReviewDTO to only send the information needed for each type of method.
+    // Scale back on the fields that being set and sent
+
     public List<MovieReviewDTO> getReviewsByMovieId(Long movieId) {
         List<MovieReview> movieReviews = movieReviewRepository.findByMovieId(movieId);
         List<MovieReviewDTO> movieReviewDTOS = new ArrayList<>();
@@ -104,6 +107,9 @@ public class MovieReviewService {
             dto.setDateWatched(movieReview.getDateWatched());
             dto.setId(movieReview.getId());
             dto.setUserId(movieReview.getUser().getId());
+            dto.setUsername(movieReview.getUser().getUsername());
+            dto.setFirstname(movieReview.getUser().getFirstname());
+            dto.setLastname(movieReview.getUser().getLastname());
 
             movieReviewDTOS.add(dto);
         }
