@@ -26,7 +26,6 @@ function InteractionsCard({ movieDetails }) {
     const userId = user.id;
 
 
-
     useEffect(() => {
         async function checkLikeStatus() {
             const liked = await checkIfUserLikedMovie(movieId, userId);
@@ -36,7 +35,6 @@ function InteractionsCard({ movieDetails }) {
     }, [movieId, userId]);
 
 
-
     useEffect(() => {
         async function getLikeCount() {
             const count = await fetchLikeCount(movieId);
@@ -44,7 +42,6 @@ function InteractionsCard({ movieDetails }) {
         };
         getLikeCount();
     }, [movieId]);
-
 
 
     useEffect(() => {
@@ -62,9 +59,7 @@ function InteractionsCard({ movieDetails }) {
             
         };
         checkRatedStatus();
-    }, [movieId, userId, isRated]);
-    
-    
+    }, [movieId, userId, isRated]);  
 
 
     async function handleRatingChange(e) {
@@ -96,16 +91,10 @@ function InteractionsCard({ movieDetails }) {
         }
     }
     
-    
-    console.log("this is the rating state now: ", rating);
-    
 
     async function handleLikeClick() {
         setLiked(!isLiked);
         setLikeCount(likeCount + 1);
-
-        console.log("movieDetails.id: ", movieId);
-        console.log("user.id :", userId);
    
         const data = {
             movieId,
@@ -133,8 +122,7 @@ function InteractionsCard({ movieDetails }) {
             setLiked(!isLiked);  
             setLikeCount(isLiked ? likeCount + 1 : likeCount - 1);  
         }
-    }
-   
+    }   
 
 
     function handleWriteReviewClick() {
@@ -143,9 +131,10 @@ function InteractionsCard({ movieDetails }) {
             navigate('/login');
         }
         navigate("/reviews/create", {
-            state: { movieDetails, user }
+            state: { movieDetails, user}
         });
     }
+
 
     function handleJournalClick() {
         if(!user) {
@@ -171,13 +160,13 @@ function InteractionsCard({ movieDetails }) {
                     onChange={ handleRatingChange }
                     sx={{
                         '& .MuiRating-iconFilled': {
-                            color: '#ff9800', // Color for filled stars (e.g., amber)
+                            color: '#ff9800', 
                         },
                         '& .MuiRating-iconEmpty': {
-                            color: '#e0e0e0', // Color for empty stars (e.g., light gray)
+                            color: '#e0e0e0', 
                         },
                         '& .MuiRating-iconHover': {
-                            color: '#ffcc00', // Hover color for stars (e.g., yellow)
+                            color: '#ffcc00', 
                         },
                     }}
                 />
