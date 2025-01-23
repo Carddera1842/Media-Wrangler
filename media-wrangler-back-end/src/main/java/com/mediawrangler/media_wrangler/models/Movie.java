@@ -1,6 +1,7 @@
 package com.mediawrangler.media_wrangler.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Movie {
     private int id;
@@ -12,8 +13,14 @@ public class Movie {
     private ArrayList<CastMember> cast;
     private ArrayList<CrewMember> crew;
 
-    public Movie() {
+    private List<String> buyProviders;
+    private List<String> flatrateProviders;
+    private List<String> rentProviders;
 
+    public Movie() {
+        this.buyProviders = new ArrayList<>();
+        this.flatrateProviders = new ArrayList<>();
+        this.rentProviders = new ArrayList<>();
     }
 
     public Movie(int id, String title, String releaseDate, double rating, String overview,
@@ -26,6 +33,9 @@ public class Movie {
         this.posterPath = posterPath;
         this.cast = cast;
         this.crew = crew;
+        this.buyProviders = new ArrayList<>();
+        this.flatrateProviders = new ArrayList<>();
+        this.rentProviders = new ArrayList<>();
     }
 
     public int getId() {
@@ -94,7 +104,13 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Title: " + title + "\nRelease Date: " + releaseDate + "\nRating: " + rating + "\nOverview: " + overview;
+        return "Title='" + title + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", rating=" + rating +
+                ", overview='" + overview + '\'' +
+                ", buyProviders=" + buyProviders +
+                ", flatrateProviders=" + flatrateProviders +
+                ", rentProviders=" + rentProviders +
+                '}';
     }
 }
-
