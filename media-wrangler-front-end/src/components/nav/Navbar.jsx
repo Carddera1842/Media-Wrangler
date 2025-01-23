@@ -14,6 +14,7 @@ export default function Navbar() {
     { label: "Home", path: "/" },
     { label: "Discover", path: "/discover" },
     { label: "Search", path: "/search" },
+    { label: "Discussions", path: "/questions" },
     ...(user
       ? [
           { label: "Profile", path: `/profile/${user.id}` },
@@ -85,7 +86,7 @@ export default function Navbar() {
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="auto"
-          TabIndicatorProps={{ style: { transition: "none" } }} // Optional: Disable tab indicator animation
+          TabIndicatorProps={{ style: { transition: "none" } }} 
         >
           {tabs.map((tab, index) =>
             tab.path ? (
