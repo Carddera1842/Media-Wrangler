@@ -1,6 +1,7 @@
 package com.mediawrangler.media_wrangler.controllers;
 
 import com.mediawrangler.media_wrangler.dto.MovieLikeDTO;
+import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.dto.RatingDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.models.Rating;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 @RestController
@@ -59,6 +61,23 @@ public class RatingController {
     public ResponseEntity<RatingDTO> updateRating(@RequestBody RatingDTO ratingDTO) {
         RatingDTO updatedRating = ratingService.updateUserRating(ratingDTO);
         return ResponseEntity.status(HttpStatus.OK).body(updatedRating);
+    }
+
+
+    @GetMapping("/view/{movieId}")
+    public ResponseEntity<?> findRatingByMovieId(@PathVariable Long movieId) {
+        try {
+            Optional<RatingDTO> optionalRating = ratingService.getReviewByMovieId(movieId);
+
+            if (optionalRating.isPresent()) {
+                RatingDTO savedRating = (RatingDTO) optionalRating.get();
+                return new ResponseEntity<>(savedRating, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Rating not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while retrieving the rating", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

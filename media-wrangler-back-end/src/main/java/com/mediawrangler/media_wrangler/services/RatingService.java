@@ -2,11 +2,14 @@ package com.mediawrangler.media_wrangler.services;
 
 import com.mediawrangler.media_wrangler.data.RatingRepository;
 import com.mediawrangler.media_wrangler.data.UserRepository;
+import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.dto.RatingDTO;
+import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.models.Rating;
 import com.mediawrangler.media_wrangler.models.User;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -115,4 +118,20 @@ public class RatingService {
     }
 
 
+    public Optional<RatingDTO> getReviewByMovieId(Long movieId) {
+        Optional<Rating> optionalRating = ratingRepository.findRatingByMovieId(movieId);
+
+        if(optionalRating.isPresent()) {
+            Rating rating = optionalRating.get();
+            RatingDTO dto = new RatingDTO();
+
+            dto.setRating(rating.getRating());
+            dto.setMovieId(rating.getMovieId());
+            dto.setUserId(rating.getUser().getId());
+            dto.setId(rating.getId());
+
+            return Optional.of(dto);
+        }
+        return Optional.empty();
+    }
 }
