@@ -4,6 +4,7 @@ import com.mediawrangler.media_wrangler.dto.MovieLikeDTO;
 import com.mediawrangler.media_wrangler.dto.RatingDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.models.Rating;
+import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.services.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 @RestController
-@RequestMapping("/rating")
+@RequestMapping("/api/rating")
 public class RatingController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class RatingController {
     }
 
     @PostMapping
-    public RatingDTO addLike(@RequestBody RatingDTO ratingDTO) {
+    public RatingDTO createRating(@RequestBody RatingDTO ratingDTO) {
         return ratingService.addRating(ratingDTO);
     }
 
@@ -49,8 +50,16 @@ public class RatingController {
     }
 
 
-    @GetMapping("/check-like/{movieId}/{userId}")
+    @GetMapping("/check-rating/{movieId}/{userId}")
     public boolean hasUserRatedMovie(@PathVariable Long movieId, @PathVariable int userId) {
         return ratingService.hasUserRatedMovie(movieId, userId);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<RatingDTO> updateRating(@RequestBody RatingDTO ratingDTO) {
+        RatingDTO updatedRating = ratingService.updateUserRating(ratingDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedRating);
+    }
+
+
 }
