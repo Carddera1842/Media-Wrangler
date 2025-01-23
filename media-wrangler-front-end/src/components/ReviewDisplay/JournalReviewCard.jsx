@@ -81,7 +81,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             </Typography>
                                                                                                      
                             <Typography variant="body1" sx={{ color: 'text.primary', textAlign: 'center', fontSize: '22px' }}>
-                            You Awarded the Movie with the <b> "{ award }" </b> Award                           
+                            You Awarded the Movie with the <b> "{award}" </b> Award                           
                             </Typography>                            
                             <br />                                      
                             <Typography variant="body1" sx={{ color: 'black' }}  >
@@ -103,6 +103,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                         </Typography>
                                     </div>))}
                             </Stack>
+                            <br />
                             <Typography variant='body2' sx={{ color: 'text.secondary'}}>
                                     Watched on { dateWatched }  
                             </Typography>

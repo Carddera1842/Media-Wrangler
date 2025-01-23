@@ -12,6 +12,7 @@ import axios from "axios";
                     withCredentials: true,  
                 }
             );
+            console.log("data being sent: ", data);
             console.log("Response:", response);
             if (response.status === 201) {          
                 console.log("Like saved for movie");
@@ -54,7 +55,7 @@ import axios from "axios";
             const response = await axios.get(`http://localhost:8080/api/movie-likes/check-like/${movieId}/${userId}`, {
                 withCredentials: true
             });
-            console.log(response.data);
+            console.log("has movie been liked: ", response.data);
             return response.data; 
         } catch (error) {
             console.error("Error checking like status:", error);

@@ -98,8 +98,7 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
             margin: "10px auto",        
         }} >
       <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid #ff8f00" }}>
-        <CardContent>
-          <Typography variant="h5" component="div" className="username" color="text.secondary">
+        <CardContent>          
             <AvatarHeader 
               firstname = { firstname }
               lastname = { lastname }
@@ -119,12 +118,11 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
             >
                 { username }
             </span>            
-              <Rating name="read-only" value={ rating } readOnly />         
-          </Typography> 
+            <Rating name="read-only" value={ rating } readOnly />       
           <Divider sx={{ marginBottom: "20px"}}/>
           <Typography>
             User Presented Movie with the <span style={{ color: "black", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
-              "{award}"</span> Award 
+             "{award}"</span> Award 
           </Typography>
           <br />                          
           <Typography variant="body2" color="text.primary" > { review } </Typography>
