@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import Rating from '@mui/material/Rating';
 import PropTypes from 'prop-types';
 
-export default function StarRatingButton({ defaultValue, precision, onChange, name, movieId, title } ) {
+export default function StarRatingButton({ defaultValue, precision, onChange, name, movieId, title, rating } ) {
 
   return (
     <>    
       <Rating 
           name={ name } 
-          defaultValue={ defaultValue }
+          defaultValue={ rating }
           precision={ precision } 
           onChange={ onChange }
           sx={{

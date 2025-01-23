@@ -7,12 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAuth } from '../../Services/AuthContext';
 import { submitMovieLike, removeMovieLike, checkIfUserLikedMovie, fetchLikeCount } from '../../Services/MovieLikeService';
+import { submitMovieRating, updateMovieRating, checkIfUserRatedMovie } from '../../Services/RatingService';
 
-/*
-    TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
-
-    TODO: The "liked" button counter needs some focus, figure out how to save the counts so we can display the total "likes" across all reviews
-*/
 
 function InteractionsCard({ movieDetails }) {
 
@@ -22,10 +18,6 @@ function InteractionsCard({ movieDetails }) {
     
     const { user } = useAuth();
     const navigate = useNavigate();
-
-    function onChangeRating(e) {
-        setRating(e.target.value);
-    }
 
     const movieId = movieDetails.id;
     const userId = user.id;
@@ -50,6 +42,50 @@ function InteractionsCard({ movieDetails }) {
     }, [movieId]);
 
 
+    useEffect(() => {
+        async function fetchUserRating() {
+            const hasRated = await checkIfUserRatedMovie(movieId, userId);
+            if (hasRated) {
+                const userRating = await fetchUserRating(movieId, userId);
+                setRating(userRating.rating);
+            }
+        }
+        fetchUserRating();
+    }, [movieId, userId]);
+    
+
+
+    async function handleRatingChange(e) {
+        const newRating = parseFloat(e.target.value);
+        setRating(newRating);
+    
+        const data = {
+            movieId,
+            userId,
+            rating: newRating,
+        };
+    
+        try {
+            const hasRated = await checkIfUserRatedMovie(movieId, userId);
+    
+            if (hasRated) {
+                const result = await updateMovieRating(data);
+                if (result === "Success") {
+                    console.log("Successfully updated the rating:", data);
+                }
+            } else {
+                const result = await submitMovieRating(data);
+                if (result === "Success") {
+                    console.log("Successfully submitted the rating:", data);
+                }
+            }
+        } catch (error) {
+            console.error("Error occurred while handling rating:", error);
+        }
+    }
+    
+
+    
 
     async function handleLikeClick() {
         setLiked(!isLiked);
@@ -60,7 +96,7 @@ function InteractionsCard({ movieDetails }) {
    
         const data = {
             movieId,
-            userId
+            userId, 
         }
 
         try {
@@ -120,9 +156,9 @@ function InteractionsCard({ movieDetails }) {
                 <StarRatingButton
                     name="half-rating" 
                     title={ movieDetails.title }
-                    defaultValue={0} 
+                    defaultValue={ rating } 
                     precision={0.5} 
-                    onChange={ onChangeRating }
+                    onChange={ handleRatingChange }
                 />
             </div>
         </Button>,

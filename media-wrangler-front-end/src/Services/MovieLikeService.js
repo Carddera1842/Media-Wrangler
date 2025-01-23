@@ -12,6 +12,7 @@ import axios from "axios";
                     withCredentials: true,  
                 }
             );
+            console.log("data being sent: ", data);
             console.log("Response:", response);
             if (response.status === 201) {          
                 console.log("Like saved for movie");
