@@ -2,10 +2,7 @@ package com.mediawrangler.media_wrangler.services;
 
 import com.mediawrangler.media_wrangler.data.RatingRepository;
 import com.mediawrangler.media_wrangler.data.UserRepository;
-import com.mediawrangler.media_wrangler.dto.MovieLikeDTO;
 import com.mediawrangler.media_wrangler.dto.RatingDTO;
-import com.mediawrangler.media_wrangler.models.MovieLike;
-import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.models.Rating;
 import com.mediawrangler.media_wrangler.models.User;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,12 +36,14 @@ public class RatingService {
         Rating rating = new Rating();
         rating.setMovieId(ratingDTO.getMovieId());
         rating.setUser(user);
+        rating.setRating(ratingDTO.getRating());
 
         Rating savedRating = ratingRepository.save(rating);
 
         RatingDTO savedRatingDTO = new RatingDTO();
         savedRatingDTO.setMovieId(savedRating.getMovieId());
         savedRatingDTO.setUserId(savedRating.getUser().getId());
+        savedRatingDTO.setRating(savedRating.getRating());
 
         return savedRatingDTO;
     }
@@ -87,7 +86,7 @@ public class RatingService {
     }
 
 
-    //TODO: Not sure where the user would delete the rating at but... just in case we add it in somewhere
+
     public void deleteRating(Long movieId, int userId) {
         Rating rating = ratingRepository.findByMovieIdAndUserId(movieId, userId)
                 .orElseThrow(() -> new RuntimeException("Like not found"));
@@ -96,15 +95,23 @@ public class RatingService {
     }
 
 
-    public void updateUserRating(Long movieId, User user, Double newRating) {
-        Optional<Rating> existingRating = ratingRepository.findByMovieIdAndUser(movieId, user);
-        if (existingRating.isPresent()) {
-            Rating rating = existingRating.get();
-            rating.setRating(newRating);
-            ratingRepository.save(rating);
-        } else {
-            throw new EntityNotFoundException("Rating not found for the given movie and user.");
-        }
+    public RatingDTO updateUserRating(RatingDTO ratingDTO) {
+        Long movieId = ratingDTO.getMovieId();
+        int userId = ratingDTO.getUserId();
+        double newRating = ratingDTO.getRating();
+
+
+        Rating rating = ratingRepository.findByMovieIdAndUserId(movieId, userId)
+                .orElseThrow(() -> new RuntimeException("Rating not found"));
+
+        rating.setRating(newRating);
+        Rating updatedRating = ratingRepository.save(rating);
+
+        RatingDTO updatedRatingDTO = new RatingDTO();
+        updatedRatingDTO.setMovieId(updatedRating.getMovieId());
+        updatedRatingDTO.setUserId(updatedRating.getUser().getId());
+
+        return updatedRatingDTO;
     }
 
 

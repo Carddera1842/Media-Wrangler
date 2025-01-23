@@ -19,6 +19,6 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     boolean existsByMovieIdAndUserId(Long movieId, int userId);
 
-    Optional<Rating> findByMovieIdAndUser(Long movieId, User user);
+
 
 }
