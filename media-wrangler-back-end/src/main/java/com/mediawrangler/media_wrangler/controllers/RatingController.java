@@ -67,7 +67,7 @@ public class RatingController {
     @GetMapping("/view/{movieId}")
     public ResponseEntity<?> findRatingByMovieId(@PathVariable Long movieId) {
         try {
-            Optional<RatingDTO> optionalRating = ratingService.getReviewByMovieId(movieId);
+            Optional<RatingDTO> optionalRating = ratingService.getRatingByMovieId(movieId);
 
             if (optionalRating.isPresent()) {
                 RatingDTO savedRating = (RatingDTO) optionalRating.get();
@@ -80,5 +80,22 @@ public class RatingController {
         }
     }
 
+
+
+//    @GetMapping("/view/{movieId}/{userId}")
+//    public ResponseEntity<?> findRatingByMovieIdAndUserId(@PathVariable Long movieId, @PathVariable int userId) {
+//        try {
+//            Optional<RatingDTO> optionalRating = ratingService.getRatingByMovieIdAndUserId(movieId, userId);
+//
+//            if (optionalRating.isPresent()) {
+//                return new ResponseEntity<>(optionalRating.get(), HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>("Rating not found", HttpStatus.NOT_FOUND);
+//            }
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("An error occurred while retrieving the rating", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
 
 }

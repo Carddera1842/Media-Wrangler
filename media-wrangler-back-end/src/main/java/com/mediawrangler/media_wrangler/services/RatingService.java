@@ -118,7 +118,7 @@ public class RatingService {
     }
 
 
-    public Optional<RatingDTO> getReviewByMovieId(Long movieId) {
+    public Optional<RatingDTO> getRatingByMovieId(Long movieId) {
         Optional<Rating> optionalRating = ratingRepository.findRatingByMovieId(movieId);
 
         if(optionalRating.isPresent()) {
@@ -128,7 +128,7 @@ public class RatingService {
             dto.setRating(rating.getRating());
             dto.setMovieId(rating.getMovieId());
             dto.setUserId(rating.getUser().getId());
-            dto.setId(rating.getId());
+//            dto.setId(rating.getId());
 
             return Optional.of(dto);
         }
