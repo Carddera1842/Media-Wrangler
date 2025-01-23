@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper } from '@mui/material';
-import './MovieDetailCard.css';
+import '../../stylings/MovieDetailsPage.css';
 import PropTypes from 'prop-types';
 import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
+import MovieDetailsNav from "../nav/MovieDetailsNav";
  
    
 
@@ -30,20 +31,22 @@ function MovieDetailCard({ movieDetails }) {
 
 
   return (
-    <>
-        <Paper 
-            elevation={0} 
-            sx={{
-                maxWidth: 1100, 
-                background: "#004d40", 
-                margin: "30px auto", 
-                padding: "20px",             
-            }} 
-        >
+    <>  
+        <div>
+            <Paper 
+                elevation={0} 
+                sx={{
+                    maxWidth: 1000, 
+                    background: "rgba(55, 160, 146, 0.77)", 
+                    margin: "40px auto", 
+                    padding: "10px",  
+                    borderRadius: "14px"           
+                }} 
+            >       
             <div className="movie-detail-container">
-                <Card sx={{maxWidth: 1000}} variant="outlined">
+                <Card sx={{maxWidth: 1000, background: "rgba(19, 19, 20, 0.81)", borderRadius: "14px"}} variant="outlined">
                     <div className="movie-info-container">
-                        <CardActionArea>            
+                        <CardActionArea >     
                             <CardMedia
                                 onClick={handlePosterClick}
                                 component="img"
@@ -52,23 +55,20 @@ function MovieDetailCard({ movieDetails }) {
                                 image={ fullPosterURL }
                                 alt="Movie Poster"
                             />
-                        </CardActionArea>
-                        <CardContent>            
-                            <Typography gutterBottom variant="h3" component="div">
+                        </CardActionArea>    
+                        <CardContent sx={{ color: 'white' }}>            
+                            <Typography gutterBottom variant="h4" component="div">
                                 { movieDetails.title } 
                                 <span style={{ marginLeft: '8px', fontSize: '2rem', color: '#ff8f00' }}>
                                     ({yearReleased})
                                 </span>
                             </Typography>          
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            <Typography variant="body2" >
                                 <b>Date Released: </b> { movieDetails.releaseDate }
                             </Typography>
                             <br />
-                            {/* <Typography variant="body2" sx={{ color: 'black' }}>
-                                <b>Genres: </b>{ genre.join(', ') }
-                            </Typography> */}
                             <br />
-                            <Typography variant="body2" sx={{ color: 'black' }}  >
+                            <Typography variant="body1"   >
                                 <b>Overview: </b>{ movieDetails.overview }
                             </Typography>          
                         </CardContent>
@@ -83,6 +83,10 @@ function MovieDetailCard({ movieDetails }) {
                 <InteractionsCard movieDetails={ movieDetails } />     
             </div>
         </Paper>
+        <div className="interactions-container">
+            {/* <MovieDetailsNav /> */}
+        </div>
+        </div>
     </>
   );
 }

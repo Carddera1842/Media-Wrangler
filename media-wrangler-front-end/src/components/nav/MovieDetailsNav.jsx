@@ -19,11 +19,9 @@ function MovieDetailsNav({ movieDetails }) {
 
     //Need to provide the tabs with data to display from API... will make dynamic once merged with API branch
     const tabData = {
-        one: "Cast details go here",
+        one: "Cast details go here.",
         two: "Crew details go here",
-        three: "Movie details go here",
-        four: "Release dates go here",
-        five: "Genres go here"
+        three: "Genres go here"
     };
 
   
@@ -45,15 +43,13 @@ function MovieDetailsNav({ movieDetails }) {
                 indicatorColor="primary" 
                 sx={{
                   '& .MuiTab-root': {
-                    color: 'white',  // Set custom text color to white
+                    color: 'white',  
                   },
                 }}   
               >
                 <Tab value="one" label="Cast" />
                 <Tab value="two" label="Crew" />
-                <Tab value="three" label="Details" />
-                <Tab value="four" label="Releases" />
-                <Tab value="five" label="Genres" />
+                <Tab value="three" label="Genres" />
               </Tabs>
               <Card 
                 sx={{

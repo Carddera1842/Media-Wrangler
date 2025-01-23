@@ -93,11 +93,11 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
         elevation={0}
         sx={{
             maxWidth: 1100,
-            background: "#004d40",
+            background: "rgba(249, 79, 0, 0.55)",
             padding: "10px",
-            margin: "10px auto",        
+            margin: "20px auto",        
         }} >
-      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid #ff8f00" }}>
+      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid rgba(55, 160, 146, 0.77)" }}>
         <CardContent>          
             <AvatarHeader 
               firstname = { firstname }
