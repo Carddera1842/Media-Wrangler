@@ -128,7 +128,7 @@ public class RatingService {
             dto.setRating(rating.getRating());
             dto.setMovieId(rating.getMovieId());
             dto.setUserId(rating.getUser().getId());
-//            dto.setId(rating.getId());
+            dto.setId(rating.getId());
 
             return Optional.of(dto);
         }
