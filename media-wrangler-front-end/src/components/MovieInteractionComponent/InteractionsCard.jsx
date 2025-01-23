@@ -244,6 +244,7 @@ function InteractionsCard({ movieDetails }) {
 
 export default InteractionsCard;
 
+
 InteractionsCard.propTypes = {
     movieId: PropTypes.number,
     title: PropTypes.string,
