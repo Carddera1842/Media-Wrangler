@@ -32,13 +32,16 @@ import axios from "axios";
             const response = await axios.get(`http://localhost:8080/api/rating/check-rating/${movieId}/${userId}`, {
                 withCredentials: true
             });
+            console.log("has movie been rated: ", response.data);
             return response.data; 
         } catch (error) {
             console.error("Error checking rating status:", error);
             return false; 
         }
     }
-    
+
+
+   
     async function updateMovieRating({ movieId, userId, rating: newRating }) {
 
         try {
@@ -61,11 +64,27 @@ import axios from "axios";
             return "An error occurred. Please try again";
         }
     }
-   
+
+
+    async function fetchMovieRating(movieId) {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/rating/view/${movieId}`, {
+                withCredentials: true,
+            });
+
+            if (response.status === 200) {
+                const ratingData = response.data;
+                console.log("current movie rating: ", ratingData);
+                return ratingData; 
+            } else {
+                return "Rating not found or error occurred. Please try again";
+            }
+        } catch (error) {
+            console.error("Error fetching current movie rating:", error);
+            return 0; 
+        }
+    }
 
 
 
-
-
-
-    export { submitMovieRating, checkIfUserRatedMovie, updateMovieRating };
+    export { submitMovieRating, checkIfUserRatedMovie, updateMovieRating, fetchMovieRating };

@@ -55,7 +55,7 @@ import axios from "axios";
             const response = await axios.get(`http://localhost:8080/api/movie-likes/check-like/${movieId}/${userId}`, {
                 withCredentials: true
             });
-            console.log(response.data);
+            console.log("has movie been liked: ", response.data);
             return response.data; 
         } catch (error) {
             console.error("Error checking like status:", error);

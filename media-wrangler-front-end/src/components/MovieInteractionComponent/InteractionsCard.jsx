@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Button, ButtonGroup, Box } from '@mui/material';
 import PropTypes from 'prop-types';
-import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAuth } from '../../Services/AuthContext';
 import { submitMovieLike, removeMovieLike, checkIfUserLikedMovie, fetchLikeCount } from '../../Services/MovieLikeService';
-import { submitMovieRating, updateMovieRating, checkIfUserRatedMovie } from '../../Services/RatingService';
+import { submitMovieRating, updateMovieRating, checkIfUserRatedMovie, fetchMovieRating } from '../../Services/RatingService';
+import Rating from '@mui/material/Rating';
+
+
 
 
 function InteractionsCard({ movieDetails }) {
@@ -15,12 +17,14 @@ function InteractionsCard({ movieDetails }) {
     const [rating, setRating] = useState(0);
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);    
+    const [isRated, setRated] = useState(false);
     
     const { user } = useAuth();
     const navigate = useNavigate();
 
     const movieId = movieDetails.id;
     const userId = user.id;
+
 
 
     useEffect(() => {
@@ -34,7 +38,7 @@ function InteractionsCard({ movieDetails }) {
 
 
     useEffect(() => {
-        const getLikeCount = async () => {
+        async function getLikeCount() {
             const count = await fetchLikeCount(movieId);
             setLikeCount(count);
         };
@@ -42,16 +46,24 @@ function InteractionsCard({ movieDetails }) {
     }, [movieId]);
 
 
+
     useEffect(() => {
-        async function fetchUserRating() {
-            const hasRated = await checkIfUserRatedMovie(movieId, userId);
-            if (hasRated) {
-                const userRating = await fetchUserRating(movieId, userId);
+        async function checkRatedStatus() {
+            const rated = await checkIfUserRatedMovie(movieId, userId);
+            setRated(rated);
+
+            if (isRated) {
+                const userRating = await fetchMovieRating(movieId);
                 setRating(userRating.rating);
+                console.log("user rating : ", userRating);
+            } else {
+                console.log("User rating not found");
             }
-        }
-        fetchUserRating();
-    }, [movieId, userId]);
+            
+        };
+        checkRatedStatus();
+    }, [movieId, userId, isRated]);
+    
     
 
 
@@ -84,7 +96,8 @@ function InteractionsCard({ movieDetails }) {
         }
     }
     
-
+    
+    console.log("this is the rating state now: ", rating);
     
 
     async function handleLikeClick() {
@@ -124,9 +137,6 @@ function InteractionsCard({ movieDetails }) {
    
 
 
-
-
-    //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
     function handleWriteReviewClick() {
         if(!user) {
             alert("You must be logged in to write a review");
@@ -153,12 +163,23 @@ function InteractionsCard({ movieDetails }) {
         <Button key="one" className="button-container">
             <div className="button-content">
                 <span className="button-label">Rate</span>
-                <StarRatingButton
+                <Rating
                     name="half-rating" 
                     title={ movieDetails.title }
-                    defaultValue={ rating } 
+                    value={ rating } 
                     precision={0.5} 
                     onChange={ handleRatingChange }
+                    sx={{
+                        '& .MuiRating-iconFilled': {
+                            color: '#ff9800', // Color for filled stars (e.g., amber)
+                        },
+                        '& .MuiRating-iconEmpty': {
+                            color: '#e0e0e0', // Color for empty stars (e.g., light gray)
+                        },
+                        '& .MuiRating-iconHover': {
+                            color: '#ffcc00', // Hover color for stars (e.g., yellow)
+                        },
+                    }}
                 />
             </div>
         </Button>,
