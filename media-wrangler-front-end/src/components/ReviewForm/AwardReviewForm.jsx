@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
-import './ReviewForm.css';
+import '../../stylings/CreateReview.css';
 import { submitMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
@@ -120,7 +120,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
         if (responseMessage === "Success") {
           navigate(`/reviews/user/${user.id}`, {
-              state: movieReviewData, // Pass the movieReviewData as part of the navigation state
+              state: movieReviewData, 
           });    
         
 
@@ -141,7 +141,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
             elevation={0} 
             sx={{
                 maxWidth: 1000, 
-                background: "#004d40", 
+                background: "rgba(17, 96, 77, 0.88)", 
                 margin: "30px", 
                 padding: "20px", 
                 transform: "scale(.9)", 
