@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
   const loginAction = async (data) => {
     try {
       const response = await login(data);
-      const user = response.data;
+      const { user } = response.data;
       console.log("Login successful", user);
       if (user) {
         setUser(user);
