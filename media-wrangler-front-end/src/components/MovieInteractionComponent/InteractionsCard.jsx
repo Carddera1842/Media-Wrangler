@@ -199,9 +199,11 @@ function InteractionsCard({ movieDetails }) {
                 <span className="button-label">Write Review</span>   
             </div>
             </Button>,
-           <Button>
-           <AddToListMenu movieId={movieDetails.id} />
-         </Button>,
+            <Button key="four" className="button-container">
+            <div className="button-content">
+                <AddToListMenu movieId={movieDetails.id} />
+            </div>
+        </Button>,
             <Button 
                 key="five" 
                 className="button-container"

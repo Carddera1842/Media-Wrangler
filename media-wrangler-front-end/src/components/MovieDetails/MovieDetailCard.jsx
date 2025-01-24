@@ -74,9 +74,7 @@ function MovieDetailCard({ movieDetails }) {
                                 <b>Overview: </b>{ movieDetails.overview }
                             </Typography>          
                         </CardContent>
-                        <CardActions>
-          <AddToListMenu movieId={movieDetails.id} />
-        </CardActions>
+                    
                     </div>
                     <CardActions>
                         <Button onClick={handleWantToWatch}
