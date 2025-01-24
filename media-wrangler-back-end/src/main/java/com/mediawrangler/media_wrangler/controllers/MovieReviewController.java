@@ -7,9 +7,11 @@ import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.services.MovieReviewService;
 import jakarta.servlet.http.HttpSession;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -38,8 +40,6 @@ public class MovieReviewController {
     private MovieReviewRepository movieReviewRepository;
 
 
-
-
     @PostMapping("/create")
         public ResponseEntity<?> createReview(@RequestBody MovieReview movieReview) {
         try {
@@ -63,6 +63,16 @@ public class MovieReviewController {
             }
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while retrieving the review", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> updateReview(@PathVariable Long id) {
+        if (!movieReviewRepository.existsById(id)) {
+            throw new Error("Review not found");
+        }
+        try {
+            MovieReview updatedReview = movieReviewService.updatedReview(id,)
         }
     }
 

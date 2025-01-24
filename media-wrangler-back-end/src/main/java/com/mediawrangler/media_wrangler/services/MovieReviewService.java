@@ -84,6 +84,8 @@ public class MovieReviewService {
             reviewDTOs.add(dto);
         }
 
+        public MovieReview updatedReview(Long id)
+
         return reviewDTOs;
     }
 
