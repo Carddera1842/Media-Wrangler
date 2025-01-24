@@ -43,7 +43,7 @@ function MovieDetailCard({ movieDetails }) {
             <Paper 
                 elevation={0} 
                 sx={{
-                    maxWidth: 1200, 
+                    maxWidth: 1100, 
                     background: "rgba(249, 79, 0 , 0.55)", 
                     margin: "40px auto", 
                     padding: "10px",  
@@ -51,9 +51,9 @@ function MovieDetailCard({ movieDetails }) {
                 }} 
             >       
             <div className="movie-detail-container">
-                <Card sx={{maxWidth: 1100, background:"rgba(19, 19, 20, 0.81)", borderRadius:"14px", border:"3px solid rgba(5, 70, 105, 0.93)"}} variant="outlined">
+                <Card sx={{maxWidth: 1000, background:"rgba(19, 19, 20, 0.81)", borderRadius:"14px", border:"3px solid rgba(5, 70, 105, 0.93)"}} variant="outlined">
                     <div className="movie-info-container">
-                        <div className="action-area-container">
+                        <div >
                         <CardActionArea >     
                             <CardMedia
                                 onClick={handlePosterClick}

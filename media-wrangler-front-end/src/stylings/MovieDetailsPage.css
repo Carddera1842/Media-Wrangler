@@ -3,16 +3,18 @@
 
 /* Page Layout & Styling */
 .movie-details-page-background {
-  background-image: url('C:\Users\RBurk\OneDrive\Desktop\Media-Wrangler\liftoff-emily-group-1\media-wrangler-front-end\public\backgroundBlue.jpg'); 
+  background-image: url('C:\Users\RBurk\OneDrive\Desktop\Media-Wrangler\liftoff-emily-group-1\media-wrangler-front-end\public\backgroundBlue.jpg');
   background-size: cover;
   background-position: center;
-  height: 300vh;
   padding: 10px;
+  transition: height 0.3s ease;  
 }
+
   
 .MuiCard-root {
   margin:20px;
 }
+
 
 
 /* Movie Detail Card */
@@ -38,6 +40,7 @@
   gap: 20px;
   padding: 10px;
 }
+
   
 /* .action-area-container {
   height: 400px !important;
