@@ -9,7 +9,9 @@ import { Card, Typography, Tabs, Tab, Box } from '@mui/material';
 
 
 function MovieDetailsNav({ movieDetails }) {
-    
+
+
+
     const [value, setValue] = useState('one');
 
     const handleChange = (event, newValue) => {
@@ -23,7 +25,7 @@ function MovieDetailsNav({ movieDetails }) {
       tabOneCastString += `${movieDetails.cast[i].name} as ${movieDetails.cast[i].character}\n`
     }
 
-    
+
     // parsing crew data
     let directors = ""
     let writers = ""
@@ -35,7 +37,7 @@ function MovieDetailsNav({ movieDetails }) {
     console.log(movieDetails.crew)
     for (let i = 0; i < movieDetails.crew.length; i++) {
       let crewMember = movieDetails.crew[i]
-      
+
       if (crewMember.job.trim() == "Director") {
         if (directors === "") {
           directors += crewMember.name
@@ -85,7 +87,7 @@ function MovieDetailsNav({ movieDetails }) {
       }
     }
 
-    let tabTwoCrewString = 
+    let tabTwoCrewString =
     `Director(s): ${directors}
     Writer(s): ${writers}
     Cinematography: ${cinematographer}

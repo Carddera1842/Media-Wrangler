@@ -8,16 +8,6 @@ import AddToListMenu from "../InteractiveSoloComponents/AddToListButton";
 
 
 
-
-    //TODO: The "watched" and "want to watch" buttons need to be finished when the lists are ready for them. These buttons can be used, we can add them to the InteractionsCard -- OR-- they can be incorporated in a different way based on what the feature designer would like to do
-    
-    //TODO: uncomment out the baseImageURL and fullPosterURL when the API is hooked back up...And switch { poster } back to { fullPosterURL }
-  
-    
-   
-
-   
-
 function MovieDetailCard({ movieDetails }) {
 
     console.log('Received movieDetails:', movieDetails);
@@ -84,10 +74,8 @@ function MovieDetailCard({ movieDetails }) {
                                 <b>Overview: </b>{ movieDetails.overview }
                             </Typography>          
                         </CardContent>
-                        <CardActions>
-          <AddToListMenu movieId={movieDetails.id} />
-        </CardActions>
-                    </div> 
+                    
+                    </div>
                     <CardActions>
                         <Button onClick={handleWantToWatch}
                             size="small">Want to Watch</Button>
@@ -98,7 +86,6 @@ function MovieDetailCard({ movieDetails }) {
                 <InteractionsCard movieDetails={ movieDetails } />     
             </div>
         </Paper>
-        <MovieDetailsNav movieDetails={ movieDetails } />
     </>
   );
 }
