@@ -8,7 +8,8 @@ const StreamingProviders = ({ movieId }) => {
     useEffect(() => {
         const fetchProviders = async () => {
             try {
-                const response = await axios.get(`/api/movies/streaming/${movieId}`);
+                const response = await axios.get(`http://localhost:8080/api/movies/streaming/${movieId}`);
+                console.log("API Response:", response.data);
                 if (response.headers['content-type'].includes('application/json')) {
                     setProviders(response.data || { buy: [], rent: [], streaming: [] });
                 }
@@ -16,10 +17,11 @@ const StreamingProviders = ({ movieId }) => {
                 console.error('Error fetching streaming providers:', err.message);
                 setError('Failed to load streaming providers.');
             }
+            
         };
-        // console.log(providers);
+        console.log(providers);
         fetchProviders();
-        console.log(response.data);
+        
     }, [movieId]);
 
     if (error) return <div>{error}</div>;

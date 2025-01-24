@@ -51,7 +51,7 @@ public class MovieProcessingService {
                     movieStreamingProvider.addRentProvider(providerDTO);
                 }
             }
-
+            System.out.println("Processed MovieStreamingProvider: " + movieStreamingProvider);
             return movieStreamingProvider;
         } catch (Exception e) {
             e.printStackTrace();
