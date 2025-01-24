@@ -58,11 +58,10 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
             setRating(userRating.rating);
             console.log("User rating now set to :", userRating);
             console.log("extract rating value from rating: ", userRating.rating);
-            console.log("Checking if there is rating.id :", userRating.id);
+            console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
             setRatingId(userRating.id);
-            console.log("Now setting the id into ratingId: ", ratingId);
-             
-           
+            
+                   
           } else {
             setError("Could not fetch the rating.");
           }
@@ -76,7 +75,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
     checkRatedStatus();
   }, [movieId, userId]);
 
-  
+ 
 
 
   async function handleRatingChange(e) {
@@ -102,6 +101,16 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
             if (result === "Success") {
                 console.log("Successfully submitted the rating:", data);
             }
+
+            const userRating = await fetchMovieRating(movieId, userId);
+            console.log("Creating another fetch for MovieRating in onChange:", userRating);
+              setRating(userRating.rating);
+              console.log("User rating now set to :", userRating);
+              console.log("extract rating value from rating: ", userRating.rating);
+              console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
+              setRatingId(userRating.id);
+
+            
         }
     } catch (error) {
         console.error("Error occurred while handling rating:", error);
