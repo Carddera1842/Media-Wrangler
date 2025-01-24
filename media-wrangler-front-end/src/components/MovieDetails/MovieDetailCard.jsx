@@ -3,7 +3,6 @@ import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, 
 import '../../stylings/MovieDetailsPage.css';
 import PropTypes from 'prop-types';
 import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
-import MovieDetailsNav from "../nav/MovieDetailsNav";
 import CloseIcon from "@mui/icons-material/Close";
    
 
@@ -44,23 +43,23 @@ function MovieDetailCard({ movieDetails }) {
             <Paper 
                 elevation={0} 
                 sx={{
-                    maxWidth: 1000, 
-                    background: "rgba(55, 160, 146, 0.77)", 
+                    maxWidth: 1200, 
+                    background: "rgba(249, 79, 0 , 0.55)", 
                     margin: "40px auto", 
                     padding: "10px",  
                     borderRadius: "14px"           
                 }} 
             >       
             <div className="movie-detail-container">
-                <Card sx={{maxWidth: 1000, background: "rgba(19, 19, 20, 0.81)", borderRadius: "14px"}} variant="outlined">
+                <Card sx={{maxWidth: 1100, background:"rgba(19, 19, 20, 0.81)", borderRadius:"14px", border:"3px solid rgba(5, 70, 105, 0.93)"}} variant="outlined">
                     <div className="movie-info-container">
-                        <div>
+                        <div className="action-area-container">
                         <CardActionArea >     
                             <CardMedia
                                 onClick={handlePosterClick}
                                 component="img"
-                                height="300px"  
-                                width="100%"  
+                                height= "300px"
+                                width = "auto"
                                 image={ fullPosterURL }
                                 alt="Movie Poster"                               
                             />
@@ -132,9 +131,6 @@ function MovieDetailCard({ movieDetails }) {
                 <InteractionsCard movieDetails={ movieDetails } />     
             </div>
         </Paper>
-        <div className="interactions-container">
-            {/* <MovieDetailsNav /> */}
-        </div>
         </div>
     </>
   );

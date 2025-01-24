@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import { Card, CardContent, Typography, Button, CardActions, Avatar, Paper, Divider, TextField } from '@mui/material';
-import "../ReviewDisplay/JournalReviewCard.css";
 import submitUserComment from "../../Services/CommentService";
 import { useAuth } from '../../Services/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import AvatarHeader from '../Profile/AvatarHeader';
-import { fontSize } from '@mui/system';
 
 
-
-
-const MovieReviewListCard = ({ rating, award, review, userId, username, firstname, lastname }) => {
+const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title }) => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
@@ -43,7 +39,7 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
     e.preventDefault();
 
     if(!user) {
-      alert("You must be logged in to write a review");
+      alert("You must be logged in to write a comment");
       navigate('/login');
   }
    
@@ -52,15 +48,11 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
       return;
     }
      
-
-    //TODO: Add in review once the cards are dynamic
     const userCommentData = { 
       userComment,
       user
     }
 
-
-    
     console.log("Submitting user comment for:", userCommentData);
   
 
@@ -88,7 +80,7 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
 
 
   return (
-    <div className='searched-movie-review-list'>  
+    <div>  
       <Paper
         elevation={0}
         sx={{
@@ -97,39 +89,31 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
             padding: "10px",
             margin: "20px auto",        
         }} >
-      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid rgba(55, 160, 146, 0.77)" }}>
-        <CardContent>          
+      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid rgba(5, 70, 105, 0.93)", background: "rgba(19, 19, 20, 0.81)" }}>
+        <CardContent>     
+          <div className="avatar-username-rating-container ">     
             <AvatarHeader 
-              userId = { userId }
               firstname = { firstname }
               lastname = { lastname }
-            />                       
-            <span
-                onClick={() => navigate(`/profile/${userId}`)}
-                style={{
-                    color: "#004d40",
-                    fontWeight: "bold",
-                    fontSize: "22px",
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    textDecorationThickness: "1px",
-                    textDecorationColor: "#ff8f00", 
-                    textUnderlineOffset: "3px",
-                }}
-            >
-                { username }
-            </span>            
-            <Rating name="read-only" value={ rating } readOnly />       
-          <Divider sx={{ marginBottom: "20px"}}/>
-          <Typography>
-            User Presented Movie with the <span style={{ color: "black", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
-             "{award}"</span> Award 
+            />
+            <div className='username-profile-link'>                       
+              <span onClick={() => navigate(`/profile/${authorId}`)} > { username } </span>
+            </div>            
+            <Rating name="read-only" value={ rating } readOnly />
+          </div>       
+          <Divider sx={{
+                      marginBottom: "20px",
+                      backgroundColor: "white", 
+                      height: "2px", 
+                    }}/>
+          <Typography sx={{color: "white"}}>
+            { username } Presented { title } with the <span style={{ color: "rgba(249, 79, 0, 0.55)", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
+             " {award} "</span> Award 
           </Typography>
           <br />                          
-          <Typography variant="body2" color="text.primary" > { review } </Typography>
+          <Typography variant="body2" color="white" > { review } </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" >Like</Button>
           <Button size="small" onClick={handleCommentClick} >Comment</Button>
         </CardActions>
         {showCommentBox && (
@@ -140,7 +124,19 @@ const MovieReviewListCard = ({ rating, award, review, userId, username, firstnam
               multiline
               value={userComment}
               onChange={handleCommentChange}
-              sx={{ marginBottom: 2 }}
+              sx={{ marginBottom: 2,
+                    "& .MuiInputBase-root": {
+                      color: "white", // Text color inside the input
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: "white", // Label color
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "white", // Border color
+                    },
+                    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#ff8f00", // Border color on hover
+                    }, }}
             />            
             <Button size="small" onClick={handleSaveComment}>Save</Button>
             <Button size="small" onClick={handleCancelComment} >Cancel </Button>

@@ -30,7 +30,7 @@ function MovieDetailsNav({ movieDetails }) {
           <Box 
             sx={{
             width: "500px",
-            background: "#004d40", 
+            background: "rgba(5, 70, 105, 0.93)", 
             padding: '10px', 
             borderRadius: '4px', 
             margin: "auto",

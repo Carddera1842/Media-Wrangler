@@ -69,10 +69,11 @@ function MovieDetailsPage() {
             rating = { review.rating }
             award = { review.award }
             review = { review.review } 
-            userId = { review.userId }
+            authorId = { review.userId }
             username = { review.username }
             firstname = { review.username }
-            lastname = { review.lastname }                    
+            lastname = { review.lastname }     
+            title = { review.title }               
           />
           )))}
          

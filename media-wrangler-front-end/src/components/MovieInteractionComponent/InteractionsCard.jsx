@@ -232,7 +232,7 @@ function InteractionsCard({ movieDetails }) {
                 sx={{
                     backgroundColor: "rgba(19, 19, 20, 0.81)",  
                     borderRadius: '8px',   
-                    border: "2px solid #ff8f00"        
+                    border: "3px solid rgba(5, 70, 105, 0.93)"      
                 }}
             >
                 {buttons}
