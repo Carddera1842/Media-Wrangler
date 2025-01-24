@@ -67,6 +67,7 @@ import axios from "axios";
 
 
     async function fetchMovieRating(movieId, userId) {
+        console.log("what is userId in the fetchMovieRating?:", userId);
         try {
             const response = await axios.get(`http://localhost:8080/api/rating/view/${movieId}/${userId}`, {
                 withCredentials: true,
