@@ -286,6 +286,33 @@ public class MovieDataFetcher {
             return null;
         }
     }
+
+    public String fetchWatchProviders(int movieId) {
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/watch/providers";
+        System.out.println("URL: " + url);
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + API_READ_ACCESS_KEY)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                System.out.println("Provider Request failed with status: " + response.code());
+                return null;
+            }
+
+            return response.body().string();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 
 

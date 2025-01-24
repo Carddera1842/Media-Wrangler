@@ -1,7 +1,9 @@
 package com.mediawrangler.media_wrangler.controllers;
 
+import com.mediawrangler.media_wrangler.dto.MovieStreamingProviderDTO;
 import com.mediawrangler.media_wrangler.models.Movie;
 import com.mediawrangler.media_wrangler.services.MovieDataFetcher;
+import com.mediawrangler.media_wrangler.services.MovieProcessingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,12 @@ import java.util.Objects;
 public class MovieController {
 
     private final MovieDataFetcher movieDataFetcher;
+    private final MovieProcessingService movieProcessingService;
 
     // Constructor injection of MovieDataFetcher
     @Autowired
-    public MovieController(MovieDataFetcher movieDataFetcher) {
+    public MovieController(MovieDataFetcher movieDataFetcher, MovieProcessingService movieProcessingService) {
+        this.movieProcessingService = movieProcessingService;
         this.movieDataFetcher = movieDataFetcher;
     }
 
@@ -45,5 +49,12 @@ public class MovieController {
         } else {
             return movieDataFetcher.personSearch(searchString);
         }
+    }
+
+    @GetMapping("/streaming/{movieId}")
+    public MovieStreamingProviderDTO getWatchProviders(@PathVariable int movieId) {
+        System.out.println("HERE!!!");
+        String jsonData = movieDataFetcher.fetchWatchProviders(movieId);
+        return movieProcessingService.processMovieData(jsonData);
     }
 }
