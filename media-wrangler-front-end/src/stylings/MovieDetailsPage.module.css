@@ -1,0 +1,70 @@
+/* Movie Details Page -- Movie Detail Cards, Navigation Bar, Interaction Cards and Interactive Review Cards */
+
+
+/* Page Layout & Styling */
+.movie-details-page-background {
+  background-image: url('/media-wrangler-front-end/public/backgroundBlue.jpg'); 
+  background-size: cover;
+  background-position: center;
+  height: 300vh;
+  padding: 10px;
+}
+  
+.MuiCard-root {
+  margin:20px;
+}
+
+
+/* Movie Detail Card */
+.movie-info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 10px;
+}  
+
+.movie-interactions-container {
+  width: 300px;  
+  display: flex;
+  flex-direction: column;
+  gap: 10px;  
+}
+
+.movie-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+  
+
+
+/* Interactive Review Cards */
+.searched-movie-review-list {
+  color: "white";
+}
+
+
+
+
+
+
+
+  /* NOTE: This is in case we want to pull the InteractionsCard out of the MovieDetailCard */
+
+  .layout {
+    display: flex; 
+    flex-direction: row; 
+    justify-content: flex-start; 
+    align-items: center;
+    gap: 20px; 
+    margin: 20px;
+  }
+
+  .interactions-container {
+    flex: 1; /* makes it smaller than the movieDetailCard */
+    display: flex; 
+    align-items: center; 
+  }
