@@ -1,10 +1,12 @@
 package com.mediawrangler.media_wrangler.controllers;
 
 
+import com.mediawrangler.media_wrangler.Exception.UserNotFound;
 import com.mediawrangler.media_wrangler.data.MovieReviewRepository;
 import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.services.MovieReviewService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +64,17 @@ public class MovieReviewController {
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while retrieving the review", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long id) {
+
+        if (!movieReviewRepository.existsById(id)) {
+            throw new Error("Review not found");
+        }
+
+        movieReviewRepository.deleteById(id);
+        return ResponseEntity.ok("Review with id " + id + " has been deleted");
     }
 
 
