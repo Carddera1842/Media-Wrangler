@@ -62,7 +62,6 @@ function UserJournalPage() {
     return (
         <>
         <div>            
-            <h1>Users Movie Reviews:</h1>
             <Paper 
             elevation={0} 
             sx={{
