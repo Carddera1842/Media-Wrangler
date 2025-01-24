@@ -118,7 +118,7 @@ function MovieDetailsNav({ movieDetails }) {
           <Box 
             sx={{
             width: "500px",
-            background: "#004d40", 
+            background: "rgba(5, 70, 105, 0.93)",
             padding: '10px', 
             borderRadius: '4px', 
             margin: "auto",
@@ -131,15 +131,13 @@ function MovieDetailsNav({ movieDetails }) {
                 indicatorColor="primary" 
                 sx={{
                   '& .MuiTab-root': {
-                    color: 'white',  // Set custom text color to white
+                    color: 'white',
                   },
                 }}   
               >
                 <Tab value="one" label="Cast" />
                 <Tab value="two" label="Crew" />
-                <Tab value="three" label="Details" />
-                <Tab value="four" label="Releases" />
-                <Tab value="five" label="Genres" />
+                <Tab value="three" label="Genres" />
               </Tabs>
               <Card 
                 sx={{

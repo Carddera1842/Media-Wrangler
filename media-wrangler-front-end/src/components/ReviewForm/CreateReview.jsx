@@ -16,16 +16,18 @@ export default function CreateReview() {
 
     return (
         <>
-            {/* Pass the movie details to your forms */}
-            { movieDetails && (
-                <AwardReviewForm 
-                    movieId={ movieDetails.id } 
-                    title={ movieDetails.title } 
-                    posterPath={ movieDetails.posterPath }
-                    releaseDate={ movieDetails.releaseDate }
-                    
-                />
-            )}
+            <div className= "create-review-background">
+                
+                { movieDetails && (
+                    <AwardReviewForm 
+                        movieId={ movieDetails.id } 
+                        title={ movieDetails.title } 
+                        posterPath={ movieDetails.posterPath }
+                        releaseDate={ movieDetails.releaseDate }
+                        
+                    />
+                )}
+            </div>
         </>
 
 

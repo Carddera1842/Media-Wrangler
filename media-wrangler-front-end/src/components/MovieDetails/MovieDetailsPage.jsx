@@ -5,7 +5,7 @@ import StreamingProviders from "./StreamingProviders";
 import MovieDetailsNav from "../nav/MovieDetailsNav";
 import MovieReviewListCard from "../ReviewDisplay/MovieReviewListCard";
 import { fetchMovieDetails, fetchMovieReviewsByMovieId } from "../../Services/MovieReviewService";
-import TestReviewCard from "../ReviewDisplay/TestReviewCard";
+import "../../stylings/MovieDetailsPage.css";
 
 
 
@@ -47,7 +47,8 @@ function MovieDetailsPage() {
 
 
   return (
-    <div>
+    <>
+    <div className="movie-details-page-background">
       {movieDetails && (
         <div>
             <MovieDetailCard movieDetails={ movieDetails } />
@@ -69,16 +70,18 @@ function MovieDetailsPage() {
             key = { review.id }
             rating = { review.rating }
             award = { review.award }
-            review = { review.review }
-            userId = { review.userId }
+            review = { review.review } 
+            authorId = { review.userId }
             username = { review.username }
             firstname = { review.username }
             lastname = { review.lastname }
+            title = { review.title }
           />
           )))}
 
         </div>
     </div>
+    </>
   );
 };
 

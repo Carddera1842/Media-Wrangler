@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
-import './ReviewForm.css';
+import '../../stylings/CreateReview.css';
 import { submitMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
@@ -35,7 +35,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
 
   const userId = user.id;
   console.log("THIS IS THE USER ID: ", userId);
-  
+
 
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
@@ -60,8 +60,8 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
             console.log("extract rating value from rating: ", userRating.rating);
             console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
             setRatingId(userRating.id);
-            
-                   
+
+
           } else {
             setError("Could not fetch the rating.");
           }
@@ -75,7 +75,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
     checkRatedStatus();
   }, [movieId, userId]);
 
- 
+
 
 
   async function handleRatingChange(e) {
@@ -110,7 +110,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
               console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
               setRatingId(userRating.id);
 
-            
+
         }
     } catch (error) {
         console.error("Error occurred while handling rating:", error);
@@ -153,7 +153,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
       if(!review){
         alert("Let your peers know what you thought, write your review.");
         return;
-      }      
+      }
       if(watchAgain === ""){
         alert("Would you watch movie again, pick yes or no...");
         return;
@@ -168,17 +168,17 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
         }
       }
 
-  
-      
+
+
       const movieReviewData = { 
         dateWatched,
         review,
         isSpoiler,
         rating: {
           movieId: movieId,
-          userId: user.id, 
+          userId: user.id,
           id: ratingId,
-        
+
         },
         tags,
         title,
@@ -220,7 +220,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
             elevation={0} 
             sx={{
                 maxWidth: 1000, 
-                background: "#004d40", 
+                background: "rgba(17, 96, 77, 0.88)",
                 margin: "30px", 
                 padding: "20px", 
                 transform: "scale(.9)", 
@@ -268,7 +268,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
                               required
                               name="half-rating" 
                               value={ rating }
-                              precision={0.5} 
+                              precision={0.5}
                               onChange={ handleRatingChange }
                               sx={{
                                   '& .MuiRating-iconFilled': {

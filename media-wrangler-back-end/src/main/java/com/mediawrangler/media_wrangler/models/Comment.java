@@ -15,6 +15,11 @@ public class Comment {
 
     private LocalDate dateCreated;
 
+    @ManyToOne
+    @JoinColumn(name = "movie_review_id", nullable = false)
+    private MovieReview movieReview;
+    
+
     @PrePersist
     protected void onCreate() {
         this.dateCreated = LocalDate.now();
@@ -27,9 +32,10 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String userComment, User user) {
+    public Comment(String userComment, User user, MovieReview movieReview) {
         this.userComment = userComment;
         this.user = user;
+        this.movieReview = movieReview;
         this.dateCreated = LocalDate.now();
     }
 
@@ -48,4 +54,17 @@ public class Comment {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public MovieReview getMovieReview() {
+        return movieReview;
+    }
+
+    public void setMovieReview(MovieReview movieReview) {
+        this.movieReview = movieReview;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+    
 }
