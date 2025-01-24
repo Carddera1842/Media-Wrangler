@@ -1,8 +1,8 @@
 import React from "react";
-import AddEventForm from './components/Discover/UpcomingReleases.jsx'
-import "./DiscoverPage.css";
+import AddEventForm from './components/UpcomingMovies/UpcomingReleases.jsx'
+import "./ComingSoon.css";
 
-function DiscoverPage() {
+function ComingSoon() {
   return (
     <div className="discover-page-container">
       <div className="discover-section">
@@ -18,4 +18,4 @@ function DiscoverPage() {
   );
 }
 
-export default DiscoverPage;
+export default ComingSoon;

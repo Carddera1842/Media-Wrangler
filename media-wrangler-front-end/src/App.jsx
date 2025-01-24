@@ -14,9 +14,10 @@ import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
 import UserJournalPage from './components/Journal/UserJournalPage'
-import DiscoverPage from './components/Discover/UpcomingReleases.jsx'
+import ComingSoon from './components/UpcomingMovies/UpcomingReleases.jsx'
 import QuestionDetail from './components/Discussions/Answers.jsx'
 import Discussions from './components/Discussions/Discussions.jsx'
+import DiscoverPage from './components/Discover/DiscoverPage.jsx'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
           <Route path="/questions" element={<Discussions />} />
           <Route path="/answers/:questionId" element={<QuestionDetail />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>
       </div>
     </ListProvider>
