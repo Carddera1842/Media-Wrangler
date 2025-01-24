@@ -1,13 +1,15 @@
-import * as React from 'react';
-import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper, Modal, Box, IconButton } from '@mui/material';
 import '../../stylings/MovieDetailsPage.css';
 import PropTypes from 'prop-types';
 import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
 import MovieDetailsNav from "../nav/MovieDetailsNav";
- 
+import CloseIcon from "@mui/icons-material/Close";
    
 
 function MovieDetailCard({ movieDetails }) {
+
+    const [isOpen, setOpen] = useState(false);
 
     console.log('Received movieDetails:', movieDetails);
 
@@ -26,7 +28,13 @@ function MovieDetailCard({ movieDetails }) {
     }
 
     function handlePosterClick() {
+        setOpen(true);
         console.log("clicked movie poster");
+    }
+
+    function handleClose() {
+        setOpen(false);
+        console.log("poster closed");
     }
 
 
@@ -46,16 +54,57 @@ function MovieDetailCard({ movieDetails }) {
             <div className="movie-detail-container">
                 <Card sx={{maxWidth: 1000, background: "rgba(19, 19, 20, 0.81)", borderRadius: "14px"}} variant="outlined">
                     <div className="movie-info-container">
+                        <div>
                         <CardActionArea >     
                             <CardMedia
                                 onClick={handlePosterClick}
                                 component="img"
-                                height="300"  
-                                width="auto"   
+                                height="300px"  
+                                width="100%"  
                                 image={ fullPosterURL }
-                                alt="Movie Poster"
+                                alt="Movie Poster"                               
                             />
-                        </CardActionArea>    
+
+                        </CardActionArea> 
+                        <Modal open={ isOpen} onClose={handleClose}>
+                            <Box
+                            sx={{
+                                position: "fixed",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                bgcolor: "background.paper",
+                                boxShadow: 24,
+                                p: 2,
+                                outline: "none",
+                            }}
+                            >
+                                 <IconButton 
+                                    aria-label="close"
+                                    onClick={handleClose}
+                                    sx={{
+                                    position: "absolute",
+                                    top: 8,
+                                    right: 8,
+                                    color: "grey.500",
+                                    }}
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            <img
+                                src={ fullPosterURL }
+                                alt="Enlarged Poster"
+                                style={{
+                                width: "100%",
+                                maxWidth: "600px",
+                                height: "auto",
+                                display: "block",
+                                margin: "0 auto",
+                                }}
+                            />
+                            </Box>
+                        </Modal>
+                        </div>   
                         <CardContent sx={{ color: 'white' }}>            
                             <Typography gutterBottom variant="h4" component="div">
                                 { movieDetails.title } 
