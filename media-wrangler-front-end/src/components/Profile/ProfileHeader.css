@@ -43,6 +43,27 @@
                  0 0 30px rgba(255, 255, 255, 0.4);
 }
 
+.review-avatar {
+    position: relative;
+    width: 50px !important; 
+    height: 50px !important;
+    border-radius: 50%;
+    border: 2px solid #000;
+    margin-bottom: 20px;
+    background-image: url('/Avatar2.jpg'); 
+    background-size: cover; 
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black !important; 
+    font-size: 30px !important; 
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                 0 0 20px rgba(255, 255, 255, 0.6),
+                 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
 .avatar-initials {
     transform: rotate(-10deg); 
     display: inline-block; 

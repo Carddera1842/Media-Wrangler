@@ -1,11 +1,13 @@
 package com.mediawrangler.media_wrangler.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +15,17 @@ import java.util.List;
 @Entity
 public class MovieReview {
 
-    //Add for SQL to store review
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //stamps date for when the review is submitted/created
     private LocalDate dateCreated;
 
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreated = LocalDate.now();
+    }
 
     @NotNull(message = "You must enter a date watched")
     private LocalDate dateWatched;
@@ -30,13 +35,13 @@ public class MovieReview {
     @Size(max = 1000, message = "Review must be less than 1000 characters")
     private String review;
 
-//TODO: Still have to get spoiler checkbox logging correctly...changed back to boolean to see if I can get it to work
+    @JsonProperty("isSpoiler")
     private boolean isSpoiler;
 
     private String award;
 
     @NotNull(message = "You must give movie a star rating")
-    private int rating;
+    private double rating;
 
     private String watchAgain;
 
@@ -65,7 +70,7 @@ public class MovieReview {
     }
 
     //overloaded constructor for easier testing (without User logged in)
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, int rating,
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, double rating,
                        String watchAgain, String title, String fullPosterURL, String yearReleased, User user, Long movieId ) {
         this.dateCreated = LocalDate.now();
         this.review = review;
@@ -93,11 +98,11 @@ public class MovieReview {
 
 
     //* All the review fields here...
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

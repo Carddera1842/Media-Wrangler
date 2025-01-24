@@ -2,50 +2,48 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MovieDetailCard from "./MovieDetailCard";
 import StreamingProviders from "./StreamingProviders";
+import MovieDetailsNav from "../nav/MovieDetailsNav";
+import MovieReviewListCard from "../ReviewDisplay/MovieReviewListCard";
+import { fetchMovieDetails, fetchMovieReviewsByMovieId } from "../../Services/MovieReviewService";
+import TestReviewCard from "../ReviewDisplay/TestReviewCard";
+
+
 
 function MovieDetailsPage() {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [loadingMovie, setLoadingMovie] = useState(true);
+  const [loadingReviews, setLoadingReviews] = useState();
+
 
   useEffect(() => {
-    
-    const fetchMovieDetails = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/movies/${id}`);
-            
-           
-            console.log('Response:', response);
-            
-            //was having some weird warnings and couldn't get the data as a json, so I did text instead
-            const textResponse = await response.text();
-            console.log('Raw Response Body:', textResponse);
-    
-            if (response.ok) {
-                const movieDetails = JSON.parse(textResponse); 
-                console.log('Movie Details:', movieDetails);
-                setMovieDetails(movieDetails);
-            } else {
-                console.error('Failed to fetch movie details from the backend.');
-            }
-        } catch (error) {
-            console.error('Error fetching movie details:', error);
-        }
+    async function fetchData() {
+        const data = await fetchMovieDetails(id);
+        setMovieDetails(data);
+        setLoadingMovie(false);
     };
-    
-    fetchMovieDetails();
-    }, [id]);
+    fetchData();
+  }, [id]);
 
 
-   
-    const fetchReviews = async () => {
-      const response = await fetch(`/api/reviews?movieId=${id}`);
-      const data = await response.json();
-      setReviews(data);
+  useEffect(() => {
+    async function fetchReviews() {
+        const data = await fetchMovieReviewsByMovieId(id);
+        setReviews(data);
+        setLoadingReviews(false);
     };
-
-   
     fetchReviews();
+  }, [id]);
+
+
+  if (loadingMovie) {
+    return <p>Loading movie ... </p>
+  }
+
+  if (loadingReviews) {
+    return <p>Loading movie reviews</p>
+  }
 
 
   return (
@@ -56,15 +54,30 @@ function MovieDetailsPage() {
             <StreamingProviders movieId={id} />
         </div>
       )}
-      {/* <div>
-        <h2>User Reviews</h2>
-        {reviews.map((review) => (
-          <div key={review.id}>
-            <p>{review.text}</p>
-            <small>{review.author}</small>
-          </div>
-        ))}
-      </div> */}
+      {movieDetails && (
+        <div>
+          <MovieDetailsNav movieDetails={ movieDetails } />
+        </div>
+      )}
+
+        <div>
+          {reviews.length === 0 ? (
+              <p>Be the first to write this movie a review!</p>
+          ) : (
+            reviews.map((review) => (
+          <MovieReviewListCard
+            key = { review.id }
+            rating = { review.rating }
+            award = { review.award }
+            review = { review.review }
+            userId = { review.userId }
+            username = { review.username }
+            firstname = { review.username }
+            lastname = { review.lastname }
+          />
+          )))}
+
+        </div>
     </div>
   );
 };

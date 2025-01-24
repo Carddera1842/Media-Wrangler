@@ -16,26 +16,19 @@ import java.util.List;
 import java.util.Optional;
 
 
-//Add CrossOrigin annotation to allow HTTP request/response exchange between front and back end
+
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 @RestController
 @RequestMapping("/reviews")
 public class MovieReviewController {
 
-    //Based off other branches, setup Service here
+
     @Autowired
     private final MovieReviewService movieReviewService;
 
-    //Constructor injection of MovieReviewService -- constructor that takes in service
     public MovieReviewController(MovieReviewService movieReviewService) {
         this.movieReviewService = movieReviewService;
     }
-
-    //Add movieReviewRepository to perform CRUD functions
-    @Autowired
-    private MovieReviewRepository movieReviewRepository;
-
-
 
 
     @PostMapping("/create")
@@ -48,7 +41,8 @@ public class MovieReviewController {
         }
     }
 
-    @GetMapping("view/{id}")
+
+    @GetMapping("/view/{id}")
     public ResponseEntity<?> findReviewById(@PathVariable Long id) {
         try {
             Optional<MovieReviewDTO> optionalMovieReview = movieReviewService.getReviewById(id);
@@ -77,6 +71,22 @@ public class MovieReviewController {
             }
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while retrieving reviews", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/movies/{movieId}")
+    public ResponseEntity<?> getReviewsByMovieId(@PathVariable Long movieId) {
+        try {
+            List<MovieReviewDTO> movieReviews = movieReviewService.getReviewsByMovieId(movieId);
+
+            if (movieReviews.isEmpty()) {
+                return ResponseEntity.ok(Collections.emptyList());
+            }  else {
+                return new ResponseEntity<>(movieReviews, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while retrieving movie reviews", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

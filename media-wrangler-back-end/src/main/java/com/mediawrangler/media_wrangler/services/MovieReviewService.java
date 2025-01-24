@@ -4,8 +4,6 @@ import com.mediawrangler.media_wrangler.data.MovieReviewRepository;
 import com.mediawrangler.media_wrangler.data.UserRepository;
 import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
-import com.mediawrangler.media_wrangler.models.User;
-import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +51,9 @@ public class MovieReviewService {
             dto.setDateWatched(review.getDateWatched());
             dto.setId(review.getId());
             dto.setUserId(review.getUser().getId());
+            dto.setLastname(review.getUser().getLastname());
+            dto.setFirstname(review.getUser().getFirstname());
+            dto.setUsername(review.getUser().getUsername());
 
             return Optional.of(dto);
         }
@@ -83,9 +84,41 @@ public class MovieReviewService {
 
             reviewDTOs.add(dto);
         }
-
         return reviewDTOs;
     }
+
+
+    //TODO: Update the MovieReviewDTO to only send the information needed for each type of method.
+    // Scale back on the fields that being set and sent
+
+    public List<MovieReviewDTO> getReviewsByMovieId(Long movieId) {
+        List<MovieReview> movieReviews = movieReviewRepository.findByMovieId(movieId);
+        List<MovieReviewDTO> movieReviewDTOS = new ArrayList<>();
+
+        for (MovieReview movieReview : movieReviews) {
+            MovieReviewDTO dto = new MovieReviewDTO();
+            dto.setMovieId(movieReview.getMovieId());
+            dto.setTitle(movieReview.getTitle());
+            dto.setFullPosterURL(movieReview.getFullPosterURL());
+            dto.setYearReleased(movieReview.getYearReleased());
+            dto.setReview(movieReview.getReview());
+            dto.setRating(movieReview.getRating());
+            dto.setSpoiler(movieReview.isSpoiler());
+            dto.setWatchAgain(movieReview.getWatchAgain());
+            dto.setAward(movieReview.getAward());
+            dto.setTags(movieReview.getTags());
+            dto.setDateWatched(movieReview.getDateWatched());
+            dto.setId(movieReview.getId());
+            dto.setUserId(movieReview.getUser().getId());
+            dto.setUsername(movieReview.getUser().getUsername());
+            dto.setFirstname(movieReview.getUser().getFirstname());
+            dto.setLastname(movieReview.getUser().getLastname());
+
+            movieReviewDTOS.add(dto);
+        }
+        return movieReviewDTOS;
+    }
+
 
 
 }

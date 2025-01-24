@@ -15,8 +15,11 @@ public class Comment {
 
     private LocalDate dateCreated;
 
-    //Need to add a user and movieReview field inside class when I get them storing properly
-    //userId & movieReviewId (Many to One relationships)
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreated = LocalDate.now();
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
