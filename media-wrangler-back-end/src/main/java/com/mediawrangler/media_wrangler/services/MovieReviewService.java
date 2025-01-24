@@ -43,7 +43,7 @@ public class MovieReviewService {
             dto.setFullPosterURL(review.getFullPosterURL());
             dto.setYearReleased(review.getYearReleased());
             dto.setReview(review.getReview());
-            dto.setRating(review.getRating());
+            dto.setRatingId(review.getRating().getId());
             dto.setSpoiler(review.isSpoiler());
             dto.setWatchAgain(review.getWatchAgain());
             dto.setAward(review.getAward());
@@ -73,7 +73,7 @@ public class MovieReviewService {
             dto.setFullPosterURL(review.getFullPosterURL());
             dto.setYearReleased(review.getYearReleased());
             dto.setReview(review.getReview());
-            dto.setRating(review.getRating());
+            dto.setRatingId(review.getRating().getId());
             dto.setSpoiler(review.isSpoiler());
             dto.setWatchAgain(review.getWatchAgain());
             dto.setAward(review.getAward());
@@ -102,7 +102,7 @@ public class MovieReviewService {
             dto.setFullPosterURL(movieReview.getFullPosterURL());
             dto.setYearReleased(movieReview.getYearReleased());
             dto.setReview(movieReview.getReview());
-            dto.setRating(movieReview.getRating());
+            dto.setRatingId(movieReview.getRating().getId());
             dto.setSpoiler(movieReview.isSpoiler());
             dto.setWatchAgain(movieReview.getWatchAgain());
             dto.setAward(movieReview.getAward());

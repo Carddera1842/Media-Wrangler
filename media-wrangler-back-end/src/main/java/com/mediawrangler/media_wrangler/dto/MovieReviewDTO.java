@@ -1,6 +1,7 @@
 package com.mediawrangler.media_wrangler.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mediawrangler.media_wrangler.models.Rating;
 import com.mediawrangler.media_wrangler.models.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,8 +22,7 @@ public class MovieReviewDTO {
     @Size(max = 1000, message = "Review must be less than 1000 characters")
     private String review;
     private String award;
-    @NotNull(message = "You must give movie a star rating")
-    private double rating;
+
     private String watchAgain;
     @JsonProperty("isSpoiler")
     private boolean isSpoiler;
@@ -33,6 +33,8 @@ public class MovieReviewDTO {
     private String username;
     private String firstname;
     private String lastname;
+
+    private double ratingId;
 
 
 
@@ -51,14 +53,14 @@ public class MovieReviewDTO {
     }
 
 
-    public MovieReviewDTO(LocalDate dateWatched, String review, String award, double rating, String watchAgain, boolean isSpoiler,
+    public MovieReviewDTO(LocalDate dateWatched, String review, String award, double ratingId, String watchAgain, boolean isSpoiler,
                           List<String> tags, String title, String fullPosterURL, String yearReleased, Long movieId, Long id,
                           int userId, String username, String firstname, String lastname) {
         this.dateCreated = LocalDate.now();
         this.dateWatched = dateWatched;
         this.review = review;
         this.award = award;
-        this.rating = rating;
+        this.ratingId = ratingId;
         this.watchAgain = watchAgain;
         this.tags = tags;
         this.title = title;
@@ -117,12 +119,12 @@ public class MovieReviewDTO {
     }
 
     @NotNull(message = "You must give movie a star rating")
-    public double getRating() {
-        return rating;
+    public double getRatingId() {
+        return ratingId;
     }
 
-    public void setRating(@NotNull(message = "You must give movie a star rating") double rating) {
-        this.rating = rating;
+    public void setRatingId(@NotNull(message = "You must give movie a star rating") double ratingId) {
+        this.ratingId = ratingId;
     }
 
     public String getWatchAgain() {
