@@ -19,6 +19,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
   const [review, setReview] = useState('');
   const [isSpoiler, setSpoiler] = useState(false);
   const [rating, setRating] = useState(0);
+  const [rated, setRated] = useState(false);
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
   const [award, setAward] = useState(null);
@@ -39,6 +40,32 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
   const baseImageURL = "https://image.tmdb.org/t/p/w300";
   const fullPosterURL = `${baseImageURL}${posterPath}`;
+
+
+  useEffect(() => {
+    async function checkRatedStatus() {
+      try {
+        const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
+        setRated(ratedStatus);
+
+        if (ratedStatus) {
+          const userRating = await fetchMovieRating(movieId);
+          if (userRating) {
+            setRating(userRating.rating);
+            console.log("User rating:", userRating);
+          } else {
+            setError("Could not fetch the rating.");
+          }
+        }
+      } catch (error) {
+        console.error("Error checking rating status:", error);
+        setError("Error fetching rating status.");
+      }
+    }
+
+    checkRatedStatus();
+  }, [movieId, userId]);
+
 
   function handleHatedAward(e){
     setHatedAward(e.target.value);
@@ -86,7 +113,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
       }
   
 
-      //TODO: Adjust this alert/confirm depending on how the spoilers input is executed
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
         if(submission === false) {
@@ -120,7 +146,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
         if (responseMessage === "Success") {
           navigate(`/reviews/user/${user.id}`, {
-              state: movieReviewData, // Pass the movieReviewData as part of the navigation state
+              state: movieReviewData,
           });    
         
 
@@ -157,7 +183,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                       <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
                        <b>{ title }</b> <span style={{ fontSize: '19px', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span> 
                       </h3>
-                      {/* <p>{ genre.join(", ") }</p> */}
                     </div> 
                 <img src={ fullPosterURL } ></img>
               </div>
@@ -188,7 +213,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                           <div className="field-label is-normal">
                             <StarRatingButton
                               name="half-rating" 
-                              defaultValue={ 0 } 
+                              value={ rating || 0 }
                               precision={ 0.5 } 
                               onChange={ (e) => setRating(e.target.value) }
                             />

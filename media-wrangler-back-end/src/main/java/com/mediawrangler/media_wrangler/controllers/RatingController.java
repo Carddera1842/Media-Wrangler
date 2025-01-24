@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
@@ -76,21 +78,19 @@ public class RatingController {
     }
 
 
+    @GetMapping("/view/{movieId}/{userId}")
+    public ResponseEntity<RatingDTO> getMovieRating(@PathVariable Long movieId, @PathVariable int userId) {
+        try {
+            Optional<RatingDTO> optionalRating = ratingService.fetchMovieRating(movieId, userId);
 
-//    @GetMapping("/view/{movieId}/{userId}")
-//    public ResponseEntity<?> findRatingByMovieIdAndUserId(@PathVariable Long movieId, @PathVariable int userId) {
-//        try {
-//            Optional<RatingDTO> optionalRating = ratingService.getRatingByMovieIdAndUserId(movieId, userId);
-//
-//            if (optionalRating.isPresent()) {
-//                return new ResponseEntity<>(optionalRating.get(), HttpStatus.OK);
-//            } else {
-//                return new ResponseEntity<>("Rating not found", HttpStatus.NOT_FOUND);
-//            }
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("An error occurred while retrieving the rating", HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-
+            if (optionalRating.isPresent()) {
+                RatingDTO savedRating = optionalRating.get();
+                return new ResponseEntity<RatingDTO>(savedRating, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

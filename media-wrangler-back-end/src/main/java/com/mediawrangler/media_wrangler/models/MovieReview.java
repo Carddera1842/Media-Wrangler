@@ -41,21 +41,17 @@ public class MovieReview {
     private String award;
 
     @NotNull(message = "You must give movie a star rating")
-    private double rating;
+    @ManyToOne
+    @JoinColumn(name = "rating_id", referencedColumnName = "id", nullable = false)
+    private Rating rating;
 
     private String watchAgain;
 
     private List<String> tags = new ArrayList<>();
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
-
-//TODO: uncomment when ready to test relationships
-//    @ManyToOne
-//    private List<Comment> comments;
-
 
     //To track the movie until movie data gets sent to database from API
     private String title;
@@ -65,12 +61,18 @@ public class MovieReview {
     private Long movieId;
 
 
-    //empty constructor for hibernate
+//TODO: uncomment when ready to test relationships
+//    @ManyToOne
+//    private List<Comment> comments;
+
+
+
+
     public MovieReview() {
     }
 
-    //overloaded constructor for easier testing (without User logged in)
-    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, double rating,
+
+    public MovieReview(String review, LocalDate dateWatched, boolean isSpoiler, String award, Rating rating,
                        String watchAgain, String title, String fullPosterURL, String yearReleased, User user, Long movieId ) {
         this.dateCreated = LocalDate.now();
         this.review = review;
@@ -98,11 +100,11 @@ public class MovieReview {
 
 
     //* All the review fields here...
-    public double getRating() {
+    public Rating getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(Rating rating) {
         this.rating = rating;
     }
 

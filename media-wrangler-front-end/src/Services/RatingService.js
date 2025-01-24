@@ -66,9 +66,9 @@ import axios from "axios";
     }
 
 
-    async function fetchMovieRating(movieId) {
+    async function fetchMovieRating(movieId, userId) {
         try {
-            const response = await axios.get(`http://localhost:8080/api/rating/view/${movieId}`, {
+            const response = await axios.get(`http://localhost:8080/api/rating/view/${movieId}/${userId}`, {
                 withCredentials: true,
             });
 

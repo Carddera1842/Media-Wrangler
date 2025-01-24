@@ -8,14 +8,12 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private double rating;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
     private Long movieId;
+
 
     public Rating() {
     }
@@ -25,6 +23,7 @@ public class Rating {
         this.user = user;
         this.movieId = movieId;
     }
+
 
     public Long getId() {
         return id;

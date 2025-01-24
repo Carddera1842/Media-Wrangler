@@ -134,4 +134,23 @@ public class RatingService {
         }
         return Optional.empty();
     }
+
+
+
+    public Optional<RatingDTO> fetchMovieRating(Long movieId, int userId) {
+        Optional<Rating> optionalRating = ratingRepository.findByMovieIdAndUserId(movieId, userId);
+
+        if(optionalRating.isPresent()) {
+            Rating rating = optionalRating.get();
+            RatingDTO dto = new RatingDTO();
+
+            dto.setRating(rating.getRating());
+            dto.setMovieId(rating.getMovieId());
+            dto.setUserId(rating.getUser().getId());
+            dto.setId(rating.getId());
+
+            return Optional.of(dto);
+        }
+        return Optional.empty();
+    }
 }
