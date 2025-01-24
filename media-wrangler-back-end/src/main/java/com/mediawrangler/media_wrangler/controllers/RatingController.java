@@ -1,11 +1,6 @@
 package com.mediawrangler.media_wrangler.controllers;
 
-import com.mediawrangler.media_wrangler.dto.MovieLikeDTO;
-import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.dto.RatingDTO;
-import com.mediawrangler.media_wrangler.models.MovieReview;
-import com.mediawrangler.media_wrangler.models.Rating;
-import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.services.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
