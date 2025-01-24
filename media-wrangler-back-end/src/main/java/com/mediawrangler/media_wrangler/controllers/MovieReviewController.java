@@ -66,15 +66,15 @@ public class MovieReviewController {
         }
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?> updateReview(@PathVariable Long id) {
-        if (!movieReviewRepository.existsById(id)) {
-            throw new Error("Review not found");
-        }
-        try {
-            MovieReview updatedReview = movieReviewService.updatedReview(id,)
-        }
-    }
+//    @PutMapping("/edit/{id}")
+//    public ResponseEntity<?> updateReview(@PathVariable Long id) {
+//        if (!movieReviewRepository.existsById(id)) {
+//            throw new Error("Review not found");
+//        }
+//        try {
+//            MovieReview updatedReview = movieReviewService.updatedReview(id)
+//        }
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteReview(@PathVariable Long id) {

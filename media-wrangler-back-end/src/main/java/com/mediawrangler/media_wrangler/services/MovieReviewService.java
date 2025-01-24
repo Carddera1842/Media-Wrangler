@@ -84,10 +84,25 @@ public class MovieReviewService {
             reviewDTOs.add(dto);
         }
 
-        public MovieReview updatedReview(Long id)
-
         return reviewDTOs;
     }
+
+//    public MovieReview updatedReview(Long id, int userId) {
+//        MovieReview movieReview = MovieReviewRepository.findByIdAndUserId(id, userId)
+//                .orElseThrow(() -> new IllegalArgumentException("Review not found or unauthorized"));
+//
+//        //updated dateCreated
+//        if (MovieReviewDTO.getReview() != null) movieReview.setReview(MovieReviewDTO.getReview());
+//        if (MovieReviewDTO.getDateWatched() != null) movieReview.setDateWatched(MovieReviewDTO.getDateWatched());
+//        if (MovieReviewDTO.getAward() != null) movieReview.setAward(MovieReviewDTO.getAward());
+//        if (MovieReviewDTO.getRating() != null) movieReview.setRating(MovieReviewDTO.getRating());
+//        if (MovieReviewDTO.getWatchAgain() != null) movieReview.setWatchAgain(MovieReviewDTO.getWatchAgain());
+//        if (MovieReviewDTO.getTags() != null) movieReview.setTags(MovieReviewDTO.getTags());
+//        if (MovieReviewDTO.getSpoiler() != null) movieReview.setSpoiler(MovieReviewDTO.getSpoiler());
+//
+//        return movieReviewRepository.save(movieReview);
+//
+//    }
 
 
 }
