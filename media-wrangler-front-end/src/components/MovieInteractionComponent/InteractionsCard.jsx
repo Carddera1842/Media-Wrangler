@@ -19,6 +19,7 @@ function InteractionsCard({ movieDetails }) {
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [isRated, setRated] = useState(false);
+    const [error, setError] = useState("");
     
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -45,22 +46,49 @@ function InteractionsCard({ movieDetails }) {
     }, [movieId]);
 
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     async function checkRatedStatus() {
+    //         const rated = await checkIfUserRatedMovie(movieId, userId);
+    //         setRated(rated);
+
+    //         if (isRated) {
+    //             const userRating = await fetchMovieRating(movieId);
+    //             setRating(userRating.rating);
+    //             console.log("user rating : ", userRating);
+    //         } else {
+    //             console.log("User rating not found");
+    //         }
+
+    //     };
+    //     checkRatedStatus();
+    // }, [movieId, userId, isRated]);
+
+      useEffect(() => {
         async function checkRatedStatus() {
-            const rated = await checkIfUserRatedMovie(movieId, userId);
-            setRated(rated);
-
-            if (isRated) {
-                const userRating = await fetchMovieRating(movieId);
+          try {
+            const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
+            setRated(ratedStatus);
+    
+            if (ratedStatus) {
+              const userRating = await fetchMovieRating(movieId, userId);
+              if (userRating) {
                 setRating(userRating.rating);
-                console.log("user rating : ", userRating);
-            } else {
-                console.log("User rating not found");
+                console.log("User rating now set to :", userRating);
+                console.log("extract rating value from rating: ", userRating.rating);
+              
+               
+              } else {
+                setError("Could not fetch the rating.");
+              }
             }
-
-        };
+          } catch (error) {
+            console.error("Error checking rating status:", error);
+            setError("Error fetching rating status.");
+          }
+        }
+    
         checkRatedStatus();
-    }, [movieId, userId, isRated]);
+      }, [movieId, userId]);
 
 
     async function handleRatingChange(e) {

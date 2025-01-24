@@ -1,25 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
 import { submitMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
-import { Checkbox, Paper } from "@mui/material";
+import { Checkbox, Paper, useStepContext } from "@mui/material";
 import RadioButton from '../InteractiveSoloComponents/RadioButton';
 import AwardEnum from "../enums/AwardEnum";
-import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import { useAuth } from '../../Services/AuthContext';
+import { checkIfUserRatedMovie, fetchMovieRating, submitMovieRating, updateMovieRating } from '../../Services/RatingService';
+import Rating from '@mui/material/Rating';
 
 
-
-function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
+function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
   const [isSpoiler, setSpoiler] = useState(false);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
+  const [ratingId, setRatingId] = useState(null);
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
   const [award, setAward] = useState(null);
@@ -31,6 +32,9 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
   
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const userId = user.id;
+  console.log("THIS IS THE USER ID: ", userId);
   
 
   const lovedAwards = Object.values(AwardEnum.loved);
@@ -49,10 +53,16 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         setRated(ratedStatus);
 
         if (ratedStatus) {
-          const userRating = await fetchMovieRating(movieId);
+          const userRating = await fetchMovieRating(movieId, userId);
           if (userRating) {
             setRating(userRating.rating);
-            console.log("User rating:", userRating);
+            console.log("User rating now set to :", userRating);
+            console.log("extract rating value from rating: ", userRating.rating);
+            console.log("Checking if there is rating.id :", userRating.id);
+            setRatingId(userRating.id);
+            console.log("Now setting the id into ratingId: ", ratingId);
+             
+           
           } else {
             setError("Could not fetch the rating.");
           }
@@ -65,6 +75,38 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
     checkRatedStatus();
   }, [movieId, userId]);
+
+  
+
+
+  async function handleRatingChange(e) {
+    const newRating = parseFloat(e.target.value);
+    setRating(newRating);
+
+    const data = {
+        movieId,
+        userId,
+        rating: newRating,
+    };
+
+    try {
+        const hasRated = await checkIfUserRatedMovie(movieId, userId);
+
+        if (hasRated) {
+            const result = await updateMovieRating(data);
+            if (result === "Success") {
+                console.log("Successfully updated the rating:", data);
+            }
+        } else {
+            const result = await submitMovieRating(data);
+            if (result === "Success") {
+                console.log("Successfully submitted the rating:", data);
+            }
+        }
+    } catch (error) {
+        console.error("Error occurred while handling rating:", error);
+    }
+}
 
 
   function handleHatedAward(e){
@@ -103,10 +145,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         alert("Let your peers know what you thought, write your review.");
         return;
       }      
-      if(rating === 0){
-        alert("You must rate the movie.");
-        return;
-      }
       if(watchAgain === ""){
         alert("Would you watch movie again, pick yes or no...");
         return;
@@ -121,12 +159,18 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         }
       }
 
+  
       
       const movieReviewData = { 
         dateWatched,
         review,
         isSpoiler,
-        rating,
+        rating: {
+          movieId: movieId,
+          userId: user.id, 
+          id: ratingId,
+        
+        },
         tags,
         title,
         movieId,
@@ -134,7 +178,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         watchAgain,
         award,
         yearReleased,
-        user
+        user,
       }
 
      
@@ -211,12 +255,24 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                         <div className="field-label"></div>
                         <div className="field">
                           <div className="field-label is-normal">
-                            <StarRatingButton
+                          <Rating
+                              required
                               name="half-rating" 
-                              value={ rating || 0 }
-                              precision={ 0.5 } 
-                              onChange={ (e) => setRating(e.target.value) }
-                            />
+                              value={ rating }
+                              precision={0.5} 
+                              onChange={ handleRatingChange }
+                              sx={{
+                                  '& .MuiRating-iconFilled': {
+                                      color: '#ff9800',
+                                  },
+                                  '& .MuiRating-iconEmpty': {
+                                      color: '#e0e0e0',
+                                  },
+                                  '& .MuiRating-iconHover': {
+                                      color: '#ffcc00',
+                                  },
+                              }}
+                          />
                           </div>                        
                         </div>
                       </div>
