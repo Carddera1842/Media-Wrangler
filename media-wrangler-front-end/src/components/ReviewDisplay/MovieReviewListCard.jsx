@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardContent, Typography, Button, CardActions, Avatar, Paper, Divider, TextField } from '@mui/material';
-import submitUserComment from "../../Services/CommentService";
+
 import { useAuth } from '../../Services/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import AvatarHeader from '../Profile/AvatarHeader';
-
+import { submitUserComment, fetchCommentsByMovieReviewId } from '../../Services/CommentService'
 
 const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId }) => {
 
@@ -13,14 +13,22 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
   const [userComment, setUserComment] = useState('');
   const [userComments, setUserComments] = useState([]);
   const [error, setError] = useState('');
-  // const [movieReviewId, setMovieReviewId] = useState(null);
+ 
 
 
   const { user } = useAuth();
   const navigate = useNavigate();
 
 
-  console.log("Here is what is says the MovieReviewId is:", movieReviewId);
+  useEffect(() => {
+    async function fetchComments() {
+      const data = await fetchCommentsByMovieReviewId(movieReviewId);  
+      setUserComments(data);  
+      console.log("here is the data from the fetchComments", data);
+    }
+  
+    fetchComments();
+  }, [movieReviewId]);  
 
 
 
@@ -124,6 +132,24 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
           <br />                          
           <Typography variant="body2" color="white" > { review } </Typography>
         </CardContent>
+
+
+        {/* <div className="comments-section">
+    {userComments.length === 0 ? (
+      <Typography color="white">No comments yet.</Typography>
+    ) : (
+      userComments.map((comment) => (
+        <div key={comment.id} className="comment-card">
+          <Typography variant="body2" color="white">
+            {comment.user.username}: {comment.content}
+          </Typography>
+        </div>
+      ))
+    )}
+  </div> */}
+
+
+
         <CardActions>
           <Button size="small" onClick={handleCommentClick} >Comment</Button>
         </CardActions>
