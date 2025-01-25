@@ -3,7 +3,7 @@ import axios from "axios";
 async function submitUserComment(userCommentData) {
     try {
         const response = await axios.post(
-            'http://localhost:8080/movies',
+            'http://localhost:8080/comments/create',
             userCommentData, {
                 withCredentials: true,
             }
