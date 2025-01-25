@@ -286,6 +286,62 @@ public class MovieDataFetcher {
             return null;
         }
     }
+
+    public static ArrayList<Movie> fetchDiscoverList(String genres) {
+        OkHttpClient client = new OkHttpClient();
+        ArrayList<Movie> movieArrayList = new ArrayList<>();
+
+        for (int i = 1; i < 6; i++) {
+            String apiUrl = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=" + i
+                    + "&sort_by=popularity.desc&with_genres=" + genres;
+
+            Request request = new Request.Builder()
+                    .url(apiUrl)
+                    .header("Authorization", "Bearer " + API_READ_ACCESS_KEY)
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (!response.isSuccessful()) {
+                    System.out.println("Request failed with status: " + response.code());
+                    return null;
+                }
+
+                // parse response and transform into array
+                String responseBody = response.body().string();
+                JSONObject jsonResponse = new JSONObject(responseBody);
+                JSONArray results = jsonResponse.getJSONArray("results");
+
+                // extract details for each movie
+                for (int j = 0; j < results.length(); j++) {
+                    JSONObject movieJson = results.getJSONObject(j);
+
+                    // Extract the required fields for the Movie object
+                    int id = movieJson.getInt("id");
+                    String title = movieJson.getString("title");
+                    String releaseDate = movieJson.getString("release_date");
+                    double rating = movieJson.getDouble("vote_average");
+                    String overview = movieJson.getString("overview");
+                    String posterPath = movieJson.optString("poster_path", null);
+
+                    //cast and crew data not currently needed for search
+                    ArrayList<CastMember> cast = null;
+                    ArrayList<CrewMember> crew = null;
+
+
+                    Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath, cast, crew);
+
+                    movieArrayList.add(movie);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+
+        return movieArrayList;
+    }
 }
 
 

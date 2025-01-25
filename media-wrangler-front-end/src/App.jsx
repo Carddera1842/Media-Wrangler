@@ -16,7 +16,7 @@ import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
 import UserJournalPage from './components/Journal/UserJournalPage'
 import DiscussionPage from './components/Discussions/Discussions.jsx'
-import DiscoverPage from './components/Discover/UpcomingReleases.jsx'
+import DiscoverPage from './components/Discover/Discover.jsx'
 
 function App() {
   return (

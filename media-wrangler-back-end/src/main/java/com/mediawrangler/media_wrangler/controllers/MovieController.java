@@ -46,4 +46,10 @@ public class MovieController {
             return movieDataFetcher.personSearch(searchString);
         }
     }
+
+    @GetMapping("/discover")
+    public ArrayList<Movie> getDiscoverListByGenreIds(@RequestParam String genres) {
+        System.out.println("Received request to fetch movie: " + genres);
+        return movieDataFetcher.fetchDiscoverList(genres);
+    }
 }

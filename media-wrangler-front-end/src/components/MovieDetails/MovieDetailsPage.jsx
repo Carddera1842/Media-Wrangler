@@ -18,7 +18,7 @@ function MovieDetailsPage() {
             
             //was having some weird warnings and couldn't get the data as a json, so I did text instead
             const textResponse = await response.text();
-            console.log('Raw Response Body:', textResponse);
+            //console.log('Raw Response Body:', textResponse);
     
             if (response.ok) {
                 const movieDetails = JSON.parse(textResponse); 

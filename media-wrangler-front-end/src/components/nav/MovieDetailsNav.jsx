@@ -32,7 +32,6 @@ function MovieDetailsNav({ movieDetails }) {
     let casting = ""
     let producers = ""
 
-    console.log(movieDetails.crew)
     for (let i = 0; i < movieDetails.crew.length; i++) {
       let crewMember = movieDetails.crew[i]
       
