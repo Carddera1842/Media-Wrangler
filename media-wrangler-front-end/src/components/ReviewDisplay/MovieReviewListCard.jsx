@@ -7,16 +7,20 @@ import Rating from '@mui/material/Rating';
 import AvatarHeader from '../Profile/AvatarHeader';
 
 
-const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title }) => {
+const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId }) => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
   const [userComments, setUserComments] = useState([]);
   const [error, setError] = useState('');
+  // const [movieReviewId, setMovieReviewId] = useState(null);
 
 
   const { user } = useAuth();
   const navigate = useNavigate();
+
+
+  console.log("Here is what is says the MovieReviewId is:", movieReviewId);
 
 
 
@@ -47,13 +51,20 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
       alert("You must write a comment or press cancel");
       return;
     }
-     
+    
+    const userId = user.id;
+
     const userCommentData = { 
       userComment,
-      user
+      userId,
+      movieReviewId,      
     }
 
     console.log("Submitting user comment for:", userCommentData);
+    console.log("user that's being logged: ", userCommentData.user);
+    console.log("this comes after the userCommentData", userCommentData.movieReviewId);
+    
+  
   
 
     try {
