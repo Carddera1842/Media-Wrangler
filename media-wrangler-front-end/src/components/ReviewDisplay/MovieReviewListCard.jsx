@@ -134,19 +134,23 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
         </CardContent>
 
 
-        {/* <div className="comments-section">
+
+{/*  Okay, so I got the mapping to work, but I want to may a better display for the comments */}
+
+         <div className="comments-section">
     {userComments.length === 0 ? (
       <Typography color="white">No comments yet.</Typography>
     ) : (
       userComments.map((comment) => (
         <div key={comment.id} className="comment-card">
           <Typography variant="body2" color="white">
-            {comment.user.username}: {comment.content}
+            {comment.username}: {comment.userComment}
           </Typography>
         </div>
       ))
     )}
-  </div> */}
+  </div> 
+
 
 
 
