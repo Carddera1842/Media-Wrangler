@@ -1,27 +1,22 @@
 package com.mediawrangler.media_wrangler.dto;
 
-import java.time.LocalDate;
-
 public class CommentDTO {
 
 
     private Long id;
     private String userComment;
-    private LocalDate dateCreated;
-    private Long movieReviewId; 
+    private Long movieReviewId;
     private int userId; 
-    private String userName; 
+
     
     public CommentDTO() {
     }
 
-    public CommentDTO(Long id, String userComment, LocalDate dateCreated, Long movieReviewId, int userId, String userName) {
+    public CommentDTO(Long id, String userComment, Long movieReviewId, int userId) {
         this.id = id;
         this.userComment = userComment;
-        this.dateCreated = dateCreated;
         this.movieReviewId = movieReviewId;
         this.userId = userId;
-        this.userName = userName;
     }
 
     public Long getId() {
@@ -40,14 +35,6 @@ public class CommentDTO {
         this.userComment = userComment;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public Long getMovieReviewId() {
         return movieReviewId;
     }
@@ -64,12 +51,6 @@ public class CommentDTO {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
 }

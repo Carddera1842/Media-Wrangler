@@ -18,7 +18,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "movie_review_id", nullable = false)
     private MovieReview movieReview;
-    
+
 
     @PrePersist
     protected void onCreate() {
@@ -66,5 +66,15 @@ public class Comment {
     public LocalDate getDateCreated() {
         return dateCreated;
     }
-    
+
+    public void setDateCreated(LocalDate now) {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 }
