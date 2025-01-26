@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import MovieCard from "../MoviePosterCard/PosterCard";
+import ToggleSwitch from '../InteractiveSoloComponents/ToggleSwitch';
 //import "./Discover.css";
 
 function DiscoverPage() {
@@ -25,15 +26,17 @@ function DiscoverPage() {
     { id: 10752, name: "War" },
     { id: 37, name: "Western" }
   ];
+  const [andOrChar, setAndOrChar] = useState(',')
   const [selectedGenres, setSelectedGenres] = useState('');
+  
   const handleToggle = (id) => {
-    let updatedGenres = selectedGenres.split(',').map(str => str.trim()).filter(Boolean);
+    let updatedGenres = selectedGenres.split(andOrChar).map(str => str.trim()).filter(Boolean);
     if (updatedGenres.includes(String(id))) {
       updatedGenres = updatedGenres.filter(genreId => genreId !== String(id));
     } else {
       updatedGenres.push(String(id));
     }
-    setSelectedGenres(updatedGenres.join(','));
+    setSelectedGenres(updatedGenres.join(andOrChar));
   };
   
   const [movieData, setMovieData] = useState([]);
@@ -45,7 +48,8 @@ function DiscoverPage() {
     
     try {
 
-        const response = await fetch(`http://localhost:8080/api/movies/discover?genres=${selectedGenres}`, {
+        const encodedGenres = encodeURIComponent(selectedGenres);
+        const response = await fetch(`http://localhost:8080/api/movies/discover?genres=${encodedGenres}`, {
         });
         
         if (!response.ok) {
@@ -68,33 +72,42 @@ useEffect(() => {
   }
 }, [selectedGenres]);
 
-  console.log(selectedGenres);
+const handleToggleButton = () => {
+  setAndOrChar((prevChar) => {
+    const newChar = prevChar === "," ? "|" : ",";
+    setSelectedGenres(selectedGenres.replaceAll(prevChar, newChar))
+    return newChar;
+  });
+};
+
   return (
     <div>
-      {genres.map(genre => (
-        <button
-          key={genre.id}
-          onClick={() => handleToggle(genre.id)}
-          style={{
-            backgroundColor: selectedGenres.includes(String(genre.id)) ? 'lightblue' : 'gray',
-            margin: '5px',
-            padding: '10px',
-            borderRadius: '5px',
-          }}
-        >
-          {genre.name}
-        </button>
-      ))}
+      <div>
+        <h1>Discover Movies</h1>
 
-    <div id="discovered-movies">
-      {movieData.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
-        </div>
-    <div>
-        
-        <h3>Selected Genres (IDs):</h3>
-        
+        <button onClick={handleToggleButton} style={{ padding: "10px", margin: "10px", borderRadius: "5px", backgroundColor: "lightblue" }}>
+          {andOrChar === "," ? "Any Movies With These Genres" : "Movie Has Each Genre"}
+        </button>
+
+        {genres.map((genre) => (
+          <button
+            key={genre.id}
+            onClick={() => handleToggle(genre.id)}
+            style={{
+              backgroundColor: selectedGenres.includes(String(genre.id)) ? "lightblue" : "gray",
+              margin: "5px",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            {genre.name}
+          </button>
+        ))}
+      </div>
+      <div id="discovered-movies">
+        {movieData.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
       </div>
     </div>
   );
