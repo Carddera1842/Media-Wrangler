@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import MovieCard from "../MoviePosterCard/PosterCard";
-import ToggleSwitch from '../InteractiveSoloComponents/ToggleSwitch';
-//import "./Discover.css";
+import "./Discover.css";
 
 function DiscoverPage() {
   const genres = [
@@ -81,35 +80,39 @@ const handleToggleButton = () => {
 };
 
   return (
-    <div>
-      <div>
-        <h1>Discover Movies</h1>
-
-        <button onClick={handleToggleButton} style={{ padding: "10px", margin: "10px", borderRadius: "5px", backgroundColor: "lightblue" }}>
+    <div className="container">
+      <h1>Discover a Movie to Watch</h1>
+      <div className="button-group">
+        <button 
+          className="button andor-button" 
+          onClick={() => {
+            handleToggleButton(); 
+            handleDiscover();
+          }}
+        >
           {andOrChar === "," ? "Any Movies With These Genres" : "Movie Has Each Genre"}
         </button>
+      </div>
 
+      <div className="button-group">
         {genres.map((genre) => (
           <button
             key={genre.id}
             onClick={() => handleToggle(genre.id)}
-            style={{
-              backgroundColor: selectedGenres.includes(String(genre.id)) ? "lightblue" : "gray",
-              margin: "5px",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
+            className={`button genre-button ${selectedGenres.includes(String(genre.id)) ? 'selected' : ''}`}
           >
             {genre.name}
           </button>
         ))}
       </div>
+
       <div id="discovered-movies">
         {movieData.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
-      </div>
     </div>
+  </div>
+
   );
 }
 
