@@ -65,28 +65,31 @@ function AddEventForm() {
   };
 
   return (
-    <div className="addEventForm-container">
-      <h2>Upcoming Movies</h2>
+    <div className="upcoming-container">
+      <h2 className="upcoming-title">Upcoming Movies</h2>
       {error && <p>{error}</p>}
 
-      <div id="movie-search" className="movie-search">
+      <div id="upcoming-movie-search">
         {upcomingMovies.map((movie) => (
-          <div key={movie.id} className="posterContainer">
+          <>
+          <div key={movie.id} className="upcoming-poster-container">
+          <div className="upcoming-release-date">
+              Release Date: {new Date(movie.release_date).toLocaleDateString()}
+            </div>
             <img
               src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
               alt={`Poster of ${movie.title}`}
-              className="posterImage"
+              className="upcoming-poster-image"
             />
-            <div>
-              <p>Release Date: {new Date(movie.release_date).toLocaleDateString()}</p>
-            </div>
+            
             <button
-              className="addButton"
+              className="upcoming-add-button"
               onClick={() => handleAddMovieToEvents(movie)}
             >
               <StarIcon style={{ color: "white", fontSize: "20px" }} />
             </button>
           </div>
+          </>
         ))}
       </div>
     </div>
