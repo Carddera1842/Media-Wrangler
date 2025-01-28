@@ -64,7 +64,7 @@ export default function Login() {
 
                         <div className="login-field">
                         <div className="login-button-container">
-                        <button className="login-button is-primary">Register</button>
+                        <button className="login-button is-primary">Login</button>
                             </div>
                         </div>
                     </Form>
