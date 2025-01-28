@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Discussions.css";
 
 const Discussions = () => {
   const [questions, setQuestions] = useState([]);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [questionText, setQuestionText] = useState("");
-  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState(""); 
 
-  const user = { id: 1 }; 
+  const navigate = useNavigate();
+  const user = { id: 1 };
 
   useEffect(() => {
     fetchQuestions();
@@ -22,6 +25,7 @@ const Discussions = () => {
       }
       const data = await response.json();
       setQuestions(data);
+      setFilteredQuestions(data);
       setLoading(false);
     } catch (err) {
       setError(err.message);
@@ -43,11 +47,9 @@ const Discussions = () => {
         }),
       });
 
-      console.log(questionText, user);
-
       if (response.ok) {
-        setQuestionText(""); 
-        fetchQuestions(); 
+        setQuestionText("");
+        fetchQuestions();
         console.log("Question submitted successfully.");
       } else {
         console.error("Failed to submit question:", response.statusText);
@@ -57,51 +59,74 @@ const Discussions = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filtered = questions.filter((question) =>
+      question.questionText.toLowerCase().includes(term)
+    );
+    setFilteredQuestions(filtered);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit} className="box">
-        <h2 className="title is-4">Ask a Question</h2>
-        <div className="field">
-          <textarea
-            className="textarea"
-            placeholder="Enter your question"
-            value={questionText}
-            onChange={(e) => setQuestionText(e.target.value)}
-            required
-          ></textarea>
-        </div>
-        <div className="field">
-          <button type="submit" className="button is-primary">
-            Submit
-          </button>
-        </div>
-      </form>
+    <div className="question-container">
+      <div className="question-form-container">
+        <form onSubmit={handleSubmit} className="question-box">
+          <h2 className="title is-4">Submit What You Want To Discuss</h2>
+          <div className="question-field">
+            <textarea
+              className="question-textarea"
+              placeholder="Enter your question"
+              value={questionText}
+              onChange={(e) => setQuestionText(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <div className="question-field">
+            <button type="submit" className="button is-primary">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div className="search-bar-container">
+        <input
+          type="text"
+          placeholder="Search discussions..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="question-search-input"
+        />
+      </div>
 
       <div>
         <h1 className="title is-3">Discussions</h1>
-        {questions.length > 0 ? (
-          <ul className="list is-hoverable">
-            {questions.map((question) => (
+        {filteredQuestions.length > 0 ? (
+          <ul className="question-list is-hoverable">
+            {filteredQuestions.map((question) => (
               <li
-              key={question.id}
-              className="box"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                console.log("Navigating to:", `/answers/${question.id}`);
-                navigate(`/answers/${question.id}`);
-              }}
+                key={question.id}
+                className="question-view-box"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  console.log("Navigating to:", `/answers/${question.id}`);
+                  navigate(`/answers/${question.id}`);
+                }}
               >
-                <p><strong>Question:</strong> {question.questionText}</p>
-                <p><strong>Posted by User:</strong> {question.user.id}</p>
-                <p><strong>Timestamp:</strong> {new Date(question.timestamp).toLocaleString()}</p>
+                <p>
+                  <strong>{question.questionText}</strong>
+                </p>
+                <p>Posted by: {question.user.username}</p>
+                <p>{new Date(question.timestamp).toLocaleString()}</p>
               </li>
             ))}
           </ul>
         ) : (
-          <p>No questions available</p>
+          <p>No matching discussions found.</p>
         )}
       </div>
     </div>
