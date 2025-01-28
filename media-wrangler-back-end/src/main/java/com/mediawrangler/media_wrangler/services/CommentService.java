@@ -77,6 +77,7 @@ public class CommentService {
             dto.setUserId(comment.getUser().getId());
             dto.setUserComment(comment.getUserComment());
             dto.setMovieReviewId(comment.getMovieReview().getId());        
+            dto.setUsername(comment.getUser().getUsername());
 
             commentDTOS.add(dto);
         }

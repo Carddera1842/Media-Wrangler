@@ -6,17 +6,20 @@ public class CommentDTO {
     private Long id;
     private String userComment;
     private Long movieReviewId;
-    private int userId; 
+    private int userId;
+    private String username;
+
 
     
     public CommentDTO() {
     }
 
-    public CommentDTO(Long id, String userComment, Long movieReviewId, int userId) {
+    public CommentDTO(Long id, String userComment, Long movieReviewId, int userId, String username) {
         this.id = id;
         this.userComment = userComment;
         this.movieReviewId = movieReviewId;
         this.userId = userId;
+        this.username = username;
     }
 
     public Long getId() {
@@ -51,6 +54,11 @@ public class CommentDTO {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
-
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
