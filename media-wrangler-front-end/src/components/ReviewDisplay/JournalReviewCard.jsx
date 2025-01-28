@@ -14,12 +14,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 
 
-
-
-
 export default function JournalReviewCard({ title, fullPosterURL, watchAgain, tags, rating, isSpoiler, review, dateWatched, award, yearReleased, username, lastname, firstname, userId }) {
 
     const navigate = useNavigate();
+
+
+
 
     return (
         <>
@@ -135,7 +135,7 @@ JournalReviewCard.propTypes = {
     poster: PropType.string, 
     watchAgain: PropType.string, 
     tags: PropType.array, 
-    rating: PropType.number,    //<---- is it a number? User input is converted to strings, so would it actually be a string
+    rating: PropType.number,    
     isSpoiler: PropType.bool, 
     review: PropType.string, 
     dateWatched: PropType.string, 

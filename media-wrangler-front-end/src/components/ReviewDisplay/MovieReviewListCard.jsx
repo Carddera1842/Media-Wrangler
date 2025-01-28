@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardContent, Typography, Button, CardActions, Avatar, Paper, Divider, TextField } from '@mui/material';
-
 import { useAuth } from '../../Services/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import AvatarHeader from '../Profile/AvatarHeader';
-import { submitUserComment, fetchCommentsByMovieReviewId } from '../../Services/CommentService'
+import { submitUserComment, fetchCommentsByMovieReviewId } from '../../Services/CommentService';
+
+
 
 const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId }) => {
 
@@ -119,7 +120,7 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
             padding: "10px",
             margin: "20px auto",        
         }} >
-      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid rgba(5, 70, 105, 0.93)", background: "rgba(19, 19, 20, 0.81)" }}>
+      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid rgba(17, 144, 213, 0.93)", background: "rgba(19, 19, 20, 0.81)" }}>
         <CardContent>     
           <div className="avatar-username-rating-container ">     
             <AvatarHeader 
