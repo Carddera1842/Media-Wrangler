@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Service
 public class MovieDataFetcher {
@@ -299,13 +300,24 @@ public class MovieDataFetcher {
         }
     }
 
-    public static ArrayList<Movie> fetchDiscoverList(String genres) {
+    public static ArrayList<Movie> fetchDiscoverList(String genres, String afterYear, String beforeYear) {
         OkHttpClient client = new OkHttpClient();
         ArrayList<Movie> movieArrayList = new ArrayList<>();
 
+        String beforeYearQuery = "";
+        String afterYearQuery = "";
+
+        if (!Objects.equals(afterYear, "")) {
+            afterYearQuery = "&primary_release_date.gte=" + afterYear + "-12-31";
+        }
+
+        if (!Objects.equals(beforeYear, "")) {
+            beforeYearQuery = "&primary_release_date.lte=" + beforeYear + "-01-01";
+        }
+
         for (int i = 1; i < 6; i++) {
             String apiUrl = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=" + i
-                    + "&sort_by=popularity.desc&with_genres=" + genres;
+                    + "&sort_by=popularity.desc&with_genres=" + genres + beforeYearQuery + afterYearQuery;
 
             Request request = new Request.Builder()
                     .url(apiUrl)

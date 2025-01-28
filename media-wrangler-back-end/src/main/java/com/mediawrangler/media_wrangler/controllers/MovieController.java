@@ -48,8 +48,8 @@ public class MovieController {
     }
 
     @GetMapping("/discover")
-    public ArrayList<Movie> getDiscoverListByGenreIds(@RequestParam String genres) {
+    public ArrayList<Movie> getDiscoverListByGenreIds(@RequestParam String genres, @RequestParam String afterYear, @RequestParam String beforeYear) {
         System.out.println("Received request to fetch movie: " + genres);
-        return movieDataFetcher.fetchDiscoverList(genres);
+        return movieDataFetcher.fetchDiscoverList(genres, afterYear, beforeYear);
     }
 }
