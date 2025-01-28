@@ -55,11 +55,12 @@ async function fetchMovieReview(id) {
             console.log('Review data:', reviewData);
             return reviewData;
         } else {
-            return "Review not found or error occurred. Please try again";
+            console.error("Review not found or error occurred. Status:", response.status);
+            return null;
         }
     } catch (error) {
         console.log("Error: ", error);
-        return "An error occurred. Please try again";
+        return null;
     }
 
 };
@@ -68,17 +69,17 @@ async function fetchMovieReviewsByUser(userId) {
     try {
         const response = await axios.get(`http://localhost:8080/reviews/user/${userId}`, { withCredentials: true });
 
-
         if (response.status === 200) {
             const userReviewList = response.data;
             console.log('User Review List: ', userReviewList);
-            return userReviewList;
+            return Array.isArray(userReviewList) ? userReviewList : [];
         } else {
-            return "User Reviews not found or error occurred. Please try again";
+            console.error("Failed to fetch reviews. Status:", response.status);
+            return [];
         }
     } catch (error) {
-        console.log("Error: ", error);
-        return "An error occurred. Please try again";
+        console.log("Error fetching reviews:", error);
+        return [];
     }
 
 };

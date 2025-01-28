@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-import { submitMovieReview } from "../../Services/MovieReviewService";
+import { fetchMovieReview, submitMovieReview, updateReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
 import { Checkbox, Paper } from "@mui/material";
@@ -34,20 +34,32 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
   const navigate = useNavigate();
   
   useEffect(() => {
-    if (mode === "edit" && existingReview) {
-      setDateWatched(existingReview.dateWatched || "");
-      setReview(existingReview.review || "");
-      setSpoiler(existingReview.isSpoiler || false);
-      setRating(existingReview.rating || 0);
-      setTags(existingReview.tags || []);
-      setAward(existingReview.award || null);
-      setLovedAward(existingReview.lovedAward || "");
-      setHatedAward(existingReview.hatedAward || "");
-      setLovedDisabled(!!existingReview.hatedAward);
-      setHatedDisabled(!!existingReview.lovedAward);
-      setWatchAgain(existingReview.watchAgain || "");
+    if (existingReview && movieId) {
+      const fetchReviewData = async () => {
+        try {
+          const fetchedReviewData = await fetchMovieReview(movieId);
+          if (fetchMovieReview) {
+            setDateWatched(existingReview.dateWatched || "");
+            setReview(existingReview.review || "");
+            setSpoiler(existingReview.isSpoiler || false);
+            setRating(existingReview.rating || 0);
+            setTags(existingReview.tags || []);
+            setAward(existingReview.award || null);
+            setLovedAward(existingReview.lovedAward || "");
+            setHatedAward(existingReview.hatedAward || "");
+            setLovedDisabled(!!existingReview.hatedAward);
+            setHatedDisabled(!!existingReview.lovedAward);
+            setWatchAgain(existingReview.watchAgain || "");
+          }
+        } catch (error) {
+          console.error("Error fetching review data:", error);
+          setError("Failed to load review data");
+        }
+      };
+      fetchReviewData();
     }
-  }, [mode, existingReview]);
+  }, [mode, movieId]);
+  console.log("Mode:", mode, "ExistingReview:", existingReview);
   
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
@@ -80,12 +92,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
 
   function updateTags(updatedTags) {
     setTags(updatedTags);
-  }
-
-  if (mode === "edit") {
-    console.log("Editing an existing review");
-  } else if (mode === "add") {
-    console.log("Creating a new review");
   }
 
   const handleSubmit = async (e) => {
@@ -130,7 +136,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
         award,
         yearReleased,
         user,
-        reviewId: existingReview?.id,
+        reviewId: mode === "edit" ? existingReview?.id : null,
       }
 
       console.log("Submitting review for:", movieReviewData);

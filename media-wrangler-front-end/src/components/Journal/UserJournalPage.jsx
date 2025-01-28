@@ -35,11 +35,9 @@ function UserJournalPage() {
 
     const handleDeleteReview = async (id) => {
         try {
-            if (reviews) {
-                await deleteReview(id);
-                console.log("Review delete successfully");
-                setReviews(reviews.filter((review) => review.id !== id));
-            }
+            await deleteReview(id);
+            console.log("Review deleted successfully");
+            setReviews(reviews.filter((review) => review.id !== id));
         } catch (error) {
             console.error("Error deleting review:", error.message);
         }
