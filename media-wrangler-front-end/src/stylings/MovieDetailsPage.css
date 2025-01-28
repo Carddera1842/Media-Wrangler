@@ -3,7 +3,7 @@
 
 /* Page Layout & Styling */
 .movie-details-page-background {
-  background-image: url('C:\Users\RBurk\OneDrive\Desktop\Media-Wrangler\liftoff-emily-group-1\media-wrangler-front-end\public\backgroundBlue.jpg');
+  background-image: url('/backgroundBlue.jpg');
   background-size: cover;
   background-position: center;
   padding: 10px;
