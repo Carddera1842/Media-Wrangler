@@ -33,7 +33,6 @@ public class UserDTO {
         this.lastname = user.getLastname();
         this.email = user.getEmail();
         this.username = user.getUsername();
-        this.username = user.getUsername();
         this.bio = user.getBio();
     }
 

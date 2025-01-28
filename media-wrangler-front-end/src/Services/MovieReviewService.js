@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const apiClient = axios.create ({
+    baseURL: 'http://localhost:8080',
+    withCredentials: true,
+});
+
 async function submitMovieReview(movieReviewData) {
     try {
         const response = await axios.post(
@@ -20,7 +25,25 @@ async function submitMovieReview(movieReviewData) {
     }
 }
 
+export const deleteReview = (id) => {
+    return apiClient.delete(`/reviews/delete/${id}`);
+};
 
+export const updateReview = async (movieReviewData) => {
+    try {
+        const response = await apiClient.put(`reviews/edit/${movieReviewData.reviewId}/${movieReviewData.userId}`, movieReviewData);
+        if (response.status === 200) {
+            console.log("Movie review updated successfully:", response.data);
+            return response.data
+        } else {
+            console.error("Failed to update movie review");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error updating movie review:", error.response?.data || error.message);
+        throw new Error("Failed to update movie review. Please try again.");
+    }
+};
 
 async function fetchMovieReview(id) {
     try {
@@ -40,8 +63,6 @@ async function fetchMovieReview(id) {
     }
 
 };
-
-
 
 async function fetchMovieReviewsByUser(userId) {
     try {

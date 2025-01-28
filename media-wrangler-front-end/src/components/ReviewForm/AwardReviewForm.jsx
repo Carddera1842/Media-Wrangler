@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
 import { submitMovieReview } from "../../Services/MovieReviewService";
@@ -11,27 +11,44 @@ import AwardEnum from "../enums/AwardEnum";
 import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import { useAuth } from '../../Services/AuthContext';
 
+function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingReview = {}, mode="create" }) {
 
-
-function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
-
-  const [dateWatched, setDateWatched] = useState("");
-  const [review, setReview] = useState('');
-  const [isSpoiler, setSpoiler] = useState(false);
-  const [rating, setRating] = useState(0);
-  const [tags, setTags] = useState([]);
+  const [dateWatched, setDateWatched] = useState(existingReview.dateWatched || "");
+  const [review, setReview] = useState(existingReview.review || "");
+  const [isSpoiler, setSpoiler] = useState(existingReview.isSpoiler || false);
+  const [rating, setRating] = useState(existingReview.rating || 0);
+  const [tags, setTags] = useState(existingReview.tags || []);
+  const [award, setAward] = useState(existingReview.award || null);
+  const [lovedAward, setLovedAward] = useState(
+    existingReview.lovedAward || (existingReview.award && AwardEnum.loved[existingReview.award]) || ""
+  );
+  const [hatedAward, setHatedAward] = useState(
+    existingReview.hatedAward || (existingReview.award && AwardEnum.hated[existingReview.award]) || ""
+  );
+  const [isLovedDisabled, setLovedDisabled] = useState(!!existingReview.hatedAward);
+  const [isHatedDisabled, setHatedDisabled] = useState(!!existingReview.lovedAward);
+  const [watchAgain, setWatchAgain] = useState(existingReview.watchAgain || "");
   const [error, setError] = useState("");
-  const [award, setAward] = useState(null);
-  const [lovedAward, setLovedAward] = useState("");
-  const [hatedAward, setHatedAward] = useState("");
-  const [isLovedDisabled, setLovedDisabled] = useState(false);
-  const [isHatedDisabled, setHatedDisabled] = useState(false);
-  const [watchAgain, setWatchAgain] = useState('');
-  
+
   const { user } = useAuth();
   const navigate = useNavigate();
   
-
+  useEffect(() => {
+    if (mode === "edit" && existingReview) {
+      setDateWatched(existingReview.dateWatched || "");
+      setReview(existingReview.review || "");
+      setSpoiler(existingReview.isSpoiler || false);
+      setRating(existingReview.rating || 0);
+      setTags(existingReview.tags || []);
+      setAward(existingReview.award || null);
+      setLovedAward(existingReview.lovedAward || "");
+      setHatedAward(existingReview.hatedAward || "");
+      setLovedDisabled(!!existingReview.hatedAward);
+      setHatedDisabled(!!existingReview.lovedAward);
+      setWatchAgain(existingReview.watchAgain || "");
+    }
+  }, [mode, existingReview]);
+  
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
 
@@ -65,27 +82,32 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
     setTags(updatedTags);
   }
 
-  async function handleSubmit(e) {
-      e.preventDefault();
-     
-      if(!dateWatched) {   
-        alert("You must pick a date watched to log in your journal.");
-        return;
-      }
-      if(!review){
-        alert("Let your peers know what you thought, write your review.");
-        return;
-      }      
-      if(rating === 0){
-        alert("You must rate the movie.");
-        return;
-      }
-      if(watchAgain === ""){
-        alert("Would you watch movie again, pick yes or no...");
-        return;
-      }
-  
+  if (mode === "edit") {
+    console.log("Editing an existing review");
+  } else if (mode === "add") {
+    console.log("Creating a new review");
+  }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!dateWatched) {
+      alert("You must pick a date watched to log in your journal.");
+      return;
+    }
+    if (!review) {
+      alert("Let your peers know what you thought, write your review.");
+      return;
+    }
+    if (rating === 0) {
+      alert("You must rate the movie.");
+      return;
+    }
+    if (watchAgain === "") {
+      alert("Would you watch the movie again? Pick yes or no.");
+      return;
+    }
+  
       //TODO: Adjust this alert/confirm depending on how the spoilers input is executed
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
@@ -94,8 +116,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         return;
         }
       }
-
-      
+  
       const movieReviewData = { 
         dateWatched,
         review,
@@ -108,31 +129,29 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         watchAgain,
         award,
         yearReleased,
-        user
+        user,
+        reviewId: existingReview?.id,
       }
 
-     
       console.log("Submitting review for:", movieReviewData);
     
 
       try {
-        const responseMessage = await submitMovieReview(movieReviewData); 
+        const responseMessage = 
+          mode === "edit"
+            ? await updateMovieReview(movieReviewData)
+            : await submitMovieReview(movieReviewData);
 
         if (responseMessage === "Success") {
-          navigate(`/reviews/user/${user.id}`, {
-              state: movieReviewData, // Pass the movieReviewData as part of the navigation state
-          });    
-        
-
+          navigate(`/reviews/user/${user.id}`, { state: movieReviewData });
         } else {
           setError(responseMessage);
         }
-        
       } catch (error) {
-          console.error("Unexpected error during movie review submission: ", error);
-          setError({error: "An unexpected error occurred. Please try again"})
+        console.error("Unexpected error during movie review submission: ", error);
+        setError({error: "An unexpected error occurred. Please try again"})
       }
-    };
+    }
 
     return (
         <>       
@@ -175,7 +194,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                               name="dateWatched"
                               className="input is-primary"
                               type="date"
-                              value={ dateWatched }
+                              value={dateWatched}
                               onChange={ (e) => setDateWatched(e.target.value) }
                             />
                             <span className="icon is-small is-left">
@@ -332,5 +351,7 @@ AwardReviewForm.propTypes = {
     title: PropTypes.string,
     releaseDate: PropTypes.string,  
     poster: PropTypes.string,
-    genre: PropTypes.array
-}
+    genre: PropTypes.array,
+    existingReview: PropTypes.object,
+    mode: PropTypes.oneOf(["create", "edit"]),
+};

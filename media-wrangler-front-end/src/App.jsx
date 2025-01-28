@@ -32,10 +32,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/reviews/create" element={<CreateReview />} />
+          <Route path="/reviews/create" element={<CreateReview mode="create" />} />
           <Route path="/reviews/view" element={<DisplayReview />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
-          <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
+          <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>
+          <Route path="/reviews/edit/:id" element={<CreateReview mode="edit" />} />   
           <Route path="/questions" element={<Discussions />} />
           <Route path="/answers/:questionId" element={<QuestionDetail />} />
         </Routes>

@@ -71,9 +71,10 @@ public class UserController {
             session.setAttribute("user", user.getId());
             System.out.println("User ID stored in session during login: " + user.getId());
             session.setMaxInactiveInterval(30 * 60);
+            UserDTO userDTO = new UserDTO(user);
             response.put("success", true);
             response.put("message", "Login successful!");
-            response.put("user", user);
+            response.put("user", userDTO);
             return ResponseEntity.ok(response);
         }
         response.put("success", false);
@@ -83,7 +84,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> loginUser( HttpSession session) {
+    public ResponseEntity<?> getUserInfo( HttpSession session) {
         System.out.println(session.getAttribute("user"));
         int userId = (int) session.getAttribute("user");
         User user = userRepository.getById(userId);

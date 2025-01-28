@@ -7,6 +7,7 @@ import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.services.MovieReviewService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,15 +67,19 @@ public class MovieReviewController {
         }
     }
 
-//    @PutMapping("/edit/{id}")
-//    public ResponseEntity<?> updateReview(@PathVariable Long id) {
-//        if (!movieReviewRepository.existsById(id)) {
-//            throw new Error("Review not found");
-//        }
-//        try {
-//            MovieReview updatedReview = movieReviewService.updatedReview(id)
-//        }
-//    }
+    @PutMapping("/edit/{id}/{userId}")
+    public ResponseEntity<?> updateReview(@PathVariable Long id, int userId, @Valid @RequestBody MovieReviewDTO movieReviewDTO) {
+
+        try {
+            MovieReview updatedReview = movieReviewService.updatedReview(id, movieReviewDTO, userId);
+            return ResponseEntity.ok(updatedReview);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while updating the review: " + e.getMessage());
+        }
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteReview(@PathVariable Long id) {

@@ -87,22 +87,21 @@ public class MovieReviewService {
         return reviewDTOs;
     }
 
-//    public MovieReview updatedReview(Long id, int userId) {
-//        MovieReview movieReview = MovieReviewRepository.findByIdAndUserId(id, userId)
-//                .orElseThrow(() -> new IllegalArgumentException("Review not found or unauthorized"));
-//
-//        //updated dateCreated
-//        if (MovieReviewDTO.getReview() != null) movieReview.setReview(MovieReviewDTO.getReview());
-//        if (MovieReviewDTO.getDateWatched() != null) movieReview.setDateWatched(MovieReviewDTO.getDateWatched());
-//        if (MovieReviewDTO.getAward() != null) movieReview.setAward(MovieReviewDTO.getAward());
-//        if (MovieReviewDTO.getRating() != null) movieReview.setRating(MovieReviewDTO.getRating());
-//        if (MovieReviewDTO.getWatchAgain() != null) movieReview.setWatchAgain(MovieReviewDTO.getWatchAgain());
-//        if (MovieReviewDTO.getTags() != null) movieReview.setTags(MovieReviewDTO.getTags());
-//        if (MovieReviewDTO.getSpoiler() != null) movieReview.setSpoiler(MovieReviewDTO.getSpoiler());
-//
-//        return movieReviewRepository.save(movieReview);
-//
-//    }
+    public MovieReview updatedReview(Long id, MovieReviewDTO incomingMovieReview, int userId) {
+        MovieReview movieReview = movieReviewRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new IllegalArgumentException("Review not found or unauthorized"));
+
+        //updated dateCreated
+        movieReview.setReview(incomingMovieReview.getReview());
+        if (incomingMovieReview.getDateWatched() != null) movieReview.setDateWatched(incomingMovieReview.getDateWatched());
+        if (incomingMovieReview.getAward() != null) movieReview.setAward(incomingMovieReview.getAward());
+        movieReview.setRating(incomingMovieReview.getRating());
+        if (incomingMovieReview.getWatchAgain() != null) movieReview.setWatchAgain(incomingMovieReview.getWatchAgain());
+        if (incomingMovieReview.getTags() != null) movieReview.setTags(incomingMovieReview.getTags());
+        movieReview.setSpoiler(incomingMovieReview.isSpoiler());
+
+        return movieReviewRepository.save(movieReview);
+    }
 
 
 }
