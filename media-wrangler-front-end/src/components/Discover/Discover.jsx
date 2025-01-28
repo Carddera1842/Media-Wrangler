@@ -31,6 +31,8 @@ function DiscoverPage() {
 
   const [andOrChar, setAndOrChar] = useState(',')
   const [selectedGenres, setSelectedGenres] = useState('');
+  const [afterYear, setAfterYear] = useState('')
+  const [beforeYear, setBeforeYear] = useState('')
   
   const handleToggle = (id) => {
     let updatedGenres = selectedGenres.split(andOrChar).map(str => str.trim()).filter(Boolean);
@@ -53,7 +55,7 @@ function DiscoverPage() {
     try {
 
         const encodedGenres = encodeURIComponent(selectedGenres);
-        const response = await fetch(`http://localhost:8080/api/movies/discover?genres=${encodedGenres}`, {
+        const response = await fetch(`http://localhost:8080/api/movies/discover?genres=${encodedGenres}&afterYear=${afterYear}&beforeYear=${beforeYear}`, {
         });
         
         if (!response.ok) {
@@ -118,6 +120,27 @@ const handleRandomButton = () => {
         ))}
       </div>
 
+      <div className="yearRange">
+
+      </div>
+        <input
+                  type="number"
+                  value={afterYear}
+                  onChange={(e) => setAfterYear(e.target.value)}
+                  placeholder="Released After Year"
+                  min={1000}
+                  max={3000}
+                  //onKeyDown={handleKeyDown}
+              />
+        <input
+                type="number"
+                value={beforeYear}
+                onChange={(e) => setBeforeYear(e.target.value)}
+                placeholder="Released Before Year"
+                min={1000}
+                max={3000}
+                //onKeyDown={handleKeyDown}
+            />
       <div>
         <button
           onClick={() => handleRandomButton()}
