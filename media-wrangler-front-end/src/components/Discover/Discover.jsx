@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import MovieCard from "../MoviePosterCard/PosterCard";
 import "./Discover.css";
+import { useNavigate } from 'react-router-dom';
 
 function DiscoverPage() {
   const genres = [
@@ -25,6 +26,9 @@ function DiscoverPage() {
     { id: 10752, name: "War" },
     { id: 37, name: "Western" }
   ];
+
+  const navigate = useNavigate();
+
   const [andOrChar, setAndOrChar] = useState(',')
   const [selectedGenres, setSelectedGenres] = useState('');
   
@@ -40,6 +44,7 @@ function DiscoverPage() {
   
   const [movieData, setMovieData] = useState([]);
   const [error, setError] = useState(null);
+  const [randomId, setrandomId] = useState(null)
 
   const handleDiscover = async () => {
     setMovieData([]); 
@@ -56,9 +61,12 @@ function DiscoverPage() {
         }
 
         const data = await response.json();
-        console.log('Fetched movie data:', data);
         setMovieData(data); 
-        setError(null);    
+        setError(null);
+        
+        if (movieData.length != 0) {
+          setrandomId(movieData[Math.floor(Math.random()*movieData.length)].id) 
+        }
     } catch (error) {
         setError(error.message); 
         setMovieData(null); 
@@ -79,6 +87,10 @@ const handleToggleButton = () => {
   });
 };
 
+const handleRandomButton = () => {
+  navigate(`/movies/${randomId}`);
+};
+
   return (
     <div className="container">
       <h1>Discover a Movie to Watch</h1>
@@ -90,7 +102,7 @@ const handleToggleButton = () => {
             handleDiscover();
           }}
         >
-          {andOrChar === "," ? "Any Movies With These Genres" : "Movie Has Each Genre"}
+          {andOrChar === "|" ? "Any Movies With These Genres" : "Movie Has Each Genre"}
         </button>
       </div>
 
@@ -104,6 +116,14 @@ const handleToggleButton = () => {
             {genre.name}
           </button>
         ))}
+      </div>
+
+      <div>
+        <button
+          onClick={() => handleRandomButton()}
+        >
+          Pick me a Movie!
+        </button>
       </div>
 
       <div id="discovered-movies">

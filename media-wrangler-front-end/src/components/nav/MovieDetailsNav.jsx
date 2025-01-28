@@ -107,7 +107,7 @@ function MovieDetailsNav({ movieDetails }) {
         two: renderWithLineBreaks(tabTwoCrewString),
         three: "Movie details go here",
         four: "Release dates go here",
-        five: "Genres go here"
+        five: movieDetails.genreList.join(', ')
     };
   
     return (
