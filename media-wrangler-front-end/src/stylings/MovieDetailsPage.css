@@ -100,3 +100,8 @@
   } 
 
   
+  /* User reviews & comments (MovieReviewListCard) */
+
+  .comments-section {
+    margin: 20px;
+  }

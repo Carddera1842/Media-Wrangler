@@ -65,12 +65,14 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
     const userCommentData = { 
       userComment,
       userId,
-      movieReviewId,      
+      movieReviewId, 
+      username     
     }
 
     console.log("Submitting user comment for:", userCommentData);
-    console.log("user that's being logged: ", userCommentData.user);
+    console.log("user that's being logged: ", userCommentData.userId);
     console.log("this comes after the userCommentData", userCommentData.movieReviewId);
+    console.log("this is the username: ", username);
     
   
   
@@ -79,7 +81,16 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
       const responseMessage = await submitUserComment(userCommentData); 
 
       if (responseMessage === "Success") {
-        console.log("Comment saved successfully!")
+        console.log("Comment saved successfully!");
+
+        const newComment = {
+          id: Date.now(),
+          username: user.username,
+          userComment
+        };
+
+        //adding the newComment to the arrayList by using spreader on the most updated state of userComments
+        setUserComments((prevComments) => [...prevComments, newComment])
       
 
       } else {
@@ -139,12 +150,12 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
 
          <div className="comments-section">
     {userComments.length === 0 ? (
-      <Typography color="white">No comments yet.</Typography>
+      <Typography margin="20px" color="white">No comments yet.</Typography>
     ) : (
       userComments.map((comment) => (
         <div key={comment.id} className="comment-card">
           <Typography variant="body2" color="white">
-            {comment.username}: {comment.userComment}
+            <b>{comment.username}</b>: {comment.userComment}
           </Typography>
         </div>
       ))
