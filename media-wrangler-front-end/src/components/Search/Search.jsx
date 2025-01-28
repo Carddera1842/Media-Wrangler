@@ -44,18 +44,18 @@ function Search() {
 
     return (
         <div>
-            <h1>Search for Movies</h1>
+            <h1 className='search-title'>Search for Movies</h1>
 
-            <div className="button-container">
+            <div className="search-button-container">
                 <button 
                     onClick={() => setSearchType('title')} 
-                    className={`button ${searchType === 'title' ? 'selected' : ''}`}
+                    className={`search-title-button ${searchType === 'title' ? 'selected' : ''}`}
                 >
                     Search by Title
                 </button>
                 <button 
                     onClick={() => setSearchType('person')} 
-                    className={`button ${searchType === 'person' ? 'selected' : ''}`}
+                    className={`search-title-button ${searchType === 'person' ? 'selected' : ''}`}
                 >
                     Search by Person
                 </button>
@@ -67,6 +67,7 @@ function Search() {
                 onChange={(e) => setMovieSearch(e.target.value)}
                 placeholder="Enter movie title"
                 onKeyDown={handleKeyDown}
+                className='search-input'
             />
             <button className='search-button' onClick={handleSearch}>Search</button>
 

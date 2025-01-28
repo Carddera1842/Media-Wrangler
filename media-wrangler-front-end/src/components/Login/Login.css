@@ -20,6 +20,19 @@
     box-sizing: border-box;  
     color: black;
   }
+
+  .login-field-row {
+    display: flex;
+    gap: 1.5rem; 
+  }
+  
+  .login-field-row .login-field {
+    flex: 1; 
+  }
+
+  .loginr-field-row .login-input {
+    width: 100%; 
+  }
   
   .login-logo {
     display: block;
@@ -38,7 +51,7 @@
     margin-bottom: 1rem;
   }
   
-  .input {
+  .login-input {
     font-size: 1rem;
     padding: 0.75rem;
     border: 1px solid #ddd;
@@ -47,7 +60,7 @@
     box-sizing: border-box;
   }
   
-  .input:focus {
+  .login-input:focus {
     outline: none;
     border-color: #9e5231;
     box-shadow: 0 0 0 2px rgba(158, 82, 49, 0.3);
@@ -73,3 +86,26 @@
     width: 50%;
   }
   
+  .login-button-container {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px;
+  }
+  
+  
+  .rlogin-button {
+    font-size: 1rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #798478;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 50%;
+    text-align: center;
+  }
+  
+  .login-button:hover {
+    background-color: #616a61;
+  }
