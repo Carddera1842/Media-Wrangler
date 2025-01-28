@@ -46,23 +46,6 @@ function InteractionsCard({ movieDetails }) {
     }, [movieId]);
 
 
-    // useEffect(() => {
-    //     async function checkRatedStatus() {
-    //         const rated = await checkIfUserRatedMovie(movieId, userId);
-    //         setRated(rated);
-
-    //         if (isRated) {
-    //             const userRating = await fetchMovieRating(movieId);
-    //             setRating(userRating.rating);
-    //             console.log("user rating : ", userRating);
-    //         } else {
-    //             console.log("User rating not found");
-    //         }
-
-    //     };
-    //     checkRatedStatus();
-    // }, [movieId, userId, isRated]);
-
       useEffect(() => {
         async function checkRatedStatus() {
           try {
@@ -260,7 +243,7 @@ function InteractionsCard({ movieDetails }) {
                 sx={{
                     backgroundColor: "rgba(19, 19, 20, 0.81)",  
                     borderRadius: '8px',   
-                    border: "3px solid rgba(5, 70, 105, 0.93)"      
+                    border: "3px solid rgba(17, 144, 213, 0.93)"      
                 }}
             >
                 {buttons}

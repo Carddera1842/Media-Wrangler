@@ -4,12 +4,15 @@ package com.mediawrangler.media_wrangler.controllers;
 import com.mediawrangler.media_wrangler.data.CommentRepository;
 import com.mediawrangler.media_wrangler.dto.CommentDTO;
 import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
+import com.mediawrangler.media_wrangler.dto.RatingDTO;
 import com.mediawrangler.media_wrangler.models.Comment;
+import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.services.CommentService;
 
 import java.util.List;
 import java.util.Optional;
 
+import com.mediawrangler.media_wrangler.services.MovieReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +27,20 @@ public class CommentController {
     @Autowired
     private final CommentService commentService;
 
-
-    //Based off other branches, setup Service here
     @Autowired
-    private final CommentRepository commentRepository;
+    private final MovieReviewService movieReviewService;
 
-    public CommentController(CommentService commentService, CommentRepository commentRepository) {
+
+     public CommentController(CommentService commentService, MovieReviewService movieReviewService) {
         this.commentService = commentService;
-        this.commentRepository = commentRepository;
-    }
+        this.movieReviewService = movieReviewService;
+     }
 
-    @PostMapping("/movies")
-    public ResponseEntity<?> saveComment(@RequestBody Comment comment) {
+    // for saving a comment...
+    @PostMapping("/create")
+    public ResponseEntity<?> createComment(@RequestBody CommentDTO commentDTO) {
         try {
-            Comment savedComment = commentService.saveComment(comment); 
+            CommentDTO savedComment = commentService.addComment(commentDTO);
             return new ResponseEntity<>("Comment Submission successful", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while saving the comment", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,7 +48,9 @@ public class CommentController {
     }
 
 
-    @GetMapping("/movie-review/{movieReviewId}")
+
+    // for rendering all comments associated with a movie review ...
+    @GetMapping("/review/{movieReviewId}")
     public ResponseEntity<List<CommentDTO>> getCommentsByMovieReviewId(@PathVariable Long movieReviewId) {
         List<CommentDTO> comments = commentService.findCommentsByMovieReviewId(movieReviewId);
         return ResponseEntity.ok(comments);

@@ -1,22 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardContent, Typography, Button, CardActions, Avatar, Paper, Divider, TextField } from '@mui/material';
-import submitUserComment from "../../Services/CommentService";
 import { useAuth } from '../../Services/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import AvatarHeader from '../Profile/AvatarHeader';
+import { submitUserComment, fetchCommentsByMovieReviewId } from '../../Services/CommentService';
 
 
-const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title }) => {
+
+const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId }) => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
   const [userComments, setUserComments] = useState([]);
   const [error, setError] = useState('');
+ 
 
 
   const { user } = useAuth();
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    async function fetchComments() {
+      const data = await fetchCommentsByMovieReviewId(movieReviewId);  
+      setUserComments(data);  
+      console.log("here is the data from the fetchComments", data);
+    }
+  
+    fetchComments();
+  }, [movieReviewId]);  
 
 
 
@@ -47,20 +60,38 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
       alert("You must write a comment or press cancel");
       return;
     }
-     
+    
+    const userId = user.id;
+
     const userCommentData = { 
       userComment,
-      user
+      userId,
+      movieReviewId, 
+      username     
     }
 
     console.log("Submitting user comment for:", userCommentData);
+    console.log("user that's being logged: ", userCommentData.userId);
+    console.log("this comes after the userCommentData", userCommentData.movieReviewId);
+    console.log("this is the username: ", username);
+    
+  
   
 
     try {
       const responseMessage = await submitUserComment(userCommentData); 
 
       if (responseMessage === "Success") {
-        console.log("Comment saved successfully!")
+        console.log("Comment saved successfully!");
+
+        const newComment = {
+          id: Date.now(),
+          username: user.username,
+          userComment
+        };
+
+        //adding the newComment to the arrayList by using spreader on the most updated state of userComments
+        setUserComments((prevComments) => [...prevComments, newComment])
       
 
       } else {
@@ -89,7 +120,7 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
             padding: "10px",
             margin: "20px auto",        
         }} >
-      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid rgba(5, 70, 105, 0.93)", background: "rgba(19, 19, 20, 0.81)" }}>
+      <Card sx={{ maxWidth: 1200, marginBottom: 2, border: "3px solid rgba(17, 144, 213, 0.93)", background: "rgba(19, 19, 20, 0.81)" }}>
         <CardContent>     
           <div className="avatar-username-rating-container ">     
             <AvatarHeader 
@@ -113,6 +144,28 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
           <br />                          
           <Typography variant="body2" color="white" > { review } </Typography>
         </CardContent>
+
+
+
+{/*  Okay, so I got the mapping to work, but I want to may a better display for the comments */}
+
+         <div className="comments-section">
+    {userComments.length === 0 ? (
+      <Typography margin="20px" color="white">No comments yet.</Typography>
+    ) : (
+      userComments.map((comment) => (
+        <div key={comment.id} className="comment-card">
+          <Typography variant="body2" color="white">
+            <b>{comment.username}</b>: {comment.userComment}
+          </Typography>
+        </div>
+      ))
+    )}
+  </div> 
+
+
+
+
         <CardActions>
           <Button size="small" onClick={handleCommentClick} >Comment</Button>
         </CardActions>
