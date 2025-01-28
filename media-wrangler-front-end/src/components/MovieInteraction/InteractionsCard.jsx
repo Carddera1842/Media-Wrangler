@@ -23,15 +23,18 @@ function InteractionsCard({ movieDetails }) {
     const navigate = useNavigate();
 
     const movieId = movieDetails.id;
-    const userId = user.id;
+    const userId = user ? user.id : null;
+
 
 
     useEffect(() => {
-        async function checkLikeStatus() {
-            const liked = await checkIfUserLikedMovie(movieId, userId);
-            setLiked(liked);
-        };
-        checkLikeStatus();
+        if (userId) { 
+            async function checkLikeStatus() {
+                const liked = await checkIfUserLikedMovie(movieId, userId);
+                setLiked(liked);
+            };
+            checkLikeStatus();
+        }
     }, [movieId, userId]);
 
 
@@ -45,6 +48,7 @@ function InteractionsCard({ movieDetails }) {
 
 
     useEffect(() => {
+        if (userId) { 
         async function checkRatedStatus() {
             const rated = await checkIfUserRatedMovie(movieId, userId);
             setRated(rated);
@@ -59,10 +63,17 @@ function InteractionsCard({ movieDetails }) {
             
         };
         checkRatedStatus();
+    }
     }, [movieId, userId, isRated]);  
 
 
     async function handleRatingChange(e) {
+        if (!userId) {
+            alert("You must be logged in to rate movies.");
+            navigate("/login");
+            return;
+        }
+
         const newRating = parseFloat(e.target.value);
         setRating(newRating);
     
@@ -93,6 +104,10 @@ function InteractionsCard({ movieDetails }) {
     
 
     async function handleLikeClick() {
+        if(!user) {
+            alert("You must be logged in to like a movie");
+            navigate('/login');
+        }
         setLiked(!isLiked);
         setLikeCount(likeCount + 1);
    

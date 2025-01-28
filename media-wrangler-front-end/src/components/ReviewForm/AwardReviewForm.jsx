@@ -178,6 +178,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
           movieId: movieId,
           userId: user.id, 
           id: ratingId,
+          rating
         
         },
         tags,

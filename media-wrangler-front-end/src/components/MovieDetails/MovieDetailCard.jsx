@@ -55,7 +55,7 @@ function MovieDetailCard({ movieDetails }) {
                 }}
             >
             <div className="movie-detail-container">
-                <Card sx={{maxWidth: 1000, background:"rgba(19, 19, 20, 0.81)", borderRadius:"14px", border:"3px solid rgba(5, 70, 105, 0.93)"}} variant="outlined">
+                <Card sx={{maxWidth: 1000, background:"rgba(19, 19, 20, 0.81)", borderRadius:"14px", border:"3px solid rgba(17, 144, 213, 0.93)"}} variant="outlined">
                     <div className="movie-info-container">
                         <div >
                         <CardActionArea >
