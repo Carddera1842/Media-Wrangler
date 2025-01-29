@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import JournalReviewCard from "./JournalReviewCard";
 import { fetchMovieReview } from "../../Services/MovieReviewService";
+import '../../stylings/JournalDisplayReview.css';
 
 
 
@@ -41,24 +42,25 @@ export default function JournalDisplayReview() {
 
     return (
         <>
-            <h1>Movie Review:</h1>
-            <JournalReviewCard 
-                title = { review.title }
-                fullPosterURL = { review.fullPosterURL }
-                watchAgain = { review.watchAgain }
-                tags = { review.tags }
-                rating = { review.ratingValue }
-                isSpoiler = { review.isSpoiler }
-                review = { review.review }
-                dateWatched = { formattedDate }
-                award = { review.award }
-                yearReleased = { review.yearReleased }
-                username = { review.username }
-                firstname = { review.username }
-                lastname = { review.lastname }  
-                userId = { review.userId }
-            />
-             
+            <div className='user-review-page-background '>
+                <h1>Movie Review:</h1>
+                <JournalReviewCard 
+                    title = { review.title }
+                    fullPosterURL = { review.fullPosterURL }
+                    watchAgain = { review.watchAgain }
+                    tags = { review.tags }
+                    rating = { review.ratingValue }
+                    isSpoiler = { review.isSpoiler }
+                    review = { review.review }
+                    dateWatched = { formattedDate }
+                    award = { review.award }
+                    yearReleased = { review.yearReleased }
+                    username = { review.username }
+                    firstname = { review.username }
+                    lastname = { review.lastname }  
+                    userId = { review.userId }
+                />
+            </div>
         </>
     );
  

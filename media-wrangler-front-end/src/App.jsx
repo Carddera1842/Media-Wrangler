@@ -8,8 +8,7 @@ import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import Profile from './components/Profile/Profile'
 import CreateReview from './components/ReviewForm/CreateReview'
-import DisplayReview from './components/ReviewDisplay/DisplayReview'
-import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview'
+import JournalDisplayReview from './components/Journal/JournalDisplayReview'
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
@@ -35,7 +34,6 @@ function App() {
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reviews/create" element={<CreateReview />} />
-          <Route path="/reviews/view" element={<DisplayReview />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
           <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
           <Route path="/questions" element={<Discussions />} />

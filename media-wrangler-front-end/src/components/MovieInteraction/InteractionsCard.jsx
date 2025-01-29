@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAuth } from '../../Services/AuthContext';
+import AddToListMenu from "../InteractiveSoloComponents/AddToListButton";
 import { submitMovieLike, removeMovieLike, checkIfUserLikedMovie, fetchLikeCount } from '../../Services/MovieLikeService';
 import { submitMovieRating, updateMovieRating, checkIfUserRatedMovie, fetchMovieRating } from '../../Services/RatingService';
 import Rating from '@mui/material/Rating';
@@ -16,25 +17,26 @@ function InteractionsCard({ movieDetails }) {
 
     const [rating, setRating] = useState(0);
     const [isLiked, setLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(0);    
+    const [likeCount, setLikeCount] = useState(0);
     const [isRated, setRated] = useState(false);
+    const [error, setError] = useState("");
     
     const { user } = useAuth();
     const navigate = useNavigate();
 
     const movieId = movieDetails.id;
-    const userId = user ? user.id : null;
-
+    const userId = user? user.id : null;
 
 
     useEffect(() => {
-        if (userId) { 
-            async function checkLikeStatus() {
-                const liked = await checkIfUserLikedMovie(movieId, userId);
-                setLiked(liked);
-            };
-            checkLikeStatus();
-        }
+        async function checkLikeStatus() {
+            if(!userId){
+                return;
+            }
+            const liked = await checkIfUserLikedMovie(movieId, userId);
+            setLiked(liked);
+        };
+        checkLikeStatus();
     }, [movieId, userId]);
 
 
@@ -47,45 +49,56 @@ function InteractionsCard({ movieDetails }) {
     }, [movieId]);
 
 
-    useEffect(() => {
-        if (userId) { 
+      useEffect(() => {
         async function checkRatedStatus() {
-            const rated = await checkIfUserRatedMovie(movieId, userId);
-            setRated(rated);
-
-            if (isRated) {
-                const userRating = await fetchMovieRating(movieId);
-                setRating(userRating.rating);
-                console.log("user rating : ", userRating);
-            } else {
-                console.log("User rating not found");
+            if (!userId){
+                return;
             }
-            
-        };
-        checkRatedStatus();
-    }
-    }, [movieId, userId, isRated]);  
+
+            try {
+                const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
+                setRated(ratedStatus);
+        
+                if (ratedStatus) {
+                const userRating = await fetchMovieRating(movieId, userId);
+                if (userRating) {
+                    setRating(userRating.rating);
+                    console.log("User rating now set to :", userRating);
+                    console.log("extract rating value from rating: ", userRating.rating);
+                
+                
+                } else {
+                    setError("Could not fetch the rating.");
+                }
+                }
+            } catch (error) {
+                console.error("Error checking rating status:", error);
+                setError("Error fetching rating status.");
+            }
+            }
+        
+            checkRatedStatus();
+        }, [movieId, userId]);
 
 
     async function handleRatingChange(e) {
         if (!userId) {
-            alert("You must be logged in to rate movies.");
+            alert("You must be logged in to Rate a movie.");
             navigate("/login");
             return;
         }
-
         const newRating = parseFloat(e.target.value);
         setRating(newRating);
-    
+
         const data = {
             movieId,
             userId,
             rating: newRating,
         };
-    
+
         try {
             const hasRated = await checkIfUserRatedMovie(movieId, userId);
-    
+
             if (hasRated) {
                 const result = await updateMovieRating(data);
                 if (result === "Success") {
@@ -101,19 +114,20 @@ function InteractionsCard({ movieDetails }) {
             console.error("Error occurred while handling rating:", error);
         }
     }
-    
+
 
     async function handleLikeClick() {
-        if(!user) {
-            alert("You must be logged in to like a movie");
-            navigate('/login');
+        if (!userId) {
+            alert("You must be logged in to Like a movie.");
+            navigate("/login");
+            return;
         }
         setLiked(!isLiked);
         setLikeCount(likeCount + 1);
-   
+
         const data = {
             movieId,
-            userId, 
+            userId,
         }
 
         try {
@@ -121,38 +135,40 @@ function InteractionsCard({ movieDetails }) {
                 const result = await submitMovieLike(data);
                 if (result === "Success") {
                     console.log("Success liking the movie:", result);
-                    setLiked(true);  
-                    setLikeCount(likeCount + 1);  
+                    setLiked(true);
+                    setLikeCount(likeCount + 1);
                 }
             } else {
                 const result = await removeMovieLike(movieId, userId);
                 if (result === "Success") {
                     console.log("Success removing the like movie:", result);
-                    setLiked(false);  
-                    setLikeCount(likeCount - 1);  
-                }            
+                    setLiked(false);
+                    setLikeCount(likeCount - 1);
+                }
             }
         } catch (error) {
             console.error("An error occurred:", error);
-            setLiked(!isLiked);  
-            setLikeCount(isLiked ? likeCount + 1 : likeCount - 1);  
+            setLiked(!isLiked);
+            setLikeCount(isLiked ? likeCount + 1 : likeCount - 1);
         }
-    }   
+    }
 
 
     function handleWriteReviewClick() {
-        if(!user) {
+        if(!userId) {
             alert("You must be logged in to write a review");
             navigate('/login');
+        } else {
+            navigate("/reviews/create", {
+                state: { movieDetails, user}
+            });
         }
-        navigate("/reviews/create", {
-            state: { movieDetails, user}
-        });
+
     }
 
 
     function handleJournalClick() {
-        if(!user) {
+        if(!userId) {
             alert("You must be logged in to visit your journal");
             navigate('/login');
         }
@@ -170,18 +186,18 @@ function InteractionsCard({ movieDetails }) {
                 <Rating
                     name="half-rating" 
                     title={ movieDetails.title }
-                    value={ rating } 
+                    value={ rating }
                     precision={0.5} 
                     onChange={ handleRatingChange }
                     sx={{
                         '& .MuiRating-iconFilled': {
-                            color: '#ff9800', 
+                            color: '#ff9800',
                         },
                         '& .MuiRating-iconEmpty': {
-                            color: '#e0e0e0', 
+                            color: '#e0e0e0',
                         },
                         '& .MuiRating-iconHover': {
-                            color: '#ffcc00', 
+                            color: '#ffcc00',
                         },
                     }}
                 />
@@ -214,11 +230,10 @@ function InteractionsCard({ movieDetails }) {
             </div>
             </Button>,
             <Button key="four" className="button-container">
-                <div className="button-content">
-                    <span className="button-label"> Add to Lists </span>
-                    <AddIcon />
-                </div>
-            </Button>,
+            <div className="button-content">
+                <AddToListMenu movieId={movieDetails.id} />
+            </div>
+        </Button>,
             <Button 
                 key="five" 
                 className="button-container"
@@ -246,8 +261,8 @@ function InteractionsCard({ movieDetails }) {
                 aria-label="Vertical button group"
                 sx={{
                     backgroundColor: "rgba(19, 19, 20, 0.81)",  
-                    borderRadius: '14px',   
-                    border: "3px solid rgba(5, 70, 105, 0.93)"        
+                    borderRadius: '8px',   
+                    border: "3px solid rgba(17, 144, 213, 0.93)"      
                 }}
             >
                 {buttons}

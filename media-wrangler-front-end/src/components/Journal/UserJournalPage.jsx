@@ -14,7 +14,6 @@ import Rating from '@mui/material/Rating';
 import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone';
 
 
-
 function UserJournalPage() {
 
     const { userId } = useParams();
@@ -61,7 +60,7 @@ function UserJournalPage() {
 
     return (
         <>
-        <div>            
+        <div className='user-journal-page-background'>            
             <Paper 
             elevation={0} 
             sx={{

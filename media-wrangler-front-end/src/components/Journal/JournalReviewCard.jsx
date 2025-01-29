@@ -1,16 +1,13 @@
 import React from 'react'
 import { Card, CardContent, Typography, CardActions, Button, Divider, Stack, Paper, Box } from '@mui/material';
-
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import "./JournalReviewCard.css";
+import "../../stylings/JournalDisplayReview.css";
 import PropType from 'prop-types';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AvatarHeader from '../Profile/AvatarHeader';
 import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-
 
 
 
@@ -28,60 +25,62 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
             elevation={0}
             sx={{
                 maxWidth: 1200,
-                background: "#004d40",
+                background: "rgba(29, 111, 104, 0.8)",
                 margin: "30px auto",
                 padding: "20px",
                 transform: "scale(.9)",
                 transition: "transform 0.3s, box-shadow 0.3s",
                 "&:hover": {
-                    transform: "scale(1.1)",
+                    transform: "scale(1)",
                     boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)"
                 }
             }} >
              <div className="user-review-container">
-                <Card sx={{ border: "4px solid #ff8f00" }} variant="outlined">
+                <Card sx={{ border: "4px solid rgb(84, 5, 71)", background:"rgba(19, 19, 20, 0.81)" }} variant="outlined">
                     <div className="movie-info-container">
                         <div>                       
-                        <Typography variant="h5" component="div" className="username" color="text.secondary">
-                            <AvatarHeader 
-                            firstname = { firstname }
-                            lastname = { lastname }
-                            />                       
-                            <span
-                                onClick={() => navigate(`/profile/${userId}`)}
-                                style={{
-                                    color: "#004d40",
-                                    fontWeight: "bold",
-                                    fontSize: "22px",
-                                    cursor: "pointer",
-                                    textDecoration: "underline",
-                                    textDecorationThickness: "1px",
-                                    textDecorationColor: "#ff8f00", 
-                                    textUnderlineOffset: "3px",
-                                }}
-                            >
-                                { username }
-                            </span>  
-                        </Typography>
-                            <Typography variant="h5" component="div" className="username" color="text.secondary">  
-                            <div>
-                                <img style={{height: "300px", width: "auto", margin: "10px"}} src={ fullPosterURL } alt="movie poster" />
-                            </div>                 
-                        </Typography>      
-                        <Rating name="read-only" value={ rating } readOnly />             
-                        <Typography className="spoiler-alert" >                                                  
-                            {(isSpoiler && <Typography className="spoiler-alert"><PriorityHighIcon />Contains Spoilers </Typography>)}
-                        </Typography>                            
-                        </div>                                    
+                            <Typography variant="h5" component="div" className="username" color="text.secondary">
+                                <AvatarHeader 
+                                firstname = { firstname }
+                                lastname = { lastname }
+                                />                       
+                                <span
+                                    onClick={() => navigate(`/profile/${userId}`)}
+                                    style={{
+                                        color: "#004d40",
+                                        fontWeight: "bold",
+                                        fontSize: "22px",
+                                        cursor: "pointer",
+                                        textDecoration: "underline",
+                                        textDecorationThickness: "1px",
+                                        textDecorationColor: "#ff8f00", 
+                                        textUnderlineOffset: "3px",
+                                    }}
+                                >
+                                    { username }
+                                </span>  
+                            </Typography>
+                                <Typography variant="h5" component="div" className="username" color="text.secondary">  
+                                <div>
+                                    <img style={{height: "300px", width: "auto", margin: "10px"}} src={ fullPosterURL } alt="movie poster" />
+                                </div>                 
+                            </Typography> 
+                            <div style={{ textAlign: "center" }}>     
+                            <Rating name="read-only" value={ rating } readOnly />             
+                            <Typography className="spoiler-alert" >                                                  
+                                {(isSpoiler && <Typography className="spoiler-alert"><PriorityHighIcon />Contains Spoilers </Typography>)}
+                            </Typography>                            
+                            </div>  
+                        </div>                                  
                         <CardContent className="user-review">    
                             <Typography variant="h4" component="div">
                                 { title }
                                 <span style={{ fontSize: '1.5rem', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span>
-                                <hr style={{ background: isSpoiler ? "#d50000" : "teal" }} />
+                                <hr style={{ background: "rgb(255, 0, 144)" }} />
                             </Typography>
                                                                                                      
                             <Typography variant="body1" sx={{ color: 'text.primary', textAlign: 'center', fontSize: '22px' }}>
-                            You Presented the Movie with the <b> "{award}" </b> Award                           
+                            You Presented { title } with the <span style={{ color: "rgb(146, 40, 7)" }}><b> "{award}" </b></span> Award                           
                             </Typography>                            
                             <br />                                      
                             <Typography variant="body1" sx={{ color: 'black' }}  >
@@ -94,7 +93,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             </Typography>    
                             <Stack
                                 direction="row"
-                                divider={<Divider orientation="vertical" flexItem sx={{borderWidth: 1, borderColor: isSpoiler ? '#d50000' : "#00695c" }} />}
+                                divider={<Divider orientation="vertical" flexItem sx={{borderWidth: 1, borderColor: "rgb(255, 0, 144)" }} />}
                                 spacing={2}
                             >
                                 { tags.map((tag, index) => (
