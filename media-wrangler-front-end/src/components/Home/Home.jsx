@@ -52,7 +52,8 @@ const HomePage = () => {
         </div>
       </div>
       <footer className="footer">
-        <p>© {new Date().getFullYear()} Media Wrangler. All rights reserved.</p>
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        <p>© {new Date().getFullYear()} Media Wrangler</p>
         <div className="about-us">
           <a href="/about-us">About PurpleTONE</a>
         </div>
