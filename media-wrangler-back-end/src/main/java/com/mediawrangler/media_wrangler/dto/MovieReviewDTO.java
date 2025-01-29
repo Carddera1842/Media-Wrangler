@@ -34,7 +34,7 @@ public class MovieReviewDTO {
     private String firstname;
     private String lastname;
 
-    private double ratingId;
+    private double ratingValue;
 
 
 
@@ -53,14 +53,14 @@ public class MovieReviewDTO {
     }
 
 
-    public MovieReviewDTO(LocalDate dateWatched, String review, String award, double ratingId, String watchAgain, boolean isSpoiler,
+    public MovieReviewDTO(LocalDate dateWatched, String review, String award, double ratingValue, String watchAgain, boolean isSpoiler,
                           List<String> tags, String title, String fullPosterURL, String yearReleased, Long movieId, Long id,
                           int userId, String username, String firstname, String lastname) {
         this.dateCreated = LocalDate.now();
         this.dateWatched = dateWatched;
         this.review = review;
         this.award = award;
-        this.ratingId = ratingId;
+        this.ratingValue = ratingValue;
         this.watchAgain = watchAgain;
         this.tags = tags;
         this.title = title;
@@ -119,12 +119,12 @@ public class MovieReviewDTO {
     }
 
     @NotNull(message = "You must give movie a star rating")
-    public double getRatingId() {
-        return ratingId;
+    public double getRatingValue() {
+        return ratingValue;
     }
 
-    public void setRatingId(@NotNull(message = "You must give movie a star rating") double ratingId) {
-        this.ratingId = ratingId;
+    public void setRatingValue(@NotNull(message = "You must give movie a star rating") double ratingValue) {
+        this.ratingValue = ratingValue;
     }
 
     public String getWatchAgain() {
