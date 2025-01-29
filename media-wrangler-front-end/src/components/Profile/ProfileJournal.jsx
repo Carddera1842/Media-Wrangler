@@ -129,7 +129,7 @@ function UserJournalPage() {
                                     </StyledTableCell>
                                     <StyledTableCell align="right">{review.yearReleased}</StyledTableCell>
                                     <StyledTableCell align="right">
-                                        <Rating name="read-only" value={ review.rating } readOnly /> 
+                                        <Rating name="read-only" value={ review.ratingValue } readOnly /> 
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
                                         { review.watchAgain }
