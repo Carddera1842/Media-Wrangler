@@ -68,7 +68,7 @@ function MovieDetailsPage() {
             reviews.map((review) => (
           <MovieReviewListCard
             key = { review.id }
-            rating = { review.rating }
+            rating = { review.ratingValue }
             award = { review.award }
             review = { review.review } 
             authorId = { review.userId }

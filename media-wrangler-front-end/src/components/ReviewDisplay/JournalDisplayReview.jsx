@@ -47,7 +47,7 @@ export default function JournalDisplayReview() {
                 fullPosterURL = { review.fullPosterURL }
                 watchAgain = { review.watchAgain }
                 tags = { review.tags }
-                rating = { review.rating }
+                rating = { review.ratingValue }
                 isSpoiler = { review.isSpoiler }
                 review = { review.review }
                 dateWatched = { formattedDate }
