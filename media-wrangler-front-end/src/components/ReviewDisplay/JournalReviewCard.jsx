@@ -7,7 +7,7 @@ import PropType from 'prop-types';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AvatarHeader from '../Profile/AvatarHeader';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
@@ -17,8 +17,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 export default function JournalReviewCard({ title, fullPosterURL, watchAgain, tags, rating, isSpoiler, review, dateWatched, award, yearReleased, username, lastname, firstname, userId }) {
 
     const navigate = useNavigate();
+    const { id } = useParams();
 
-
+    function handleEditClick() {
+        navigate(`/reviews/edit/${id}`);
+    };
+    
 
 
     return (
@@ -117,7 +121,8 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                     </div>                
                     <CardActions>
                         <Button
-                            size="small">Edit Review</Button>
+                            size="small"
+                            onClick={ handleEditClick }>Edit Review</Button>
                         <Button
                             size="small" color="error" >Delete Review</Button>
                     </CardActions>                          

@@ -101,5 +101,24 @@ import axios from "axios";
         }
     };
 
-export { submitMovieReview, fetchMovieReview, fetchMovieReviewsByUser, fetchMovieDetails, fetchMovieReviewsByMovieId };
+
+    async function fetchMovieReviewByUserIdAndMovieReviewId(id, userId) {
+        try {
+            const response = await axios.get(`http://localhost:8080/reviews/edit/${id}/${userId}`, { withCredentials: true });
+    
+            if (response.status === 200) {
+                const reviewData = response.data;
+                console.log('Review data:', reviewData);
+                return reviewData;
+            } else {
+                return "Review not found or error occurred. Please try again";
+            }
+        } catch (error) {
+            console.log("Error: ", error);
+            return "An error occurred. Please try again";
+        }
+    };
+    
+
+export { submitMovieReview, fetchMovieReview, fetchMovieReviewsByUser, fetchMovieDetails, fetchMovieReviewsByMovieId, fetchMovieReviewByUserIdAndMovieReviewId };
 
