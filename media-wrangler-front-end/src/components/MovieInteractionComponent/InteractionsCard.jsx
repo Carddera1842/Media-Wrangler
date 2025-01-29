@@ -25,11 +25,14 @@ function InteractionsCard({ movieDetails }) {
     const navigate = useNavigate();
 
     const movieId = movieDetails.id;
-    const userId = user.id;
+    const userId = user? user.id : null;
 
 
     useEffect(() => {
         async function checkLikeStatus() {
+            if(!userId){
+                return;
+            }
             const liked = await checkIfUserLikedMovie(movieId, userId);
             setLiked(liked);
         };
@@ -48,33 +51,42 @@ function InteractionsCard({ movieDetails }) {
 
       useEffect(() => {
         async function checkRatedStatus() {
-          try {
-            const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
-            setRated(ratedStatus);
-    
-            if (ratedStatus) {
-              const userRating = await fetchMovieRating(movieId, userId);
-              if (userRating) {
-                setRating(userRating.rating);
-                console.log("User rating now set to :", userRating);
-                console.log("extract rating value from rating: ", userRating.rating);
-              
-               
-              } else {
-                setError("Could not fetch the rating.");
-              }
+            if (!userId){
+                return;
             }
-          } catch (error) {
-            console.error("Error checking rating status:", error);
-            setError("Error fetching rating status.");
-          }
-        }
-    
-        checkRatedStatus();
-      }, [movieId, userId]);
+
+            try {
+                const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
+                setRated(ratedStatus);
+        
+                if (ratedStatus) {
+                const userRating = await fetchMovieRating(movieId, userId);
+                if (userRating) {
+                    setRating(userRating.rating);
+                    console.log("User rating now set to :", userRating);
+                    console.log("extract rating value from rating: ", userRating.rating);
+                
+                
+                } else {
+                    setError("Could not fetch the rating.");
+                }
+                }
+            } catch (error) {
+                console.error("Error checking rating status:", error);
+                setError("Error fetching rating status.");
+            }
+            }
+        
+            checkRatedStatus();
+        }, [movieId, userId]);
 
 
     async function handleRatingChange(e) {
+        if (!userId) {
+            alert("You must be logged in to Rate a movie.");
+            navigate("/login");
+            return;
+        }
         const newRating = parseFloat(e.target.value);
         setRating(newRating);
 
@@ -105,6 +117,11 @@ function InteractionsCard({ movieDetails }) {
 
 
     async function handleLikeClick() {
+        if (!userId) {
+            alert("You must be logged in to Like a movie.");
+            navigate("/login");
+            return;
+        }
         setLiked(!isLiked);
         setLikeCount(likeCount + 1);
 
@@ -138,18 +155,20 @@ function InteractionsCard({ movieDetails }) {
 
 
     function handleWriteReviewClick() {
-        if(!user) {
+        if(!userId) {
             alert("You must be logged in to write a review");
             navigate('/login');
+        } else {
+            navigate("/reviews/create", {
+                state: { movieDetails, user}
+            });
         }
-        navigate("/reviews/create", {
-            state: { movieDetails, user}
-        });
+
     }
 
 
     function handleJournalClick() {
-        if(!user) {
+        if(!userId) {
             alert("You must be logged in to visit your journal");
             navigate('/login');
         }
