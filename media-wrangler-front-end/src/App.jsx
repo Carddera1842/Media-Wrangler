@@ -18,6 +18,7 @@ import ComingSoon from './components/UpcomingMovies/UpcomingReleases.jsx'
 import QuestionDetail from './components/Discussions/Answers.jsx'
 import Discussions from './components/Discussions/Discussions.jsx'
 import DiscoverPage from './components/Discover/DiscoverPage.jsx'
+import AboutUs from './components/PurpleTONE/PurpleTONE.jsx'
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/questions" element={<Discussions />} />
           <Route path="/answers/:questionId" element={<QuestionDetail />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/about-us" element={<AboutUs />} />
         </Routes>
       </div>
     </ListProvider>
