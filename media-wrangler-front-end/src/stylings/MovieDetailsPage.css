@@ -77,7 +77,16 @@
 }
 
 
+/* User reviews & comments (MovieReviewListCard) */
 
+.comments-section {
+  margin: 20px;
+  color: white;
+}
+
+.movie-review-info {
+  color: white;
+}
 
 
 
@@ -100,8 +109,3 @@
   } 
 
   
-  /* User reviews & comments (MovieReviewListCard) */
-
-  .comments-section {
-    margin: 20px;
-  }

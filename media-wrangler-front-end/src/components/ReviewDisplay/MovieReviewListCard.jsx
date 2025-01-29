@@ -8,7 +8,7 @@ import { submitUserComment, fetchCommentsByMovieReviewId } from '../../Services/
 
 
 
-const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId }) => {
+const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId, dateWatched }) => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
@@ -108,6 +108,11 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
     }
   };
 
+  const formattedDate = new Date(dateWatched).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+});
 
 
   return (
@@ -135,33 +140,39 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
           <Divider sx={{
                       marginBottom: "20px",
                       backgroundColor: "white", 
-                      height: "2px", 
+                      height: "1px", 
                     }}/>
-          <Typography sx={{color: "white"}}>
-            { username } Presented { title } with the <span style={{ color: "rgba(249, 79, 0, 0.55)", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
-             " {award} "</span> Award 
-          </Typography>
-          <br />                          
-          <Typography variant="body2" color="white" > { review } </Typography>
+          <div className='movie-review-info'>
+            <Typography sx={{ textAlign: "center"}}>
+              Presented { title } with the <span style={{ color: "rgba(249, 79, 0, 0.55)", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
+             "{award}"</span> Award 
+            </Typography>
+            <br />
+            <Typography variant="body2">Watched on { formattedDate }</Typography>
+            <br />                          
+            <Typography variant="body1"> { review } </Typography>
+          </div>      
         </CardContent>
-
-
-
-{/*  Okay, so I got the mapping to work, but I want to may a better display for the comments */}
-
-         <div className="comments-section">
-    {userComments.length === 0 ? (
-      <Typography margin="20px" color="white">No comments yet.</Typography>
-    ) : (
-      userComments.map((comment) => (
-        <div key={comment.id} className="comment-card">
-          <Typography variant="body2" color="white">
-            <b>{comment.username}</b>: {comment.userComment}
-          </Typography>
-        </div>
-      ))
-    )}
-  </div> 
+        <Divider sx={{
+                      margin: "15px",
+                      backgroundColor: "white", 
+                      height: "1px", 
+                    }}/>
+        <div className="comments-section">
+        <Typography variant="body2">User Comments :</Typography>
+        <br />
+          {userComments.length === 0 ? (
+          <Typography variant="body2">No comments. Be the first to comment...</Typography>
+          ) : (
+            userComments.map((comment) => (
+              <div key={comment.id} className="comment-card">
+                <Typography variant="body2">
+                  <span style={{color: "rgba(249, 79, 0, 0.55)", fontSize: "20px"}}><b>{comment.username}</b></span> : {comment.userComment}
+                </Typography>
+              </div>
+            ))
+          )}
+        </div> 
 
 
 
