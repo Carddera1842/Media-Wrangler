@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import StarIcon from "@mui/icons-material/Star";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUpcomingMovies = async () => {
+      try {
+        const apiKey = "1ae7a70b471c9eb7d389671747750ad0";
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch upcoming movies.");
+        }
+
+        const data = await response.json();
+        setUpcomingMovies(data.results);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchUpcomingMovies();
+  }, []);
 
   return (
     <>
@@ -19,6 +44,8 @@ const HomePage = () => {
                 </div>
             </div>
         </div>
+
+        
 
         <div className="features-section">
         <h2 className="section-title">What You Can Do</h2>
@@ -51,6 +78,43 @@ const HomePage = () => {
           <div className="discussion-card" onClick={() => navigate("/movie/4")}>The Godfather</div>
         </div>
       </div>
+
+       {/* Upcoming Movies Section */}
+       <div className="home-upcoming-container">
+        <h2 className="home-upcoming-title">Upcoming Movies</h2>
+        {error && <p>{error}</p>}
+
+        <div id="home-upcoming-movie-search">
+          {upcomingMovies.slice(0, 5).map((movie) => (
+            <div key={movie.id} className="home-upcoming-poster-container">
+              <div className="home-upcoming-release-date">
+                Release Date: {new Date(movie.release_date).toLocaleDateString()}
+              </div>
+              <img
+                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                alt={`Poster of ${movie.title}`}
+                className="home-upcoming-poster-image"
+              />
+              
+              <button
+                className="home-upcoming-add-button"
+                onClick={() => navigate("/upcoming-releases")}
+              >
+                <StarIcon style={{ color: "white", fontSize: "20px" }} />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* View More Button */}
+        <div className="view-more-container">
+          <button className="view-more-button" onClick={() => navigate("/upcoming-releases")}>
+            View More
+          </button>
+        </div>
+      </div>
+
+
       <footer className="footer">
         <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
         <p>© {new Date().getFullYear()} Media Wrangler</p>

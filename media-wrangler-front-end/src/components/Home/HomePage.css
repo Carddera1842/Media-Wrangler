@@ -67,29 +67,3 @@
   letter-spacing: 1px;
 }
 
-/* Get Started Button - Warm Golden Yellow */
-.get-started-button {
-  background-color: rgb(255, 190, 0); /* Golden Yellow */
-  color: rgb(98, 0, 25); /* Deep Maroon */
-  box-shadow: 0 0 10px rgba(255, 190, 0, 0.7);
-}
-
-.get-started-button:hover {
-  background-color: rgb(255, 139, 0); /* Darker Orange */
-  box-shadow: 0 0 15px rgba(255, 139, 0, 1);
-  transform: scale(1.05);
-}
-
-/* Search Movies Button - Deep Maroon with Orange Glow */
-.search-movies-button {
-  background-color: rgb(98, 0, 25); /* Deep Maroon */
-  color: rgb(255, 190, 0); /* Golden Yellow */
-  box-shadow: 0 0 10px rgba(255, 108, 1, 0.7);
-}
-
-.search-movies-button:hover {
-  background-color: rgb(255, 108, 1); /* Bright Orange */
-  color: white;
-  box-shadow: 0 0 15px rgba(255, 108, 1, 1);
-  transform: scale(1.05);
-}
