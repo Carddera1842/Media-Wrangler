@@ -313,6 +313,31 @@ public class MovieDataFetcher {
             return null;
         }
     }
+
+    public String fetchPopularMovies(int movieId) {
+        String url = "https://api.themoviedb.org/3/movie/popular\n";
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1")
+                .get()
+                .addHeader("accept", "application/json")
+                .build();
+
+        try (Response response = client.newCall(request).execute()){
+            if (!response.isSuccessful()) {
+                System.out.println("Provider Request failed with status: " + response.code());
+                return null;
+            }
+
+            return response.body().string();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 
 
