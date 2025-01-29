@@ -7,6 +7,7 @@ import com.mediawrangler.media_wrangler.models.MovieReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +89,6 @@ public class MovieReviewService {
     }
 
 
-    //TODO: Update the MovieReviewDTO to only send the information needed for each type of method.
-    // Scale back on the fields that being set and sent
 
     public List<MovieReviewDTO> getReviewsByMovieId(Long movieId) {
         List<MovieReview> movieReviews = movieReviewRepository.findByMovieId(movieId);
@@ -117,6 +116,47 @@ public class MovieReviewService {
             movieReviewDTOS.add(dto);
         }
         return movieReviewDTOS;
+    }
+
+
+    public Optional<MovieReviewDTO> updatedReview(Long id, MovieReviewDTO incomingMovieReview, int userId) {
+        Optional<MovieReview> optionalReview = movieReviewRepository.findByIdAndUserId(id, userId);
+
+        if (optionalReview.isPresent()) {
+            MovieReview movieReview = optionalReview.get();
+
+            movieReview.setReview(incomingMovieReview.getReview());
+            movieReview.setDateWatched(incomingMovieReview.getDateWatched());
+            if (incomingMovieReview.getAward() != null) movieReview.setAward(incomingMovieReview.getAward());
+            if (incomingMovieReview.getWatchAgain() != null) movieReview.setWatchAgain(incomingMovieReview.getWatchAgain());
+            if (incomingMovieReview.getTags() != null) movieReview.setTags(incomingMovieReview.getTags());
+            movieReview.setSpoiler(incomingMovieReview.isSpoiler());
+            movieReview.getRating().setRating(incomingMovieReview.getRatingValue());
+
+            MovieReview updatedReview = movieReviewRepository.save(movieReview);
+
+            MovieReviewDTO dto = new MovieReviewDTO();
+            dto.setMovieId(updatedReview.getMovieId());
+            dto.setTitle(updatedReview.getTitle());
+            dto.setFullPosterURL(updatedReview.getFullPosterURL());
+            dto.setYearReleased(updatedReview.getYearReleased());
+            dto.setReview(updatedReview.getReview());
+            dto.setRatingValue(updatedReview.getRating().getRating());
+            dto.setSpoiler(updatedReview.isSpoiler());
+            dto.setWatchAgain(updatedReview.getWatchAgain());
+            dto.setAward(updatedReview.getAward());
+            dto.setTags(updatedReview.getTags());
+            dto.setDateWatched(updatedReview.getDateWatched());
+            dto.setId(updatedReview.getId());
+            dto.setUserId(updatedReview.getUser().getId());
+            dto.setUsername(updatedReview.getUser().getUsername());
+            dto.setFirstname(updatedReview.getUser().getFirstname());
+            dto.setLastname(updatedReview.getUser().getLastname());
+
+            return Optional.of(dto);
+        }
+
+        return Optional.empty();
     }
 
 
