@@ -5,6 +5,7 @@ import com.mediawrangler.media_wrangler.data.MovieReviewRepository;
 import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.services.MovieReviewService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,6 +90,26 @@ public class MovieReviewController {
             return new ResponseEntity<>("An error occurred while retrieving movie reviews", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PutMapping("/edit/{id}/{userId}")
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @PathVariable int userId, @Valid @RequestBody MovieReviewDTO movieReviewDTO) {
+        try {
+            Optional<MovieReviewDTO> updatedReview = movieReviewService.updatedReview(id, movieReviewDTO, userId);
+
+            if (updatedReview.isPresent()) {
+                MovieReviewDTO savedReview = updatedReview.get();
+                return new ResponseEntity<>(savedReview, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Review not found or unauthorized", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while updating the review", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 
 
 }
