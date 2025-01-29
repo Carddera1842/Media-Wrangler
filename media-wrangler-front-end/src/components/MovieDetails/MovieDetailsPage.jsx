@@ -77,6 +77,7 @@ function MovieDetailsPage() {
             lastname = { review.lastname }
             title = { review.title }
             movieReviewId = { review.id }
+            dateWatched={ review.dateWatched }
           />
           )))}
 
