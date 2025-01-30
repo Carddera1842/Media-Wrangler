@@ -72,6 +72,7 @@ const Discussions = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
+    <>
     <div className="question-container">
       <div className="question-form-container">
         <form onSubmit={handleSubmit} className="question-box">
@@ -130,6 +131,14 @@ const Discussions = () => {
         )}
       </div>
     </div>
+     <footer className="footer">
+     <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+     <p>© {new Date().getFullYear()} Media Wrangler</p>
+     <div className="about-us">
+       <a href="/about-us">About PurpleTONE</a>
+     </div>
+   </footer>
+   </>
   );
 };
 

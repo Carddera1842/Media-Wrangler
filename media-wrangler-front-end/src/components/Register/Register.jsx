@@ -46,6 +46,7 @@ export default function Register() {
     };
 
     return (
+        <>
         <div className="register-background">
             <div className="register-form-container">
                 <img src="/Media Wrangler.PNG" alt="Logo" className="register-logo" />
@@ -153,5 +154,13 @@ export default function Register() {
                 </form>
             </div>
         </div>
+        <footer className="footer">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        <p>© {new Date().getFullYear()} Media Wrangler</p>
+        <div className="about-us">
+          <a href="/about-us">About PurpleTONE</a>
+        </div>
+      </footer>
+      </>
     );
 }
