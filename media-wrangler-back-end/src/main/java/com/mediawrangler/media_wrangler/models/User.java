@@ -4,14 +4,16 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank(message = "Username is required")
@@ -47,6 +49,28 @@ public class User {
 
     @Column(name = "token_expiration_date", nullable = true)
     private LocalDateTime tokenExpirationDate;
+  
+    @Column(length = 500)
+    private String bio;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<MovieReview> movieReviews;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+
+    public User() {}
+
+    public User(String username, String firstname, String lastname, String password, String email, String bio) {
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+        this.bio = bio;
+    }
 
     public int getId() {
         return id;
@@ -118,5 +142,21 @@ public class User {
 
     public void setTokenExpirationDate(LocalDateTime tokenExpirationDate) {
         this.tokenExpirationDate = tokenExpirationDate;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public List<MovieReview> getMovieReviews() {
+        return movieReviews;
+    }
+
+    public void setMovieReviews(List<MovieReview> movieReviews) {
+        this.movieReviews = movieReviews;
     }
 }

@@ -1,5 +1,9 @@
 package com.mediawrangler.media_wrangler.services;
 
+import com.mediawrangler.media_wrangler.Exception.UserNotFoundException;
+import com.mediawrangler.media_wrangler.dto.UserDTO;
+
+
 import com.mediawrangler.media_wrangler.models.User;
 import com.mediawrangler.media_wrangler.data.UserRepository;
 import jakarta.mail.internet.MimeMessage;
@@ -12,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -38,6 +45,8 @@ public class UserService {
         user.setVerificationToken(token);
         user.setTokenExpirationDate(expirationDate);
 
+        user.setBio("");
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         sendVerificationEmail(user);
         return userRepository.save(user);
@@ -47,6 +56,7 @@ public class UserService {
         User user = userRepository.findByUsername(username);
         return user != null && passwordEncoder.matches(password, user.getPassword());
     }
+
 
 
     public String generateVerificationToken(User user) {
@@ -118,6 +128,20 @@ public class UserService {
         return true;
     }
 
+
+
+    public User updateUser(int userId, UserDTO userDTO) throws UserNotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (userDTO.getFirstname() != null) user.setFirstname(userDTO.getFirstname());
+        if (userDTO.getLastname() != null) user.setLastname(userDTO.getLastname());
+        if (userDTO.getEmail() != null) user.setEmail(userDTO.getEmail());
+        if (userDTO.getUsername() != null) user.setUsername(userDTO.getUsername());
+        if (userDTO.getBio() != null) user.setBio(userDTO.getBio());
+
+        return userRepository.save(user);
+    }
 
 }
 

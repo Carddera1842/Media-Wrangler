@@ -1,27 +1,25 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import './MovieDetailCard.css';
+import React, { useState } from 'react';
+import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper, Modal, Box, IconButton } from '@mui/material';
+import '../../stylings/MovieDetailsPage.css';
 import PropTypes from 'prop-types';
-import MovieInteractions from '../MovieInteractions/InteractionsCard';
+import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
+import CloseIcon from "@mui/icons-material/Close";
+   
+import MovieDetailsNav from '../nav/MovieDetailsNav';
+import AddToListMenu from "../InteractiveSoloComponents/AddToListButton";
 
 
 
+function MovieDetailCard({ movieDetails }) {
 
-function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
+    const [isOpen, setOpen] = useState(false);
 
-  //NOTE: The Movie Database (TMDb), the base URL for images might look like https://image.tmdb.org/t/p/w500. So, you would construct the full URL by concatenation... I didn't want image so large, so I altered the base URL
+    console.log('Received movieDetails:', movieDetails);
 
-  //TODO: uncomment out the baseImageURL and fullPosterURL when the API is hooked back up...And switch { poster } back to { fullPosterURL }
-//   const baseImageUrl = "https://image.tmdb.org/t/p/w300";
-//   const fullPosterUrl = `${baseImageUrl}${poster}`;
+    const baseImageURL = "https://image.tmdb.org/t/p/w300";
+    const fullPosterURL = `${baseImageURL}${movieDetails.posterPath}`;
     
-    const yearReleased = new Date(releaseDate).getFullYear();
+    const yearReleased = new Date(movieDetails.releaseDate).getFullYear();
 
     //NOTE: console.logs are temporary, just checking for basic functionality before moving forward
     function handleWantToWatch() {
@@ -33,83 +31,127 @@ function MovieDetailCard({ title, releaseDate, overview, poster, id }) {
     }
 
     function handlePosterClick() {
+        setOpen(true);
         console.log("clicked movie poster");
+    }
+
+    function handleClose() {
+        setOpen(false);
+        console.log("poster closed");
     }
 
 
   return (
-    <div className="movie-detail-container">
-        <Card sx={{maxWidth: 1000}} variant="outlined">
-            <div className="movie-info-container">
-                <CardActionArea>            
-                <CardMedia
-                    onClick={handlePosterClick}
-                    component="img"
-                    height="300"  
-                    width="auto"   
-                    image={ poster }
-                    alt="Movie Poster"
-                />
-                </CardActionArea>
-                <CardContent>            
-                    <Typography gutterBottom variant="h2" component="div">
-                        { title } 
-                        <span style={{ marginLeft: '8px', fontSize: '1.5rem', color: 'teal' }}>
-                            ({yearReleased})
-                        </span>
-                    </Typography>          
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    <b>Date Released: </b> { releaseDate }
-                    </Typography>
-                    <br />
-                    <Typography variant="body2" sx={{ color: 'black' }}  >
-                        <b>Overview: </b>{ overview }
-                    </Typography>          
-                </CardContent>
-                </div> 
-                <CardActions>
-                    <Button onClick={handleWantToWatch}
-                        size="small">Want to Watch</Button>
-                    <Button onClick={handleWatched}
-                        size="small">Watched</Button>
-                </CardActions>
+    <>
+        <div>
+            <Paper
+                elevation={0}
+                sx={{
+                    maxWidth: 1100,
+                    background: "rgba(249, 79, 0 , 0.55)",
+                    margin: "40px auto",
+                    padding: "10px",
+                    borderRadius: "14px"
+                }}
+            >
+            <div className="movie-detail-container">
+                <Card sx={{maxWidth: 1000, background:"rgba(19, 19, 20, 0.81)", borderRadius:"14px", border:"3px solid rgba(17, 144, 213, 0.93)"}} variant="outlined">
+                    <div className="movie-info-container">
+                        <div >
+                        <CardActionArea >
+                            <CardMedia
+                                onClick={handlePosterClick}
+                                component="img"
+                                height= "300px"
+                                width = "auto"
+                                image={ fullPosterURL }
+                                alt="Movie Poster"
+                            />
 
-                {/* Leaving here to keep an eye on functionality for now-- especially if adding more props */}
-                {/* <StarRating title={ title } id={ id } />
-                <LikeButton title={ title } id={ id } />          */}
-                
-        </Card>
-        <div className="movie-interactions-container">
-           <MovieInteractions title={ title } id={ id } />  
+                        </CardActionArea>
+                        <Modal open={ isOpen} onClose={handleClose}>
+                            <Box
+                            sx={{
+                                position: "fixed",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                bgcolor: "background.paper",
+                                boxShadow: 24,
+                                p: 2,
+                                outline: "none",
+                            }}
+                            >
+                                 <IconButton
+                                    aria-label="close"
+                                    onClick={handleClose}
+                                    sx={{
+                                    position: "absolute",
+                                    top: 8,
+                                    right: 8,
+                                    color: "grey.500",
+                                    }}
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            <img
+                                src={ fullPosterURL }
+                                alt="Enlarged Poster"
+                                style={{
+                                width: "100%",
+                                maxWidth: "600px",
+                                height: "auto",
+                                display: "block",
+                                margin: "0 auto",
+                                }}
+                            />
+                            </Box>
+                        </Modal>
+                        </div>
+                        <CardContent sx={{ color: 'white' }}>
+                            <Typography gutterBottom variant="h4" component="div">
+                                { movieDetails.title } 
+                                <span style={{ marginLeft: '8px', fontSize: '2rem', color: '#ff8f00' }}>
+                                    ({yearReleased})
+                                </span>
+                            </Typography>          
+                            <Typography variant="body2" >
+                                <b>Date Released: </b> { movieDetails.releaseDate }
+                            </Typography>
+                            <br />
+                            <br />
+                            <Typography variant="body1"   >
+                                <b>Overview: </b>{ movieDetails.overview }
+                            </Typography>          
+                        </CardContent>
+
+                    </div>
+                    <CardActions>
+                        <Button onClick={handleWantToWatch}
+                            size="small">Want to Watch</Button>
+                        <Button onClick={handleWatched}
+                            size="small">Watched</Button>
+                    </CardActions>          
+                </Card>  
+                <InteractionsCard movieDetails={ movieDetails } />     
+            </div>
+        </Paper>
         </div>
-       
-    </div>
+    </>
   );
 }
 
 export default MovieDetailCard;
 
 MovieDetailCard.propTypes = {
-    id: PropTypes.number,
+    movieId: PropTypes.number,
     title: PropTypes.string,
     releaseDate: PropTypes.string, 
     overview: PropTypes.string, 
-    poster: PropTypes.string
+    poster: PropTypes.string,
+    genre: PropTypes.array
 
 }
 
-    //TODO: Figure out how to open the image in a pop up when movie poster is clicked with onClick
 
-    //TODO: Add onClick to watched and want to watch button and get lists going...
-
-    //TODO: I extracted the year released to use, but I don't like the styling (yyyy-mm-dd) figure out how to alter the string returned
-
-    //NOTE: Styling Notes...
-    //The variant="outlined" : can be removed and the default should be a shadow for "elevated"
-    //card maxWidth can change based on space needed for other components
-
-    //"movie-info-container" : it is making it flex and moved the details to the right of image
-    //The movie info is currently centered with the image, but that can be changed adjusting the css
-
-    //the variant="body2" just seems to make the text smaller, I kept it on Release Date but removed from overview
-    //However, we might want to change the font styling in general 
+    
