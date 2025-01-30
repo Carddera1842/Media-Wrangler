@@ -25,7 +25,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
             elevation={0}
             sx={{
                 maxWidth: 1200,
-                background: "rgba(29, 111, 104, 0.8)",
+                background: "rgba(80, 15, 41, 0.8)",
                 margin: "30px auto",
                 padding: "20px",
                 transform: "scale(.9)",
