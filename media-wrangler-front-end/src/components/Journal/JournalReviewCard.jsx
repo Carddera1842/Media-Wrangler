@@ -36,7 +36,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                 }
             }} >
              <div className="user-review-container">
-                <Card sx={{ border: "4px solid rgb(84, 5, 71)", background:"rgba(19, 19, 20, 0.81)" }} variant="outlined">
+                <Card sx={{ border: "4px solid rgb(140, 170, 176)", background:"rgba(19, 19, 20, 0.81)" }} variant="outlined">
                     <div className="movie-info-container">
                         <div>                       
                             <Typography variant="h5" component="div" className="username" color="text.secondary">
@@ -47,7 +47,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                 <span
                                     onClick={() => navigate(`/profile/${userId}`)}
                                     style={{
-                                        color: "#004d40",
+                                        color: "rgb(140, 170, 176)",
                                         fontWeight: "bold",
                                         fontSize: "22px",
                                         cursor: "pointer",
@@ -73,22 +73,22 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             </div>  
                         </div>                                  
                         <CardContent className="user-review">    
-                            <Typography variant="h4" component="div">
+                            <Typography sx={{ color: "white" }}variant="h4" component="div">
                                 { title }
                                 <span style={{ fontSize: '1.5rem', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span>
                                 <hr style={{ background: "rgb(255, 0, 144)" }} />
                             </Typography>
                                                                                                      
-                            <Typography variant="body1" sx={{ color: 'text.primary', textAlign: 'center', fontSize: '22px' }}>
-                            You Presented { title } with the <span style={{ color: "rgb(146, 40, 7)" }}><b> "{award}" </b></span> Award                           
+                            <Typography variant="body1" sx={{ color: 'rgb(140, 170, 176)', textAlign: 'center', fontSize: '22px' }}>
+                            You Presented { title } with the <span style={{ color: "rgb(179, 68, 131)" }}><b> "{award}" </b></span> Award                           
                             </Typography>                            
                             <br />                                      
-                            <Typography variant="body1" sx={{ color: 'black' }}  >
+                            <Typography variant="body1" sx={{ color: 'white' }}  >
                                 { review }
                             </Typography>
                             <br />
                             <br />
-                            <Typography>
+                            <Typography sx={{ color: "rgb(179, 68, 131)" }}>
                                 <b>Your Tags:</b>
                             </Typography>    
                             <Stack
@@ -98,16 +98,16 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             >
                                 { tags.map((tag, index) => (
                                     <div key={tag.id}>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary'}}>{ tag }
+                                        <Typography variant="body2" sx={{ color: 'rgb(140, 170, 176)'}}>{ tag }
                                         </Typography>
                                     </div>))}
                             </Stack>
                             <br />
-                            <Typography variant='body2' sx={{ color: 'text.secondary'}}>
+                            <Typography variant='body2' sx={{ color: "white" }}>
                                     Watched on { dateWatched }  
                             </Typography>
                             <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <Typography variant='body2' sx={{ color: 'text.secondary'}}>
+                                <Typography variant='body2' sx={{ color: 'white'}}>
                                     Would You Watch Again?                                                          
                                 </Typography>
                                 {(watchAgain === "yes" ? <CheckCircleIcon sx={{fontSize: "25px", color: "blue", marginLeft: "5px"}} /> :                        <CancelIcon sx={{fontSize: "25px", color: "red", marginLeft: "5px"}} />  )}                           
