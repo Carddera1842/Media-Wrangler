@@ -1,15 +1,14 @@
 
-.create-review-background {
-    background-image: url('/spurs.jpg'); 
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    padding: 5px;
-  
-  }
+.movie-review-background {
+  background-image: url('/spurs.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+  transition: height 0.3s ease;
+}
 
 
   label {

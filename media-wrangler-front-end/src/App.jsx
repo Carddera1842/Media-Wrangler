@@ -12,8 +12,7 @@ import VerifyEmail from './components/VerifyEmail/VerifyEmail';
 import Profile from './components/Profile/Profile'
 import { PrivateRoutes } from './Services/PrivateRoutes'
 import VerificationSent from './components/VerifyEmail/VerificationSent'
-
-import CreateReview from './components/ReviewForm/CreateReview'
+import CreateReviewPage from './components/ReviewForm/CreateReviewPage'
 import JournalDisplayReview from './components/Journal/JournalDisplayReview'
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
@@ -41,7 +40,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/check-email" element={<VerificationSent />} />
-          <Route path="/reviews/create" element={<CreateReview />} />
+          <Route path="/reviews/create" element={<CreateReviewPage />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
           <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
           <Route path="/questions" element={<Discussions />} />

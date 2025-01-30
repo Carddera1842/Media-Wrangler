@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
-import './ReviewForm.css';
+import '../../stylings/CreateReview.css';
 import { submitMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
@@ -215,13 +215,14 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
     };
 
     return (
-        <>       
+        <>  
+        <div className ="movie-review-background "> 
         <div className="paper-container">
           <Paper 
             elevation={0} 
             sx={{
                 maxWidth: 1000, 
-                background: "#004d40", 
+                background: "rgba(17, 96, 92, 0.88)", 
                 margin: "30px", 
                 padding: "20px", 
                 transform: "scale(.9)", 
@@ -413,6 +414,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, }) {
               </div>  
               </Paper>  
             </div> 
+            </div>    
         </>
     );
 }

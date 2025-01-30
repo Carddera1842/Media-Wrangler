@@ -5,8 +5,11 @@
   background-image: url('/BackgroundPink.jpg');
   background-size: cover;
   background-position: center;
-  padding: 5px;
-  transition: height 0.3s ease;  
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+  transition: height 0.3s ease;
 }
 
 
