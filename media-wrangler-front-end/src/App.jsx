@@ -6,6 +6,14 @@ import Search from './components/Search/Search'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
+
+import MovieSearch from './components/Search/MovieSearch'
+import TestReviewForm from './components/ReviewForm/TestReviewForm'
+import VerifyEmail from './components/VerifyEmail/VerifyEmail';
+import Profile from './components/Profile/Profile'
+import { PrivateRoutes } from './Services/PrivateRoutes'
+import VerificationSent from './components/VerifyEmail/VerificationSent'
+
 import Profile from './components/Profile/Profile'
 import CreateReview from './components/ReviewForm/CreateReview'
 import DisplayReview from './components/ReviewDisplay/DisplayReview'
@@ -34,6 +42,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify" element={<VerifyEmail />} />
+          <Route path="/check-email" element={<VerificationSent />} />
           <Route path="/reviews/create" element={<CreateReview />} />
           <Route path="/reviews/view" element={<DisplayReview />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />

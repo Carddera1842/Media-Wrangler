@@ -82,6 +82,35 @@ public class UserController {
 
     }
 
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyEmail(@RequestParam("token") String token) {
+        System.out.println("Received token: " + token);
+        try {
+            boolean isVerified = userService.verifyEmailToken(token);
+            if (isVerified) {
+                System.out.println("Token verified successfully.");
+                return new ResponseEntity<>("Email verified successfully!", HttpStatus.OK);
+            } else {
+                System.out.println("Invalid or expired token.");
+                return new ResponseEntity<>(Map.of("invalid", "Invalid or expired token"), HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(Map.of("error", "An unexpected error occurred"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/check-verification")
+    public ResponseEntity<?> checkEmailVerification(@RequestParam String username, String verificationToken) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return new ResponseEntity<>(Map.of("error","User not found"), HttpStatus.NOT_FOUND);
+        }
+        userService.verifyEmailToken(verificationToken);
+        return new ResponseEntity<>(Map.of("verified", user.isEmailVerified()), HttpStatus.OK);
+    }
+
     @GetMapping("/info")
     public ResponseEntity<?> loginUser( HttpSession session) {
         System.out.println(session.getAttribute("user"));
