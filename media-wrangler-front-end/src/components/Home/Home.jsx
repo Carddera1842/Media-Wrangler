@@ -151,19 +151,19 @@ const HomePage = () => {
 
         <div className="features-section">
           <div className="features-grid">
-            <div className="feature-card" onClick={() => navigate("/my-lists")}>
+            <div className="feature-card">
                 <h3>Create Customized Lists</h3>
                 <p>Organize movies you want to watch and have seen.</p>
             </div>
-            <div className="feature-card" onClick={() => navigate("/calendar")}>
+            <div className="feature-card">
                 <h3>Add to Your Calendar</h3>
                 <p>Never miss a release. Add upcoming movies to your calendar.</p>
             </div>
-            <div className="feature-card" onClick={() => navigate("/reviews")}>
+            <div className="feature-card">
                 <h3>Read & Write Reviews</h3>
                 <p>Share your thoughts or read what others think.</p>
             </div>
-            <div className="feature-card" onClick={() => navigate("/questions")}>
+            <div className="feature-card">
                 <h3>Engage in Discussions</h3>
                 <p>Join the conversation and connect with fellow movie enthusiasts.</p>
             </div>
