@@ -25,9 +25,10 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
             elevation={0}
             sx={{
                 maxWidth: 1200,
-                background: "rgba(80, 15, 41, 0.8)",
+                background: "rgba(80, 15, 41, 0.84)",
                 margin: "30px auto",
                 padding: "20px",
+                borderRadius: "14px",
                 transform: "scale(.9)",
                 transition: "transform 0.3s, box-shadow 0.3s",
                 "&:hover": {
@@ -36,7 +37,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                 }
             }} >
              <div className="user-review-container">
-                <Card sx={{ border: "4px solid rgb(140, 170, 176)", background:"rgba(19, 19, 20, 0.81)" }} variant="outlined">
+                <Card sx={{ border: "4px solid rgb(176, 140, 161)", borderRadius: "14px", background:"rgba(19, 19, 20, 0.81)" }} variant="outlined">
                     <div className="movie-info-container">
                         <div>                       
                             <Typography variant="h5" component="div" className="username" color="text.secondary">
@@ -47,9 +48,9 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                 <span
                                     onClick={() => navigate(`/profile/${userId}`)}
                                     style={{
-                                        color: "rgb(140, 170, 176)",
+                                        color: "rgb(176, 140, 161)",
                                         fontWeight: "bold",
-                                        fontSize: "22px",
+                                        fontSize: "35px",
                                         cursor: "pointer",
                                         textDecoration: "underline",
                                         textDecorationThickness: "1px",
@@ -79,7 +80,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                 <hr style={{ background: "rgb(255, 0, 144)" }} />
                             </Typography>
                                                                                                      
-                            <Typography variant="body1" sx={{ color: 'rgb(140, 170, 176)', textAlign: 'center', fontSize: '22px' }}>
+                            <Typography variant="body1" sx={{ color: 'rgb(176, 140, 161)', textAlign: 'center', fontSize: '22px' }}>
                             You Presented { title } with the <span style={{ color: "rgb(179, 68, 131)" }}><b> "{award}" </b></span> Award                           
                             </Typography>                            
                             <br />                                      
@@ -98,7 +99,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             >
                                 { tags.map((tag, index) => (
                                     <div key={tag.id}>
-                                        <Typography variant="body2" sx={{ color: 'rgb(140, 170, 176)'}}>{ tag }
+                                        <Typography variant="body2" sx={{ color: 'rgb(176, 140, 161)'}}>{ tag }
                                         </Typography>
                                     </div>))}
                             </Stack>

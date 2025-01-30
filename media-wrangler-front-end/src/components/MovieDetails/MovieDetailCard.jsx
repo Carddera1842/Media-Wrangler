@@ -66,7 +66,6 @@ function MovieDetailCard({ movieDetails }) {
                                 image={ fullPosterURL }
                                 alt="Movie Poster"
                             />
-
                         </CardActionArea>
                         <Modal open={ isOpen} onClose={handleClose}>
                             <Box
