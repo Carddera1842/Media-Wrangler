@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import StarIcon from "@mui/icons-material/Star";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUpcomingMovies = async () => {
+      try {
+        const apiKey = "1ae7a70b471c9eb7d389671747750ad0";
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch upcoming movies.");
+        }
+
+        const data = await response.json();
+        setUpcomingMovies(data.results);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchUpcomingMovies();
+  }, []);
+
 
   return (
     <div className="homepage-container">
@@ -57,6 +83,8 @@ const HomePage = () => {
         <p>Join Media Wrangler to organize, review, and discuss your favorite movies.</p>
         <button className="primary-button" onClick={() => navigate("/signup")}>Sign Up Now</button>
       </div>
+
+      
 
       {/* Footer */}
       <footer className="footer">
