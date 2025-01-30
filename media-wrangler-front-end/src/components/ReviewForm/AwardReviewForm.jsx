@@ -31,11 +31,13 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
   const [watchAgain, setWatchAgain] = useState('');
   
   
+  
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const userId = user.id;
   console.log("THIS IS THE USER ID: ", userId);
+  console.log("checking editmode:", editMode);
   
 
   const lovedAwards = Object.values(AwardEnum.loved);
@@ -59,6 +61,8 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
       setLovedAward(existingReview.lovedAward || "");
       setHatedAward(existingReview.hatedAward || "");
       setSpoiler(existingReview.isSpoiler || false);
+
+      
     }
   }, [editMode, existingReview]);
 

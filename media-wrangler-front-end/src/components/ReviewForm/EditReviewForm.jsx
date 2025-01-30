@@ -48,7 +48,9 @@ function EditReviewForm() {
 }, [review, navigate]);
 
 
-  
+  function handleSubmit() {
+    console.log("clicked submit");
+  }
 
 
 
