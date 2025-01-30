@@ -13,7 +13,7 @@ import { checkIfUserRatedMovie, fetchMovieRating, submitMovieRating, updateMovie
 import Rating from '@mui/material/Rating';
 
 
-function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingReview, editMode }) {
+function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -37,7 +37,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
 
   const userId = user.id;
   console.log("THIS IS THE USER ID: ", userId);
-  console.log("checking editmode:", editMode);
+  
   
 
   const lovedAwards = Object.values(AwardEnum.loved);
@@ -48,23 +48,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
   const baseImageURL = "https://image.tmdb.org/t/p/w300";
   const fullPosterURL = `${baseImageURL}${posterPath}`;
 
-  useEffect(() => {
-    console.log("existingReview:", existingReview); // Debugging log
-    if (editMode && existingReview) {
-      setDateWatched(existingReview.dateWatched || ""); // Provide a fallback
-      setReview(existingReview.review || "");
-      setRating(existingReview.rating?.rating || 0);
-      setRatingId(existingReview.rating?.id || null);
-      setTags(existingReview.tags || []);
-      setAward(existingReview.award || "");
-      setWatchAgain(existingReview.watchAgain || false);
-      setLovedAward(existingReview.lovedAward || "");
-      setHatedAward(existingReview.hatedAward || "");
-      setSpoiler(existingReview.isSpoiler || false);
 
-      
-    }
-  }, [editMode, existingReview]);
 
   useEffect(() => {
     async function checkRatedStatus() {

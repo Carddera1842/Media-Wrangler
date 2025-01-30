@@ -117,7 +117,11 @@ import axios from "axios";
             console.log("Error: ", error);
             return "An error occurred. Please try again";
         }
-    };
+    }
+    
+
+    
+
     
 
 export { submitMovieReview, fetchMovieReview, fetchMovieReviewsByUser, fetchMovieDetails, fetchMovieReviewsByMovieId, fetchMovieReviewByUserIdAndMovieReviewId };
