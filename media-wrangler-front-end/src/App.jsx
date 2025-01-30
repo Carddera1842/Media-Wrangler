@@ -14,8 +14,7 @@ import { PrivateRoutes } from './Services/PrivateRoutes'
 import VerificationSent from './components/VerifyEmail/VerificationSent'
 
 import CreateReview from './components/ReviewForm/CreateReview'
-import DisplayReview from './components/ReviewDisplay/DisplayReview'
-import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview'
+import JournalDisplayReview from './components/Journal/JournalDisplayReview'
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
@@ -43,7 +42,6 @@ function App() {
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/check-email" element={<VerificationSent />} />
           <Route path="/reviews/create" element={<CreateReview />} />
-          <Route path="/reviews/view" element={<DisplayReview />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
           <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
           <Route path="/questions" element={<Discussions />} />

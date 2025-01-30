@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import MovieDetailCard from "./MovieDetailCard";
 import StreamingProviders from "./StreamingProviders";
 import MovieDetailsNav from "../nav/MovieDetailsNav";
-import MovieReviewListCard from "../ReviewDisplay/MovieReviewListCard";
+import MovieReviewListCard from '../MovieDetails/MovieReviewListCard';
 import { fetchMovieDetails, fetchMovieReviewsByMovieId } from "../../Services/MovieReviewService";
 import "../../stylings/MovieDetailsPage.css";
 
@@ -78,6 +78,7 @@ function MovieDetailsPage() {
             title = { review.title }
             movieReviewId = { review.id }
             dateWatched={ review.dateWatched }
+            isSpoiler={ review.isSpoiler }
           />
           )))}
 

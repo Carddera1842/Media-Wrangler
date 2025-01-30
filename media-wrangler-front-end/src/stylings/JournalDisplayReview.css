@@ -1,0 +1,57 @@
+/* User Journal Page & Journal Review Card */
+
+/* Page Layout & Styling */
+.user-review-page-background {
+  background-image: url('/BackgroundPink.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 5px;
+  transition: height 0.3s ease;  
+}
+
+
+/* Journal Review Card */
+.spoiler-alert {
+  font-size: 16px;
+  color: rgb(146, 40, 7);
+  display: flex;
+  padding: 12px;
+}
+
+
+.user-review {
+  margin: 15px;
+  width: 800px;
+ 
+}
+
+
+.movie-info-container {
+  padding: 15px;
+  display:inline-flex;  
+}
+
+
+.username {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+
+.paper-container {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 50vh;
+}
+
+.review-container {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 20px;
+border: 2px solid white;
+padding: 10px;
+}

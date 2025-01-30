@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper, Modal, Box, IconButton } from '@mui/material';
 import '../../stylings/MovieDetailsPage.css';
 import PropTypes from 'prop-types';
-import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
-import CloseIcon from "@mui/icons-material/Close";
-   
-import MovieDetailsNav from '../nav/MovieDetailsNav';
-import AddToListMenu from "../InteractiveSoloComponents/AddToListButton";
+import InteractionsCard from '../MovieInteraction/InteractionsCard';
+import CloseIcon from "@mui/icons-material/Close";   
+
+
 
 
 

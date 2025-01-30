@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import AvatarHeader from '../Profile/AvatarHeader';
 import { submitUserComment, fetchCommentsByMovieReviewId } from '../../Services/CommentService';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 
 
 
-const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId, dateWatched }) => {
+const MovieReviewListCard = ({ rating, award, review, authorId, username, firstname, lastname, title, movieReviewId, dateWatched, isSpoiler }) => {
 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [userComment, setUserComment] = useState('');
@@ -146,10 +147,12 @@ const MovieReviewListCard = ({ rating, award, review, authorId, username, firstn
             <Typography sx={{ textAlign: "center"}}>
               Presented { title } with the <span style={{ color: "rgba(249, 79, 0, 0.55)", fontSize: "20px", fontWeight: "bold", margin: "5px" }}>
              "{award}"</span> Award 
-            </Typography>
-            <br />
+            </Typography>            
+            <Typography >                                                  
+            {(isSpoiler && <Typography className="spoiler-alert"><PriorityHighIcon />Contains Spoilers </Typography>)} </Typography>
             <Typography variant="body2">Watched on { formattedDate }</Typography>
-            <br />                          
+            <br /> 
+            <br />                         
             <Typography variant="body1"> { review } </Typography>
           </div>      
         </CardContent>
