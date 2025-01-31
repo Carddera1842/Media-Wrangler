@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
-import apiClient, { login, logout, deleteProfile } from "./AuthService";
+import apiClient, { login, logout, checkSession, deleteProfile } from "./AuthService";
 
 const AuthContext = createContext();
 
