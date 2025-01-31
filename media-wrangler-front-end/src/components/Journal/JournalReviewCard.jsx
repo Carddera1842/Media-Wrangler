@@ -109,48 +109,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                         </div>))}
                                 </Stack>
                                 <br />
-                                <Typography variant='body2' sx={{ color: "white" }}>
-                                <div>
-                                    <img style={{height: "300px", width: "auto", margin: "10px"}} src={ fullPosterURL } alt="movie poster" />
-                                </div>
-                            </Typography>
-                            <div style={{ textAlign: "center" }}>
-                            <Rating name="read-only" value={ rating } readOnly />
-                            <Typography className="spoiler-alert" >
-                                {(isSpoiler && <Typography className="spoiler-alert"><PriorityHighIcon />Contains Spoilers </Typography>)}
-                            </Typography>
-                            </div>
-                        </div>
-                        <CardContent className="user-review">
-                            <Typography sx={{ color: "white" }}variant="h4" component="div">
-                                { title }
-                                <span style={{ fontSize: '1.5rem', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span>
-                                <hr style={{ background: "rgb(255, 0, 144)" }} />
-                            </Typography>
-
-                            <Typography variant="body1" sx={{ color: 'rgb(176, 140, 161)', textAlign: 'center', fontSize: '22px' }}>
-                            You Presented { title } with the <span style={{ color: "rgb(179, 68, 131)" }}><b> "{award}" </b></span> Award
-                            </Typography>
-                            <br />
-                            <Typography variant="body1" sx={{ color: 'white' }}  >
-                                { review }
-                            </Typography>
-                            <br />
-                            <br />
-                            <Typography sx={{ color: "rgb(179, 68, 131)" }}>
-                                <b>Your Tags:</b>
-                            </Typography>
-                            <Stack
-                                direction="row"
-                                divider={<Divider orientation="vertical" flexItem sx={{borderWidth: 1, borderColor: "rgb(255, 0, 144)" }} />}
-                                spacing={2}
-                            >
-                                { tags.map((tag, index) => (
-                                    <div key={tag.id}>
-                                        <Typography variant="body2" sx={{ color: 'rgb(176, 140, 161)'}}>{ tag }
-                                        </Typography>
-                                    </div>))}
-                            </Stack>
+                               
                             <br />
                             <Typography variant='body2' sx={{ color: "white" }}>
                                     Watched on { dateWatched }
@@ -161,15 +120,15 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                     </Typography>
                                     {(watchAgain === "yes" ? <CheckCircleIcon sx={{fontSize: "25px", color: "blue", marginLeft: "5px"}} /> :                        <CancelIcon sx={{fontSize: "25px", color: "red", marginLeft: "5px"}} />  )}
                                 </Box>
-                            </CardContent>
-                        </div>
-                        <CardActions>
+                            </CardContent>    
+                            </div>                                                
+                            <CardActions>
                             <Button
                                 size="small"
                                 onClick={ handleEditClick }>Edit Review</Button>
                             <Button
                                 size="small" color="error" >Delete Review</Button>
-                        </CardActions>
+                        </CardActions>                      
                     </Card>
                 </div>
             </Paper>
