@@ -14,9 +14,13 @@ import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
 import UserJournalPage from './components/Journal/UserJournalPage'
-import DiscoverPage from './components/Discover/UpcomingReleases.jsx'
+import ComingSoon from './components/UpcomingMovies/UpcomingReleases.jsx'
 import QuestionDetail from './components/Discussions/Answers.jsx'
 import Discussions from './components/Discussions/Discussions.jsx'
+import DiscoverPage from './components/Discover/DiscoverPage.jsx'
+import AboutUs from './components/PurpleTONE/PurpleTONE.jsx'
+import AwardReviewForm from './components/ReviewForm/AwardReviewForm.jsx'
+import EditReviewFormPage from './components/ReviewForm/EditReviewFormPage.jsx'
 
 function App() {
   return (
@@ -39,6 +43,10 @@ function App() {
           <Route path="/reviews/edit/:id" element={<CreateReview mode="edit" />} />   
           <Route path="/questions" element={<Discussions />} />
           <Route path="/answers/:questionId" element={<QuestionDetail />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/reviews/edit/:id" element={<EditReviewFormPage />} />
+
         </Routes>
       </div>
     </ListProvider>

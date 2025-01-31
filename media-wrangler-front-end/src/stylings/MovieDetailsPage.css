@@ -1,0 +1,111 @@
+/* Movie Details Page -- Movie Detail Cards, Navigation Bar, Interaction Cards and Interactive Reviews */
+
+
+/* Page Layout & Styling */
+.movie-details-page-background {
+  background-image: url('/backgroundBlue.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 10px;
+  transition: height 0.3s ease;  
+}
+
+  
+.MuiCard-root {
+  margin:20px;
+}
+
+
+
+/* Movie Detail Card */
+.movie-info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 10px;
+}  
+
+.movie-interactions-container {
+  width: 300px;  
+  display: flex;
+  flex-direction: column;
+  gap: 10px;  
+}
+
+.movie-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+
+  
+.action-area-container {
+  height: 400px !important;
+  width: 100% !important;
+} */
+
+.movie-poster {
+  height: 300px !important;  /* Force the image height */
+  width: 100% !important;    /* Ensure it spans the width of the container */
+  object-fit: cover;         /* Ensure it covers the container without distortion */
+}
+
+
+/* Interactive Review Cards */
+.searched-movie-review-list {
+  color: "white";
+}
+
+.avatar-username-rating-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar-username-rating-container {
+  color: rgba(17, 144, 213, 0.93); 
+  font-weight: bold;
+  font-size: 30px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #ff8f00;
+  text-underline-offset: 3px;
+}
+
+
+/* User reviews & comments (MovieReviewListCard) */
+
+.comments-section {
+  margin: 20px;
+  color: white;
+}
+
+.movie-review-info {
+  color: white;
+}
+
+
+
+
+  /* NOTE: This is in case we want to pull the InteractionsCard out of the MovieDetailCard */
+
+  .layout {
+    display: flex; 
+    flex-direction: row; 
+    justify-content: flex-start; 
+    align-items: center;
+    gap: 20px; 
+    margin: 20px;
+  }
+
+  .interactions-container {
+    flex: 1; /* makes it smaller than the movieDetailCard */
+    display: flex; 
+    align-items: center; 
+  } 
+
+  

@@ -125,6 +125,7 @@ export default function LetterAvatars({ user }) {
 
         {!isEditing && (
           <>
+          <div class="profile-buttons-container">
           <Button
             variant="contained"
             className="edit-profile-button"
@@ -132,12 +133,12 @@ export default function LetterAvatars({ user }) {
           >
             Edit Profile
           </Button>
-          <div>
 
             <Button
               variant="contained"
               sx={{ marginLeft: "auto" }}
               onClick={handleDeleteProfile}
+              className="delete-profile-button"
               >
                 Delete Profile
             </Button>

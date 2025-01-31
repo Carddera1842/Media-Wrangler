@@ -9,6 +9,7 @@ import com.mediawrangler.media_wrangler.services.MovieReviewService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import okhttp3.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,16 @@ import java.util.List;
 import java.util.Optional;
 
 
-//Add CrossOrigin annotation to allow HTTP request/response exchange between front and back end
+
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 @RestController
 @RequestMapping("/reviews")
 public class MovieReviewController {
 
-    //Based off other branches, setup Service here
+
     @Autowired
     private final MovieReviewService movieReviewService;
 
-    //Constructor injection of MovieReviewService -- constructor that takes in service
     public MovieReviewController(MovieReviewService movieReviewService) {
         this.movieReviewService = movieReviewService;
     }
@@ -39,7 +39,6 @@ public class MovieReviewController {
     //Add movieReviewRepository to perform CRUD functions
     @Autowired
     private MovieReviewRepository movieReviewRepository;
-
 
     @PostMapping("/create")
         public ResponseEntity<?> createReview(@RequestBody MovieReview movieReview) {
@@ -51,7 +50,8 @@ public class MovieReviewController {
         }
     }
 
-    @GetMapping("view/{id}")
+
+    @GetMapping("/view/{id}")
     public ResponseEntity<?> findReviewById(@PathVariable Long id) {
         try {
             Optional<MovieReviewDTO> optionalMovieReview = movieReviewService.getReviewById(id);
@@ -107,6 +107,48 @@ public class MovieReviewController {
             return new ResponseEntity<>("An error occurred while retrieving reviews", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("/movies/{movieId}")
+    public ResponseEntity<?> getReviewsByMovieId(@PathVariable Long movieId) {
+        try {
+            List<MovieReviewDTO> movieReviews = movieReviewService.getReviewsByMovieId(movieId);
+
+            if (movieReviews.isEmpty()) {
+                return ResponseEntity.ok(Collections.emptyList());
+            }  else {
+                return new ResponseEntity<>(movieReviews, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while retrieving movie reviews", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PutMapping("/edit/{id}/{userId}")
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @PathVariable int userId, @Valid @RequestBody MovieReviewDTO movieReviewDTO) {
+        System.out.println("Received request to update review with ID: " + id + " by user: " + userId);
+        System.out.println("Review data: " + movieReviewDTO);
+
+        try {
+            Optional<MovieReviewDTO> updatedReview = movieReviewService.updatedReview(id, movieReviewDTO, userId);
+
+            if (updatedReview.isPresent()) {
+                System.out.println("Review successfully updated: " + updatedReview.get());
+                return new ResponseEntity<>(updatedReview.get(), HttpStatus.OK);
+            } else {
+                System.out.println("Review not found or unauthorized");
+                return new ResponseEntity<>("Review not found or unauthorized", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("An error occurred while updating the review", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 
 
 }

@@ -1,24 +1,18 @@
-import * as React from 'react';
-import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper } from '@mui/material';
-import './MovieDetailCard.css';
+import React, { useState } from 'react';
+import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper, Modal, Box, IconButton } from '@mui/material';
+import '../../stylings/MovieDetailsPage.css';
 import PropTypes from 'prop-types';
 import InteractionsCard from '../MovieInteractionComponent/InteractionsCard';
+import CloseIcon from "@mui/icons-material/Close";
+   
 import MovieDetailsNav from '../nav/MovieDetailsNav';
 import AddToListMenu from "../InteractiveSoloComponents/AddToListButton";
 
 
 
-
-    //TODO: The "watched" and "want to watch" buttons need to be finished when the lists are ready for them. These buttons can be used, we can add them to the InteractionsCard -- OR-- they can be incorporated in a different way based on what the feature designer would like to do
-    
-    //TODO: uncomment out the baseImageURL and fullPosterURL when the API is hooked back up...And switch { poster } back to { fullPosterURL }
-  
-    
-   
-
-   
-
 function MovieDetailCard({ movieDetails }) {
+
+    const [isOpen, setOpen] = useState(false);
 
     console.log('Received movieDetails:', movieDetails);
 
@@ -37,57 +31,101 @@ function MovieDetailCard({ movieDetails }) {
     }
 
     function handlePosterClick() {
+        setOpen(true);
         console.log("clicked movie poster");
+    }
+
+    function handleClose() {
+        setOpen(false);
+        console.log("poster closed");
     }
 
 
   return (
     <>
-        <Paper 
-            elevation={0} 
-            sx={{
-                maxWidth: 1100, 
-                background: "#004d40", 
-                margin: "30px auto", 
-                padding: "20px",             
-            }} 
-        >
+        <div>
+            <Paper
+                elevation={0}
+                sx={{
+                    maxWidth: 1100,
+                    background: "rgba(249, 79, 0 , 0.55)",
+                    margin: "40px auto",
+                    padding: "10px",
+                    borderRadius: "14px"
+                }}
+            >
             <div className="movie-detail-container">
-                <Card sx={{maxWidth: 1000}} variant="outlined">
+                <Card sx={{maxWidth: 1000, background:"rgba(19, 19, 20, 0.81)", borderRadius:"14px", border:"3px solid rgba(17, 144, 213, 0.93)"}} variant="outlined">
                     <div className="movie-info-container">
-                        <CardActionArea>            
+                        <div >
+                        <CardActionArea >
                             <CardMedia
                                 onClick={handlePosterClick}
                                 component="img"
-                                height="300"  
-                                width="auto"   
+                                height= "300px"
+                                width = "auto"
                                 image={ fullPosterURL }
                                 alt="Movie Poster"
                             />
+
                         </CardActionArea>
-                        <CardContent>            
-                            <Typography gutterBottom variant="h3" component="div">
+                        <Modal open={ isOpen} onClose={handleClose}>
+                            <Box
+                            sx={{
+                                position: "fixed",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                bgcolor: "background.paper",
+                                boxShadow: 24,
+                                p: 2,
+                                outline: "none",
+                            }}
+                            >
+                                 <IconButton
+                                    aria-label="close"
+                                    onClick={handleClose}
+                                    sx={{
+                                    position: "absolute",
+                                    top: 8,
+                                    right: 8,
+                                    color: "grey.500",
+                                    }}
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            <img
+                                src={ fullPosterURL }
+                                alt="Enlarged Poster"
+                                style={{
+                                width: "100%",
+                                maxWidth: "600px",
+                                height: "auto",
+                                display: "block",
+                                margin: "0 auto",
+                                }}
+                            />
+                            </Box>
+                        </Modal>
+                        </div>
+                        <CardContent sx={{ color: 'white' }}>
+                            <Typography gutterBottom variant="h4" component="div">
                                 { movieDetails.title } 
                                 <span style={{ marginLeft: '8px', fontSize: '2rem', color: '#ff8f00' }}>
                                     ({yearReleased})
                                 </span>
                             </Typography>          
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            <Typography variant="body2" >
                                 <b>Date Released: </b> { movieDetails.releaseDate }
                             </Typography>
                             <br />
-                            {/* <Typography variant="body2" sx={{ color: 'black' }}>
-                                <b>Genres: </b>{ genre.join(', ') }
-                            </Typography> */}
                             <br />
-                            <Typography variant="body2" sx={{ color: 'black' }}  >
+                            <Typography variant="body1"   >
                                 <b>Overview: </b>{ movieDetails.overview }
                             </Typography>          
                         </CardContent>
-                        <CardActions>
-          <AddToListMenu movieId={movieDetails.id} />
-        </CardActions>
-                    </div> 
+
+                    </div>
                     <CardActions>
                         <Button onClick={handleWantToWatch}
                             size="small">Want to Watch</Button>
@@ -98,7 +136,7 @@ function MovieDetailCard({ movieDetails }) {
                 <InteractionsCard movieDetails={ movieDetails } />     
             </div>
         </Paper>
-        <MovieDetailsNav movieDetails={ movieDetails } />
+        </div>
     </>
   );
 }

@@ -1,0 +1,95 @@
+.about-row {
+    display: flex;
+    flex-wrap: wrap;  
+    justify-content: space-between; 
+  }
+
+.about-column {
+     width: 25%;
+    padding: 8px;
+    box-sizing: border-box;
+    display: flex; 
+  }
+  
+
+  @media screen and (max-width: 800px) {
+    .about-column {
+      width: 50%;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .about-column {
+      width: 100%;
+    }
+  }
+  
+
+  .about-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+
+  .about-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+  }
+
+  .about-container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .about-title {
+    color: grey;
+  }
+  
+  .about-button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 10px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    margin-top: auto; 
+  }
+  
+  .about-button:hover {
+    background-color: #555;
+  }
+
+  .about-image {
+    width: 100%;
+    object-fit: cover; 
+    border-radius: 40%;
+    display: block;
+    margin: 0 auto 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .about-container p::before {
+    content: "⭐ "; 
+    color: gold; 
+    font-weight: bold;
+  }
+
+  .about-container p:first-of-type::after {
+    content: " ⭐"; 
+    color: gold; 
+    font-weight: bold;
+  }
+  

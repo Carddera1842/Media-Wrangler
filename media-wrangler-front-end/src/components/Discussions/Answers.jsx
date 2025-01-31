@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../Services/AuthContext";
+import "./Answers.css"
 
 const QuestionDetail = () => {
   const { questionId } = useParams();
@@ -82,34 +83,18 @@ const QuestionDetail = () => {
   if (!question) return <p>Question data is unavailable.</p>;
 
   return (
-    <div className="box">
-      <h2 className="title is-4">{question.questionText}</h2>
-      <form onSubmit={handleSubmit} className="mt-4">
-        <textarea
-          className="textarea"
-          placeholder="Enter your answer"
-          value={answerText}
-          onChange={(e) => setAnswerText(e.target.value)}
-          required
-        ></textarea>
-        <button type="submit" className="button is-primary mt-3">
-          Submit Answer
-        </button>
-      </form>
+    <div className="answer-container">
+      <div className="answer-box">
+        <h2 className="answer-title">{question.questionText}</h2>
+        
       <div className="mt-5">
-        <h3 className="title is-5">Answers</h3>
         {answers.length > 0 ? (
-          <ul>
+          <ul className="answer-list">
             {answers.map((answer) => (
-              <li key={answer.id}>
-                <p>{answer.answerText}</p>
-                <p>
-                  <strong>Posted by User:</strong> {answer.user.id}
-                </p>
-                <p>
-                  <strong>Timestamp:</strong>{" "}
-                  {new Date(answer.timestamp).toLocaleString()}
-                </p>
+              <li key={answer.id} className="answers">
+                <p className="answer"><strong>{answer.answerText}</strong></p>
+                <p className="answer">Posted by: {answer.user.username}</p>
+                <p className="answer">{" "}{new Date(answer.timestamp).toLocaleString()}</p>
               </li>
             ))}
           </ul>
@@ -117,6 +102,21 @@ const QuestionDetail = () => {
           <p>No answers yet.</p>
         )}
       </div>
+
+      <form onSubmit={handleSubmit} className="answer-form-container">
+          <textarea
+            className="answer-textarea"
+            placeholder="Enter your answer"
+            value={answerText}
+            onChange={(e) => setAnswerText(e.target.value)}
+            required
+          ></textarea>
+          <button type="submit" className="answer-button">
+            Submit Answer
+          </button>
+        </form>
+      </div>
+      
     </div>
   );
 };

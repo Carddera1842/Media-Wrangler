@@ -32,7 +32,11 @@ export default function JournalDisplayReview() {
         alert("No review was found.");
     }
 
-
+    const formattedDate = new Date(review.dateWatched).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
 
 
     return (
@@ -43,12 +47,16 @@ export default function JournalDisplayReview() {
                 fullPosterURL = { review.fullPosterURL }
                 watchAgain = { review.watchAgain }
                 tags = { review.tags }
-                rating = { review.rating }
+                rating = { review.ratingValue }
                 isSpoiler = { review.isSpoiler }
                 review = { review.review }
-                dateWatched = { review.dateWatched }
+                dateWatched = { formattedDate }
                 award = { review.award }
                 yearReleased = { review.yearReleased }
+                username = { review.username }
+                firstname = { review.username }
+                lastname = { review.lastname }  
+                userId = { review.userId }
             />
              
         </>

@@ -115,11 +115,11 @@ function CalendarPlaceholder({ user }) {
       </div>
 
       {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Add Event</h2>
-            <form onSubmit={handleSubmit} className="event-form">
-              <div className="form-group">
+        <div className="calendar-modal-overlay">
+          <div className="calendar-modal-content">
+            <h2 className="calendar-modal-title">Add Event</h2>
+            <form onSubmit={handleSubmit} className="calendar-event-form">
+              <div className="calendar-form-group">
                 <label>Title:</label>
                 <input
                   type="text"
@@ -129,7 +129,7 @@ function CalendarPlaceholder({ user }) {
                   placeholder="Event title"
                 />
               </div>
-              <div className="form-group">
+              <div className="calendar-form-group">
                 <label>Start Date/Time:</label>
                 <input
                   type="datetime-local"
@@ -138,7 +138,7 @@ function CalendarPlaceholder({ user }) {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="calendar-form-group">
                 <label>End Date/Time:</label>
                 <input
                   type="datetime-local"
@@ -147,13 +147,13 @@ function CalendarPlaceholder({ user }) {
                   required
                 />
               </div>
-              <div className="modal-buttons">
-                <button type="submit" className="submit-button">
+              <div className="calendar-modal-buttons">
+                <button type="submit" className="calendar-submit-button">
                   Add Event
                 </button>
                 <button
                   type="button"
-                  className="cancel-button"
+                  className="calendar-cancel-button"
                   onClick={() => setShowModal(false)}
                 >
                   Cancel

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Field, ErrorMessage, FormikProvider, useFormik } from "formik";
 import { useAuth } from "../../Services/AuthContext";
-import "../../stylings/Login.css";
+import "./Login.css";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -32,12 +32,12 @@ export default function Login() {
                     <Form className="login-form">
                         <h1 className="login-title">Login</h1>
 
-                        <div className="field-row">
-                            <div className="field">
-                                <label className="label">Username</label>
-                                <div className="control">
+                        <div className="login-field-row">
+                            <div className="login-field">
+                                <label className="login-label">Username</label>
+                                <div className="login-control">
                                     <Field
-                                        className="input"
+                                        className="login-input"
                                         type="text"
                                         name="username"
                                         placeholder="Username"
@@ -46,11 +46,11 @@ export default function Login() {
                                 </div>
                             </div>
 
-                            <div className="field">
-                                <label className="label">Password</label>
-                                <div className="control">
+                            <div className="login-field">
+                                <label className="login-label">Password</label>
+                                <div className="login-control">
                                     <Field
-                                        className="input"
+                                        className="login-input"
                                         type="password"
                                         name="password"
                                         placeholder="Password"
@@ -62,11 +62,9 @@ export default function Login() {
 
                         {error && <p className="help is-danger">{error}</p>}
 
-                        <div className="field">
-                            <div className="control">
-                                <button type="submit" className="login-button is-primary is-halfwidth">
-                                    Login
-                                </button>
+                        <div className="login-field">
+                        <div className="login-button-container">
+                        <button className="login-button is-primary">Login</button>
                             </div>
                         </div>
                     </Form>

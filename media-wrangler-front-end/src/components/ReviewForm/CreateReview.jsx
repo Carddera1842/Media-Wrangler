@@ -11,34 +11,23 @@ export default function CreateReview() {
     console.log("Location state:", location.state);
 
     //we are going to destructure the props from the movie object
-    const { movieDetails = {}, reviewDetails = null } = location.state || {};
-
-    const isEditMode = !!reviewDetails;
-    const mode = isEditMode ? "edit" : "add";
-
+    const { movieDetails } = location.state || {};
 
     return (
         <>
-            {/* Pass the movie details to your forms */}
-            { movieDetails && (
-                <AwardReviewForm
-                    mode={mode} 
-                    movieId={ movieDetails.id } 
-                    title={ movieDetails.title } 
-                    posterPath={ movieDetails.posterPath }
-                    releaseDate={ movieDetails.releaseDate }
-
-                    review={reviewDetails?.review || ""}
-                    rating={reviewDetails?.rating || ""}
-                    dateWatched={reviewDetails?.dateWatched || ""}
-                    isEditMode={isEditMode}
-                    
-                />
-            )}
+            <div className= "create-review-background">
+                
+                { movieDetails && (
+                    <AwardReviewForm 
+                        movieId={ movieDetails.id } 
+                        title={ movieDetails.title } 
+                        posterPath={ movieDetails.posterPath }
+                        releaseDate={ movieDetails.releaseDate }
+                        
+                    />
+                )}
+            </div>
         </>
-
-
-        
     );
 }
 

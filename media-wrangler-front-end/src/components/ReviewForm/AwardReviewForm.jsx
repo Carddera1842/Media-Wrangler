@@ -1,37 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
 import { fetchMovieReview, submitMovieReview, updateReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
-import { Checkbox, Paper } from "@mui/material";
+import { Checkbox, Paper, useStepContext } from "@mui/material";
 import RadioButton from '../InteractiveSoloComponents/RadioButton';
 import AwardEnum from "../enums/AwardEnum";
-import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
 import { useAuth } from '../../Services/AuthContext';
+import { checkIfUserRatedMovie, fetchMovieRating, submitMovieRating, updateMovieRating } from '../../Services/RatingService';
+import Rating from '@mui/material/Rating';
 
-function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingReview = {}, mode="create" }) {
 
-  const [dateWatched, setDateWatched] = useState(existingReview.dateWatched || "");
-  const [review, setReview] = useState(existingReview.review || "");
-  const [isSpoiler, setSpoiler] = useState(existingReview.isSpoiler || false);
-  const [rating, setRating] = useState(existingReview.rating || 0);
-  const [tags, setTags] = useState(existingReview.tags || []);
-  const [award, setAward] = useState(existingReview.award || null);
-  const [lovedAward, setLovedAward] = useState(
-    existingReview.lovedAward || (existingReview.award && AwardEnum.loved[existingReview.award]) || ""
-  );
-  const [hatedAward, setHatedAward] = useState(
-    existingReview.hatedAward || (existingReview.award && AwardEnum.hated[existingReview.award]) || ""
-  );
-  const [isLovedDisabled, setLovedDisabled] = useState(!!existingReview.hatedAward);
-  const [isHatedDisabled, setHatedDisabled] = useState(!!existingReview.lovedAward);
-  const [watchAgain, setWatchAgain] = useState(existingReview.watchAgain || "");
+function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
+
+  const [dateWatched, setDateWatched] = useState("");
+  const [review, setReview] = useState('');
+  const [isSpoiler, setSpoiler] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [rated, setRated] = useState(false);
+  const [ratingId, setRatingId] = useState(null);
+  const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
-
+  const [award, setAward] = useState(null);
+  const [lovedAward, setLovedAward] = useState("");
+  const [hatedAward, setHatedAward] = useState("");
+  const [isLovedDisabled, setLovedDisabled] = useState(false);
+  const [isHatedDisabled, setHatedDisabled] = useState(false);
+  const [watchAgain, setWatchAgain] = useState('');
+  
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const userId = user.id;
+  console.log("THIS IS THE USER ID: ", userId);
+  
   
   useEffect(() => {
     if (existingReview && movieId) {
@@ -69,6 +73,80 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
   const baseImageURL = "https://image.tmdb.org/t/p/w300";
   const fullPosterURL = `${baseImageURL}${posterPath}`;
 
+
+
+  useEffect(() => {
+    async function checkRatedStatus() {
+      try {
+        const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
+        setRated(ratedStatus);
+
+        if (ratedStatus) {
+          const userRating = await fetchMovieRating(movieId, userId);
+          if (userRating) {
+            setRating(userRating.rating);
+            console.log("User rating now set to :", userRating);
+            console.log("extract rating value from rating: ", userRating.rating);
+            console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
+            setRatingId(userRating.id);
+            
+                   
+          } else {
+            setError("Could not fetch the rating.");
+          }
+        }
+      } catch (error) {
+        console.error("Error checking rating status:", error);
+        setError("Error fetching rating status.");
+      }
+    }
+
+    checkRatedStatus();
+  }, [movieId, userId]);
+
+ 
+
+
+  async function handleRatingChange(e) {
+    const newRating = parseFloat(e.target.value);
+    setRating(newRating);
+
+    const data = {
+        movieId,
+        userId,
+        rating: newRating,
+    };
+
+    try {
+        const hasRated = await checkIfUserRatedMovie(movieId, userId);
+
+        if (hasRated) {
+            const result = await updateMovieRating(data);
+            if (result === "Success") {
+                console.log("Successfully updated the rating:", data);
+            }
+        } else {
+            const result = await submitMovieRating(data);
+            if (result === "Success") {
+                console.log("Successfully submitted the rating:", data);
+            }
+
+            const userRating = await fetchMovieRating(movieId, userId);
+            console.log("Creating another fetch for MovieRating in onChange:", userRating);
+              setRating(userRating.rating);
+              console.log("User rating now set to :", userRating);
+              console.log("extract rating value from rating: ", userRating.rating);
+              console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
+              setRatingId(userRating.id);
+
+            
+        }
+    } catch (error) {
+        console.error("Error occurred while handling rating:", error);
+    }
+}
+
+
   function handleHatedAward(e){
     setHatedAward(e.target.value);
     setAward(e.target.value);
@@ -94,27 +172,22 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
     setTags(updatedTags);
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!dateWatched) {
-      alert("You must pick a date watched to log in your journal.");
-      return;
-    }
-    if (!review) {
-      alert("Let your peers know what you thought, write your review.");
-      return;
-    }
-    if (rating === 0) {
-      alert("You must rate the movie.");
-      return;
-    }
-    if (watchAgain === "") {
-      alert("Would you watch the movie again? Pick yes or no.");
-      return;
-    }
+  async function handleSubmit(e) {
+      e.preventDefault();
+     
+      if(!dateWatched) {   
+        alert("You must pick a date watched to log in your journal.");
+        return;
+      }
+      if(!review){
+        alert("Let your peers know what you thought, write your review.");
+        return;
+      }      
+      if(watchAgain === ""){
+        alert("Would you watch movie again, pick yes or no...");
+        return;
+      }
   
-      //TODO: Adjust this alert/confirm depending on how the spoilers input is executed
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
         if(submission === false) {
@@ -122,12 +195,18 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
         return;
         }
       }
-  
+
       const movieReviewData = { 
         dateWatched,
         review,
         isSpoiler,
-        rating,
+        rating: {
+          movieId: movieId,
+          userId: user.id, 
+          id: ratingId,
+          rating
+        
+        },
         tags,
         title,
         movieId,
@@ -136,28 +215,29 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
         award,
         yearReleased,
         user,
-        reviewId: mode === "edit" ? existingReview?.id : null,
       }
 
       console.log("Submitting review for:", movieReviewData);
     
 
       try {
-        const responseMessage = 
-          mode === "edit"
-            ? await updateMovieReview(movieReviewData)
-            : await submitMovieReview(movieReviewData);
+        const responseMessage = await submitMovieReview(movieReviewData); 
 
         if (responseMessage === "Success") {
-          navigate(`/reviews/user/${user.id}`, { state: movieReviewData });
+          navigate(`/reviews/user/${user.id}`, {
+              state: movieReviewData,
+          });    
+        
+
         } else {
           setError(responseMessage);
         }
+        
       } catch (error) {
-        console.error("Unexpected error during movie review submission: ", error);
-        setError({error: "An unexpected error occurred. Please try again"})
+          console.error("Unexpected error during movie review submission: ", error);
+          setError({error: "An unexpected error occurred. Please try again"})
       }
-    }
+    };
 
     return (
         <>       
@@ -182,7 +262,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
                       <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
                        <b>{ title }</b> <span style={{ fontSize: '19px', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span> 
                       </h3>
-                      {/* <p>{ genre.join(", ") }</p> */}
                     </div> 
                 <img src={ fullPosterURL } ></img>
               </div>
@@ -211,12 +290,24 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath, existingRevi
                         <div className="field-label"></div>
                         <div className="field">
                           <div className="field-label is-normal">
-                            <StarRatingButton
+                          <Rating
+                              required
                               name="half-rating" 
-                              defaultValue={ 0 } 
-                              precision={ 0.5 } 
-                              onChange={ (e) => setRating(e.target.value) }
-                            />
+                              value={ rating }
+                              precision={0.5} 
+                              onChange={ handleRatingChange }
+                              sx={{
+                                  '& .MuiRating-iconFilled': {
+                                      color: '#ff9800',
+                                  },
+                                  '& .MuiRating-iconEmpty': {
+                                      color: '#e0e0e0',
+                                  },
+                                  '& .MuiRating-iconHover': {
+                                      color: '#ffcc00',
+                                  },
+                              }}
+                          />
                           </div>                        
                         </div>
                       </div>
@@ -357,7 +448,5 @@ AwardReviewForm.propTypes = {
     title: PropTypes.string,
     releaseDate: PropTypes.string,  
     poster: PropTypes.string,
-    genre: PropTypes.array,
-    existingReview: PropTypes.object,
-    mode: PropTypes.oneOf(["create", "edit"]),
-};
+    genre: PropTypes.array
+}

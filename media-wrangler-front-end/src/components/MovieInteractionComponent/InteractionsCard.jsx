@@ -1,60 +1,174 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, ButtonGroup, Box } from '@mui/material';
 import PropTypes from 'prop-types';
-import StarRatingButton from '../InteractiveSoloComponents/StarRatingButton';
-import LoveButton from '../InteractiveSoloComponents/LoveButton';
-import WriteReviewButton from '../InteractiveSoloComponents/WriteReviewButton';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAuth } from '../../Services/AuthContext';
 import AddToListMenu from "../InteractiveSoloComponents/AddToListButton";
+import { submitMovieLike, removeMovieLike, checkIfUserLikedMovie, fetchLikeCount } from '../../Services/MovieLikeService';
+import { submitMovieRating, updateMovieRating, checkIfUserRatedMovie, fetchMovieRating } from '../../Services/RatingService';
+import Rating from '@mui/material/Rating';
 
-/*
-    TODO: The "Add to Lists" and "Your Journal" buttons need to be handled once these features are setup and ready for it.
 
-    TODO: The "liked" button counter needs some focus, figure out how to save the counts so we can display the total "likes" across all reviews
-*/
+
 
 function InteractionsCard({ movieDetails }) {
 
     const [rating, setRating] = useState(0);
     const [isLiked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
-    
+    const [isRated, setRated] = useState(false);
+    const [error, setError] = useState("");
     
     const { user } = useAuth();
     const navigate = useNavigate();
 
-    function onChangeRating(e) {
-        setRating(e.target.value);
-    }
+    const movieId = movieDetails.id;
+    const userId = user? user.id : null;
 
-    
 
-    function handleLikeClick() {
-        setLiked(!isLiked); 
-        if (isLiked) {
-            setLikeCount(likeCount - 1); 
-        } else {
-            setLikeCount(likeCount + 1); 
+    useEffect(() => {
+        async function checkLikeStatus() {
+            if(!userId){
+                return;
+            }
+            const liked = await checkIfUserLikedMovie(movieId, userId);
+            setLiked(liked);
+        };
+        checkLikeStatus();
+    }, [movieId, userId]);
+
+
+    useEffect(() => {
+        async function getLikeCount() {
+            const count = await fetchLikeCount(movieId);
+            setLikeCount(count);
+        };
+        getLikeCount();
+    }, [movieId]);
+
+
+      useEffect(() => {
+        async function checkRatedStatus() {
+            if (!userId){
+                return;
+            }
+
+            try {
+                const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
+                setRated(ratedStatus);
+        
+                if (ratedStatus) {
+                const userRating = await fetchMovieRating(movieId, userId);
+                if (userRating) {
+                    setRating(userRating.rating);
+                    console.log("User rating now set to :", userRating);
+                    console.log("extract rating value from rating: ", userRating.rating);
+                
+                
+                } else {
+                    setError("Could not fetch the rating.");
+                }
+                }
+            } catch (error) {
+                console.error("Error checking rating status:", error);
+                setError("Error fetching rating status.");
+            }
+            }
+        
+            checkRatedStatus();
+        }, [movieId, userId]);
+
+
+    async function handleRatingChange(e) {
+        if (!userId) {
+            alert("You must be logged in to Rate a movie.");
+            navigate("/login");
+            return;
+        }
+        const newRating = parseFloat(e.target.value);
+        setRating(newRating);
+
+        const data = {
+            movieId,
+            userId,
+            rating: newRating,
+        };
+
+        try {
+            const hasRated = await checkIfUserRatedMovie(movieId, userId);
+
+            if (hasRated) {
+                const result = await updateMovieRating(data);
+                if (result === "Success") {
+                    console.log("Successfully updated the rating:", data);
+                }
+            } else {
+                const result = await submitMovieRating(data);
+                if (result === "Success") {
+                    console.log("Successfully submitted the rating:", data);
+                }
+            }
+        } catch (error) {
+            console.error("Error occurred while handling rating:", error);
         }
     }
- 
 
-    //state comes fom the navigate of react-router-dom. Everything from the movie object we want to pass to the movieReview is put in the state
+
+    async function handleLikeClick() {
+        if (!userId) {
+            alert("You must be logged in to Like a movie.");
+            navigate("/login");
+            return;
+        }
+        setLiked(!isLiked);
+        setLikeCount(likeCount + 1);
+
+        const data = {
+            movieId,
+            userId,
+        }
+
+        try {
+            if (!isLiked) {
+                const result = await submitMovieLike(data);
+                if (result === "Success") {
+                    console.log("Success liking the movie:", result);
+                    setLiked(true);
+                    setLikeCount(likeCount + 1);
+                }
+            } else {
+                const result = await removeMovieLike(movieId, userId);
+                if (result === "Success") {
+                    console.log("Success removing the like movie:", result);
+                    setLiked(false);
+                    setLikeCount(likeCount - 1);
+                }
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+            setLiked(!isLiked);
+            setLikeCount(isLiked ? likeCount + 1 : likeCount - 1);
+        }
+    }
+
+
     function handleWriteReviewClick() {
-        if(!user) {
+        if(!userId) {
             alert("You must be logged in to write a review");
             navigate('/login');
+        } else {
+            navigate("/reviews/create", {
+                state: { movieDetails, user}
+            });
         }
-        navigate("/reviews/create", {
-            state: { movieDetails, user }
-        });
+
     }
 
+
     function handleJournalClick() {
-        if(!user) {
+        if(!userId) {
             alert("You must be logged in to visit your journal");
             navigate('/login');
         }
@@ -69,12 +183,23 @@ function InteractionsCard({ movieDetails }) {
         <Button key="one" className="button-container">
             <div className="button-content">
                 <span className="button-label">Rate</span>
-                <StarRatingButton
+                <Rating
                     name="half-rating" 
                     title={ movieDetails.title }
-                    defaultValue={0} 
+                    value={ rating }
                     precision={0.5} 
-                    onChange={ onChangeRating }
+                    onChange={ handleRatingChange }
+                    sx={{
+                        '& .MuiRating-iconFilled': {
+                            color: '#ff9800',
+                        },
+                        '& .MuiRating-iconEmpty': {
+                            color: '#e0e0e0',
+                        },
+                        '& .MuiRating-iconHover': {
+                            color: '#ffcc00',
+                        },
+                    }}
                 />
             </div>
         </Button>,
@@ -104,9 +229,11 @@ function InteractionsCard({ movieDetails }) {
                 <span className="button-label">Write Review</span>   
             </div>
             </Button>,
-           <Button>
-           <AddToListMenu movieId={movieDetails.id} />
-         </Button>,
+            <Button key="four" className="button-container">
+            <div className="button-content">
+                <AddToListMenu movieId={movieDetails.id} />
+            </div>
+        </Button>,
             <Button 
                 key="five" 
                 className="button-container"
@@ -133,9 +260,9 @@ function InteractionsCard({ movieDetails }) {
                 orientation="vertical"
                 aria-label="Vertical button group"
                 sx={{
-                    backgroundColor:"rgb(41, 43, 45)",  
+                    backgroundColor: "rgba(19, 19, 20, 0.81)",  
                     borderRadius: '8px',   
-                    border: "2px solid #ff8f00"        
+                    border: "3px solid rgba(17, 144, 213, 0.93)"      
                 }}
             >
                 {buttons}
@@ -147,11 +274,12 @@ function InteractionsCard({ movieDetails }) {
 
 export default InteractionsCard;
 
+
 InteractionsCard.propTypes = {
-    movieId: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.array.isRequired,
-    poster: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired
+    movieId: PropTypes.number,
+    title: PropTypes.string,
+    genre: PropTypes.array,
+    poster: PropTypes.string,
+    releaseDate: PropTypes.string
 }
 

@@ -6,7 +6,7 @@
   box-shadow: none; 
 }
 
-.modal-overlay {
+.calendar-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.calendar-modal-content {
   background: #798478;
   padding: 20px;
   border-radius: 10px;
@@ -28,29 +28,33 @@
   width: 90%;
 }
 
-.form-group {
+.calendar-modal-title {
+  text-align: center;
+}
+
+.calendar-form-group {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.calendar-form-group label {
   display: block;
   margin-bottom: 5px;
 }
 
-.form-group input {
+.calendar-form-group input {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.modal-buttons {
+.calendar-modal-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.submit-button {
+.calendar-submit-button {
   background: #add9f4;
   color: white;
   border: none;
@@ -59,7 +63,7 @@
   cursor: pointer;
 }
 
-.cancel-button {
+.calendar-cancel-button {
   background: #dc3545;
   color: white;
   border: none;
@@ -68,8 +72,8 @@
   cursor: pointer;
 }
 
-.submit-button:hover,
-.cancel-button:hover {
+.calendar-submit-button:hover,
+.calendar-cancel-button:hover {
   opacity: 0.9;
 }
 
