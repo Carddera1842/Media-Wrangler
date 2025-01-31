@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardMedia, Typography, CardActionArea, CardActions, Button, Paper, Modal, Box, IconButton } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, CardActionArea, Paper, Modal, Box, IconButton } from '@mui/material';
 import '../../stylings/MovieDetailsPage.css';
 import PropTypes from 'prop-types';
 import InteractionsCard from '../MovieInteraction/InteractionsCard';
@@ -21,14 +21,6 @@ function MovieDetailCard({ movieDetails }) {
     const yearReleased = new Date(movieDetails.releaseDate).getFullYear();
 
     
-    function handleWantToWatch() {
-        console.log("clicked want to watch button!");
-    }
-
-    function handleWatched() {
-        console.log("clicked watched button!");
-    }
-
     function handlePosterClick() {
         setOpen(true);
     }
