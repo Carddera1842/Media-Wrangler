@@ -11,8 +11,6 @@ import { submitMovieRating, updateMovieRating, checkIfUserRatedMovie, fetchMovie
 import Rating from '@mui/material/Rating';
 
 
-
-
 function InteractionsCard({ movieDetails }) {
 
     const [rating, setRating] = useState(0);
@@ -49,36 +47,33 @@ function InteractionsCard({ movieDetails }) {
     }, [movieId]);
 
 
-      useEffect(() => {
-        async function checkRatedStatus() {
-            if (!userId){
-                return;
-            }
+    useEffect(() => {
+    async function checkRatedStatus() {
+        if (!userId){
+            return;
+        }
 
-            try {
-                const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
-                setRated(ratedStatus);
-        
-                if (ratedStatus) {
-                const userRating = await fetchMovieRating(movieId, userId);
+        try {
+            const ratedStatus = await checkIfUserRatedMovie(movieId, userId);
+            setRated(ratedStatus);
+    
+            if (ratedStatus) {
+            const userRating = await fetchMovieRating(movieId, userId);
                 if (userRating) {
                     setRating(userRating.rating);
-                    console.log("User rating now set to :", userRating);
-                    console.log("extract rating value from rating: ", userRating.rating);
-                
-                
+                            
                 } else {
                     setError("Could not fetch the rating.");
                 }
-                }
-            } catch (error) {
-                console.error("Error checking rating status:", error);
-                setError("Error fetching rating status.");
             }
-            }
-        
-            checkRatedStatus();
-        }, [movieId, userId]);
+        } catch (error) {
+            console.error("Error checking rating status:", error);
+            setError("Error fetching rating status.");
+        }
+    }
+    
+        checkRatedStatus();
+    }, [movieId, userId]);
 
 
     async function handleRatingChange(e) {
@@ -87,6 +82,7 @@ function InteractionsCard({ movieDetails }) {
             navigate("/login");
             return;
         }
+
         const newRating = parseFloat(e.target.value);
         setRating(newRating);
 
@@ -122,6 +118,7 @@ function InteractionsCard({ movieDetails }) {
             navigate("/login");
             return;
         }
+
         setLiked(!isLiked);
         setLikeCount(likeCount + 1);
 
@@ -212,8 +209,7 @@ function InteractionsCard({ movieDetails }) {
             onClick={ handleLikeClick }
         > 
             <div className="button-content">
-               <FavoriteIcon sx={{ fontSize: '40px', color: isLiked ? 'red' : 'gray', 
-          transition: 'color 0.3s',  }} /> 
+               <FavoriteIcon sx={{ fontSize: '40px', color: isLiked ? 'red' : 'gray', transition: 'color 0.3s',  }} /> 
                <br />
                <span className="button-label">Likes { likeCount }</span>                
             </div>
@@ -228,22 +224,22 @@ function InteractionsCard({ movieDetails }) {
             <div className="button-content">
                 <span className="button-label">Write Review</span>   
             </div>
-            </Button>,
-            <Button key="four" className="button-container">
+        </Button>,
+        <Button key="four" className="button-container">
             <div className="button-content">
                 <AddToListMenu movieId={movieDetails.id} />
             </div>
         </Button>,
-            <Button 
-                key="five" 
-                className="button-container"
-                name="route-to-journal"
-                onClick={ handleJournalClick }
-            >
-                <div className="button-content">
-                    <span className="button-label">Your Journal</span>
-                </div>
-            </Button>
+        <Button 
+            key="five" 
+            className="button-container"
+            name="route-to-journal"
+            onClick={ handleJournalClick }
+        >
+            <div className="button-content">
+                <span className="button-label">Your Journal</span>
+            </div>
+        </Button>
     ];
     
     return (
@@ -276,10 +272,6 @@ export default InteractionsCard;
 
 
 InteractionsCard.propTypes = {
-    movieId: PropTypes.number,
-    title: PropTypes.string,
-    genre: PropTypes.array,
-    poster: PropTypes.string,
-    releaseDate: PropTypes.string
+    movieDetails: PropTypes.object
 }
 

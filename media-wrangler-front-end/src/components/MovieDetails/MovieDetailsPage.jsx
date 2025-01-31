@@ -48,42 +48,42 @@ function MovieDetailsPage() {
 
   return (
     <>
-    <div className="movie-details-page-background">
-      {movieDetails && (
-        <div>
-            <MovieDetailCard movieDetails={ movieDetails } />
-            <StreamingProviders movieId={id} />
-        </div>
-      )}
-      {movieDetails && (
-        <div>
-          <MovieDetailsNav movieDetails={ movieDetails } />
-        </div>
-      )}
+      <div className="movie-details-page-background">
+        {movieDetails && (
+          <div>
+              <MovieDetailCard movieDetails={ movieDetails } />
+              <StreamingProviders movieId={id} />
+          </div>
+        )}
+        {movieDetails && (
+          <div>
+            <MovieDetailsNav movieDetails={ movieDetails } />
+          </div>
+        )}
 
-        <div>
-          {reviews.length === 0 ? (
-              <p>Be the first to write this movie a review!</p>
-          ) : (
-            reviews.map((review) => (
-          <MovieReviewListCard
-            key = { review.id }
-            rating = { review.ratingValue }
-            award = { review.award }
-            review = { review.review } 
-            authorId = { review.userId }
-            username = { review.username }
-            firstname = { review.username }
-            lastname = { review.lastname }
-            title = { review.title }
-            movieReviewId = { review.id }
-            dateWatched={ review.dateWatched }
-            isSpoiler={ review.isSpoiler }
-          />
-          )))}
+          <div>
+            {reviews.length === 0 ? (
+                <p>Be the first to write this movie a review!</p>
+            ) : (
+              reviews.map((review) => (
+            <MovieReviewListCard
+              key = { review.id }
+              rating = { review.ratingValue }
+              award = { review.award }
+              review = { review.review } 
+              authorId = { review.userId }
+              username = { review.username }
+              firstname = { review.username }
+              lastname = { review.lastname }
+              title = { review.title }
+              movieReviewId = { review.id }
+              dateWatched={ review.dateWatched }
+              isSpoiler={ review.isSpoiler }
+            />
+            )))}
 
-        </div>
-    </div>
+          </div>
+      </div>
     </>
   );
 };
