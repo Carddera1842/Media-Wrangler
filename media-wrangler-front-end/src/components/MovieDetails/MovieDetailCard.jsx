@@ -120,14 +120,7 @@ function MovieDetailCard({ movieDetails }) {
                                     <b>Overview: </b>{ movieDetails.overview }
                                 </Typography>          
                             </CardContent>
-
-                        </div>
-                        <CardActions>
-                            <Button onClick={handleWantToWatch}
-                                size="small">Want to Watch</Button>
-                            <Button onClick={handleWatched}
-                                size="small">Watched</Button>
-                        </CardActions>          
+                        </div>         
                     </Card>  
                     <InteractionsCard movieDetails={ movieDetails } />     
                 </div>
