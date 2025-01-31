@@ -314,10 +314,9 @@ public class MovieDataFetcher {
         }
     }
 
-    public String fetchPopularMovies(int movieId) {
-        String url = "https://api.themoviedb.org/3/movie/popular\n";
-
+    public ArrayList<Movie>  fetchPopularMovies() {
         OkHttpClient client = new OkHttpClient();
+        ArrayList<Movie> popularMovieArrayList = new ArrayList<>();
 
         Request request = new Request.Builder()
                 .url("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1")
@@ -325,18 +324,46 @@ public class MovieDataFetcher {
                 .addHeader("accept", "application/json")
                 .build();
 
-        try (Response response = client.newCall(request).execute()){
+        try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
                 System.out.println("Provider Request failed with status: " + response.code());
                 return null;
             }
 
-            return response.body().string();
+            //TODO: make response into a list of Movies
+
+            // parse response and transform into array
+            String responseBody = response.body().string();
+            JSONObject jsonResponse = new JSONObject(responseBody);
+            JSONArray results = jsonResponse.getJSONArray("results");
+
+            // extract details for each movie
+            for (int j = 0; j < results.length(); j++) {
+                JSONObject movieJson = results.getJSONObject(j);
+
+                // Extract the required fields for the Movie object
+                int id = movieJson.getInt("id");
+                String title = movieJson.getString("title");
+                String releaseDate = movieJson.getString("release_date");
+                double rating = movieJson.getDouble("vote_average");
+                String overview = movieJson.getString("overview");
+                String posterPath = movieJson.optString("poster_path", null);
+
+                //cast and crew data not currently needed for search
+                ArrayList<CastMember> cast = null;
+                ArrayList<CrewMember> crew = null;
+
+
+                Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath, cast, crew);
+
+                popularMovieArrayList.add(movie);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+        return popularMovieArrayList;
     }
 }
 
