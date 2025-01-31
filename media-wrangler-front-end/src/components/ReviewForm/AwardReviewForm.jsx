@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
-import './ReviewForm.css';
+import '../../stylings/CreateReview.css';
 import { submitMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
-import { Checkbox, Paper, useStepContext } from "@mui/material";
+import { Checkbox, Paper } from "@mui/material";
 import RadioButton from '../InteractiveSoloComponents/RadioButton';
 import AwardEnum from "../enums/AwardEnum";
 import { useAuth } from '../../Services/AuthContext';
@@ -30,16 +30,12 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
   
-  
-  
+   
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const userId = user.id;
-  console.log("THIS IS THE USER ID: ", userId);
   
-  
-
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
 
@@ -58,20 +54,15 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
         if (ratedStatus) {
           const userRating = await fetchMovieRating(movieId, userId);
+          
           if (userRating) {
             setRating(userRating.rating);
-            console.log("User rating now set to :", userRating);
-            console.log("extract rating value from rating: ", userRating.rating);
-            console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
-            setRatingId(userRating.id);
-            
-                   
+            setRatingId(userRating.id);           
           } else {
             setError("Could not fetch the rating.");
           }
         }
       } catch (error) {
-        console.error("Error checking rating status:", error);
         setError("Error fetching rating status.");
       }
     }
@@ -102,19 +93,14 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
             }
         } else {
             const result = await submitMovieRating(data);
+            
             if (result === "Success") {
                 console.log("Successfully submitted the rating:", data);
             }
 
             const userRating = await fetchMovieRating(movieId, userId);
-            console.log("Creating another fetch for MovieRating in onChange:", userRating);
               setRating(userRating.rating);
-              console.log("User rating now set to :", userRating);
-              console.log("extract rating value from rating: ", userRating.rating);
-              console.log("Checking if there is userRating.id in the first fetch :", userRating.id);
-              setRatingId(userRating.id);
-
-            
+              setRatingId(userRating.id);            
         }
     } catch (error) {
         console.error("Error occurred while handling rating:", error);
@@ -161,8 +147,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
       if(watchAgain === ""){
         alert("Would you watch movie again, pick yes or no...");
         return;
-      }
-  
+      }  
 
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
@@ -182,8 +167,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
           movieId: movieId,
           userId: user.id, 
           id: ratingId,
-          rating
-        
+          rating        
         },
         tags,
         title,
@@ -194,10 +178,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         yearReleased,
         user,
       }
-
-     
-      console.log("Submitting review for:", movieReviewData);
-    
+   
 
       try {
         const responseMessage = await submitMovieReview(movieReviewData); 
@@ -205,13 +186,10 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         if (responseMessage === "Success") {
           navigate(`/reviews/user/${user.id}`, {
               state: movieReviewData,
-          });    
-        
-
+          });          
         } else {
           setError(responseMessage);
-        }
-        
+        }        
       } catch (error) {
           console.error("Unexpected error during movie review submission: ", error);
           setError({error: "An unexpected error occurred. Please try again"})
@@ -219,32 +197,33 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
     };
 
     return (
-        <>       
-        <div className="paper-container">
-          <Paper 
-            elevation={0} 
-            sx={{
-                maxWidth: 1000, 
-                background: "#004d40", 
-                margin: "30px", 
-                padding: "20px", 
-                transform: "scale(.9)", 
-                transition: "transform 0.3s, box-shadow 0.3s", 
-                "&:hover": {
-                    transform: "scale(1.1)", 
-                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)" 
-                }
-            }} >
-            <div className="review-container">
-              <div className="poster">
-              <div className="form-header">
-                      <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
-                       <b>{ title }</b> <span style={{ fontSize: '19px', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span> 
-                      </h3>
-                    </div> 
-                <img src={ fullPosterURL } ></img>
-              </div>
-              <form onSubmit={ handleSubmit }>              
+        <>  
+        <div className ="movie-review-background "> 
+          <div className="paper-container">
+            <Paper 
+              elevation={0} 
+              sx={{
+                  maxWidth: 1000, 
+                  background: "rgba(17, 96, 92, 0.88)", 
+                  margin: "30px", 
+                  padding: "20px", 
+                  transform: "scale(.9)", 
+                  transition: "transform 0.3s, box-shadow 0.3s", 
+                  "&:hover": {
+                      transform: "scale(1.1)", 
+                      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)" 
+                  }
+              }} >
+              <div className="review-container">
+                <div className="poster">
+                  <div className="form-header">
+                    <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
+                      <b>{ title }</b> <span style={{ fontSize: '19px', margin: '0', color: "#ff8f00", fontWeight: '100' }}> ({ yearReleased }) </span> 
+                    </h3>
+                  </div> 
+                  <img src={ fullPosterURL } ></img>
+                </div>
+                <form onSubmit={ handleSubmit }>              
                   <div className="review-form">
                     <div className="field is-horizontal">
                       <div className="field-label is-normal">
@@ -269,24 +248,24 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                         <div className="field-label"></div>
                         <div className="field">
                           <div className="field-label is-normal">
-                          <Rating
-                              required
-                              name="half-rating" 
-                              value={ rating }
-                              precision={0.5} 
-                              onChange={ handleRatingChange }
-                              sx={{
-                                  '& .MuiRating-iconFilled': {
-                                      color: '#ff9800',
-                                  },
-                                  '& .MuiRating-iconEmpty': {
-                                      color: '#e0e0e0',
-                                  },
-                                  '& .MuiRating-iconHover': {
-                                      color: '#ffcc00',
-                                  },
-                              }}
-                          />
+                            <Rating
+                                required
+                                name="half-rating" 
+                                value={ rating }
+                                precision={0.5} 
+                                onChange={ handleRatingChange }
+                                sx={{
+                                    '& .MuiRating-iconFilled': {
+                                        color: '#ff9800',
+                                    },
+                                    '& .MuiRating-iconEmpty': {
+                                        color: '#e0e0e0',
+                                    },
+                                    '& .MuiRating-iconHover': {
+                                        color: '#ffcc00',
+                                    },
+                                }}
+                            />
                           </div>                        
                         </div>
                       </div>
@@ -303,15 +282,13 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                             value={ lovedAward }
                             onChange={ handleLovedAward }
                             disabled={ isLovedDisabled }
-                          >
-                           
+                          >                          
                             <option value="">-- Select an Award --</option>
                             { lovedAwards.map((award) => (
                             <option key={ award.id } value={ award.value } title={ award.description }>
                                 { award.icon } { award.label }
                             </option>
-                            ))}
-                           
+                            ))}                          
                           </select>
                         </div>
                       </div>
@@ -345,78 +322,79 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                         </div>
                       </div>
                     </div>           
-                    <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                      <label className="radio-label">
-                        Would You Watch This Movie Again?
-                        <div className="radio-group">
-                          <label className="radio">
-                            <RadioButton
-                              name="watchAgain"
-                              value="yes"
-                              checked={ watchAgain === 'yes' }
-                              onChange={ (e) => setWatchAgain(e.target.value) }
-                            />
-                              Yes
-                          </label>
-                          <label className="radio">
-                            <RadioButton
-                              name="watchAgain"
-                              value="no"
-                              checked={ watchAgain === 'no' }
-                              onChange={ (e) => setWatchAgain(e.target.value) }
-                            />
-                              No
-                          </label>
-                        </div>
-                      </label>
-                    </div>
-                    <div>
-                    <div className="field-body">
-                        <div className="field">
-                          <div className="control">
-                            <textarea
-                              id="review-comments"
-                              required
-                              value={ review }
-                              className="textarea is-success"
-                              placeholder="Write your thoughts here ..."
-                              rows="4"
-                              onChange={ (e) => setReview(e.target.value) }
-                            ></textarea>
+                      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                        <label className="radio-label">
+                          Would You Watch This Movie Again?
+                          <div className="radio-group">
+                            <label className="radio">
+                              <RadioButton
+                                name="watchAgain"
+                                value="yes"
+                                checked={ watchAgain === 'yes' }
+                                onChange={ (e) => setWatchAgain(e.target.value) }
+                              />
+                                Yes
+                            </label>
+                            <label className="radio">
+                              <RadioButton
+                                name="watchAgain"
+                                value="no"
+                                checked={ watchAgain === 'no' }
+                                onChange={ (e) => setWatchAgain(e.target.value) }
+                              />
+                                No
+                            </label>
                           </div>
-                        </div>
+                        </label>
                       </div>
-                    </div>                  
-                    <div className="inline-form" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
-                      <label className="checkbox" style={{ display: 'flex', alignItems: 'center' }}>
-                        <Checkbox 
-                          name="isSpoiler" 
-                          checked={ isSpoiler } 
-                          onChange={ (e) => setSpoiler(e.target.checked) } 
-                        />
-                          &nbsp; Does Review Contain Spoilers?
-                      </label>
-                    </div>               
-                    <div>                    
-                      <InputTags onChange={ updateTags } />
-                    </div>                  
-                    <br />               
-                    <div className="field is-horizontal">                     
-                      <div className="field-label"></div>
-                      <div className="field-label"></div>
+                      <div>
                         <div className="field-body">
                           <div className="field">
                             <div className="control">
-                              <button className="button is-warning">Submit Review</button>
+                              <textarea
+                                id="review-comments"
+                                required
+                                value={ review }
+                                className="textarea is-success"
+                                placeholder="Write your thoughts here ..."
+                                rows="4"
+                                onChange={ (e) => setReview(e.target.value) }
+                              ></textarea>
                             </div>
                           </div>
                         </div>
+                      </div>                  
+                      <div className="inline-form" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+                        <label className="checkbox" style={{ display: 'flex', alignItems: 'center' }}>
+                          <Checkbox 
+                            name="isSpoiler" 
+                            checked={ isSpoiler } 
+                            onChange={ (e) => setSpoiler(e.target.checked) } 
+                          />
+                            &nbsp; Does Review Contain Spoilers?
+                        </label>
+                      </div>               
+                      <div>                    
+                        <InputTags onChange={ updateTags } />
+                      </div>                  
+                      <br />               
+                      <div className="field is-horizontal">                     
+                        <div className="field-label"></div>
+                        <div className="field-label"></div>
+                          <div className="field-body">
+                            <div className="field">
+                              <div className="control">
+                                <button className="button is-warning">Submit Review</button>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
                     </div>
-                  </div>
-                </form>
-              </div>  
-              </Paper>  
-            </div> 
+                  </form>
+                </div>  
+                </Paper>  
+              </div> 
+            </div>    
         </>
     );
 }
@@ -427,5 +405,6 @@ AwardReviewForm.propTypes = {
     title: PropTypes.string,
     releaseDate: PropTypes.string,  
     poster: PropTypes.string,
-    genre: PropTypes.array
+    genre: PropTypes.array,
+    posterPath: PropTypes.string
 }

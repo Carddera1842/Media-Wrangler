@@ -6,10 +6,14 @@ import Search from './components/Search/Search'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
+
+
+import VerifyEmail from './components/VerifyEmail/VerifyEmail';
 import Profile from './components/Profile/Profile'
-import CreateReview from './components/ReviewForm/CreateReview'
-import DisplayReview from './components/ReviewDisplay/DisplayReview'
-import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview'
+import { PrivateRoutes } from './Services/PrivateRoutes'
+import VerificationSent from './components/VerifyEmail/VerificationSent'
+import CreateReviewPage from './components/ReviewForm/CreateReviewPage'
+import JournalDisplayReview from './components/Journal/JournalDisplayReview'
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
@@ -36,8 +40,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/reviews/create" element={<CreateReview />} />
-          <Route path="/reviews/view" element={<DisplayReview />} />
+          <Route path="/verify" element={<VerifyEmail />} />
+          <Route path="/check-email" element={<VerificationSent />} />
+          <Route path="/reviews/create" element={<CreateReviewPage />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
           <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
           <Route path="/questions" element={<Discussions />} />

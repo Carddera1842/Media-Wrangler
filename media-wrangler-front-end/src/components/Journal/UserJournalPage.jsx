@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone';
-
+import '../../stylings/JournalTablePage.css';
 
 
 function UserJournalPage() {
@@ -55,7 +55,7 @@ function UserJournalPage() {
     if (loading) return <p>Loading reviews...</p>;
 
 
-    //Styling declared for the table
+
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
           backgroundColor: theme.palette.common.black,
@@ -78,15 +78,15 @@ function UserJournalPage() {
 
     return (
         <>
-        <div>            
+        <div className='user-journal-table-page-background'>
             <Paper 
             elevation={0} 
             sx={{
                 maxWidth: 1100, 
-                background: "#004d40" ,
+                background: "rgba(80, 27, 27, 0.89)" ,
                 margin: "30px auto", 
                 padding: "20px",
-                border: "3px solid #ff8f00"             
+                border: "3px solid rgba(208, 193, 118, 0.85)"
             }} 
         >
             <TableContainer >
@@ -128,7 +128,7 @@ function UserJournalPage() {
                                             cursor: "pointer",
                                             textDecoration: "underline",
                                             textDecorationThickness: "1px",
-                                            textDecorationColor: "#ff8f00", 
+                                            textDecorationColor: "rgb(208, 193, 118)",
                                             textUnderlineOffset: "3px",
                                         }}
                                     >
@@ -160,4 +160,3 @@ function UserJournalPage() {
 
 export default UserJournalPage;
 
-//TODO: I need to reformat the date for dateWatched --- and dateReleased as well. 

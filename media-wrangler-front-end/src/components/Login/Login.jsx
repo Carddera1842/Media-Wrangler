@@ -25,6 +25,7 @@ export default function Login() {
     });
 
     return (
+        <>
         <div className="login-background">
             <div className="login-form-container">
                 <img src="/Media Wrangler.PNG" alt="Logo" className="login-logo" />
@@ -71,6 +72,14 @@ export default function Login() {
                 </FormikProvider>
             </div>
         </div>
+        <footer className="footer">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        <p>© {new Date().getFullYear()} Media Wrangler</p>
+        <div className="about-us">
+          <a href="/about-us">About PurpleTONE</a>
+        </div>
+      </footer>
+      </>
     );
 }
 

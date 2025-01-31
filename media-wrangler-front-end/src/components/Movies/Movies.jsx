@@ -1,6 +1,6 @@
 import React from "react";
 import MovieDetailCard from "../MovieDetails/MovieDetailCard";
-import MovieReviewListCard from "../ReviewDisplay/MovieReviewListCard";
+import MovieReviewListCard from "../MovieDetails/MovieReviewListCard";
 import MovieDetailsNav from "../nav/MovieDetailsNav";
 import { Paper } from "@mui/material";
 

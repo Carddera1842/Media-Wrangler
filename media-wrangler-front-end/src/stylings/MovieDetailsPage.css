@@ -40,18 +40,12 @@
   gap: 20px;
   padding: 10px;
 }
-
   
 .action-area-container {
   height: 400px !important;
   width: 100% !important;
 } */
 
-.movie-poster {
-  height: 300px !important;  /* Force the image height */
-  width: 100% !important;    /* Ensure it spans the width of the container */
-  object-fit: cover;         /* Ensure it covers the container without distortion */
-}
 
 
 /* Interactive Review Cards */

@@ -91,7 +91,7 @@ function UserJournalPage() {
                             <StyledTableCell align="right">Year Released</StyledTableCell>
                             <StyledTableCell align="right">Rating</StyledTableCell>
                             <StyledTableCell align="right">Rewatchable</StyledTableCell>
-                            <StyledTableCell align="right">Update</StyledTableCell>
+                            {/* <StyledTableCell align="right">Update</StyledTableCell> */}
                             
                         </TableRow>
                     </TableHead>
@@ -134,10 +134,10 @@ function UserJournalPage() {
                                     <StyledTableCell align="right">
                                         { review.watchAgain }
                                     </StyledTableCell>
-                                    <StyledTableCell align="right">
+                                    {/* <StyledTableCell align="right">
                                         <Button>Edit</Button> 
                                         <Button color="error">Delete</Button>
-                                    </StyledTableCell>                                    
+                                    </StyledTableCell>                                     */}
                                 </StyledTableRow>
                             ))
                         )}
