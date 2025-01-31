@@ -94,7 +94,6 @@ const ToggleReviewForm = ({ title, genre, releaseDate, poster, id }) => {
   
         alert("Thank you for your submission!");
         console.log(movieReview);
-        
     }
 
     return (

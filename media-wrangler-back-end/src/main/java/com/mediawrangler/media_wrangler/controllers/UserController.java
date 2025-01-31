@@ -84,7 +84,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> getUserInfo( HttpSession session) {
+    public ResponseEntity<?> loginUser( HttpSession session) {
         System.out.println(session.getAttribute("user"));
         int userId = (int) session.getAttribute("user");
         User user = userRepository.getById(userId);
