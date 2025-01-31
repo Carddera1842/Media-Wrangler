@@ -3,10 +3,14 @@ package com.mediawrangler.media_wrangler.services;
 import com.mediawrangler.media_wrangler.data.MovieReviewRepository;
 import com.mediawrangler.media_wrangler.data.UserRepository;
 import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
+import com.mediawrangler.media_wrangler.dto.RatingDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
+import com.mediawrangler.media_wrangler.models.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +92,6 @@ public class MovieReviewService {
     }
 
 
-    //TODO: Update the MovieReviewDTO to only send the information needed for each type of method.
-    // Scale back on the fields that being set and sent
 
     public List<MovieReviewDTO> getReviewsByMovieId(Long movieId) {
         List<MovieReview> movieReviews = movieReviewRepository.findByMovieId(movieId);
@@ -119,6 +121,68 @@ public class MovieReviewService {
         return movieReviewDTOS;
     }
 
+
+    public Optional<MovieReviewDTO> updatedReview(Long id, MovieReviewDTO incomingMovieReview, int userId) {
+        Optional<MovieReview> optionalReview = movieReviewRepository.findByIdAndUserId(id, userId);
+
+        if (optionalReview.isPresent()) {
+            MovieReview movieReview = optionalReview.get();
+
+            movieReview.setReview(incomingMovieReview.getReview());
+            movieReview.setDateWatched(incomingMovieReview.getDateWatched());
+            if (incomingMovieReview.getAward() != null) movieReview.setAward(incomingMovieReview.getAward());
+            if (incomingMovieReview.getWatchAgain() != null) movieReview.setWatchAgain(incomingMovieReview.getWatchAgain());
+            if (incomingMovieReview.getTags() != null) movieReview.setTags(incomingMovieReview.getTags());
+            movieReview.setSpoiler(incomingMovieReview.isSpoiler());
+
+            MovieReview updatedReview = movieReviewRepository.save(movieReview);
+            System.out.println("Updated review: " + updatedReview.getReview());
+
+            MovieReviewDTO dto = new MovieReviewDTO();
+            dto.setMovieId(updatedReview.getMovieId());
+            dto.setTitle(updatedReview.getTitle());
+            dto.setFullPosterURL(updatedReview.getFullPosterURL());
+            dto.setYearReleased(updatedReview.getYearReleased());
+            dto.setReview(updatedReview.getReview());
+            dto.setSpoiler(updatedReview.isSpoiler());
+            dto.setWatchAgain(updatedReview.getWatchAgain());
+            dto.setAward(updatedReview.getAward());
+            dto.setTags(updatedReview.getTags());
+            dto.setDateWatched(updatedReview.getDateWatched());
+            dto.setId(updatedReview.getId());
+            dto.setUserId(updatedReview.getUser().getId());
+            dto.setUsername(updatedReview.getUser().getUsername());
+            dto.setFirstname(updatedReview.getUser().getFirstname());
+            dto.setLastname(updatedReview.getUser().getLastname());
+
+            return Optional.of(dto);
+        }
+
+        return Optional.empty();
+    }
+
+
+
+//    public MovieReviewDTO updateMovieReview(MovieReviewDTO MovieReviewDTO) {
+//        Long movieId = MovieReviewDTO.getMovieId();
+//        String setTitle = MovieReviewDTO.getTitle();
+//        String setFullPosterURL = MovieReviewDTO.getFullPosterURL();
+//        String setYearReleased = MovieReviewDTO.getYearReleased();
+//        String setReview = MovieReviewDTO.getReview();
+//        boolean setSpoiler = MovieReviewDTO.isSpoiler();
+//        String setWatchAgain = MovieReviewDTO.getWatchAgain();
+//        String setAward = MovieReviewDTO.getAward();
+//        List<String> setTags = MovieReviewDTO.getTags();
+//        LocalDate setDateWatched = MovieReviewDTO.getDateWatched();
+//        Long setId = MovieReviewDTO.getId();
+//
+//        //missing rating and user id
+//
+//
+//
+//
+//
+//    }
 
 
 }

@@ -20,6 +20,30 @@ import axios from "axios";
         }
     }
 
+    async function updateMovieReview(movieReviewData) {
+        try {
+            console.log("Updating movie review with data:", movieReviewData);
+            console.log("user: ", movieReviewData.user.id);
+            console.log("rating:", movieReviewData.rating.rating);
+            const userId = movieReviewData.user.id;
+            const response = await axios.put(
+                `http://localhost:8080/reviews/edit/${movieReviewData.id}/${userId}`,
+                movieReviewData, {
+                    withCredentials: true,
+                }
+            );
+            console.log("Response:", response);
+            if (response.status === 200) {
+                console.log("Updating movie review");
+                return "Success"
+            } else {
+                return ("Review edit failed. Please try again");
+            }
+        } catch (error) {
+            return ("An error occurred. Please try again", error);
+        }
+    }
+
 
     async function fetchMovieReview(id) {
         try {
@@ -101,5 +125,28 @@ import axios from "axios";
         }
     };
 
-export { submitMovieReview, fetchMovieReview, fetchMovieReviewsByUser, fetchMovieDetails, fetchMovieReviewsByMovieId };
+
+    async function fetchMovieReviewByUserIdAndMovieReviewId(id, userId) {
+        try {
+            const response = await axios.get(`http://localhost:8080/reviews/edit/${id}/${userId}`, { withCredentials: true });
+    
+            if (response.status === 200) {
+                const reviewData = response.data;
+                console.log('Review data:', reviewData);
+                return reviewData;
+            } else {
+                return "Review not found or error occurred. Please try again";
+            }
+        } catch (error) {
+            console.log("Error: ", error);
+            return "An error occurred. Please try again";
+        }
+    }
+    
+
+    
+
+    
+
+export { submitMovieReview, updateMovieReview, fetchMovieReview, fetchMovieReviewsByUser, fetchMovieDetails, fetchMovieReviewsByMovieId, fetchMovieReviewByUserIdAndMovieReviewId };
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
-import '../../stylings/CreateReview.css';
-import { submitMovieReview } from "../../Services/MovieReviewService";
+import './ReviewForm.css';
+import { submitMovieReview, updateMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
 import { Checkbox, Paper, useStepContext } from "@mui/material";
@@ -13,7 +13,7 @@ import { checkIfUserRatedMovie, fetchMovieRating, submitMovieRating, updateMovie
 import Rating from '@mui/material/Rating';
 
 
-function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
+function AwardReviewForm({ existingReview }) {
 
   const [dateWatched, setDateWatched] = useState("");
   const [review, setReview] = useState('');
@@ -29,6 +29,11 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
   const [isLovedDisabled, setLovedDisabled] = useState(false);
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
+
+  const [fullPosterURL, setFullPosterURL] = useState('');
+  const [title, setTitle] = useState('');
+  const [yearReleased, setYearReleased] = useState('');
+  const [movieId, setMovieId] = useState(null);
   
   
   
@@ -37,18 +42,38 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
 
   const userId = user.id;
   console.log("THIS IS THE USER ID: ", userId);
-  
+ 
   
 
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
 
-  const yearReleased = new Date(releaseDate).getFullYear();
-
-  const baseImageURL = "https://image.tmdb.org/t/p/w300";
-  const fullPosterURL = `${baseImageURL}${posterPath}`;
+  
 
 
+
+  useEffect(() => {
+    console.log("existingReview:", existingReview); 
+    if (existingReview) {
+      setDateWatched(existingReview.dateWatched || ""); 
+      setReview(existingReview.review || "");
+      setRating(existingReview.rating?.rating || 0);
+      setRatingId(existingReview.rating?.id || null);
+      setTags(existingReview.tags || []);
+      setAward(existingReview.award || "");
+      setWatchAgain(existingReview.watchAgain || false);
+      setLovedAward(existingReview.lovedAward || "");
+      setHatedAward(existingReview.hatedAward || "");
+      setSpoiler(existingReview.isSpoiler || false);
+
+      setFullPosterURL(existingReview.fullPosterURL || "");
+      setTitle(existingReview.title || "");
+      setYearReleased(existingReview.yearReleased || "");
+      setMovieId(existingReview.movieId || null);
+
+      
+    }
+  }, [existingReview]);
 
   useEffect(() => {
     async function checkRatedStatus() {
@@ -85,6 +110,8 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
   async function handleRatingChange(e) {
     const newRating = parseFloat(e.target.value);
     setRating(newRating);
+    
+    
 
     const data = {
         movieId,
@@ -162,7 +189,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         alert("Would you watch movie again, pick yes or no...");
         return;
       }
-  
 
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
@@ -172,18 +198,16 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         }
       }
 
-  
-      
       const movieReviewData = { 
+        id: existingReview?.id || null,
         dateWatched,
         review,
         isSpoiler,
         rating: {
           movieId: movieId,
-          userId: user.id, 
+          userId, 
           id: ratingId,
           rating
-        
         },
         tags,
         title,
@@ -195,38 +219,37 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         user,
       }
 
-     
       console.log("Submitting review for:", movieReviewData);
-    
 
       try {
-        const responseMessage = await submitMovieReview(movieReviewData); 
+        let responseMessage;
+        if (existingReview) {
+          responseMessage = await updateMovieReview(movieReviewData);
+        } else {
+          responseMessage = await submitMovieReview(movieReviewData);
+        }
 
         if (responseMessage === "Success") {
           navigate(`/reviews/user/${user.id}`, {
-              state: movieReviewData,
-          });    
-        
-
+            state: movieReviewData,
+          });
         } else {
           setError(responseMessage);
         }
-        
-      } catch (error) {
-          console.error("Unexpected error during movie review submission: ", error);
-          setError({error: "An unexpected error occurred. Please try again"})
-      }
-    };
+    } catch (error) {
+      console.error("Unexpected error during movie review submission: ", error);
+      setError("An unexpected error occured. Please try again.");
+    }
+  };
 
     return (
-        <>  
-        <div className ="movie-review-background "> 
+        <>       
         <div className="paper-container">
           <Paper 
             elevation={0} 
             sx={{
                 maxWidth: 1000, 
-                background: "rgba(17, 96, 92, 0.88)", 
+                background: "#004d40", 
                 margin: "30px", 
                 padding: "20px", 
                 transform: "scale(.9)", 
@@ -418,7 +441,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
               </div>  
               </Paper>  
             </div> 
-            </div>    
         </>
     );
 }

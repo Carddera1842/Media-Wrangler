@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AwardReviewForm from './AwardReviewForm';
 import { useLocation } from "react-router-dom";
 
@@ -12,6 +12,8 @@ export default function CreateReview() {
 
     const { movieDetails } = location.state || {};
 
+ 
+
 
     return (
         <>
@@ -23,6 +25,7 @@ export default function CreateReview() {
                         title={ movieDetails.title } 
                         posterPath={ movieDetails.posterPath }
                         releaseDate={ movieDetails.releaseDate }
+                     
                         
                     />
                 )}

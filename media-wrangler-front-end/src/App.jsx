@@ -23,6 +23,8 @@ import QuestionDetail from './components/Discussions/Answers.jsx'
 import Discussions from './components/Discussions/Discussions.jsx'
 import DiscoverPage from './components/Discover/DiscoverPage.jsx'
 import AboutUs from './components/PurpleTONE/PurpleTONE.jsx'
+import AwardReviewForm from './components/ReviewForm/AwardReviewForm.jsx'
+import EditReviewFormPage from './components/ReviewForm/EditReviewFormPage.jsx'
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function App() {
           <Route path="/answers/:questionId" element={<QuestionDetail />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/reviews/edit/:id" element={<EditReviewFormPage />} />
+
         </Routes>
       </div>
     </ListProvider>
