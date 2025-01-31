@@ -1,0 +1,12 @@
+/* Style for the Journal Table (large view) */
+
+.user-journal-table-page-background {
+    background-image: url('/desertsunset.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    transition: height 0.3s ease; 
+  }
