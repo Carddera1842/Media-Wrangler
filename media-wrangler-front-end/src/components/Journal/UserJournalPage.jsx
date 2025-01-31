@@ -9,7 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone';
 import '../../stylings/JournalTablePage.css';
@@ -23,7 +23,7 @@ function UserJournalPage() {
    
     const navigate = useNavigate();
 
-    //This is going to fetch the users reviewData
+  
     useEffect(() => {
         async function fetchData() {
             const data = await fetchMovieReviewsByUser(userId);
@@ -38,7 +38,7 @@ function UserJournalPage() {
     if (loading) return <p>Loading reviews...</p>;
 
 
-    //Styling declared for the table
+
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
           backgroundColor: theme.palette.common.black,
@@ -82,8 +82,7 @@ function UserJournalPage() {
                             <StyledTableCell align="right">Year Released</StyledTableCell>
                             <StyledTableCell align="right">Rating</StyledTableCell>
                             <StyledTableCell align="right">Rewatchable</StyledTableCell>
-                            <StyledTableCell align="right">Update</StyledTableCell>
-                            
+                            {/* <StyledTableCell align="right">Update</StyledTableCell> */}                            
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -125,10 +124,10 @@ function UserJournalPage() {
                                     <StyledTableCell align="right">
                                         { review.watchAgain }
                                     </StyledTableCell>
-                                    <StyledTableCell align="right">
+                                    {/* <StyledTableCell align="right">
                                         <Button>Edit</Button> 
                                         <Button color="error">Delete</Button>
-                                    </StyledTableCell>                                    
+                                    </StyledTableCell>                                     */}
                                 </StyledTableRow>
                             ))
                         )}
@@ -143,4 +142,3 @@ function UserJournalPage() {
 
 export default UserJournalPage;
 
-//TODO: I need to reformat the date for dateWatched --- and dateReleased as well. 
