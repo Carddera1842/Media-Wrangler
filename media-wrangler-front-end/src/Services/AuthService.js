@@ -17,16 +17,16 @@ export const deleteProfile = (userId) => {
   return apiClient.delete(`/users/profile/${userId}`);
 };
 
-export const checkSession = async () => {
-    try {
-      const response = await apiClient.get('/users/session-status'); 
-      console.log("Session status response:", response.data);
-      return response; 
-    } catch (error) {
-      console.error("Session status check failed:", error.response?.data || error.message);
-      throw error;
-    }
-  };
+// export const checkSession = async () => {
+//     try {
+//       const response = await apiClient.get('/users/session-status'); 
+//       console.log("Session status response:", response.data);
+//       return response; 
+//     } catch (error) {
+//       console.error("Session status check failed:", error.response?.data || error.message);
+//       throw error;
+//     }
+//   };
 
 apiClient.interceptors.response.use(
     response => response,

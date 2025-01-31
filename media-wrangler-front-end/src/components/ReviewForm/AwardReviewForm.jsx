@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-import { submitMovieReview } from "../../Services/MovieReviewService";
+import { fetchMovieReview, submitMovieReview, updateReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
 import { Checkbox, Paper, useStepContext } from "@mui/material";
@@ -30,8 +30,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
   const [isHatedDisabled, setHatedDisabled] = useState(false);
   const [watchAgain, setWatchAgain] = useState('');
   
-  
-  
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -39,7 +37,34 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
   console.log("THIS IS THE USER ID: ", userId);
   
   
-
+  useEffect(() => {
+    if (existingReview && movieId) {
+      const fetchReviewData = async () => {
+        try {
+          const fetchedReviewData = await fetchMovieReview(movieId);
+          if (fetchMovieReview) {
+            setDateWatched(existingReview.dateWatched || "");
+            setReview(existingReview.review || "");
+            setSpoiler(existingReview.isSpoiler || false);
+            setRating(existingReview.rating || 0);
+            setTags(existingReview.tags || []);
+            setAward(existingReview.award || null);
+            setLovedAward(existingReview.lovedAward || "");
+            setHatedAward(existingReview.hatedAward || "");
+            setLovedDisabled(!!existingReview.hatedAward);
+            setHatedDisabled(!!existingReview.lovedAward);
+            setWatchAgain(existingReview.watchAgain || "");
+          }
+        } catch (error) {
+          console.error("Error fetching review data:", error);
+          setError("Failed to load review data");
+        }
+      };
+      fetchReviewData();
+    }
+  }, [mode, movieId]);
+  console.log("Mode:", mode, "ExistingReview:", existingReview);
+  
   const lovedAwards = Object.values(AwardEnum.loved);
   const hatedAwards = Object.values(AwardEnum.hated);
 
@@ -163,7 +188,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         return;
       }
   
-
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
         if(submission === false) {
@@ -172,8 +196,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         }
       }
 
-  
-      
       const movieReviewData = { 
         dateWatched,
         review,
@@ -195,7 +217,6 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
         user,
       }
 
-     
       console.log("Submitting review for:", movieReviewData);
     
 
@@ -258,7 +279,7 @@ function AwardReviewForm({ title, releaseDate, movieId, posterPath }) {
                               name="dateWatched"
                               className="input is-primary"
                               type="date"
-                              value={ dateWatched }
+                              value={dateWatched}
                               onChange={ (e) => setDateWatched(e.target.value) }
                             />
                             <span className="icon is-small is-left">

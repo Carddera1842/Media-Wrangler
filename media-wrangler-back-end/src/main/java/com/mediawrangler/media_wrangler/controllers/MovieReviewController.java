@@ -1,14 +1,19 @@
 package com.mediawrangler.media_wrangler.controllers;
 
 
+import com.mediawrangler.media_wrangler.Exception.UserNotFound;
 import com.mediawrangler.media_wrangler.data.MovieReviewRepository;
 import com.mediawrangler.media_wrangler.dto.MovieReviewDTO;
 import com.mediawrangler.media_wrangler.models.MovieReview;
 import com.mediawrangler.media_wrangler.services.MovieReviewService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import okhttp3.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,6 +36,9 @@ public class MovieReviewController {
         this.movieReviewService = movieReviewService;
     }
 
+    //Add movieReviewRepository to perform CRUD functions
+    @Autowired
+    private MovieReviewRepository movieReviewRepository;
 
     @PostMapping("/create")
         public ResponseEntity<?> createReview(@RequestBody MovieReview movieReview) {
@@ -57,6 +65,31 @@ public class MovieReviewController {
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while retrieving the review", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/edit/{id}/{userId}")
+    public ResponseEntity<?> updateReview(@PathVariable Long id, int userId, @Valid @RequestBody MovieReviewDTO movieReviewDTO) {
+
+        try {
+            MovieReview updatedReview = movieReviewService.updatedReview(id, movieReviewDTO, userId);
+            return ResponseEntity.ok(updatedReview);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while updating the review: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long id) {
+
+        if (!movieReviewRepository.existsById(id)) {
+            throw new Error("Review not found");
+        }
+
+        movieReviewRepository.deleteById(id);
+        return ResponseEntity.ok("Review with id " + id + " has been deleted");
     }
 
 

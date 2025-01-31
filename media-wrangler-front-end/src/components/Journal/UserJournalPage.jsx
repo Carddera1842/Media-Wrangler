@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMovieReviewsByUser } from '../../Services/MovieReviewService';
+import { fetchMovieReviewsByUser, deleteReview } from '../../Services/MovieReviewService';
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -32,6 +32,24 @@ function UserJournalPage() {
         };
         fetchData();
     }, [userId]);
+
+    const handleDeleteReview = async (id) => {
+        try {
+            await deleteReview(id);
+            console.log("Review deleted successfully");
+            setReviews(reviews.filter((review) => review.id !== id));
+        } catch (error) {
+            console.error("Error deleting review:", error.message);
+        }
+    };
+
+    const ReviewItem = ({ review }) => {
+        const navigate = useNavigate();
+    }
+
+    const handleEditClick = (id) => {
+        navigate(`/reviews/edit/${id}`);
+    };
 
 
 
@@ -126,8 +144,8 @@ function UserJournalPage() {
                                         { review.watchAgain }
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
-                                        <Button>Edit</Button> 
-                                        <Button color="error">Delete</Button>
+                                        <Button onClick={() => handleEditClick(review.id)}>Edit</Button> 
+                                        <Button color="error" onClick={() => handleDeleteReview(review.id)}>Delete</Button>
                                     </StyledTableCell>                                    
                                 </StyledTableRow>
                             ))

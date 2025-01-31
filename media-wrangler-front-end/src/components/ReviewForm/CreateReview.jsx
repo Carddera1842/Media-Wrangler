@@ -13,7 +13,6 @@ export default function CreateReview() {
     //we are going to destructure the props from the movie object
     const { movieDetails } = location.state || {};
 
-
     return (
         <>
             <div className= "create-review-background">
@@ -29,9 +28,6 @@ export default function CreateReview() {
                 )}
             </div>
         </>
-
-
-        
     );
 }
 
