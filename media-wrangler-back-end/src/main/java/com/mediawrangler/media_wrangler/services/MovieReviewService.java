@@ -134,6 +134,7 @@ public class MovieReviewService {
             movieReview.getRating().setRating(incomingMovieReview.getRatingValue());
 
             MovieReview updatedReview = movieReviewRepository.save(movieReview);
+            System.out.println("Updated review: " + updatedReview.getReview());
 
             MovieReviewDTO dto = new MovieReviewDTO();
             dto.setMovieId(updatedReview.getMovieId());

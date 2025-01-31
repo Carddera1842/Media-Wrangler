@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import './ReviewForm.css';
-import { submitMovieReview } from "../../Services/MovieReviewService";
+import { submitMovieReview, updateMovieReview } from "../../Services/MovieReviewService";
 import PropTypes from 'prop-types';
 import InputTags from "../InteractiveSoloComponents/InputTags";
 import { Checkbox, Paper, useStepContext } from "@mui/material";
@@ -187,7 +187,6 @@ function AwardReviewForm({ existingReview }) {
         alert("Would you watch movie again, pick yes or no...");
         return;
       }
-  
 
       if(isSpoiler === false) {
         const submission = window.confirm("Are you sure there are no spoilers? If so, press ok to continue submitting your review?");
@@ -197,9 +196,8 @@ function AwardReviewForm({ existingReview }) {
         }
       }
 
-  
-      
       const movieReviewData = { 
+        id: existingReview?.id || null,
         dateWatched,
         review,
         isSpoiler,
@@ -208,7 +206,6 @@ function AwardReviewForm({ existingReview }) {
           userId: user.id, 
           id: ratingId,
           rating
-        
         },
         tags,
         title,
@@ -220,28 +217,28 @@ function AwardReviewForm({ existingReview }) {
         user,
       }
 
-     
       console.log("Submitting review for:", movieReviewData);
-    
 
       try {
-        const responseMessage = await submitMovieReview(movieReviewData); 
+        let responseMessage;
+        if (existingReview) {
+          responseMessage = await updateMovieReview(movieReviewData);
+        } else {
+          responseMessage = await submitMovieReview(movieReviewData);
+        }
 
         if (responseMessage === "Success") {
-          navigate(`/reviews/user/${user.id}`, {
-              state: movieReviewData,
-          });    
-        
-
+          navigate(`/reviews/user/{user.id}`, {
+            state: movieReviewData,
+          });
         } else {
           setError(responseMessage);
         }
-        
-      } catch (error) {
-          console.error("Unexpected error during movie review submission: ", error);
-          setError({error: "An unexpected error occurred. Please try again"})
-      }
-    };
+    } catch (error) {
+      console.error("Unexpected error during movie review submission: ", error);
+      setError("An unexpected error occured. Please try again.");
+    }
+  };
 
     return (
         <>       

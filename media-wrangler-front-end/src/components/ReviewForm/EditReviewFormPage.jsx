@@ -18,9 +18,9 @@ const EditReviewFormPage = () => {
     const [editMode, setEditMode] = useState(false);
 
     const { user } = useAuth();
-    const userId = user.id;
+    // const userId = user.id;
     console.log("This is the user object:", user);
-    console.log("this is the user id:", userId);
+    // console.log("this is the user id:", userId);
 
 
     //We are getting the movie review id from the param and the userId is coming from the useAuth

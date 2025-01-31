@@ -20,6 +20,27 @@ import axios from "axios";
         }
     }
 
+    async function updateMovieReview(movieReviewData) {
+        try {
+            console.log("Updating movie review with data:", movieReviewData);
+            const response = await axios.put(
+                `http://localhost:8080/reviews/edit/${review.id}/${userId}`,
+                movieReviewData, {
+                    withCredentials: true,
+                }
+            );
+            console.log("Response:", response);
+            if (response.status === 200) {
+                console.log("Updating movie review");
+                return "Success"
+            } else {
+                return ("Review edit failed. Please try again");
+            }
+        } catch (error) {
+            return ("An error occurred. Please try again", error);
+        }
+    }
+
 
     async function fetchMovieReview(id) {
         try {
@@ -124,5 +145,5 @@ import axios from "axios";
 
     
 
-export { submitMovieReview, fetchMovieReview, fetchMovieReviewsByUser, fetchMovieDetails, fetchMovieReviewsByMovieId, fetchMovieReviewByUserIdAndMovieReviewId };
+export { submitMovieReview, updateMovieReview, fetchMovieReview, fetchMovieReviewsByUser, fetchMovieDetails, fetchMovieReviewsByMovieId, fetchMovieReviewByUserIdAndMovieReviewId };
 
