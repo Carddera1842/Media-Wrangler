@@ -31,6 +31,9 @@ public class MovieReviewController {
         this.movieReviewService = movieReviewService;
     }
 
+    @Autowired
+    private MovieReviewRepository movieReviewRepository;
+
 
     @PostMapping("/create")
         public ResponseEntity<?> createReview(@RequestBody MovieReview movieReview) {
@@ -40,6 +43,17 @@ public class MovieReviewController {
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while saving the review", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long id) {
+
+        if (!movieReviewRepository.existsById(id)) {
+            throw new Error("Review not found");
+        }
+
+        movieReviewRepository.deleteById(id);
+        return ResponseEntity.ok("Review with id " + id + " has been deleted");
     }
 
 

@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const apiClient = axios.create ({
+    baseURL: 'http://localhost:8080',
+    withCredentials: true,
+});
+
     async function submitMovieReview(movieReviewData) {
         try {
             const response = await axios.post(
@@ -18,7 +23,11 @@ import axios from "axios";
         } catch (error) {
             return ("An error occurred. Please try again", error);
         }
-    }
+    };
+
+    export const deleteReview = (id) => {
+        return apiClient.delete(`/reviews/delete/${id}`);
+    };
 
     async function updateMovieReview(movieReviewData) {
         try {

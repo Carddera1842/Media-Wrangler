@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMovieReviewsByUser } from '../../Services/MovieReviewService';
+import { fetchMovieReviewsByUser, deleteReview } from '../../Services/MovieReviewService';
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -9,7 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-// import { Button } from '@mui/material';
+import { Button } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone';
 import '../../stylings/JournalTablePage.css';
@@ -23,7 +23,7 @@ function UserJournalPage() {
    
     const navigate = useNavigate();
 
-  
+    //This is going to fetch the users reviewData
     useEffect(() => {
         async function fetchData() {
             const data = await fetchMovieReviewsByUser(userId);
@@ -33,6 +33,23 @@ function UserJournalPage() {
         fetchData();
     }, [userId]);
 
+    const handleDeleteReview = async (id) => {
+        try {
+            await deleteReview(id);
+            console.log("Review deleted successfully");
+            setReviews(reviews.filter((review) => review.id !== id));
+        } catch (error) {
+            console.error("Error deleting review:", error.message);
+        }
+    };
+
+    const ReviewItem = ({ review }) => {
+        const navigate = useNavigate();
+    }
+
+    const handleEditClick = (id) => {
+        navigate(`/reviews/edit/${id}`);
+    };
 
 
     if (loading) return <p>Loading reviews...</p>;
@@ -61,7 +78,7 @@ function UserJournalPage() {
 
     return (
         <>
-        <div className='user-journal-table-page-background'>            
+        <div className='user-journal-table-page-background'>
             <Paper 
             elevation={0} 
             sx={{
@@ -69,7 +86,7 @@ function UserJournalPage() {
                 background: "rgba(80, 27, 27, 0.89)" ,
                 margin: "30px auto", 
                 padding: "20px",
-                border: "3px solid rgba(208, 193, 118, 0.85)"             
+                border: "3px solid rgba(208, 193, 118, 0.85)"
             }} 
         >
             <TableContainer >
@@ -82,7 +99,8 @@ function UserJournalPage() {
                             <StyledTableCell align="right">Year Released</StyledTableCell>
                             <StyledTableCell align="right">Rating</StyledTableCell>
                             <StyledTableCell align="right">Rewatchable</StyledTableCell>
-                            {/* <StyledTableCell align="right">Update</StyledTableCell> */}                            
+                            <StyledTableCell align="right">Update</StyledTableCell>
+                            
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -110,7 +128,7 @@ function UserJournalPage() {
                                             cursor: "pointer",
                                             textDecoration: "underline",
                                             textDecorationThickness: "1px",
-                                            textDecorationColor: "rgb(208, 193, 118)", 
+                                            textDecorationColor: "rgb(208, 193, 118)",
                                             textUnderlineOffset: "3px",
                                         }}
                                     >
@@ -124,10 +142,10 @@ function UserJournalPage() {
                                     <StyledTableCell align="right">
                                         { review.watchAgain }
                                     </StyledTableCell>
-                                    {/* <StyledTableCell align="right">
+                                    <StyledTableCell align="right">
                                         <Button>Edit</Button> 
-                                        <Button color="error">Delete</Button>
-                                    </StyledTableCell>                                     */}
+                                        <Button color="error" onClick={() => handleDeleteReview(review.id)}>Delete</Button>
+                                    </StyledTableCell>                                    
                                 </StyledTableRow>
                             ))
                         )}
