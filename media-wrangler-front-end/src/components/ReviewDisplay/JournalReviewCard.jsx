@@ -20,22 +20,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
     const { id } = useParams();
 
     function handleEditClick() {
-        navigate(`/reviews/edit/${id}`, { state: { review: { 
-            title, 
-            fullPosterURL, 
-            watchAgain, 
-            tags, 
-            rating, 
-            isSpoiler, 
-            review, 
-            dateWatched, 
-            award, 
-            yearReleased, 
-            username, 
-            lastname, 
-            firstname, 
-            userId 
-        }}});
+        navigate(`/reviews/edit/${id}`);
     };
     
     
