@@ -69,7 +69,7 @@ function AwardReviewForm({ existingReview }) {
       setFullPosterURL(existingReview.fullPosterURL || "");
       setTitle(existingReview.title || "");
       setYearReleased(existingReview.yearReleased || "");
-      setMovieId(existingReview.id || null);
+      setMovieId(existingReview.movieId || null);
 
       
     }
@@ -110,6 +110,8 @@ function AwardReviewForm({ existingReview }) {
   async function handleRatingChange(e) {
     const newRating = parseFloat(e.target.value);
     setRating(newRating);
+    
+    
 
     const data = {
         movieId,
