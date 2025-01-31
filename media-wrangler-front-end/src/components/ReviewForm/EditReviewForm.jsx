@@ -205,7 +205,7 @@ function AwardReviewForm({ existingReview }) {
         isSpoiler,
         rating: {
           movieId: movieId,
-          userId: user.id, 
+          userId, 
           id: ratingId,
           rating
         },
@@ -230,7 +230,7 @@ function AwardReviewForm({ existingReview }) {
         }
 
         if (responseMessage === "Success") {
-          navigate(`/reviews/user/{user.id}`, {
+          navigate(`/reviews/user/${user.id}`, {
             state: movieReviewData,
           });
         } else {

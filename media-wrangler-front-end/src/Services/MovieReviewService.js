@@ -23,8 +23,11 @@ import axios from "axios";
     async function updateMovieReview(movieReviewData) {
         try {
             console.log("Updating movie review with data:", movieReviewData);
+            console.log("user: ", movieReviewData.user.id);
+            console.log("rating:", movieReviewData.rating.rating);
+            const userId = movieReviewData.user.id;
             const response = await axios.put(
-                `http://localhost:8080/reviews/edit/${review.id}/${userId}`,
+                `http://localhost:8080/reviews/edit/${movieReviewData.id}/${userId}`,
                 movieReviewData, {
                     withCredentials: true,
                 }
