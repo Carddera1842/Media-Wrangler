@@ -123,22 +123,32 @@ const handleRandomButton = () => {
       <div className="yearRange">
 
       </div>
+      <label for="afterYear">Released After</label>
         <input
                   type="number"
+                  id="afterYear"
                   value={afterYear}
-                  onChange={(e) => setAfterYear(e.target.value)}
-                  placeholder="Released After Year"
-                  min={1000}
-                  max={3000}
+                  onChange={(e) => {
+                    setAfterYear(e.target.value);
+                    handleDiscover();
+                  }}
+                  placeholder="Year"
+                  min={1880}
+                  max={2500}
                   //onKeyDown={handleKeyDown}
               />
+      <label for="beforeYear">Released Before</label>        
         <input
                 type="number"
+                id="beforeYear"
                 value={beforeYear}
-                onChange={(e) => setBeforeYear(e.target.value)}
-                placeholder="Released Before Year"
+                onChange={(e) => {
+                  setBeforeYear(e.target.value)
+                  handleDiscover();
+                }}
+                placeholder="Year"
                 min={1000}
-                max={3000}
+                max={2500}
                 //onKeyDown={handleKeyDown}
             />
       <div>
