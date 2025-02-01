@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMovieReviewsByUser } from '../../Services/MovieReviewService';
+import { fetchMovieReviewsByUser, deleteReview } from '../../Services/MovieReviewService';
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone';
-
+import '../../stylings/JournalTablePage.css';
 
 
 function UserJournalPage() {
@@ -33,12 +33,29 @@ function UserJournalPage() {
         fetchData();
     }, [userId]);
 
+    const handleDeleteReview = async (id) => {
+        try {
+            await deleteReview(id);
+            console.log("Review deleted successfully");
+            setReviews(reviews.filter((review) => review.id !== id));
+        } catch (error) {
+            console.error("Error deleting review:", error.message);
+        }
+    };
+
+    const ReviewItem = ({ review }) => {
+        const navigate = useNavigate();
+    }
+
+    const handleEditClick = (id) => {
+        navigate(`/reviews/edit/${id}`);
+    };
 
 
     if (loading) return <p>Loading reviews...</p>;
 
 
-    //Styling declared for the table
+
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
           backgroundColor: theme.palette.common.black,
@@ -61,16 +78,15 @@ function UserJournalPage() {
 
     return (
         <>
-        <div>            
-            <h1>Users Movie Reviews:</h1>
+        <div className='user-journal-table-page-background'>
             <Paper 
             elevation={0} 
             sx={{
                 maxWidth: 1100, 
-                background: "#004d40" ,
+                background: "rgba(80, 27, 27, 0.89)" ,
                 margin: "30px auto", 
                 padding: "20px",
-                border: "3px solid #ff8f00"             
+                border: "3px solid rgba(208, 193, 118, 0.85)"
             }} 
         >
             <TableContainer >
@@ -112,7 +128,7 @@ function UserJournalPage() {
                                             cursor: "pointer",
                                             textDecoration: "underline",
                                             textDecorationThickness: "1px",
-                                            textDecorationColor: "#ff8f00", 
+                                            textDecorationColor: "rgb(208, 193, 118)",
                                             textUnderlineOffset: "3px",
                                         }}
                                     >
@@ -121,14 +137,14 @@ function UserJournalPage() {
                                     </StyledTableCell>
                                     <StyledTableCell align="right">{review.yearReleased}</StyledTableCell>
                                     <StyledTableCell align="right">
-                                        <Rating name="read-only" value={ review.rating } readOnly /> 
+                                        <Rating name="read-only" value={ review.ratingValue } readOnly /> 
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
                                         { review.watchAgain }
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
                                         <Button>Edit</Button> 
-                                        <Button color="error">Delete</Button>
+                                        <Button color="error" onClick={() => handleDeleteReview(review.id)}>Delete</Button>
                                     </StyledTableCell>                                    
                                 </StyledTableRow>
                             ))
@@ -144,4 +160,3 @@ function UserJournalPage() {
 
 export default UserJournalPage;
 
-//TODO: I need to reformat the date for dateWatched --- and dateReleased as well. 

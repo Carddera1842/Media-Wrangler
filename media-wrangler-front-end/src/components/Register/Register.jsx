@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRegister } from "../../Services/RegistrationService";
-import "../../stylings/Register.css";
+import "./Register.css";
 
 export default function Register() {
     const [username, setUsername] = useState("");
@@ -35,7 +35,8 @@ export default function Register() {
             const responseMessage = await apiRegister(registerData);
 
             if (responseMessage === "Success") {
-                navigate("/login");
+                
+                    navigate("/check-email");
             } else {
                 setErrors(responseMessage);
             }
@@ -46,18 +47,19 @@ export default function Register() {
     };
 
     return (
+        <>
         <div className="register-background">
-            <div className="form-container">
+            <div className="register-form-container">
                 <img src="/Media Wrangler.PNG" alt="Logo" className="register-logo" />
                 <form onSubmit={handleSubmit}>
-                    <h1 className="title">Register</h1>
+                    <h1 className="register-title">Register</h1>
 
-                    <div className="field-row">
-                        <div className="field">
-                            <label className="label">Username</label>
-                            <div className="control">
+                    <div className="register-field-row">
+                        <div className="register-field">
+                            <label className="register-label">Username</label>
+                            <div className="register-control">
                                 <input
-                                    className={`input ${errors.username ? "is-danger" : ""}`}
+                                    className={`register-input ${errors.username ? "is-danger" : ""}`}
                                     type="text"
                                     placeholder="Username"
                                     value={username}
@@ -67,11 +69,11 @@ export default function Register() {
                             {errors.username && <p className="help is-danger">{errors.username}</p>}
                         </div>
 
-                        <div className="field">
-                            <label className="label">Email</label>
-                            <div className="control">
+                        <div className="register-field">
+                            <label className="register-label">Email</label>
+                            <div className="register-control">
                                 <input
-                                    className={`input ${errors.email ? "is-danger" : ""}`}
+                                    className={`register-input ${errors.email ? "is-danger" : ""}`}
                                     type="email"
                                     placeholder="Email"
                                     value={email}
@@ -82,12 +84,12 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <div className="field-row">
-                        <div className="field">
-                            <label className="label">First Name</label>
-                            <div className="control">
+                    <div className="register-field-row">
+                        <div className="register-field">
+                            <label className="register-label">First Name</label>
+                            <div className="register-control">
                                 <input
-                                    className={`input ${errors.firstname ? "is-danger" : ""}`}
+                                    className={`register-input ${errors.firstname ? "is-danger" : ""}`}
                                     type="text"
                                     placeholder="First Name"
                                     value={firstname}
@@ -97,11 +99,11 @@ export default function Register() {
                             {errors.firstname && <p className="help is-danger">{errors.firstname}</p>}
                         </div>
 
-                        <div className="field">
-                            <label className="label">Last Name</label>
-                            <div className="control">
+                        <div className="register-field">
+                            <label className="register-label">Last Name</label>
+                            <div className="register-control">
                                 <input
-                                    className={`input ${errors.lastname ? "is-danger" : ""}`}
+                                    className={`register-input ${errors.lastname ? "is-danger" : ""}`}
                                     type="text"
                                     placeholder="Last Name"
                                     value={lastname}
@@ -112,12 +114,12 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <div className="field-row">
-                        <div className="field">
-                            <label className="label">Password</label>
-                            <div className="control">
+                    <div className="register-field-row">
+                        <div className="register-field">
+                            <label className="register-label">Password</label>
+                            <div className="register-control">
                                 <input
-                                    className={`input ${errors.password ? "is-danger" : ""}`}
+                                    className={`register-input ${errors.password ? "is-danger" : ""}`}
                                     type="password"
                                     placeholder="Password"
                                     value={password}
@@ -127,11 +129,11 @@ export default function Register() {
                             {errors.password && <p className="help is-danger">{errors.password}</p>}
                         </div>
 
-                        <div className="field">
-                            <label className="label">Re-enter Password</label>
-                            <div className="control">
+                        <div className="register-field">
+                            <label className="register-label">Re-enter Password</label>
+                            <div className="register-control">
                                 <input
-                                    className={`input ${errors.confirmPassword ? "is-danger" : ""}`}
+                                    className={`register-input ${errors.confirmPassword ? "is-danger" : ""}`}
                                     type="password"
                                     placeholder="Re-enter Password"
                                     value={confirmPassword}
@@ -144,13 +146,22 @@ export default function Register() {
 
                     {errors.error && <p className="help is-danger">{errors.error}</p>}
 
-                    <div className="field">
-                        <div className="control">
-                            <button className="button is-primary is-halfwidth">Register</button>
-                        </div>
+                    <div className="register-field">
+                    <div className="register-button-container">
+                        <button className="register-button is-primary">Register</button>
+                    </div>
+
                     </div>
                 </form>
             </div>
         </div>
+        <footer className="footer">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        <p>© {new Date().getFullYear()} Media Wrangler</p>
+        <div className="about-us">
+          <a href="/about-us">About PurpleTONE</a>
+        </div>
+      </footer>
+      </>
     );
 }

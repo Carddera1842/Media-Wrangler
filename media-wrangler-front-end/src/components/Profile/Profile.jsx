@@ -4,6 +4,7 @@ import ProfileHeader from "./ProfileHeader";
 import MovieListTable from "./MovieListTable";
 import CalendarPlaceholder from "./Calendar";
 import "./Profile.css";
+import ProfileJournal from "./ProfileJournal"
 
 const Profile = () => {
   const { user, error } = useAuth();
@@ -24,8 +25,7 @@ const Profile = () => {
         </div>
         <div className="profile-middle-bottom">
           <div className="profile-middle">
-            <h2>New Section</h2>
-            <p>This is the new section next to the movie list.</p>
+            <ProfileJournal />
           </div>
           <div className="profile-bottom">
             <MovieListTable />

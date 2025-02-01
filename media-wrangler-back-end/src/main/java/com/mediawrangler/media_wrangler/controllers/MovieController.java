@@ -1,11 +1,15 @@
 package com.mediawrangler.media_wrangler.controllers;
 
+import com.mediawrangler.media_wrangler.dto.MovieStreamingProviderDTO;
 import com.mediawrangler.media_wrangler.models.Movie;
 import com.mediawrangler.media_wrangler.services.MovieDataFetcher;
+import com.mediawrangler.media_wrangler.services.MovieProcessingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -14,10 +18,12 @@ import java.util.Objects;
 public class MovieController {
 
     private final MovieDataFetcher movieDataFetcher;
+    private final MovieProcessingService movieProcessingService;
 
     // Constructor injection of MovieDataFetcher
     @Autowired
-    public MovieController(MovieDataFetcher movieDataFetcher) {
+    public MovieController(MovieDataFetcher movieDataFetcher, MovieProcessingService movieProcessingService) {
+        this.movieProcessingService = movieProcessingService;
         this.movieDataFetcher = movieDataFetcher;
     }
 
@@ -52,4 +58,21 @@ public class MovieController {
         System.out.println("Received request to fetch movie: " + genres);
         return movieDataFetcher.fetchDiscoverList(genres, afterYear, beforeYear);
     }
+
+    @GetMapping("/streaming/{movieId}")
+    public MovieStreamingProviderDTO getWatchProviders(@PathVariable int movieId) {
+        System.out.println("HERE!!!");
+        String jsonData = movieDataFetcher.fetchWatchProviders(movieId);
+        return movieProcessingService.processMovieData(jsonData);
+    }
+
+    @GetMapping("/popular")
+    public Map<String, Object> getPopularMovies() {
+        System.out.println("Received request to fetch popular movies ");
+        ArrayList<Movie> popularMovies = movieDataFetcher.fetchPopularMovies();
+        Map<String, Object> response = new HashMap<>();
+        response.put("results", popularMovies);
+        return response;
+    }
+
 }

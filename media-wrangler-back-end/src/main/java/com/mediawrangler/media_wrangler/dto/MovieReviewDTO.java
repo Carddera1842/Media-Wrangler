@@ -1,5 +1,7 @@
 package com.mediawrangler.media_wrangler.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mediawrangler.media_wrangler.models.Rating;
 import com.mediawrangler.media_wrangler.models.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,26 +16,27 @@ public class MovieReviewDTO {
 
     private Long id;
     private final LocalDate dateCreated;
-
     @NotNull(message = "You must enter a date watched")
     private LocalDate dateWatched;
-
     @NotBlank(message = "We want to hear your thoughts, write your movie review")
     @Size(max = 1000, message = "Review must be less than 1000 characters")
     private String review;
-
     private String award;
 
-    @NotNull(message = "You must give movie a star rating")
-    private int rating;
-
     private String watchAgain;
-
+    @JsonProperty("isSpoiler")
     private boolean isSpoiler;
-
     private List<String> tags = new ArrayList<>();
 
+
     private int userId;
+    private String username;
+    private String firstname;
+    private String lastname;
+
+    private double ratingValue;
+
+
 
     private String title;
     private String fullPosterURL;
@@ -42,18 +45,22 @@ public class MovieReviewDTO {
 
 
 
+
+
+
     public MovieReviewDTO() {
         this.dateCreated = LocalDate.now();
     }
 
 
-    public MovieReviewDTO(LocalDate dateWatched, String review, String award, int rating, String watchAgain, boolean isSpoiler,
-                          List<String> tags, String title, String fullPosterURL, String yearReleased, Long movieId, Long id, int userId) {
+    public MovieReviewDTO(LocalDate dateWatched, String review, String award, double ratingValue, String watchAgain, boolean isSpoiler,
+                          List<String> tags, String title, String fullPosterURL, String yearReleased, Long movieId, Long id,
+                          int userId, String username, String firstname, String lastname) {
         this.dateCreated = LocalDate.now();
         this.dateWatched = dateWatched;
         this.review = review;
         this.award = award;
-        this.rating = rating;
+        this.ratingValue = ratingValue;
         this.watchAgain = watchAgain;
         this.tags = tags;
         this.title = title;
@@ -63,6 +70,10 @@ public class MovieReviewDTO {
         this.isSpoiler = isSpoiler;
         this.id = id;
         this.userId = userId;
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+
     }
 
 
@@ -108,12 +119,12 @@ public class MovieReviewDTO {
     }
 
     @NotNull(message = "You must give movie a star rating")
-    public int getRating() {
-        return rating;
+    public double getRatingValue() {
+        return ratingValue;
     }
 
-    public void setRating(@NotNull(message = "You must give movie a star rating") int rating) {
-        this.rating = rating;
+    public void setRatingValue(@NotNull(message = "You must give movie a star rating") double ratingValue) {
+        this.ratingValue = ratingValue;
     }
 
     public String getWatchAgain() {
@@ -143,9 +154,6 @@ public class MovieReviewDTO {
 
 
     //* User data
-
-
-
     public int getUserId() {
         return userId;
     }
@@ -154,6 +162,29 @@ public class MovieReviewDTO {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
 
 

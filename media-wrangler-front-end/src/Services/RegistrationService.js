@@ -8,7 +8,7 @@ export async function apiRegister(registerData) {
         );
         console.log("Response:", response);
         if (response.status === 201) {
-            console.log("Navigating to login");
+            console.log("Registration successful! Please check your email for a verification link.");
             return "Success"
         } else {
             return "Registration failed. Please try again"

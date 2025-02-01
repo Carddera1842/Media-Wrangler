@@ -6,17 +6,25 @@ import Search from './components/Search/Search'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
+
+
+import VerifyEmail from './components/VerifyEmail/VerifyEmail';
 import Profile from './components/Profile/Profile'
-import CreateReview from './components/ReviewForm/CreateReview'
-import DisplayReview from './components/ReviewDisplay/DisplayReview'
-import JournalDisplayReview from './components/ReviewDisplay/JournalDisplayReview'
-import QuestionDetail from './components/Discussions/Answers.jsx'
+import { PrivateRoutes } from './Services/PrivateRoutes'
+import VerificationSent from './components/VerifyEmail/VerificationSent'
+import CreateReviewPage from './components/ReviewForm/CreateReviewPage'
+import JournalDisplayReview from './components/Journal/JournalDisplayReview'
 import { AuthProvider } from './Services/AuthContext';
 import { ListProvider } from './Services/ListContext.jsx'
 import MovieDetailsPage from './components/MovieDetails/MovieDetailsPage'
 import UserJournalPage from './components/Journal/UserJournalPage'
-import DiscussionPage from './components/Discussions/Discussions.jsx'
-import DiscoverPage from './components/Discover/Discover.jsx'
+import ComingSoon from './components/UpcomingMovies/UpcomingReleases.jsx'
+import QuestionDetail from './components/Discussions/Answers.jsx'
+import Discussions from './components/Discussions/Discussions.jsx'
+import DiscoverPage from './components/Discover/DiscoverPage.jsx'
+import AboutUs from './components/PurpleTONE/PurpleTONE.jsx'
+import AwardReviewForm from './components/ReviewForm/AwardReviewForm.jsx'
+import EditReviewFormPage from './components/ReviewForm/EditReviewFormPage.jsx'
 
 function App() {
   return (
@@ -32,12 +40,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/reviews/create" element={<CreateReview />} />
-          <Route path="/reviews/view" element={<DisplayReview />} />
+          <Route path="/verify" element={<VerifyEmail />} />
+          <Route path="/check-email" element={<VerificationSent />} />
+          <Route path="/reviews/create" element={<CreateReviewPage />} />
           <Route path="/reviews/view/:id" element={<JournalDisplayReview />} />
           <Route path="/reviews/user/:userId" element={<UserJournalPage />}/>   
-          <Route path="/questions" element={<DiscussionPage />} />
-          <Route path="/questions/:id" element={<QuestionDetail />} />
+          <Route path="/questions" element={<Discussions />} />
+          <Route path="/answers/:questionId" element={<QuestionDetail />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/reviews/edit/:id" element={<EditReviewFormPage />} />
+
         </Routes>
       </div>
     </ListProvider>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Field, ErrorMessage, FormikProvider, useFormik } from "formik";
 import { useAuth } from "../../Services/AuthContext";
-import "../../stylings/Login.css";
+import "./Login.css";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -25,6 +25,7 @@ export default function Login() {
     });
 
     return (
+        <>
         <div className="login-background">
             <div className="login-form-container">
                 <img src="/Media Wrangler.PNG" alt="Logo" className="login-logo" />
@@ -32,12 +33,12 @@ export default function Login() {
                     <Form className="login-form">
                         <h1 className="login-title">Login</h1>
 
-                        <div className="field-row">
-                            <div className="field">
-                                <label className="label">Username</label>
-                                <div className="control">
+                        <div className="login-field-row">
+                            <div className="login-field">
+                                <label className="login-label">Username</label>
+                                <div className="login-control">
                                     <Field
-                                        className="input"
+                                        className="login-input"
                                         type="text"
                                         name="username"
                                         placeholder="Username"
@@ -46,11 +47,11 @@ export default function Login() {
                                 </div>
                             </div>
 
-                            <div className="field">
-                                <label className="label">Password</label>
-                                <div className="control">
+                            <div className="login-field">
+                                <label className="login-label">Password</label>
+                                <div className="login-control">
                                     <Field
-                                        className="input"
+                                        className="login-input"
                                         type="password"
                                         name="password"
                                         placeholder="Password"
@@ -62,17 +63,23 @@ export default function Login() {
 
                         {error && <p className="help is-danger">{error}</p>}
 
-                        <div className="field">
-                            <div className="control">
-                                <button type="submit" className="login-button is-primary is-halfwidth">
-                                    Login
-                                </button>
+                        <div className="login-field">
+                        <div className="login-button-container">
+                        <button className="login-button is-primary">Login</button>
                             </div>
                         </div>
                     </Form>
                 </FormikProvider>
             </div>
         </div>
+        <footer className="footer">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        <p>© {new Date().getFullYear()} Media Wrangler</p>
+        <div className="about-us">
+          <a href="/about-us">About PurpleTONE</a>
+        </div>
+      </footer>
+      </>
     );
 }
 
