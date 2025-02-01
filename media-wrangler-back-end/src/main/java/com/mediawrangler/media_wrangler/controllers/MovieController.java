@@ -57,4 +57,10 @@ public class MovieController {
         String jsonData = movieDataFetcher.fetchWatchProviders(movieId);
         return movieProcessingService.processMovieData(jsonData);
     }
+
+    @GetMapping("/popular")
+    public ArrayList<Movie> getPopularMovies() {
+        System.out.println("Received request to fetch popular movies ");
+        return movieDataFetcher.fetchPopularMovies();
+    }
 }
