@@ -82,6 +82,34 @@
   color: white;
 }
 
+/* Container for StreamingProviders & MovieDetailsNav */
+.streaming-nav-container {
+  display: flex;
+  justify-content: space-between;  /* Ensures spacing between items */
+  align-items: stretch;  /* Makes both components the same height */
+  gap: 20px;  /* Adds spacing between them */
+  margin-top: 20px;
+}
+
+/* Ensures consistency with MovieDetailsNav */
+.styled-card {
+  background-color: rgba(0, 0, 0, 0.7); /* Match theme */
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  text-align: center;
+  flex: 1; /* Makes both items take equal width */
+}
+
+/* Responsive: Stack on smaller screens */
+@media (max-width: 768px) {
+  .streaming-nav-container {
+    flex-direction: column;
+  }
+}
+
+
 
 
 

@@ -4,7 +4,8 @@ import MovieDetailCard from "./MovieDetailCard";
 import StreamingProviders from "./StreamingProviders";
 import MovieDetailsNav from "../nav/MovieDetailsNav";
 import MovieReviewListCard from '../MovieDetails/MovieReviewListCard';
-import { fetchMovieDetails, fetchMovieReviewsByMovieId } from "../../Services/MovieReviewService";
+import { fetchMovieReviewsByMovieId } from "../../Services/MovieReviewService";
+import { Container, Box, Typography } from "@mui/material";
 import "../../stylings/MovieDetailsPage.css";
 
 
@@ -21,15 +22,10 @@ function MovieDetailsPage() {
     const fetchMovieDetails = async () => {
       try {
         const response = await fetch(`http://localhost:8080/api/movies/${id}`);
-        console.log('Response:', response);
-
-        // Handle response as text
         const textResponse = await response.text();
-        // console.log('Raw Response Body:', textResponse);
 
         if (response.ok) {
           const movieDetails = JSON.parse(textResponse);
-          console.log('Movie Details:', movieDetails);
           setMovieDetails(movieDetails);
         } else {
           console.error('Failed to fetch movie details from the backend.');
@@ -65,45 +61,53 @@ function MovieDetailsPage() {
 
 
   return (
-    <>
-      <div className="movie-details-page-background">
-        {movieDetails && (
-          <div>
-              <MovieDetailCard movieDetails={ movieDetails } />
-              <StreamingProviders movieId={id} />
-          </div>
-        )}
-        {movieDetails && (
-          <div>
-            <MovieDetailsNav movieDetails={ movieDetails } />
-          </div>
-        )}
+    <div className="movie-details-page-background">
+      <Container maxWidth="lg">
+        {/* Movie Detail Card - Full Width */}
+        <Box mb={3}>
+          {movieDetails && <MovieDetailCard movieDetails={movieDetails} />}
+        </Box>
 
-          <div>
-            {reviews.length === 0 ? (
-                <p>Be the first to write this movie a review!</p>
-            ) : (
-              reviews.map((review) => (
-            <MovieReviewListCard
-              key = { review.id }
-              rating = { review.ratingValue }
-              award = { review.award }
-              review = { review.review }
-              authorId = { review.userId }
-              username = { review.username }
-              firstname = { review.username }
-              lastname = { review.lastname }
-              title = { review.title }
-              movieReviewId = { review.id }
-              dateWatched={ review.dateWatched }
-              isSpoiler={ review.isSpoiler }
-            />
-            )))}
-
+        <div className="streaming-nav-container">
+          <div className="styled-card">
+            {movieDetails && <StreamingProviders movieId={id} />}
           </div>
-      </div>
-    </>
+          <div className="styled-card">
+            {movieDetails && <MovieDetailsNav movieDetails={movieDetails} />}
+          </div>
+        </div>
+
+        {/* Reviews Section */}
+        <Box mt={4}>
+          <Typography variant="h5" gutterBottom>
+            Reviews
+          </Typography>
+          {reviews.length === 0 ? (
+            <Typography variant="body1">
+              Be the first to write this movie a review!
+            </Typography>
+          ) : (
+            reviews.map((review) => (
+              <MovieReviewListCard
+                key={review.id}
+                rating={review.ratingValue}
+                award={review.award}
+                review={review.review}
+                authorId={review.userId}
+                username={review.username}
+                firstname={review.firstname}
+                lastname={review.lastname}
+                title={review.title}
+                movieReviewId={review.id}
+                dateWatched={review.dateWatched}
+                isSpoiler={review.isSpoiler}
+              />
+            ))
+          )}
+        </Box>
+      </Container>
+    </div>
   );
-};
+}
 
 export default MovieDetailsPage;
