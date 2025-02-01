@@ -102,7 +102,6 @@ public class ListController {
         }).collect(Collectors.toList());
     }
 
-
     @DeleteMapping("/{listId}/movie/{movieId}")
     public ResponseEntity<String> deleteMovieFromList(@PathVariable int listId, @PathVariable int movieId) {
         // Find the movie list by its ID
