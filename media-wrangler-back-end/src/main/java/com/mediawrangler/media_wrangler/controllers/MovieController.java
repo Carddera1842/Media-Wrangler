@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -57,4 +59,14 @@ public class MovieController {
         String jsonData = movieDataFetcher.fetchWatchProviders(movieId);
         return movieProcessingService.processMovieData(jsonData);
     }
+
+    @GetMapping("/popular")
+    public Map<String, Object> getPopularMovies() {
+        System.out.println("Received request to fetch popular movies ");
+        ArrayList<Movie> popularMovies = movieDataFetcher.fetchPopularMovies();
+        Map<String, Object> response = new HashMap<>();
+        response.put("results", popularMovies);
+        return response;
+    }
+
 }
