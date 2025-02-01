@@ -45,9 +45,11 @@ const StreamingProviders = ({ movieId }) => {
                                 <List>
                                     {providers[category].map((provider, index) => (
                                         <ListItem key={index}>
-                                            <ListItemAvatar>
-                                                <Avatar src={provider.logoPath} alt={provider.providerName} />
-                                            </ListItemAvatar>
+                                            <img
+                                                src={provider.logoPath} 
+                                                alt={provider.providerName} 
+                                                style={{ width: "50px", marginRight: "10px" }} 
+                                            />
                                             <Typography>{provider.providerName}</Typography>
                                         </ListItem>
                                     ))}

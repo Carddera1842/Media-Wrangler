@@ -63,7 +63,6 @@ function MovieDetailsPage() {
   return (
     <div className="movie-details-page-background">
       <Container maxWidth="lg">
-        {/* Movie Detail Card - Full Width */}
         <Box mb={3}>
           {movieDetails && <MovieDetailCard movieDetails={movieDetails} />}
         </Box>

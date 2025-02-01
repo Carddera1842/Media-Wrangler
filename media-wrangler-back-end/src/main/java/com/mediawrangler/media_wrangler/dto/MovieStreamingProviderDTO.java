@@ -4,7 +4,6 @@ import org.json.JSONPropertyName;
 
 import java.util.ArrayList;
 
-//TODO: add JSON
 public class MovieStreamingProviderDTO {
 
     ArrayList<ProviderDTO> buy = new ArrayList<>();
