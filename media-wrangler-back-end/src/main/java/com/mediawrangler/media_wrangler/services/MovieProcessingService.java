@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MovieProcessingService {
 
-    private String providerBaseURL = "https://image.tmdb.org/t/p/";
+    private String providerBaseURL = "https://image.tmdb.org/t/p/w200/";
 
     public MovieStreamingProviderDTO processMovieData(String rawJson) {
         if (rawJson == null || rawJson.isEmpty()) {

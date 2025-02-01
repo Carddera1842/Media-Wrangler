@@ -18,13 +18,11 @@ function MovieDetailsNav({ movieDetails }) {
       setValue(newValue);
     };
 
-
     // parsing cast data
     let tabOneCastString = ``
     for (let i = 0; i < 10 && i < movieDetails.cast.length; i++) {
       tabOneCastString += `${movieDetails.cast[i].name} as ${movieDetails.cast[i].character}\n`
     }
-
 
     // parsing crew data
     let directors = ""
@@ -122,7 +120,7 @@ function MovieDetailsNav({ movieDetails }) {
             borderRadius: '4px', 
             margin: "auto",
             marginBottom: "30px",
-            border: "2px solid white"
+            border: "2px solid white",
             }} >
               <Tabs
                 value={ value }
@@ -144,7 +142,7 @@ function MovieDetailsNav({ movieDetails }) {
                 margin: "10px auto",
                 border: "2px solid #ff8f00",
                 background: "rgb(41, 43, 45)",
-                padding: "10px"
+                padding: "10px", 
                 }} >
                 <Typography variant="body2" color="white">
                     { tabData[value] }
