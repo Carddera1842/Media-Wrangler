@@ -19,17 +19,6 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
     function handleEditClick() {
         navigate(`/reviews/edit/${id}`);
     };
-
-    const handleDeleteReview = async (id) => {
-        console.log("Deleting review with id:", id);
-        try {
-            await deleteReview(id);
-            console.log("Review deleted successfully");
-            setReviews(reviews.filter((review) => review.id !== id));
-        } catch (error) {
-            console.error("Error deleting review:", error.message);
-        }
-    };
     
     return (
         <>
@@ -133,8 +122,6 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                             <Button
                                 size="small"
                                 onClick={ handleEditClick }>Edit Review</Button>
-                            <Button
-                                size="small" color="error" onClick={() => handleDeleteReview(review.id)}>Delete Review</Button>
                         </CardActions>                      
                     </Card>
                 </div>
