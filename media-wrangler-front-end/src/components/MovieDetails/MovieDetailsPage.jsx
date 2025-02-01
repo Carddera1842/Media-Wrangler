@@ -18,34 +18,30 @@ function MovieDetailsPage() {
 
 
   useEffect(() => {
-    async function fetchData() {
-        const data = await fetchMovieDetails(id);
-        setMovieDetails(data);
-        setLoadingMovie(false);
-
     const fetchMovieDetails = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/movies/${id}`);
+      try {
+        const response = await fetch(`http://localhost:8080/api/movies/${id}`);
+        console.log('Response:', response);
 
+        // Handle response as text
+        const textResponse = await response.text();
+        // console.log('Raw Response Body:', textResponse);
 
-            console.log('Response:', response);
-
-            //was having some weird warnings and couldn't get the data as a json, so I did text instead
-            const textResponse = await response.text();
-            //console.log('Raw Response Body:', textResponse);
-
-            if (response.ok) {
-                const movieDetails = JSON.parse(textResponse);
-                console.log('Movie Details:', movieDetails);
-                setMovieDetails(movieDetails);
-            } else {
-                console.error('Failed to fetch movie details from the backend.');
-            }
-        } catch (error) {
-            console.error('Error fetching movie details:', error);
+        if (response.ok) {
+          const movieDetails = JSON.parse(textResponse);
+          console.log('Movie Details:', movieDetails);
+          setMovieDetails(movieDetails);
+        } else {
+          console.error('Failed to fetch movie details from the backend.');
         }
+      } catch (error) {
+        console.error('Error fetching movie details:', error);
+      } finally {
+        setLoadingMovie(false);
+      }
     };
-    fetchData();
+
+    fetchMovieDetails();
   }, [id]);
 
 

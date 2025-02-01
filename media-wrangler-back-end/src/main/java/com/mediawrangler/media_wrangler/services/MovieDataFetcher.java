@@ -435,9 +435,10 @@ public class MovieDataFetcher {
                 //cast and crew data not currently needed for search
                 ArrayList<CastMember> cast = null;
                 ArrayList<CrewMember> crew = null;
+                ArrayList<String> genres = null;
 
 
-                Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath, cast, crew);
+                Movie movie = new Movie(id, title, releaseDate, rating, overview, posterPath, cast, crew, genres);
 
                 popularMovieArrayList.add(movie);
             }
