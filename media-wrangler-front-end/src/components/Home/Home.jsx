@@ -5,6 +5,7 @@ import StarIcon from "@mui/icons-material/Star";
 import GradeIcon from "@mui/icons-material/Grade";
 import { useAuth } from "../../Services/AuthContext";
 import { useListContext } from "../../Services/ListContext.jsx";
+import { getPopularMovies } from "../../Services/HomePageService.js"
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
@@ -26,7 +27,7 @@ const HomePage = () => {
   const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
-    const fetchMovies = async (type, setState) => {
+    const fetchUpcomingMovies = async (type, setState) => {
       try {
         const apiKey = "1ae7a70b471c9eb7d389671747750ad0";
         const response = await fetch(
@@ -44,9 +45,26 @@ const HomePage = () => {
       }
     };
 
-    fetchMovies("upcoming", setUpcomingMovies);
-    fetchMovies("popular", setPopularMovies);
+    fetchUpcomingMovies("upcoming", setUpcomingMovies);
   }, []);
+
+  
+    const fetchPopularMovies = async () => {
+      try {
+        const movies = await getPopularMovies();
+        console.log("Fetched movies", movies);
+        if (!Array.isArray(movies)) {
+            throw new Error("Invalid response format for popular movies");
+        }
+        setPopularMovies(movies)
+      } catch (err) {
+        setError(err.message || "Popular movies fetch failed");
+      }
+    };
+
+    useEffect(() => {
+        fetchPopularMovies();
+    }, [])
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -204,10 +222,10 @@ const HomePage = () => {
     {error && <p>{error}</p>}
 
     <div id="home-popular-movie-search">
-      {popularMovies.slice(0, 5).map((movie) => (
+      {Array.isArray(popularMovies) && popularMovies.slice(0, 5).map((movie) => (
         <div key={movie.id} className="home-popular-poster-container">
           <img
-            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`}
             alt={`Poster of ${movie.title}`}
             className="home-popular-poster-image"
             onClick={() => handlePosterClick(movie)}

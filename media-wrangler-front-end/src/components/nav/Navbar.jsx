@@ -15,7 +15,6 @@ export default function Navbar() {
     { label: "Discover", path: "/discover" },
     { label: "Search", path: "/search" },
     { label: "Discussions", path: "/questions" },
-    { label: "Upcoming Movies", path: "/coming-soon"},
     ...(user
       ? [
           { label: "Profile", path: `/profile/${user.id}` },

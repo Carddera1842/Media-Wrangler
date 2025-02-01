@@ -369,7 +369,3 @@ public class MovieDataFetcher {
         return popularMovieArrayList;
     }
 }
-
-
-
-
