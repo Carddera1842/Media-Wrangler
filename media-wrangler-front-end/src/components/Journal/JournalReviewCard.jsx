@@ -1,4 +1,5 @@
 import React from 'react'
+import { deleteReview } from '../../Services/MovieReviewService';
 import { Card, CardContent, Typography, CardActions, Button, Divider, Stack, Paper, Box } from '@mui/material';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import "../../stylings/JournalDisplayReview.css";
@@ -10,8 +11,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import PropTypes from 'prop-types';
 
-
-
 export default function JournalReviewCard({ title, fullPosterURL, watchAgain, tags, rating, isSpoiler, review, dateWatched, award, yearReleased, username, lastname, firstname, userId }) {
 
     const navigate = useNavigate();
@@ -20,10 +19,18 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
     function handleEditClick() {
         navigate(`/reviews/edit/${id}`);
     };
-    
-    
 
-
+    const handleDeleteReview = async (id) => {
+        console.log("Deleting review with id:", id);
+        try {
+            await deleteReview(id);
+            console.log("Review deleted successfully");
+            setReviews(reviews.filter((review) => review.id !== id));
+        } catch (error) {
+            console.error("Error deleting review:", error.message);
+        }
+    };
+    
     return (
         <>
          
@@ -127,7 +134,7 @@ export default function JournalReviewCard({ title, fullPosterURL, watchAgain, ta
                                 size="small"
                                 onClick={ handleEditClick }>Edit Review</Button>
                             <Button
-                                size="small" color="error" >Delete Review</Button>
+                                size="small" color="error" onClick={() => handleDeleteReview(review.id)}>Delete Review</Button>
                         </CardActions>                      
                     </Card>
                 </div>
