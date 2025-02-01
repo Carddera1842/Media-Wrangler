@@ -94,9 +94,9 @@ const DiscoverPage = () => {
   return (
     <>
       <div className="discover-container">
-        <h1>Discover a Movie to Watch</h1>
+        <h1 className='dicover-title'>Discover a Movie to Watch</h1>
 
-        <div className="button-group">
+        <div className="discover-button-group">
           <button
             className="button andor-button"
             onClick={() => {
@@ -108,7 +108,7 @@ const DiscoverPage = () => {
           </button>
         </div>
 
-        <div className="button-group">
+        <div className="discover-button-group">
           {genres.map((genre) => (
             <button
               key={genre.id}
@@ -121,7 +121,7 @@ const DiscoverPage = () => {
         </div>
 
         <div className="yearRange">
-          <label htmlFor="afterYear">Released After</label>
+          <label className='discover-label' htmlFor="afterYear">Released After</label>
           <input
             type="number"
             id="afterYear"
@@ -134,7 +134,7 @@ const DiscoverPage = () => {
             min={1880}
             max={2500}
           />
-          <label htmlFor="beforeYear">Released Before</label>
+          <label className='discover-label' htmlFor="beforeYear">Released Before</label>
           <input
             type="number"
             id="beforeYear"
