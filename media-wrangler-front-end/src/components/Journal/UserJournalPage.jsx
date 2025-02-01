@@ -13,6 +13,7 @@ import { Button } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone';
 import '../../stylings/JournalTablePage.css';
+import { id } from 'date-fns/locale';
 
 
 function UserJournalPage() {
@@ -43,9 +44,9 @@ function UserJournalPage() {
         }
     };
 
-    const ReviewItem = ({ review }) => {
-        const navigate = useNavigate();
-    }
+    // const ReviewItem = ({ review }) => {
+    //     const navigate = useNavigate();
+    // }
 
     const handleEditClick = (id) => {
         navigate(`/reviews/edit/${id}`);
@@ -143,7 +144,7 @@ function UserJournalPage() {
                                         { review.watchAgain }
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
-                                        <Button>Edit</Button> 
+                                        <Button onClick={() => handleEditClick(review.id)}>Edit</Button> 
                                         <Button color="error" onClick={() => handleDeleteReview(review.id)}>Delete</Button>
                                     </StyledTableCell>                                    
                                 </StyledTableRow>
