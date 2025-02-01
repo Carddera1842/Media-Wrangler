@@ -12,26 +12,29 @@ const MovieListTable = () => {
   const TMDB_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNGY4N2NjNmIxZTZhMzQyMThjNjdjYWM1NGMwYzE0ZiIsIm5iZiI6MTczNDE5MTM5MS43NzcsInN1YiI6IjY3NWRhOTFmZjFiZjk2ZGMyNDc4MTA4ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4trA-9bv10lqcfQyhPxFTeKRWMyyPjIhgM_3Vri9Y6Y";
 ;
 
-  useEffect(() => {
-    const fetchMovieLists = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/lists/all');
-        if (response.ok) {
-          const data = await response.json();
-          const userMovieLists = data.filter((list) => list.user.id === user.id);
-          setMovieLists(userMovieLists);
-        } else {
-          console.error('Failed to fetch movie lists.');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
+useEffect(() => {
+  const fetchMovieLists = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/lists/all');
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Fetched movie lists after adding a review:", JSON.stringify(data, null, 2)); 
 
-    if (user) {
-      fetchMovieLists();
+        const userMovieLists = data.filter((list) => list?.user?.id === user?.id);
+        setMovieLists(userMovieLists);
+      } else {
+        console.error('Failed to fetch movie lists.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
-  }, [user]);
+  };
+
+  if (user) {
+    fetchMovieLists();
+  }
+}, [user]);
+
 
   useEffect(() => {
     const fetchMovieDetails = async (movieId) => {

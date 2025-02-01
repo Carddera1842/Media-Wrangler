@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/lists")
@@ -82,10 +84,24 @@ public class ListController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<MovieList>> getAllMovieLists() {
+    public List<Map<String, Object>> getAllMovieLists() {
         List<MovieList> movieLists = movieListRepository.findAll();
-        return ResponseEntity.ok(movieLists);
+
+        return movieLists.stream().map(list -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", list.getId());
+            map.put("movieId", list.getMovieId());
+            map.put("listName", list.getListName());
+
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("id", list.getUser().getId());
+            userMap.put("username", list.getUser().getUsername());
+
+            map.put("user", userMap);
+            return map;
+        }).collect(Collectors.toList());
     }
+
 
     @DeleteMapping("/{listId}/movie/{movieId}")
     public ResponseEntity<String> deleteMovieFromList(@PathVariable int listId, @PathVariable int movieId) {
