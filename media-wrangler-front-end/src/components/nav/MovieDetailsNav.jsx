@@ -105,9 +105,9 @@ function MovieDetailsNav({ movieDetails }) {
     const tabData = {
         one: renderWithLineBreaks(tabOneCastString),
         two: renderWithLineBreaks(tabTwoCrewString),
-        three: "Movie details go here",
+        three: movieDetails.genreList.join(', '),
         four: "Release dates go here",
-        five: movieDetails.genreList.join(', ')
+        five: ""
     };
   
     return (

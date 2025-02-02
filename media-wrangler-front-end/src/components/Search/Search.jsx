@@ -12,6 +12,13 @@ function Search() {
     const handleSearch = async () => {
         setMovieData([]); 
         setError(null);
+
+        const validCharacters = /^[a-zA-Z0-9\s]*$/;
+
+        if (!validCharacters.test(movieSearch)) {
+            setError('Invalid characters in search. Please use only letters, numbers, and spaces.');
+            return;
+        }
         
         try {
 
