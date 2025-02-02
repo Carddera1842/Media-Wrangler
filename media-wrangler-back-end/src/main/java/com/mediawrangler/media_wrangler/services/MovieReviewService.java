@@ -161,31 +161,8 @@ public class MovieReviewService {
         return Optional.empty();
     }
 
-
-
-//    public MovieReviewDTO updateMovieReview(MovieReviewDTO MovieReviewDTO) {
-//        Long movieId = MovieReviewDTO.getMovieId();
-//        String setTitle = MovieReviewDTO.getTitle();
-//        String setFullPosterURL = MovieReviewDTO.getFullPosterURL();
-//        String setYearReleased = MovieReviewDTO.getYearReleased();
-//        String setReview = MovieReviewDTO.getReview();
-//        boolean setSpoiler = MovieReviewDTO.isSpoiler();
-//        String setWatchAgain = MovieReviewDTO.getWatchAgain();
-//        String setAward = MovieReviewDTO.getAward();
-//        List<String> setTags = MovieReviewDTO.getTags();
-//        LocalDate setDateWatched = MovieReviewDTO.getDateWatched();
-//        Long setId = MovieReviewDTO.getId();
-//
-//        //missing rating and user id
-//
-//
-//
-//
-//
-//    }
-
-
 }
+
 
 
 
