@@ -88,7 +88,11 @@ const DiscoverPage = () => {
   };
 
   const handleRandomButton = () => {
-    navigate(`/movies/${randomId}`);
+    if (randomId != null) {
+      navigate(`/movies/${randomId}`);
+    } else {
+      alert("Pick a genre!");
+    };
   };
 
   return (
@@ -149,7 +153,7 @@ const DiscoverPage = () => {
           />
         </div>
 
-        <div>
+        <div className='button'>
           <button onClick={() => handleRandomButton()}>Pick me a Movie!</button>
         </div>
 
