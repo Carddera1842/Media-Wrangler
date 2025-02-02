@@ -79,7 +79,7 @@ function UserJournalPage() {
                 borderRadius: "12px",
                 fontFamily: "'Roboto Slab', serif",
                 color: "#fff3e0", 
-            }}
+            }}          
         >
             <TableContainer >
                 <Table sx={{ maxWidth: 1200, margin: "30px auto" }} aria-label="customized table">
@@ -144,6 +144,21 @@ function UserJournalPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <span
+                onClick={() => navigate(`/reviews/user/${userId}`)}
+                style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    textDecorationThickness: "1px",
+                    textDecorationColor: "#ff8f00",
+                    textUnderlineOffset: "3px",
+                }}
+            >
+                View Your Journal
+            </span>
             </Paper> 
             </div>
         </>
