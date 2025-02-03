@@ -1,0 +1,95 @@
+.discover-page-background {
+    background-image: url('/cactusdesert.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    transition: height 0.3s ease;
+  }
+
+  .discover-container {
+    background-image: url('/cactusdesert.jpg');
+    background-size: cover;
+    min-height: 100vh;
+  }
+  
+  /* Title styling */
+  .discover-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the button group */
+  .discover-button-group {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    margin-bottom: 20px;
+  }
+  
+  /* Common button styling */
+  .button {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Specific styles for the genre buttons */
+  .genre-button {
+    background-color: gray;
+    width: 100%;
+    margin: 5px;
+    max-width: 150px;
+  }
+  
+  .genre-button.selected {
+    background-color: lightblue;
+  }
+
+  .button-group .genre-button {
+    flex: 1 1 auto; 
+    margin: 5px; 
+  }
+  
+  /* Specific styles for the toggle button */
+  .andor-button {
+    background-color: rgb(75, 211, 48);
+    
+  }
+  
+  .discover-label {
+    color: #B4886B;
+    font-weight: bold;
+    display: block;  
+  }
+  
+  .genre-button.selected {
+    background-color: lightblue;
+  }
+
+  .button-group .genre-button {
+    flex: 1 1 auto; 
+    margin: 5px; 
+  }
+  
+  /* Specific styles for the toggle button */
+  .andor-button {
+    background-color: rgb(207, 145, 30);
+    
+  }
+  
+  /* Movie cards container */
+  #discovered-movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .yearRange {
+    padding-left: 20px;
+  }
