@@ -183,67 +183,57 @@ const HomePage = () => {
             </div>
             <div className="feature-card">
                 <h3>Engage in Discussions</h3>
-                <p>Join the conversation and connect with fellow movie enthusiasts.</p>
+                <p>Join the conversation and connect.</p>
             </div>
           </div>
         </div>
 
       <div className="home-container">
       <div className="home-movie-sections">
-  <div className="home-upcoming-container">
-    <h2 className="home-upcoming-title">Upcoming Movies</h2>
-    {error && <p>{error}</p>}
+        <div className="home-upcoming-container">
+          <h2 className="home-upcoming-title">Upcoming Movies</h2>
+          {error && <p>{error}</p>}
 
-    <div id="home-upcoming-movie-search">
-      {upcomingMovies.slice(0, 5).map((movie) => (
-        <div key={movie.id} className="home-upcoming-poster-container">
-          <img
-            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-            alt={`Poster of ${movie.title}`}
-            className="home-upcoming-poster-image"
-            onClick={() => handlePosterClick(movie)}
-          />
-          <button
-            className="home-upcoming-add-button"
-            onClick={(event) => handleAddClick(event, movie)}
-          >
-            <StarIcon style={{ color: "white", fontSize: "20px" }} />
+          <div id="home-upcoming-movie-search">
+            {upcomingMovies.slice(0, 5).map((movie) => (
+              <div key={movie.id} className="home-upcoming-poster-container">
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                  alt={`Poster of ${movie.title}`}
+                  className="home-upcoming-poster-image"
+                  onClick={() => handlePosterClick(movie)}
+                />
+                
+              </div>
+            ))}
+          </div>
+          <button className="home-view-more-button" onClick={() => navigate("/coming-soon")}>
+            View More
           </button>
         </div>
-      ))}
-    </div>
-    <button className="home-view-more-button" onClick={() => navigate("/coming-soon")}>
-      View More
-    </button>
-  </div>
 
-  <div className="home-popular-container">
-    <h2 className="home-popular-title">Popular Movies</h2>
-    {error && <p>{error}</p>}
+        <div className="home-popular-container">
+          <h2 className="home-popular-title">Popular Movies</h2>
+          {error && <p>{error}</p>}
 
-    <div id="home-popular-movie-search">
-      {Array.isArray(popularMovies) && popularMovies.slice(0, 5).map((movie) => (
-        <div key={movie.id} className="home-popular-poster-container">
-          <img
-            src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`}
-            alt={`Poster of ${movie.title}`}
-            className="home-popular-poster-image"
-            onClick={() => handlePosterClick(movie)}
-          />
-          <button
-            className="home-popular-add-button"
-            onClick={(event) => handleAddClick(event, movie)}
-          >
-            <StarIcon style={{ color: "white", fontSize: "20px" }} />
+          <div id="home-popular-movie-search">
+            {Array.isArray(popularMovies) && popularMovies.slice(0, 5).map((movie) => (
+              <div key={movie.id} className="home-popular-poster-container">
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`}
+                  alt={`Poster of ${movie.title}`}
+                  className="home-popular-poster-image"
+                  onClick={() => handlePosterClick(movie)}
+                />
+                
+              </div>
+            ))}
+          </div>
+          <button className="home-view-more-button" onClick={() => navigate("/search")}>
+            Search More
           </button>
         </div>
-      ))}
-    </div>
-    <button className="home-view-more-button" onClick={() => navigate("/search")}>
-      Search More
-    </button>
-  </div>
-</div>
+      </div>
 
 
       {anchorEl && (

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #1a1a1a;
 }
 
 .home-hero-section {
@@ -132,7 +133,7 @@
 
 .features-section {
   text-align: center;
-  padding: 60px 20px;
+  padding: 15px 10px;
   background-color: #1a1a1a;
 }
 
@@ -140,13 +141,13 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  max-width: 1200px;
+  max-width: 2000px;
   margin: auto;
 }
 
 .feature-card {
   background: linear-gradient(135deg, #3a3a3a, #222);
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   color: white;
   text-align: center;
@@ -155,7 +156,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 180px;
+  min-height: 40px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -196,18 +197,12 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 40px; 
-  padding: 40px 20px;
-  max-width: 1800px;
-  margin: auto;
 }
 
 .home-upcoming-container,
 .home-popular-container {
-  flex: 1;
   background-color: #222;
   padding: 20px;
-  border-radius: 10px;
   text-align: center;
   min-width: 300px;
 }
@@ -229,21 +224,17 @@
 
 .home-upcoming-poster-container,
 .home-popular-poster-container {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 10px;
   width: 150px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .home-upcoming-poster-image,
 .home-popular-poster-image {
   width: 100%;
-  border-radius: 8px;
   cursor: pointer;
 }
 
+/*
 .home-upcoming-add-button,
 .home-popular-add-button {
   background-color: #ff6600;
@@ -260,6 +251,7 @@
   background-color: #ff4500;
 }
 
+
 .home-view-more-button {
   background-color: #444;
   color: white;
@@ -275,6 +267,7 @@
 .home-view-more-button:hover {
   background-color: #222;
 }
+  */
 
 @media screen and (max-width: 900px) {
   .home-movie-sections {
