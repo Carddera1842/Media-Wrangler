@@ -24,8 +24,8 @@ const Navbar = () => {
       <div className="navbar-logo">
       </div>
 
-      <div
-        className={`navbar-hamburger ${isOpen ? "active" : ""}`}
+      <div 
+        className={`navbar-hamburger ${isOpen ? "active" : ""}`} 
         onClick={toggleMenu}
       >
         <span className="line" />
@@ -46,9 +46,6 @@ const Navbar = () => {
               value={searchQuery}
               onChange={handleSearchChange}
             />
-            <button type="submit" className="navbar-search-btn">
-              Go
-            </button>
           </form>
         </li>
 
@@ -58,11 +55,9 @@ const Navbar = () => {
         <li>
           <a href="/discussions">Discussions</a>
         </li>
-
         <li>
           <a href="/login">Log In</a>
         </li>
-
       </ul>
     </nav>
   );
