@@ -1,113 +1,71 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../../Services/AuthContext';
+import React, { useState } from "react";
+import "./Navbar.css";
 
-export default function Navbar() {
-  const location = useLocation();
-  const { user, logoutAction } = useAuth();
-  const [value, setValue] = React.useState(0);
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const tabs = [
-    { label: "Home", path: "/" },
-    { label: "Discover", path: "/discover" },
-    { label: "Search", path: "/search" },
-    { label: "Discussions", path: "/questions" },
-    ...(user
-      ? [
-          { label: "Profile", path: `/profile/${user.id}` },
-          { label: "Log Out", onClick: () => handleLogout() },
-        ]
-      : [
-          { label: "Log In", path: "/login" },
-          { label: "Register", path: "/register" },
-        ]),
-  ];
+  const [searchQuery, setSearchQuery] = useState("");
 
-  React.useEffect(() => {
-    const currentIndex = tabs.findIndex((tab) =>
-      tab.path ? tab.path === location.pathname : false
-    );
-    setValue(currentIndex >= 0 ? currentIndex : 0);
-  }, [location.pathname, user, tabs]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
   };
 
-  const handleLogout = async () => {
-    try {
-      await logoutAction();
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    console.log("Search query:", searchQuery);
   };
 
   return (
-    <Box 
-      sx={{ 
-        display: "flex",
-        flexDirection: { xs: "column", sm: "row" },
-        alignItems: "center",
-        justifyContent: "space-between",
-        bgcolor: "background.paper",
-        padding: 2, 
-      }}
-    >
-      <Box
-        component={Link}
-        to="/"
-        sx={{
-          fontSize: { xs: 24, sm: 36 },
-          fontWeight: "bold",
-          fontFamily: "sans-serif",
-          textAlign: { xs: "center", sm: "left" },
-          textDecoration: "none",
-          color: "grey",
-          width: { xs: "100%", sm: "auto" },
-        }}
-      >
-        Media Wrangler
-      </Box>
+    <nav className="navbar">
+      <div className="navbar-logo">
+      </div>
 
-      <Box
-        sx={{
-          flexGrow: 1,
-          maxWidth: "100%",
-          minWidth: 0,
-          bgcolor: "background.paper",
-          padding: 2,
-        }}
+      <div
+        className={`navbar-hamburger ${isOpen ? "active" : ""}`}
+        onClick={toggleMenu}
       >
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          TabIndicatorProps={{ style: { transition: "none" } }} 
-        >
-          {tabs.map((tab, index) =>
-            tab.path ? (
-              <Tab
-                key={index}
-                label={tab.label}
-                component={Link}
-                to={tab.path}
-                sx={{ marginX: 3 }}
-              />
-            ) : (
-              <Tab
-                key={index}
-                label={tab.label}
-                onClick={tab.onClick}
-                sx={{ marginX: 3, cursor: "pointer" }}
-              />
-            )
-          )}
-        </Tabs>
-      </Box>
-    </Box>
+        <span className="line" />
+        <span className="line" />
+        <span className="line" />
+      </div>
+
+      <ul className={`navbar-links ${isOpen ? "open" : ""}`}>
+        <li>
+          <a href="/">Media Wrangler</a>
+        </li>
+        <li>
+          <form className="navbar-search-form" onSubmit={handleSearchSubmit}>
+            <input
+              type="text"
+              className="navbar-search-input"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <button type="submit" className="navbar-search-btn">
+              Go
+            </button>
+          </form>
+        </li>
+
+        <li>
+          <a href="/discover">Discover</a>
+        </li>
+        <li>
+          <a href="/discussions">Discussions</a>
+        </li>
+
+        <li>
+          <a href="/login">Log In</a>
+        </li>
+
+      </ul>
+    </nav>
   );
-}
+};
+
+export default Navbar;
